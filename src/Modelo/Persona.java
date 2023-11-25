@@ -13,18 +13,28 @@ public class Persona {
     private String NumeroCedula;
     private String Nombre;
     private String Apellido;
+    private String Genero;
+    private String FechaNacimineto;
+    private String direccion;
     private String Telefono;
+    private Rol rolPersona;
+    private Cuenta cuentaPersona;
 
     public Persona() {
         
     }
 
-    public Persona(Integer idPersona, String NumeroCedula, String Nombre, String Apellido, String Telefono) {
+    public Persona(Integer idPersona, String NumeroCedula, String Nombre, String Apellido, String Genero, String FechaNacimineto, String direccion, String Telefono, Rol rolPersona, Cuenta cuentaPersona) {
         this.idPersona = idPersona;
         this.NumeroCedula = NumeroCedula;
         this.Nombre = Nombre;
         this.Apellido = Apellido;
+        this.Genero = Genero;
+        this.FechaNacimineto = FechaNacimineto;
+        this.direccion = direccion;
         this.Telefono = Telefono;
+        this.rolPersona = rolPersona;
+        this.cuentaPersona = cuentaPersona;
     }
 
     public Integer getIdPersona() {
@@ -59,6 +69,30 @@ public class Persona {
         this.Apellido = Apellido;
     }
 
+    public String getGenero() {
+        return Genero;
+    }
+
+    public void setGenero(String Genero) {
+        this.Genero = Genero;
+    }
+
+    public String getFechaNacimineto() {
+        return FechaNacimineto;
+    }
+
+    public void setFechaNacimineto(String FechaNacimineto) {
+        this.FechaNacimineto = FechaNacimineto;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
     public String getTelefono() {
         return Telefono;
     }
@@ -67,9 +101,25 @@ public class Persona {
         this.Telefono = Telefono;
     }
 
+    public Rol getRolPersona() {
+        return rolPersona;
+    }
+
+    public void setRolPersona(Rol rolPersona) {
+        this.rolPersona = rolPersona;
+    }
+
+    public Cuenta getCuentaPersona() {
+        return cuentaPersona;
+    }
+
+    public void setCuentaPersona(Cuenta cuentaPersona) {
+        this.cuentaPersona = cuentaPersona;
+    }
+
     @Override
     public String toString() {
-        return "Persona{" + "idPersona=" + idPersona + ", NumeroCedula=" + NumeroCedula + ", Nombre=" + Nombre + ", Apellido=" + Apellido + ", Telefono=" + Telefono + '}';
+        return "Persona{" + "idPersona=" + idPersona + ", NumeroCedula=" + NumeroCedula + ", Nombre=" + Nombre + ", Apellido=" + Apellido + ", Genero=" + Genero + ", FechaNacimineto=" + FechaNacimineto + ", direccion=" + direccion + ", Telefono=" + Telefono + ", rolPersona=" + rolPersona + ", cuentaPersona=" + cuentaPersona + '}';
     }
     
 }

@@ -4,7 +4,8 @@
  */
 package Controlador.TDA.ListaDinamica;
 
-import Controlador.TDA.ListaDinamica.Exepciones.EstaVacia;
+import Controlador.Tda.listas.Exepciones.ListaVacia;
+import Controlador.Tda.listas.Exepciones.PosicionNoEncontrada;
 
 /**
  *
@@ -21,55 +22,57 @@ public class ListaDinamica<E> {
         ultimo = null;
         Longitud = 0;
     }
-
-    public Boolean EstaVacio() {
-        return (cabezera == null || Longitud == 0);
+    
+    public Boolean EstaVacio(){
+        return(cabezera == null || Longitud == 0 );
     }
-
-    public void Agregar(E info) {
-        AgregarFinal(info);
-    }
-
-    public void AgregarCabeza(E info) {
-        Nodo<E> Ayuda;
-        if (EstaVacio()) {
+    
+    public void AgregarCabeza(E info){
+        Nodo<E> Ayuda ;
+        if(EstaVacio()){
             Ayuda = new Nodo<>(info);
             cabezera = Ayuda;
             ultimo = Ayuda;
             Longitud++;
-        } 
-        else {
+        }
+        else{
             Nodo<E> CabezaAyuda = cabezera;
             Ayuda = new Nodo<>(info, CabezaAyuda);
             cabezera = Ayuda;
             Longitud++;
         }
     }
-
-    public void AgregarFinal(E info) {
+    
+    public void AgregarFinal(E info){
         Nodo<E> Ayuda;
-        if (EstaVacio()) {
+        if(EstaVacio()){
             AgregarCabeza(info);
 //            Ayuda = new Nodo<>(info);
 //            cabezera = Ayuda;
 //            ultimo = Ayuda;
 //            Longitud++;
-        } 
-        else {
+        }
+        else{
             Ayuda = new Nodo<>(info, null);
             ultimo.setSiguiente(Ayuda);
             ultimo = Ayuda;
             Longitud++;
         }
     }
-
-    private E ObtenerPrimero() throws EstaVacia {
-        if (EstaVacio()) {
-            throw new EstaVacia("La lista esta vacia");
-        }
+    
+    public void Agregar(E info){
+        AgregarFinal(info);
+    }
+    
+    
+    
+    private E getPrimero() throws ListaVacia{
+        if(EstaVacio()){
+            throw new ListaVacia("La lista esta vacia");
+    }
         return cabezera.getInfo();
     }
-
+    
 //    public E ObtenerPrimero(Integer pos) throws EstaVacia{
 //        
 //        if (!EstaVacio()) {
@@ -96,57 +99,82 @@ public class ListaDinamica<E> {
 //            throw new EstaVacia("La lista esta vacia");
 //        }
 //    }
-    private E ObtenerUltimo() throws EstaVacia {
-        if (EstaVacio()) {
-            throw new EstaVacia("La lista esta vacia");
+    
+    private E getFinal() throws ListaVacia{
+        if(EstaVacio()){
+            throw new ListaVacia("La lista esta vacia");
         }
         return ultimo.getInfo();
     }
-
-    public E ObtenerInfo(Integer indice) throws EstaVacia, IndexOutOfBoundsException {
-        return ObtenerNodo(indice).getInfo();
+    
+    public E getInfo(Integer indice)throws ListaVacia, IndexOutOfBoundsException{
+        return getNodo(indice).getInfo();
     }
-
-    private Nodo<E> ObtenerNodo(Integer indice) throws EstaVacia, IndexOutOfBoundsException {
-        if (EstaVacio()) {
-            throw new EstaVacia("La lista esta vacia");
-        } 
-        else if (indice < 0 || indice.intValue() == Longitud) {
+    
+    private Nodo<E> getNodo(Integer indice)throws ListaVacia, IndexOutOfBoundsException{
+        if(EstaVacio()){
+            throw new ListaVacia("La lista esta vacia");
+        }
+        else if(indice < 0 || indice.intValue() == Longitud){
             throw new IndexOutOfBoundsException("Fuera de nodo");
-        } 
-        else if (indice == 0) {
+        }
+        else if(indice == 0){
             return cabezera;
-        } 
-        else if (indice == (Longitud - 1)) {
+        }
+        else if(indice == (Longitud -1)){
             return ultimo;
-        } 
-        else {
+        }
+        else{
             Nodo<E> Buscar = cabezera;
-            int contador = 0;
-            while (contador < indice) {
+            int contador =0;
+            while(contador < indice){
                 contador++;
                 Buscar = Buscar.getSiguiente();
             }
             return Buscar;
         }
     }
-
-    public void Agregar(E info, Integer indice) throws EstaVacia {
-        if (EstaVacio() || indice == 0) {
+       
+    public void Agregar (E info, Integer indice)throws ListaVacia{
+        if(EstaVacio() || indice == 0){
             AgregarCabeza(info);
-        } 
-        else if (indice.intValue() == Longitud) {
+        }
+        else if(indice.intValue() == Longitud){
             AgregarFinal(info);
-        } 
-        else {
-            Nodo<E> BuscarPrevio = ObtenerNodo(indice - 1);
-            Nodo<E> Buscar = ObtenerNodo(indice);
+        }
+        else{
+            Nodo<E> BuscarPrevio = getNodo(indice - 1);
+            Nodo<E> Buscar= getNodo(indice);
             Nodo<E> Ayuda = new Nodo<>(info, Buscar);
             BuscarPrevio.setSiguiente(Ayuda);
             Longitud++;
         }
     }
+    
+    public void modificarPosicion(E dato, Integer pos) throws PosicionNoEncontrada{
+        if(EstaVacio()){
+            Agregar(dato);
+        }
+        else if(pos>=0 && pos < Longitud){
+            if(pos == 0){
+                cabezera.setInfo(dato);
+            } 
+            else{
+                
+                Nodo<E> aux = cabezera;
 
+                for (int i = 0; i < pos; i++ ){
+                    aux = aux.getSiguiente();
+                }
+                aux.setInfo(dato);
+            }
+            
+        }
+        else{
+            throw new PosicionNoEncontrada();
+        }
+    }
+    
     public ListaDinamica<E> obtenerLista() {
         ListaDinamica<E> lista = new ListaDinamica<>();
         Nodo<E> actual = cabezera;
@@ -158,7 +186,7 @@ public class ListaDinamica<E> {
 
         return lista;
     }
-
+    
     public Object[] CovertirEnArreglo() {
         Object[] Arreglos = new Object[Longitud];
         Nodo<E> actual = cabezera;
@@ -170,16 +198,83 @@ public class ListaDinamica<E> {
 
         return Arreglos;
     }
+    
+    public E extractFirst() throws ListaVacia{
+        if(EstaVacio()){
+            throw new ListaVacia("Lista vacia");
+        }
+        else{
+            E element = cabezera.getInfo();
+            Nodo<E> help = cabezera.getSiguiente();
+            cabezera = null;
+            cabezera = help;
+            if(Longitud ==1)
+                ultimo = null;
+            Longitud--;
+            return element;
+        }
+    }
+    
+    public E extractLast() throws ListaVacia{
+        if(EstaVacio()){
+            throw new ListaVacia("Lista vacia");
+        }
+        else{
+            E element = ultimo.getInfo();
+            Nodo<E> help = getNodo(Longitud-2);
+            if(help == null){
+                ultimo =null;
+                if(Longitud == 2){
+                    ultimo = cabezera;
+                }
+                else{
+                    cabezera = null;
+                }
+            }
+            else{
+               ultimo = null;
+               ultimo = help;
+               ultimo.setSiguiente(null);
+            }
+            Longitud--;
+            return element;
+        }
+    }
+    
+    public E extract(Integer indice) throws ListaVacia{
+        if(EstaVacio()){
+            throw new ListaVacia("La lista esta vacia");
+        }
+        else if(indice < 0 || indice.intValue() == Longitud){
+            throw new IndexOutOfBoundsException("Fuera de nodo");
+        }
+        else if(indice == 0){
+            return extractFirst();
+        }
+        else if(indice == (Longitud -1)){
+            return extractLast();
+        }
+        else{
+            Nodo<E> nodo_previo = getNodo(indice-1);
+            Nodo<E> nodo_actual = getNodo(indice);
+            E info = nodo_actual.getInfo();
+            Nodo<E> help_next = nodo_actual.getSiguiente();
+            nodo_actual = null;
+            nodo_previo.setSiguiente(help_next);
+            Longitud--;
+            return info;
+        }
+    }
 
     @Override
     public String toString() {
         StringBuilder StringB = new StringBuilder("Datos de lista \n");
         try {
             EstaVacio();
-
+            
             Nodo<E> ayuda = cabezera;
-
-            while (ayuda != null) {
+            
+            while(ayuda != null){
                 StringB.append(ayuda.getInfo().toString());
                 ayuda = ayuda.getSiguiente();
             }
