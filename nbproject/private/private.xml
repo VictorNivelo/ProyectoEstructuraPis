@@ -3,8 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Vista/VistaPrincipal.java</file>
-            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Modelo/Persona.java</file>
+            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Vista/VistaInicioSeccion.java</file>
+            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Vista/VistaAsistencia.java</file>
+            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Vista/Modelo/ModeloTablaAsistencia.java</file>
+            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Controlador/ControladorAlumnos.java</file>
         </group>
     </open-files>
 </project-private>
