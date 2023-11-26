@@ -66,7 +66,7 @@
                               <Component id="jLabel14" alignment="0" min="-2" pref="355" max="-2" attributes="0"/>
                               <Component id="jLabel15" alignment="0" min="-2" pref="355" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="839" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Group type="103" groupAlignment="1" max="-2" attributes="0">
@@ -104,7 +104,7 @@
                                           <Component id="cbxRol" alignment="0" pref="249" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
-                                  <EmptySpace pref="839" max="32767" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
