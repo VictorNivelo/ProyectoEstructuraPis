@@ -45,12 +45,11 @@ public class VistaInicioSeccion extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("AUTENTIFICACION");
-        setPreferredSize(new java.awt.Dimension(1200, 700));
 
         jPanel2.setBackground(new java.awt.Color(16, 35, 105));
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel1.setFont(new java.awt.Font("Haettenschweiler", 0, 46)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Haettenschweiler", 0, 48)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("SERVICIO DE AUTENTIFICACION CENTRALIZADA");

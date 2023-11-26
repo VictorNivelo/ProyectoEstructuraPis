@@ -8,10 +8,7 @@ package Vista.Modelo;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Controlador.Tda.listas.Exepciones.ListaVacia;
 import Modelo.Alumno;
-import Vista.VistaAsistencia;
-import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableColumn;
 
 /**
  *

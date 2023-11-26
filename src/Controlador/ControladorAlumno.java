@@ -11,15 +11,15 @@ import Modelo.Alumno;
  *
  * @author Victor
  */
-public class ControladorAlumnos {
+public class ControladorAlumno {
     private ListaDinamica<Alumno> listaAlumnos;
     private Alumno alumnosContol;
     
-    public ControladorAlumnos() {
+    public ControladorAlumno() {
         
     }
     
-    public ControladorAlumnos(Integer tamano) {
+    public ControladorAlumno(Integer tamano) {
      this.listaAlumnos  = new ListaDinamica<>();   
     }
     

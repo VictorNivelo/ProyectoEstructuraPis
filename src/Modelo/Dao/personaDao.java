@@ -6,42 +6,43 @@ package Modelo.Dao;
 
 import Controlador.Dao.DaoImplement;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
-import Modelo.Alumno;
+import Modelo.Persona;
 
 /**
  *
  * @author Victor
  */
-public class personaDao extends DaoImplement<Alumno>{
-    private ListaDinamica<Alumno> ListaAlumnos = new ListaDinamica<>();
-    private Alumno alumnos;
+public class personaDao extends DaoImplement<Persona>{
+    private ListaDinamica<Persona> ListaPersonas = new ListaDinamica<>();
+    private Persona persona;
     
     public personaDao(){
-        super (Alumno.class);
+        super (Persona.class);
+    }
+    
+    public ListaDinamica<Persona> getListaPersonas() {
+        ListaPersonas = all();
+        return ListaPersonas;
     }
 
-    public ListaDinamica<Alumno> getListaAlumnos() {
-        ListaAlumnos = all();
-        return ListaAlumnos;
+    public void setListaPersonas(ListaDinamica<Persona> ListaPersonas) {
+        this.ListaPersonas = ListaPersonas;
     }
 
-    public void setListaAlumnos(ListaDinamica<Alumno> ListaAlumnos) {
-        this.ListaAlumnos = ListaAlumnos;
-    }
-
-    public Alumno getAlumnos() {
-        if(alumnos == null){
-            alumnos = new Alumno();
+    public Persona getPersona() {
+        if(persona == null){
+            persona = new Persona();
         }
-        return alumnos;
+        return persona;
     }
 
-    public void setAlumnos(Alumno alumnos) {
-        this.alumnos = alumnos;
+    public void setPersona(Persona persona) {
+        this.persona = persona;
     }
     
     public Boolean Persist(){
-        alumnos.setIdAlumno(all().getLongitud()+1);
-        return Persist(alumnos);
+        persona.setIdPersona(all().getLongitud()+1);
+        return Persist(persona);
     }
+    
 }
