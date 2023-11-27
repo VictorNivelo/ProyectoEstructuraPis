@@ -3,12 +3,35 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/romer/Documents/GitHub/ProyectoEstructuraPis/src/Vista/VistaPrincipal.java</file>
-            <file>file:/C:/Users/romer/Documents/GitHub/ProyectoEstructuraPis/src/Modelo/PeriodoAcademico.java</file>
-            <file>file:/C:/Users/romer/Documents/GitHub/ProyectoEstructuraPis/src/Controlador/Dao/matricula/ControlPeriodo.java</file>
-            <file>file:/C:/Users/romer/Documents/GitHub/ProyectoEstructuraPis/src/Controlador/ControlPeriodo.java</file>
-            <file>file:/C:/Users/romer/Documents/GitHub/ProyectoEstructuraPis/src/Vista/tablas/TbPeriodo.java</file>
-            <file>file:/C:/Users/romer/Documents/GitHub/ProyectoEstructuraPis/src/Vista/PeriodosAcademicos.java</file>
+            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Modelo/Cursa.java</file>
+            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/Files/Persona.json</file>
+            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Vista/Modelo/ModeloTablaPersona.java</file>
+            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Modelo/Rol.java</file>
+            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Modelo/Docente.java</file>
+            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Vista/VistaRegistroPersonas.java</file>
+            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Vista/Modelo/ModeloTablaCurso.java</file>
+            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Modelo/Horario.java</file>
+            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Controlador/Dao/DaoImplement.java</file>
+            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Modelo/Dao/materiaDao.java</file>
+            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Modelo/Dao/personaDao.java</file>
+            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Controlador/ControladorMateria.java</file>
+            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Vista/VistaAsistencia.java</file>
+            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Vista/VistaRegistroMateria.java</file>
+            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Vista/Arreglos/Util/UtilVista.java</file>
+            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Modelo/Materia.java</file>
+            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Modelo/Dao/rolDao.java</file>
+            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Controlador/ControladorCurso.java</file>
+            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Controlador/ControladorAlumno.java</file>
+            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Controlador/TDA/ListaDinamica/ListaDinamica.java</file>
+            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Vista/Modelo/ModeloTablaAsistencia.java</file>
+            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Controlador/ControladorRol.java</file>
+            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Modelo/Alumno.java</file>
+            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Vista/Modelo/ModeloTablaMateria.java</file>
+            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Modelo/Persona.java</file>
+            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Vista/VistaInicioSeccion.java</file>
+            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Controlador/ControladorCiclo.java</file>
+            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Modelo/Ciclo.java</file>
+            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Vista/VistaRegistroCurso.java</file>
         </group>
     </open-files>
 </project-private>

@@ -49,7 +49,7 @@ public class Rol {
 
     @Override
     public String toString() {
-        return "Rol{" + "idRol=" + idRol + ", nombreRol=" + nombreRol + ", DescripcionRol=" + DescripcionRol + '}';
+        return nombreRol;
     }
     
 }
