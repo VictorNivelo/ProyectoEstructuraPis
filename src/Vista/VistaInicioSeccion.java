@@ -83,7 +83,7 @@ public class VistaInicioSeccion extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Segoe UI Emoji", 0, 24)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 0, 0));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("INICIAR SECCION");
+        jLabel3.setText("INICIAR SESION");
 
         jLabel4.setForeground(new java.awt.Color(119, 119, 119));
         jLabel4.setText("Nombre de ususario");
