@@ -3,8 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Vista/VistaPrincipal.java</file>
-            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Modelo/Persona.java</file>
+            <file>file:/C:/Users/romer/Documents/GitHub/ProyectoEstructuraPis/src/Vista/VistaPrincipal.java</file>
+            <file>file:/C:/Users/romer/Documents/GitHub/ProyectoEstructuraPis/src/Modelo/PeriodoAcademico.java</file>
+            <file>file:/C:/Users/romer/Documents/GitHub/ProyectoEstructuraPis/src/Controlador/Dao/matricula/ControlPeriodo.java</file>
+            <file>file:/C:/Users/romer/Documents/GitHub/ProyectoEstructuraPis/src/Controlador/ControlPeriodo.java</file>
+            <file>file:/C:/Users/romer/Documents/GitHub/ProyectoEstructuraPis/src/Vista/tablas/TbPeriodo.java</file>
+            <file>file:/C:/Users/romer/Documents/GitHub/ProyectoEstructuraPis/src/Vista/PeriodosAcademicos.java</file>
         </group>
     </open-files>
 </project-private>
