@@ -42,7 +42,6 @@ public class DaoImplement<T> implements DaoInterface<T>{
         catch (Exception e) {
             return false;
         }
-//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
     @Override
@@ -69,12 +68,6 @@ public class DaoImplement<T> implements DaoInterface<T>{
             return false;
         }
     }
-    
-//    @Override
-//    public Boolean Merge(T data, Integer index) {
-//        
-//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-//    }
 
     @Override
     public ListaDinamica<T> all() {
@@ -86,7 +79,6 @@ public class DaoImplement<T> implements DaoInterface<T>{
             
         }
         return dl;
-//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
@@ -94,60 +86,18 @@ public class DaoImplement<T> implements DaoInterface<T>{
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
-//    public void modificar(T dato, Integer pos) throws FileNotFoundException, JAXBException{
-//        ListaDinamica<T> lista = listar();
-//        try {
-//            lista.modificarPosicion(dato, pos);
-//            FileOutputStream file = new FileOutputStream(URL);
-//            JAXBContext jaxbc = JAXBContext.newInstance(new Class[]{ListaDinamica.class, this.clazz});
-//            Marshaller marshaller = jaxbc.createMarshaller(); //Transforma el objeto a xml
-//            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-//            marshaller.marshal(lista, file);
-//        } 
-//        catch (Exception e) {
-//            System.out.println(e);
-//        }
-//    }
-    
-//    public ListaDinamica<T> listar() {
-//        ListaDinamica<T> lista = new ListaDinamica<>();
-//        try {
-//            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-//            DocumentBuilder db = dbf.newDocumentBuilder();
-//            Document doc = db.parse(URL);
-//            NodeList datos = doc.getElementsByTagName(this.clazz.getSimpleName().toLowerCase()); //Encontrar en el archivo las etiquetas de la clase que se busca
-//            
-//            for(int i = 0; i<datos.getLength();i++){
-//                Node n1 = datos.item(i);
-//                NodeList nodo1 = n1.getChildNodes();
-//                T obj = this.clazz.newInstance();
-//                
-//                for(int j = 0; j <nodo1.getLength(); j++){
-//                    Node dato = nodo1.item(j);
-//                    if(dato.getNodeName() != null && !dato.getNodeName().equalsIgnoreCase("")&& 
-//                            dato.getTextContent() != null && !dato.getTextContent().equalsIgnoreCase("") && !dato.getNodeName().equalsIgnoreCase("#Text")){
-//                        
-//                        Method metodo = null; //llamar al método para fijar las etiquetas a un objeto de la clase que se pide
-//                        for(Method met : this.clazz.getMethods()){
-//                            if(met.getName().equalsIgnoreCase((("set"+Utiles.capitalizar(dato.getNodeName()))))){
-//                                metodo = met;
-//                                break;
-//                            }
-//                        }
-//                        metodo.invoke(obj, 
-//                         Utiles.transformarDato(Utiles.obtenerAtributo(clazz, dato.getNodeName()), dato.getTextContent()));
-//                    }
-//                }
-//                lista.Agregar(obj);
-////            }
-//        } 
-//        catch (Exception e) {
-//            System.out.println(e);
-//        }
-//        return lista;
-//    }
-//
-//    public T obtener(Integer id) {
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//    }
+    public Boolean Eliminar(Integer index) {
+        ListaDinamica<T> listaActualizada = all();
+
+        try {
+            listaActualizada.eliminar(index);
+
+            conection.toXML(listaActualizada, new FileWriter(URL));
+
+            return true;
+        } 
+        catch (Exception e) {
+            return false;
+        }
+    }
 }
