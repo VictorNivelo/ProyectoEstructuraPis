@@ -39,7 +39,7 @@ public class UtilVista {
         cbx.removeAllItems();
         
         if(mc.getListaMateria().EstaVacio()){
-            throw new ListaVacia("No hay roles que mostrar");
+            throw new ListaVacia("No hay materias que mostrar");
         }
         else{
            for (int i = 0; i < mc.getListaMateria().getLongitud(); i++) {
