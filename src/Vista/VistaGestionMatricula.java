@@ -7,7 +7,7 @@ package Vista;
 
 import Controlador.ControladorMatricula;
 import Controlador.Tda.listas.Exepciones.ListaVacia;
-import Vista.tablas.TbMatriculas;
+import Vista.Modelo.TbMatriculas;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;

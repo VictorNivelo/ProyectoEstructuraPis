@@ -48,7 +48,7 @@ public class VistaCalendario extends javax.swing.JDialog {
         jButton1 = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
 
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/images/unlLogo (2).png"))); // NOI18N
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/unlLogo (2).png"))); // NOI18N
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -79,7 +79,7 @@ public class VistaCalendario extends javax.swing.JDialog {
         );
 
         btnSalir.setBackground(new java.awt.Color(16, 35, 105));
-        btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/images/x.png"))); // NOI18N
+        btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/x.png"))); // NOI18N
         btnSalir.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -88,7 +88,7 @@ public class VistaCalendario extends javax.swing.JDialog {
         });
 
         jButton1.setBackground(new java.awt.Color(16, 35, 105));
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/images/cerrar-sesion.png"))); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/cerrar-sesion.png"))); // NOI18N
         jButton1.setBorder(null);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -96,7 +96,7 @@ public class VistaCalendario extends javax.swing.JDialog {
             }
         });
 
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/images/unlLogo (2).png"))); // NOI18N
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/unlLogo (2).png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);

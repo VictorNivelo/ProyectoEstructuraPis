@@ -5,7 +5,7 @@
     <Component class="javax.swing.JLabel" name="jLabel7">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/Vista/images/unlLogo (2).png"/>
+          <Image iconType="3" name="/Vista/RecursosGraficos/unlLogo (2).png"/>
         </Property>
       </Properties>
     </Component>
@@ -149,7 +149,7 @@
               <Color blue="69" green="23" red="10" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Vista/images/x.png"/>
+              <Image iconType="3" name="/Vista/RecursosGraficos/x.png"/>
             </Property>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
@@ -167,7 +167,7 @@
               <Color blue="69" green="23" red="10" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Vista/images/cerrar-sesion.png"/>
+              <Image iconType="3" name="/Vista/RecursosGraficos/cerrar-sesion.png"/>
             </Property>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="null"/>
@@ -180,7 +180,7 @@
         <Component class="javax.swing.JLabel" name="jLabel8">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Vista/images/unlLogo (2).png"/>
+              <Image iconType="3" name="/Vista/RecursosGraficos/unlLogo (2).png"/>
             </Property>
           </Properties>
         </Component>

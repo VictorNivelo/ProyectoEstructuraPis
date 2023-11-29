@@ -6,7 +6,7 @@ package Vista;
 
 
 import Controlador.ControlPeriodo;
-import Vista.tablas.TbPeriodo;
+import Vista.Modelo.TbPeriodo;
 import javax.swing.JOptionPane;
 
 /**
