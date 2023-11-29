@@ -14,13 +14,13 @@ import java.util.logging.Logger;
  *
  * @author Victor
  */
-public class VistaRegistroCurso extends javax.swing.JFrame {
+public class VistaGestionCurso extends javax.swing.JFrame {
     materiaDao materiaControl = new materiaDao();
 
     /**
      * Creates new form VistaRegistroMateria
      */
-    public VistaRegistroCurso() throws ListaVacia {
+    public VistaGestionCurso() throws ListaVacia {
         initComponents();
         this.setLocationRelativeTo(null);
         UtilVista.CargarComboMateria(cbxMateria);
@@ -64,6 +64,8 @@ public class VistaRegistroCurso extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ADMINISTRACION DE CURSO");
 
+        jPanel1.setBackground(new java.awt.Color(190, 193, 197));
+
         jPanel2.setBackground(new java.awt.Color(16, 35, 105));
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -91,16 +93,16 @@ public class VistaRegistroCurso extends javax.swing.JFrame {
             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        jLabel3.setFont(new java.awt.Font("Candara Light", 0, 32)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Candara Light", 1, 32)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("DOCENTE");
 
         jLabel4.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel4.setText("Nombre materia");
 
-        jLabel6.setFont(new java.awt.Font("Candara Light", 0, 32)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Candara Light", 1, 32)); // NOI18N
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("DATOS MATERIA");
+        jLabel6.setText("DATOS CURSO");
 
         jLabel7.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel7.setText("Nombre docente");
@@ -111,7 +113,7 @@ public class VistaRegistroCurso extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel9.setText("Especialidad");
 
-        jLabel10.setFont(new java.awt.Font("Candara Light", 0, 32)); // NOI18N
+        jLabel10.setFont(new java.awt.Font("Candara Light", 1, 32)); // NOI18N
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel10.setText("CURSO");
 
@@ -128,8 +130,9 @@ public class VistaRegistroCurso extends javax.swing.JFrame {
             }
         });
 
-        jLabel13.setFont(new java.awt.Font("Candara Light", 0, 32)); // NOI18N
-        jLabel13.setText("LISTA DE MATERIAS");
+        jLabel13.setFont(new java.awt.Font("Candara Light", 1, 32)); // NOI18N
+        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel13.setText("LISTA DE CURSOS");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -280,23 +283,25 @@ public class VistaRegistroCurso extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VistaRegistroCurso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaGestionCurso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VistaRegistroCurso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaGestionCurso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VistaRegistroCurso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaGestionCurso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VistaRegistroCurso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaGestionCurso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
             try {
-                new VistaRegistroCurso().setVisible(true);
+                new VistaGestionCurso().setVisible(true);
             } catch (ListaVacia ex) {
-                Logger.getLogger(VistaRegistroCurso.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(VistaGestionCurso.class.getName()).log(Level.SEVERE, null, ex);
             }
             }
         );

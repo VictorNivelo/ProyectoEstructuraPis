@@ -16,19 +16,19 @@ import javax.swing.table.AbstractTableModel;
  */
 public class ModeloTablaAsistencia extends AbstractTableModel {
 
-    private ListaDinamica<Alumno> pasajerosTabla;
+    private ListaDinamica<Alumno> asistenciaTabla;
 
-    public ListaDinamica<Alumno> getPasajerosTabla() {
-        return pasajerosTabla;
+    public ListaDinamica<Alumno> getAsistenciaTabla() {
+        return asistenciaTabla;
     }
 
-    public void setPasajerosTabla(ListaDinamica<Alumno> pasajerosTabla) {
-        this.pasajerosTabla = pasajerosTabla;
+    public void setAsistenciaTabla(ListaDinamica<Alumno> asistenciaTabla) {
+        this.asistenciaTabla = asistenciaTabla;
     }
-    
+
     @Override
     public int getRowCount() {
-        return pasajerosTabla.getLongitud();
+        return asistenciaTabla.getLongitud();
     }
 
     @Override
@@ -36,11 +36,30 @@ public class ModeloTablaAsistencia extends AbstractTableModel {
         return 4;
     }
     
+    public void setValueAt(Object valor, int fila, int columna) {
+        if (columna == 3 && valor instanceof Boolean) {
+            try {
+                Alumno p = asistenciaTabla.getInfo(fila);
+                if (p != null) {
+                    p.getAsistenciaAlumno().setEstadoAsistencia((Boolean) valor);
+                    fireTableCellUpdated(fila, columna); // Notifica a la tabla que los datos han cambiado
+                }
+            } catch (ListaVacia | IndexOutOfBoundsException ex) {
+                // Manejar la excepción adecuadamente
+            }
+        }
+    }
+
+    public boolean isCellEditable(int fila, int columna) {
+        // Solo permitir la edición en la columna de asistencia
+        return columna == 3;
+    }
+    
     @Override
     public Object getValueAt(int Fila, int Columna) {
 
         try {
-            Alumno p = pasajerosTabla.getInfo(Fila);
+            Alumno p = asistenciaTabla.getInfo(Fila);
 
             switch (Columna) {
                 case 0:
@@ -50,14 +69,14 @@ public class ModeloTablaAsistencia extends AbstractTableModel {
                 case 2:
                     return (p != null) ? p.getDatosAlumno().getApellido(): "";
                 case 3:
-                    return "";
+                    return (p != null) ? p.getAsistenciaAlumno().getEstadoAsistencia(): true;
                 default:
                     return null;
             }
         } 
         catch (ListaVacia | IndexOutOfBoundsException ex) {
         }
-        return pasajerosTabla;
+        return asistenciaTabla;
     }
 
 
