@@ -43,6 +43,8 @@ public class VistaAdministracion extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ADMINISTRACION GENERAL");
 
+        jPanel1.setBackground(new java.awt.Color(190, 193, 197));
+
         jPanel2.setBackground(new java.awt.Color(16, 35, 105));
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -149,8 +151,8 @@ public class VistaAdministracion extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         try {
-            VistaAsistencia abrirAsistencia;
-            abrirAsistencia = new VistaAsistencia();
+            VistaGestionAsistencia abrirAsistencia;
+            abrirAsistencia = new VistaGestionAsistencia();
             abrirAsistencia.setVisible(true);
         this.setVisible(false);
         } catch (ListaVacia ex) {
@@ -162,7 +164,7 @@ public class VistaAdministracion extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try {
             // TODO add your handling code here:
-            VistaRegistroCurso abrirAsistencia = new VistaRegistroCurso();
+            VistaGestionCurso abrirAsistencia = new VistaGestionCurso();
             abrirAsistencia.setVisible(true);
             this.setVisible(false);
         } catch (ListaVacia ex) {
@@ -172,7 +174,7 @@ public class VistaAdministracion extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        VistaRegistroMateria abrirAsistencia = new VistaRegistroMateria();
+        VistaGestionMateria abrirAsistencia = new VistaGestionMateria();
         abrirAsistencia.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -180,7 +182,7 @@ public class VistaAdministracion extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         try {
             // TODO add your handling code here:
-            VistaRegistroPersonas abrirAsistencia = new VistaRegistroPersonas();
+            VistaGestionPersonas abrirAsistencia = new VistaGestionPersonas();
             abrirAsistencia.setVisible(true);
             this.setVisible(false);
         } catch (ListaVacia ex) {
