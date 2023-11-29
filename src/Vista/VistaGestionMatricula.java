@@ -7,7 +7,7 @@ package Vista;
 
 import Controlador.ControladorMatricula;
 import Controlador.Tda.listas.Exepciones.ListaVacia;
-import Vista.tablas.TbMatriculas;
+import Vista.Modelo.TbMatriculas;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
  *
  * @author romer
  */
-public class Matricula extends javax.swing.JFrame {
+public class VistaGestionMatricula extends javax.swing.JFrame {
     private ControladorMatricula controladorMatricula = new ControladorMatricula();
     private Controlador.Dao.matricula.ControlMatriculaDao control = new Controlador.Dao.matricula.ControlMatriculaDao();
     private TbMatriculas tbm = new TbMatriculas(); 
@@ -65,9 +65,10 @@ public class Matricula extends javax.swing.JFrame {
     /**
      * Creates new form Matricula
      */
-    public Matricula() throws ListaVacia {
+    public VistaGestionMatricula() throws ListaVacia {
         initComponents();
         cargarTabla();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -279,23 +280,24 @@ public class Matricula extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Matricula.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaGestionMatricula.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Matricula.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaGestionMatricula.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Matricula.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaGestionMatricula.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Matricula.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaGestionMatricula.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    new Matricula().setVisible(true);
+                    new VistaGestionMatricula().setVisible(true);
                 } catch (ListaVacia ex) {
-                    Logger.getLogger(Matricula.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(VistaGestionMatricula.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });

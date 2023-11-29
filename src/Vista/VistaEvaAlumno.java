@@ -4,14 +4,15 @@ package Vista;
  *
  * @author FA506ICB-HN114W
  */
-public class FrmEva extends javax.swing.JDialog {
+public class VistaEvaAlumno extends javax.swing.JDialog {
 
     /**
      * Creates new form FrmEva
      */
-    public FrmEva(java.awt.Frame parent, boolean modal) {
+    public VistaEvaAlumno(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
 
@@ -46,7 +47,7 @@ public class FrmEva extends javax.swing.JDialog {
         jPanel2.setBackground(new java.awt.Color(16, 35, 105));
 
         btnSalir.setBackground(new java.awt.Color(16, 35, 105));
-        btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/images/x.png"))); // NOI18N
+        btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/x.png"))); // NOI18N
         btnSalir.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -108,7 +109,7 @@ public class FrmEva extends javax.swing.JDialog {
         jLabel2.setFont(new java.awt.Font("Rockstar Extra Bold", 0, 12)); // NOI18N
         jLabel2.setText("MATERIAS");
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/images/libro-abierto.png"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/libro-abierto.png"))); // NOI18N
 
         jComboBox2.setBackground(new java.awt.Color(232, 241, 242));
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -152,7 +153,7 @@ public class FrmEva extends javax.swing.JDialog {
         jLabel4.setText("PAGINA PRINCIPAL");
 
         btnPrincipal.setBackground(new java.awt.Color(0, 100, 148));
-        btnPrincipal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/images/colegio.png"))); // NOI18N
+        btnPrincipal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/colegio.png"))); // NOI18N
         btnPrincipal.setBorder(null);
 
         jLabel5.setFont(new java.awt.Font("Rockstar Extra Bold", 0, 18)); // NOI18N
@@ -160,7 +161,7 @@ public class FrmEva extends javax.swing.JDialog {
         jLabel5.setText("CALENDARIO");
 
         btnCalendario.setBackground(new java.awt.Color(0, 100, 148));
-        btnCalendario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/images/calendario-3d.png"))); // NOI18N
+        btnCalendario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/calendario-3d.png"))); // NOI18N
         btnCalendario.setBorder(null);
         btnCalendario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -174,10 +175,10 @@ public class FrmEva extends javax.swing.JDialog {
         jLabel6.setText("PERFIL");
 
         btnPerfil.setBackground(new java.awt.Color(0, 100, 148));
-        btnPerfil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/images/perfil.png"))); // NOI18N
+        btnPerfil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/perfil.png"))); // NOI18N
         btnPerfil.setBorder(null);
 
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/images/unlLogo (2).png"))); // NOI18N
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/unlLogo (2).png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -190,17 +191,17 @@ public class FrmEva extends javax.swing.JDialog {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(75, 75, 75)
                 .addComponent(btnPrincipal)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(297, 297, 297)
                 .addComponent(btnCalendario)
-                .addGap(126, 126, 126)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnPerfil)
                 .addGap(62, 62, 62))
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(32, 32, 32)
                 .addComponent(jLabel4)
-                .addGap(94, 94, 94)
+                .addGap(222, 222, 222)
                 .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 118, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 358, Short.MAX_VALUE)
                 .addComponent(jLabel6)
                 .addGap(70, 70, 70))
         );
@@ -240,14 +241,14 @@ public class FrmEva extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 148, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -270,7 +271,7 @@ public class FrmEva extends javax.swing.JDialog {
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void btnCalendarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalendarioActionPerformed
-        FrmCalendario fc = new FrmCalendario(null, true);
+        VistaCalendario fc = new VistaCalendario(null, true);
         dispose();
         fc.setVisible(true);
         
@@ -293,21 +294,23 @@ public class FrmEva extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmEva.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaEvaAlumno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmEva.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaEvaAlumno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmEva.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaEvaAlumno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmEva.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaEvaAlumno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                FrmEva dialog = new FrmEva(new javax.swing.JFrame(), true);
+                VistaEvaAlumno dialog = new VistaEvaAlumno(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
