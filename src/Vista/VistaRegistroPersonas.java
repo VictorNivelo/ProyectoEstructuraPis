@@ -329,6 +329,11 @@ public class VistaRegistroPersonas extends javax.swing.JFrame {
         });
 
         btnRegistrar.setText("REGRESAR");
+        btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -455,7 +460,7 @@ public class VistaRegistroPersonas extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(180, 180, 180)
                     .addComponent(jLabel17)
-                    .addContainerGap(484, Short.MAX_VALUE)))
+                    .addContainerGap(480, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -568,6 +573,13 @@ public class VistaRegistroPersonas extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+        // TODO add your handling code here:
+        VistaAdministracion abrirLogin = new VistaAdministracion();
+        abrirLogin.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnRegistrarActionPerformed
 
     /**
      * @param args the command line arguments

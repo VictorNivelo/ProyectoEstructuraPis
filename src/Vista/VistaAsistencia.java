@@ -30,7 +30,7 @@ public class VistaAsistencia extends javax.swing.JFrame {
     }
     
     private void CargarTabla() {
-        mta.setPasajerosTabla(AlumnosControlDao.getListaAlumnos());
+        mta.setAsistenciaTabla(AlumnosControlDao.getListaAlumnos());
         tblAsistencia.setModel(mta);
         tblAsistencia.updateUI();
     }

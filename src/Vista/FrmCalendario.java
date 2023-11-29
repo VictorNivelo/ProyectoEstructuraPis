@@ -17,6 +17,7 @@ public class FrmCalendario extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         mostrarFechaActual();
+        this.setLocationRelativeTo(null);
     }
 
     private void mostrarFechaActual(){
@@ -71,7 +72,7 @@ public class FrmCalendario extends javax.swing.JDialog {
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(15, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jCalendar1, javax.swing.GroupLayout.PREFERRED_SIZE, 424, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(16, 16, 16))
         );

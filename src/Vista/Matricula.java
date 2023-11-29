@@ -68,6 +68,7 @@ public class Matricula extends javax.swing.JFrame {
     public Matricula() throws ListaVacia {
         initComponents();
         cargarTabla();
+        this.setLocationRelativeTo(null);
     }
 
     /**

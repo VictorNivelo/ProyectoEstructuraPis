@@ -15,6 +15,7 @@ public class VistaELSA extends javax.swing.JFrame {
      */
     public VistaELSA() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**

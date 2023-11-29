@@ -15,19 +15,19 @@ import javax.swing.table.AbstractTableModel;
  */
 public class ModeloTablaCurso extends AbstractTableModel {
 
-    private ListaDinamica<Cursa> personasTabla;
+    private ListaDinamica<Cursa> cursoTabla;
 
-    public ListaDinamica<Cursa> getPersonasTabla() {
-        return personasTabla;
+    public ListaDinamica<Cursa> getCursoTabla() {
+        return cursoTabla;
     }
 
-    public void setPersonasTabla(ListaDinamica<Cursa> personasTabla) {
-        this.personasTabla = personasTabla;
+    public void setCursoTabla(ListaDinamica<Cursa> cursoTabla) {
+        this.cursoTabla = cursoTabla;
     }
-    
+       
     @Override
     public int getRowCount() {
-        return personasTabla.getLongitud();
+        return cursoTabla.getLongitud();
     }
 
     @Override
@@ -51,7 +51,7 @@ public class ModeloTablaCurso extends AbstractTableModel {
     public Object getValueAt(int Fila, int Columna) {
 
         try {
-            Cursa p = personasTabla.getInfo(Fila);
+            Cursa p = cursoTabla.getInfo(Fila);
 
             switch (Columna) {
                 case 0:
@@ -74,7 +74,7 @@ public class ModeloTablaCurso extends AbstractTableModel {
         } 
         catch (ListaVacia | IndexOutOfBoundsException ex) {
         }
-        return personasTabla;
+        return cursoTabla;
     }
 
 

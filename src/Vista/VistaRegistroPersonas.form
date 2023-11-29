@@ -205,7 +205,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="180" max="-2" attributes="0"/>
                       <Component id="jLabel17" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="484" max="32767" attributes="0"/>
+                      <EmptySpace pref="480" max="32767" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -482,6 +482,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="REGRESAR"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRegistrarActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
