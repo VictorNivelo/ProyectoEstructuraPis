@@ -6,28 +6,28 @@ package Vista.Modelo;
 
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Controlador.Tda.listas.Exepciones.ListaVacia;
-import Modelo.Materia;
+import Modelo.Ciclo;
 import javax.swing.table.AbstractTableModel;
 
 /**
  *
  * @author Victor
  */
-public class ModeloTablaMateria extends AbstractTableModel {
+public class ModeloTablaCiclos extends AbstractTableModel {
 
-    private ListaDinamica<Materia> materiaTabla;
+    private ListaDinamica<Ciclo> cicloTabla;
 
-    public ListaDinamica<Materia> getMateriaTabla() {
-        return materiaTabla;
+    public ListaDinamica<Ciclo> getCicloTabla() {
+        return cicloTabla;
     }
 
-    public void setMateriaTabla(ListaDinamica<Materia> materiaTabla) {
-        this.materiaTabla = materiaTabla;
+    public void setCicloTabla(ListaDinamica<Ciclo> cicloTabla) {
+        this.cicloTabla = cicloTabla;
     }
     
     @Override
     public int getRowCount() {
-        return materiaTabla.getLongitud();
+        return cicloTabla.getLongitud();
     }
 
     @Override
@@ -39,24 +39,24 @@ public class ModeloTablaMateria extends AbstractTableModel {
     public Object getValueAt(int Fila, int Columna) {
 
         try {
-            Materia p = materiaTabla.getInfo(Fila);
+            Ciclo p = cicloTabla.getInfo(Fila);
 
             switch (Columna) {
                 case 0:
-                    return (p != null) ? p.getIdMateria(): "";
+                    return (p != null) ? p.getIdCiclo(): "";
                 case 1:
-                    return (p != null) ? p.getNombreMateria() : "";
+                    return (p != null) ? p.getNombreCiclo(): "";
                 case 2:
-                    return (p != null) ? p.getDescipcionMateria() : "";
+                    return (p != null) ? p.getNumeroCiclo(): "";
                 case 3:
-                    return (p != null) ? p.getCicloMateria(): "";
+                    return (p != null) ? p.getNombreParalelo(): "";
                 default:
                     return null;
             }
         } 
         catch (ListaVacia | IndexOutOfBoundsException ex) {
         }
-        return materiaTabla;
+        return cicloTabla;
     }
 
 
@@ -64,13 +64,13 @@ public class ModeloTablaMateria extends AbstractTableModel {
     public String getColumnName(int column) {
         switch (column) {
             case 0:
-                return "Id materia";
+                return "Id ciclo";
             case 1:
-                return "Nombre materia";
+                return "Nombre ciclo";
             case 2:
-                return "Descripcion materia";
+                return "Numero ciclo";
             case 3:
-                return "Ciclo pertenece";
+                return "Paralelo asignado";
             default:
                 return null;
         }

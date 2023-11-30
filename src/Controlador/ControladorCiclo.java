@@ -15,11 +15,7 @@ public class ControladorCiclo {
     private ListaDinamica<Ciclo> ciclo;
     
     public ControladorCiclo() {
-        ciclo = new ListaDinamica<>();
-        ciclo.Agregar(new Ciclo(1, "Administrador", 1));
-        ciclo.Agregar(new Ciclo(2, "Personal administrativo", 2));
-        ciclo.Agregar(new Ciclo(3, "Docente", 3));
-        ciclo.Agregar(new Ciclo(4, "Estrudiante", 4));
+        
     }
 
     public ListaDinamica<Ciclo> getCiclo() {

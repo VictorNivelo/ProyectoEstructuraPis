@@ -6,7 +6,6 @@ package Modelo.Dao;
 
 import Controlador.Dao.DaoImplement;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
-import Modelo.Alumno;
 import Modelo.PeriodoAcademico;
 
 /**

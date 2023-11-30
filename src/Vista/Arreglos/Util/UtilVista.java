@@ -5,6 +5,8 @@
 package Vista.Arreglos.Util;
 
 import Controlador.Tda.listas.Exepciones.ListaVacia;
+import Modelo.Ciclo;
+import Modelo.Dao.cicloDao;
 import Modelo.Dao.materiaDao;
 import Modelo.Dao.rolDao;
 import Modelo.Materia;
@@ -50,5 +52,23 @@ public class UtilVista {
     
     public static Materia obtenreComboMateria(JComboBox cbx){
         return (Materia) cbx.getSelectedItem();
+    }
+    
+    public static void cargarComboCiclo(JComboBox cbx) throws ListaVacia{
+        cicloDao rc = new cicloDao();
+        cbx.removeAllItems();
+        
+        if(rc.getListaCiclos().EstaVacio()){
+            throw new ListaVacia("No hay ciclos que mostrar");
+        }
+        else{
+           for (int i = 0; i < rc.getListaCiclos().getLongitud(); i++) {
+            cbx.addItem(rc.getListaCiclos().getInfo(i));
+           }
+        }
+    }
+    
+    public static Ciclo obtenerCicloControl(JComboBox cbx){
+        return (Ciclo) cbx.getSelectedItem();
     }
 }

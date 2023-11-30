@@ -39,6 +39,7 @@ public class VistaAdministracion extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        btnAdministrarCiclos = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ADMINISTRACION GENERAL");
@@ -104,6 +105,13 @@ public class VistaAdministracion extends javax.swing.JFrame {
             }
         });
 
+        btnAdministrarCiclos.setText("ADMINISTRAR CICLOS");
+        btnAdministrarCiclos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdministrarCiclosActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -115,7 +123,8 @@ public class VistaAdministracion extends javax.swing.JFrame {
                     .addComponent(jButton1)
                     .addComponent(jButton2)
                     .addComponent(jButton3)
-                    .addComponent(jButton4))
+                    .addComponent(jButton4)
+                    .addComponent(btnAdministrarCiclos))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -130,7 +139,9 @@ public class VistaAdministracion extends javax.swing.JFrame {
                 .addComponent(jButton3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton4)
-                .addGap(0, 404, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnAdministrarCiclos)
+                .addGap(0, 371, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -174,9 +185,13 @@ public class VistaAdministracion extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        VistaGestionMateria abrirAsistencia = new VistaGestionMateria();
-        abrirAsistencia.setVisible(true);
-        this.setVisible(false);
+        try {
+            VistaGestionMateria abrirAsistencia = new VistaGestionMateria();
+            abrirAsistencia.setVisible(true);
+            this.setVisible(false);
+        } 
+        catch (Exception e) {
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -190,6 +205,13 @@ public class VistaAdministracion extends javax.swing.JFrame {
         }
               
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void btnAdministrarCiclosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministrarCiclosActionPerformed
+        // TODO add your handling code here:
+        VistaGestionCiclos abrirLogin = new VistaGestionCiclos();
+        abrirLogin.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnAdministrarCiclosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -227,6 +249,7 @@ public class VistaAdministracion extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAdministrarCiclos;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;

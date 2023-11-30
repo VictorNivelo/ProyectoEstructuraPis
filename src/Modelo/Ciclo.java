@@ -12,15 +12,17 @@ public class Ciclo {
     private Integer idCiclo;
     private String NombreCiclo;
     private Integer NumeroCiclo;
+    private String NombreParalelo;
 
     public Ciclo() {
         
     }
 
-    public Ciclo(Integer idCiclo, String NombreCiclo, Integer NumeroCiclo) {
+    public Ciclo(Integer idCiclo, String NombreCiclo, Integer NumeroCiclo, String NombreParalelo) {
         this.idCiclo = idCiclo;
         this.NombreCiclo = NombreCiclo;
         this.NumeroCiclo = NumeroCiclo;
+        this.NombreParalelo = NombreParalelo;
     }
 
     public Integer getIdCiclo() {
@@ -47,9 +49,17 @@ public class Ciclo {
         this.NumeroCiclo = NumeroCiclo;
     }
 
+    public String getNombreParalelo() {
+        return NombreParalelo;
+    }
+
+    public void setNombreParalelo(String NombreParalelo) {
+        this.NombreParalelo = NombreParalelo;
+    }
+
     @Override
     public String toString() {
-        return "Ciclo{" + "idCiclo=" + idCiclo + ", NombreCiclo=" + NombreCiclo + ", NumeroCiclo=" + NumeroCiclo + '}';
+        return NombreCiclo +" "+ NombreParalelo;
     }
     
 }

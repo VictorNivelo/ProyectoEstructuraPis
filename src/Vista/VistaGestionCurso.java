@@ -25,6 +25,9 @@ public class VistaGestionCurso extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         UtilVista.CargarComboMateria(cbxMateria);
+        UtilVista.cargarComboCiclo(cbxCiclo);
+        cbxMateria.setSelectedIndex(-1);
+        cbxCiclo.setSelectedIndex(-1);
     }
     
 
@@ -49,12 +52,10 @@ public class VistaGestionCurso extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
         cbxNombreDocente = new javax.swing.JComboBox<>();
         txtTitulacion = new javax.swing.JTextField();
         txtEspecialidad = new javax.swing.JComboBox<>();
         cbxCiclo = new javax.swing.JComboBox<>();
-        cbxParalelo = new javax.swing.JComboBox<>();
         btnAsignarMateria = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -124,9 +125,6 @@ public class VistaGestionCurso extends javax.swing.JFrame {
         jLabel11.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel11.setText("Ciclo");
 
-        jLabel12.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        jLabel12.setText("Paralelo");
-
         btnAsignarMateria.setText("ASIGNAR MATERIA");
         btnAsignarMateria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -191,13 +189,9 @@ public class VistaGestionCurso extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cbxMateria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cbxCiclo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cbxParalelo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(cbxCiclo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -245,10 +239,6 @@ public class VistaGestionCurso extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel11)
                             .addComponent(cbxCiclo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel12)
-                            .addComponent(cbxParalelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 463, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -337,11 +327,9 @@ public class VistaGestionCurso extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbxCiclo;
     private javax.swing.JComboBox<String> cbxMateria;
     private javax.swing.JComboBox<String> cbxNombreDocente;
-    private javax.swing.JComboBox<String> cbxParalelo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
