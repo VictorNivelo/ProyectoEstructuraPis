@@ -7,7 +7,7 @@ package Vista;
 
 import Controlador.ControladorMatricula;
 import Controlador.Tda.listas.Exepciones.ListaVacia;
-import Vista.Modelo.TbMatriculas;
+import Vista.Modelo.ModeloTablaMatriculas;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -20,8 +20,8 @@ import javax.swing.JOptionPane;
  */
 public class VistaGestionMatricula extends javax.swing.JFrame {
     private ControladorMatricula controladorMatricula = new ControladorMatricula();
-    private Controlador.Dao.matricula.ControlMatriculaDao control = new Controlador.Dao.matricula.ControlMatriculaDao();
-    private TbMatriculas tbm = new TbMatriculas(); 
+    private Modelo.Dao.matriculaDao control = new Modelo.Dao.matriculaDao();
+    private ModeloTablaMatriculas tbm = new ModeloTablaMatriculas(); 
     
     public Boolean verificar() {
         if (txtFechaMatricula.getText().trim().isEmpty()) {

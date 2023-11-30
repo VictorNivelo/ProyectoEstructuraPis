@@ -101,7 +101,6 @@ public class ModeloTablaCurso extends AbstractTableModel {
                 return "Correo";
             case 9:
                 return "Estado cuenta";
-
             
             default:
                 return null;

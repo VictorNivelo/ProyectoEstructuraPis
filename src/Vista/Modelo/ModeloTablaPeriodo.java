@@ -12,7 +12,7 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author romer
  */
-public class TbPeriodo extends AbstractTableModel {
+public class ModeloTablaPeriodo extends AbstractTableModel {
     ListaDinamica<PeriodoAcademico> periodos;
 
     @Override

@@ -12,7 +12,7 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author romer
  */
-public class TbAlumnos extends AbstractTableModel {
+public class ModeloTablaAlumnos extends AbstractTableModel {
     ListaDinamica<Alumno> alumnos;
 
     @Override
@@ -73,6 +73,5 @@ public class TbAlumnos extends AbstractTableModel {
     public void setAlumnos(ListaDinamica<Alumno> alumnos) {
         this.alumnos = alumnos;
     }
-    
     
 }
