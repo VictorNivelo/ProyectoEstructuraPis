@@ -12,11 +12,11 @@ import Modelo.PeriodoAcademico;
  *
  * @author Victor
  */
-public class periodoDao extends DaoImplement<PeriodoAcademico> {
+public class periodoAcademicoDao extends DaoImplement<PeriodoAcademico> {
     private ListaDinamica<PeriodoAcademico> periodos;
     private PeriodoAcademico periodo;
     
-    public periodoDao(){
+    public periodoAcademicoDao(){
         super(PeriodoAcademico.class);
     }
 
