@@ -160,15 +160,14 @@ public class ListaDinamica<E> {
                 cabezera.setInfo(dato);
             } 
             else{
-                
+    
                 Nodo<E> aux = cabezera;
-
+    
                 for (int i = 0; i < pos; i++ ){
                     aux = aux.getSiguiente();
                 }
                 aux.setInfo(dato);
             }
-            
         }
         else{
             throw new PosicionNoEncontrada();

@@ -18,6 +18,7 @@ import java.util.logging.Logger;
 public class VistaGestionAsistencia extends javax.swing.JFrame {
     ModeloTablaAsistencia mta = new ModeloTablaAsistencia();
     ControladorAlumno AlumnosControlDao = new ControladorAlumno();
+    
 
     /**
      * Creates new form VistaPrincipal
