@@ -67,7 +67,7 @@ public class VistaGestionCurso extends javax.swing.JFrame {
         btnEliminar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("ADMINISTRACION DE CURSO");
+        setTitle("GESTION CURSOS");
 
         jPanel1.setBackground(new java.awt.Color(190, 193, 197));
 

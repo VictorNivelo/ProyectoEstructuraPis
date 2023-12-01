@@ -98,6 +98,7 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
         btnGuardar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("GESTION MATRICULA");
 
         jLabel1.setText("Matriculas");
 

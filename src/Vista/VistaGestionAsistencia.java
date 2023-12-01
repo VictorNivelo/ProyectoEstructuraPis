@@ -66,7 +66,7 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
         btnEliminar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("ADMINISTRACION DE ASISTENCIAS");
+        setTitle("GESTION ASISTENCIAS");
 
         jPanel2.setBackground(new java.awt.Color(190, 193, 197));
 

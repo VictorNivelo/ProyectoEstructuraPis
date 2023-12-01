@@ -204,7 +204,7 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
         jLabel1.setToolTipText("");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("REGISTRO PERSONAS");
+        setTitle("GESTION PERSONAS");
 
         jPanel1.setBackground(new java.awt.Color(190, 193, 197));
 
@@ -570,7 +570,8 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
         else{
             try {
                 Guardar();
-            } catch (ListaVacia ex) {
+            } 
+            catch (ListaVacia ex) {
                 Logger.getLogger(VistaGestionPersonas.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

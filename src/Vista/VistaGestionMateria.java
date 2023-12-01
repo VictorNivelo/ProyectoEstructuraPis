@@ -6,7 +6,6 @@ package Vista;
 
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Controlador.Tda.listas.Exepciones.ListaVacia;
-import Modelo.Ciclo;
 import Modelo.Dao.cicloDao;
 import Modelo.Dao.materiaDao;
 import Modelo.Materia;
@@ -133,7 +132,7 @@ public class VistaGestionMateria extends javax.swing.JFrame {
         cbxCicloPertenece = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("ADMINISTRACION DE MATERIAS");
+        setTitle("GESTION MATERIAS");
 
         jPanel1.setBackground(new java.awt.Color(190, 193, 197));
 
@@ -326,7 +325,8 @@ public class VistaGestionMateria extends javax.swing.JFrame {
         else{
             try {
                 Guardar();
-            } catch (ListaVacia ex) {
+            } 
+            catch (ListaVacia ex) {
                 Logger.getLogger(VistaGestionMateria.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
