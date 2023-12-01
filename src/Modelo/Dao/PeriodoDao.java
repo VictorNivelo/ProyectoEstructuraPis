@@ -10,7 +10,7 @@ import Modelo.PeriodoAcademico;
 
 /**
  *
- * @author romer
+ * @author Victor
  */
 public class periodoDao extends DaoImplement<PeriodoAcademico> {
     private ListaDinamica<PeriodoAcademico> periodos;
@@ -45,5 +45,4 @@ public class periodoDao extends DaoImplement<PeriodoAcademico> {
         periodo.setIdPeriodoAcademino(all().getLongitud() + 1);
         return Persist(periodo);
     }
-    
 }

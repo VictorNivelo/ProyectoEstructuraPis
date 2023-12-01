@@ -6,6 +6,7 @@ package Vista;
 
 
 import Controlador.ControlPeriodo;
+import Modelo.Dao.periodoDao;
 import Vista.Modelo.ModeloTablaPeriodo;
 import javax.swing.JOptionPane;
 
@@ -14,9 +15,9 @@ import javax.swing.JOptionPane;
  * @author romer
  */
 public class VistaGestionPeriodosAcademicos extends javax.swing.JFrame {
-    private ControlPeriodo controlPeriodo = new ControlPeriodo();
-    private Modelo.Dao.periodoDao controlP = new Modelo.Dao.periodoDao();
-    private ModeloTablaPeriodo tbp = new ModeloTablaPeriodo();
+    ControlPeriodo controlPeriodo = new ControlPeriodo();
+    periodoDao controlP = new periodoDao();
+    ModeloTablaPeriodo tbp = new ModeloTablaPeriodo();
     
     public void cargarTabla(){
         tbp.setPeriodos(controlP.all());
