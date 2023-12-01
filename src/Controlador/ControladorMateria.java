@@ -15,12 +15,12 @@ public class ControladorMateria {
     private ListaDinamica<Materia> materias;
     
     public ControladorMateria() {
-        materias = new ListaDinamica<>();
-        materias.Agregar(new Materia(1, "Estructura de datos", "Materia principal"));
-        materias.Agregar(new Materia(2, "Base de datos", "Materia principal"));
-        materias.Agregar(new Materia(3, "Requisitos de software", "Materia principal"));
-        materias.Agregar(new Materia(4, "Arquitectura de ordenadores", "Materia principal"));
-        materias.Agregar(new Materia(5, "Relleno", "Materia principal"));
+//        materias = new ListaDinamica<>();
+//        materias.Agregar(new Materia(1, "Estructura de datos", "Materia principal"));
+//        materias.Agregar(new Materia(2, "Base de datos", "Materia principal"));
+//        materias.Agregar(new Materia(3, "Requisitos de software", "Materia principal"));
+//        materias.Agregar(new Materia(4, "Arquitectura de ordenadores", "Materia principal"));
+//        materias.Agregar(new Materia(5, "Relleno", "Materia principal"));
     }
 
     public ListaDinamica<Materia> getMaterias() {

@@ -12,17 +12,19 @@ public class Materia {
     private Integer idMateria;
     private String NombreMateria;
     private String DescipcionMateria;
+    private Ciclo cicloMateria;
 
     public Materia() {
         
     }
 
-    public Materia(Integer idMateria, String NombreMateria, String DescipcionMateria) {
+    public Materia(Integer idMateria, String NombreMateria, String DescipcionMateria, Ciclo cicloMateria) {
         this.idMateria = idMateria;
         this.NombreMateria = NombreMateria;
         this.DescipcionMateria = DescipcionMateria;
+        this.cicloMateria = cicloMateria;
     }
-
+    
     public Integer getIdMateria() {
         return idMateria;
     }
@@ -47,6 +49,14 @@ public class Materia {
         this.DescipcionMateria = DescipcionMateria;
     }
 
+    public Ciclo getCicloMateria() {
+        return cicloMateria;
+    }
+
+    public void setCicloMateria(Ciclo cicloMateria) {
+        this.cicloMateria = cicloMateria;
+    }
+    
     @Override
     public String toString() {
         return NombreMateria;

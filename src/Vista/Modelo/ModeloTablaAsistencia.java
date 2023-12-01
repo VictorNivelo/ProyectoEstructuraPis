@@ -36,23 +36,16 @@ public class ModeloTablaAsistencia extends AbstractTableModel {
         return 4;
     }
     
-    public void setValueAt(Object valor, int fila, int columna) {
-        if (columna == 3 && valor instanceof Boolean) {
-            try {
-                Alumno p = asistenciaTabla.getInfo(fila);
-                if (p != null) {
-                    p.getAsistenciaAlumno().setEstadoAsistencia((Boolean) valor);
-                    fireTableCellUpdated(fila, columna); // Notifica a la tabla que los datos han cambiado
-                }
-            } catch (ListaVacia | IndexOutOfBoundsException ex) {
-                // Manejar la excepción adecuadamente
-            }
+    private String EstadoCuenta(int i) throws ListaVacia {
+        
+        Alumno p = asistenciaTabla.getInfo(i);
+        
+        if (p.getEstado()) {
+            return "Matriculado";
+        } 
+        else {
+            return "Retirado";
         }
-    }
-
-    public boolean isCellEditable(int fila, int columna) {
-        // Solo permitir la edición en la columna de asistencia
-        return columna == 3;
     }
     
     @Override
@@ -69,7 +62,7 @@ public class ModeloTablaAsistencia extends AbstractTableModel {
                 case 2:
                     return (p != null) ? p.getDatosAlumno().getApellido(): "";
                 case 3:
-                    return (p != null) ? p.getAsistenciaAlumno().getEstadoAsistencia(): true;
+                    return (p != null) ? EstadoCuenta(Fila): "";
                 default:
                     return null;
             }

@@ -11,20 +11,18 @@ package Modelo;
 public class Alumno {
     private Integer idAlumno;
     private Persona datosAlumno;
-    private Asistencia asistenciaAlumno;
-    private Matricula matriculaAlumno;
+    private Boolean estado;
 
     public Alumno() {
         
     }
 
-    public Alumno(Integer idAlumno, Persona datosAlumno, Asistencia asistenciaAlumno, Matricula matriculaAlumno) {
+    public Alumno(Integer idAlumno, Persona datosAlumno, Boolean estado) {
         this.idAlumno = idAlumno;
         this.datosAlumno = datosAlumno;
-        this.asistenciaAlumno = asistenciaAlumno;
-        this.matriculaAlumno = matriculaAlumno;
+        this.estado = estado;
     }
-
+    
     public Integer getIdAlumno() {
         return idAlumno;
     }
@@ -41,25 +39,12 @@ public class Alumno {
         this.datosAlumno = datosAlumno;
     }
 
-    public Asistencia getAsistenciaAlumno() {
-        return asistenciaAlumno;
+    public Boolean getEstado() {
+        return estado;
     }
 
-    public void setAsistenciaAlumno(Asistencia asistenciaAlumno) {
-        this.asistenciaAlumno = asistenciaAlumno;
-    }
-
-    public Matricula getMatriculaAlumno() {
-        return matriculaAlumno;
-    }
-
-    public void setMatriculaAlumno(Matricula matriculaAlumno) {
-        this.matriculaAlumno = matriculaAlumno;
-    }
-
-    @Override
-    public String toString() {
-        return "Alumno{" + "idAlumno=" + idAlumno + ", datosAlumno=" + datosAlumno + ", asistenciaAlumno=" + asistenciaAlumno + ", matriculaAlumno=" + matriculaAlumno + '}';
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
     }
     
 }

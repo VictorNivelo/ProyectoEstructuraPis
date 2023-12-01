@@ -6,7 +6,8 @@ package Vista;
 
 
 import Controlador.ControlPeriodo;
-import Vista.Modelo.TbPeriodo;
+import Modelo.Dao.periodoAcademicoDao;
+import Vista.Modelo.ModeloTablaPeriodo;
 import javax.swing.JOptionPane;
 
 /**
@@ -14,9 +15,9 @@ import javax.swing.JOptionPane;
  * @author romer
  */
 public class VistaGestionPeriodosAcademicos extends javax.swing.JFrame {
-    private ControlPeriodo controlPeriodo = new ControlPeriodo();
-    private Controlador.Dao.matricula.ControlPeriodo controlP = new Controlador.Dao.matricula.ControlPeriodo();
-    private TbPeriodo tbp = new TbPeriodo();
+    ControlPeriodo controlPeriodo = new ControlPeriodo();
+    periodoAcademicoDao controlP = new periodoAcademicoDao();
+    ModeloTablaPeriodo tbp = new ModeloTablaPeriodo();
     
     public void cargarTabla(){
         tbp.setPeriodos(controlP.all());
@@ -218,7 +219,7 @@ public class VistaGestionPeriodosAcademicos extends javax.swing.JFrame {
                 .addGroup(RegistrarPeriodoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(txtFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(220, Short.MAX_VALUE))
+                .addContainerGap(351, Short.MAX_VALUE))
         );
 
         jtbPeriodo.addTab("Añadir periodos academicos", RegistrarPeriodoPanel);
@@ -285,7 +286,7 @@ public class VistaGestionPeriodosAcademicos extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(16, Short.MAX_VALUE)
+                        .addContainerGap(421, Short.MAX_VALUE)
                         .addComponent(jtbPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, 533, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -303,7 +304,7 @@ public class VistaGestionPeriodosAcademicos extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(32, 32, 32)
-                        .addComponent(jtbPeriodo))
+                        .addComponent(jtbPeriodo, javax.swing.GroupLayout.DEFAULT_SIZE, 522, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(64, 64, 64)
                         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))

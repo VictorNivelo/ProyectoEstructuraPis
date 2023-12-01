@@ -15,7 +15,7 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author romer
  */
-public class TbMatriculas extends AbstractTableModel{
+public class ModeloTablaMatriculas extends AbstractTableModel{
     private ListaDinamica<Matricula> matriculas;
 
     @Override

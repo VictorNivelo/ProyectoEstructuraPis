@@ -2,22 +2,21 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Controlador.Dao.matricula;
+package Modelo.Dao;
 
 import Controlador.Dao.DaoImplement;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
-import Modelo.Alumno;
 import Modelo.PeriodoAcademico;
 
 /**
  *
- * @author romer
+ * @author Victor
  */
-public class ControlPeriodo extends DaoImplement<PeriodoAcademico> {
+public class periodoAcademicoDao extends DaoImplement<PeriodoAcademico> {
     private ListaDinamica<PeriodoAcademico> periodos;
     private PeriodoAcademico periodo;
     
-    public ControlPeriodo(){
+    public periodoAcademicoDao(){
         super(PeriodoAcademico.class);
     }
 
@@ -46,5 +45,4 @@ public class ControlPeriodo extends DaoImplement<PeriodoAcademico> {
         periodo.setIdPeriodoAcademino(all().getLongitud() + 1);
         return Persist(periodo);
     }
-    
 }

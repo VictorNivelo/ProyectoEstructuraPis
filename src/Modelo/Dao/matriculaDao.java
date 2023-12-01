@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Controlador.Dao.matricula;
+package Modelo.Dao;
 
 import Controlador.Dao.DaoImplement;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
@@ -12,12 +12,12 @@ import Modelo.Matricula;
  *
  * @author romer
  */
-public class ControlMatriculaDao extends DaoImplement<Matricula>{
+public class matriculaDao extends DaoImplement<Matricula>{
     
     private ListaDinamica<Matricula> matriculas;
     private Matricula matricula;
     
-    public ControlMatriculaDao() {
+    public matriculaDao() {
         super(Matricula.class);
     }
 
