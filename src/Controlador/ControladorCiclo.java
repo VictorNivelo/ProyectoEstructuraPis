@@ -16,7 +16,7 @@ public class ControladorCiclo {
     private Ciclo ciclos;
     
     public ControladorCiclo() {
-        
+
     }
     
     public ControladorCiclo(Integer tamano) {
@@ -76,6 +76,4 @@ public class ControladorCiclo {
         this.ciclos = ciclos;
     }
 
-    
-    
 }

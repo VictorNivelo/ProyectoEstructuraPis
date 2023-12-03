@@ -26,9 +26,10 @@ public class VistaGestionCurso extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         UtilVista.CargarComboMateria(cbxMateria);
         UtilVista.cargarComboCiclo(cbxCiclo);
-        UtilVista.cargarComboParalelo(cbxParalelo);
+        UtilVista.cargarcomboParalelo(cbxParalelo);
         cbxMateria.setSelectedIndex(-1);
         cbxCiclo.setSelectedIndex(-1);
+        cbxParalelo.setSelectedIndex(-1);
     }
     
 

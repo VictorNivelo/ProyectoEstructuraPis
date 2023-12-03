@@ -25,7 +25,7 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         UtilVista.CargarComboMateria(cbxMateria);
         UtilVista.cargarComboCiclo(cbxCiclo);
-        UtilVista.cargarComboParalelo(cbxParalelo);
+        UtilVista.cargarcomboParalelo(cbxParalelo);
         cbxCiclo.setSelectedIndex(-1);
         cbxMateria.setSelectedIndex(-1);
         cbxParalelo.setSelectedIndex(-1);

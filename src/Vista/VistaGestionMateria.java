@@ -6,7 +6,6 @@ package Vista;
 
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Controlador.Tda.listas.Exepciones.ListaVacia;
-import Modelo.Dao.cicloDao;
 import Modelo.Dao.materiaDao;
 import Modelo.Materia;
 import Vista.Arreglos.Util.UtilVista;
@@ -21,7 +20,6 @@ import javax.swing.JOptionPane;
  */
 public class VistaGestionMateria extends javax.swing.JFrame {
     materiaDao materiaControlDao = new materiaDao();
-    cicloDao cicloControlDao = new cicloDao();;
     ListaDinamica<Materia> listaMateria = new ListaDinamica<>();
     ModeloTablaMateria mtp = new ModeloTablaMateria();
 
@@ -32,9 +30,9 @@ public class VistaGestionMateria extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         CargarTabla();
-        UtilVista.cargarComboCiclo(cbxCicloPertenece);
-        UtilVista.cargarComboParalelo(cbxParalelo);
-        cbxCicloPertenece.setSelectedIndex(-1);
+        UtilVista.cargarComboCiclo(cbxCiclo);
+        UtilVista.cargarcomboParalelo(cbxParalelo);
+        cbxCiclo.setSelectedIndex(-1);
         cbxParalelo.setSelectedIndex(-1);
     }
     
@@ -42,13 +40,14 @@ public class VistaGestionMateria extends javax.swing.JFrame {
         mtp.setMateriaTabla(materiaControlDao.getListaMateria());
         tblMaterias.setModel(mtp);
         tblMaterias.updateUI();
-        cbxCicloPertenece.setSelectedIndex(-1);
+        cbxCiclo.setSelectedIndex(-1);
     }
     
     private void Limpiar() throws ListaVacia {
         txtNombreMateria.setText("");
         txtNombreDescripcion.setText("");
-        cbxCicloPertenece.setSelectedIndex(-1);
+        cbxCiclo.setSelectedIndex(-1);
+        cbxParalelo.setSelectedIndex(-1);
         materiaControlDao.setMateria(null);
         CargarTabla();
     }
@@ -64,7 +63,7 @@ public class VistaGestionMateria extends javax.swing.JFrame {
                 
                 txtNombreMateria.setText(materiaControlDao.getMateria().getNombreMateria());
                 txtNombreDescripcion.setText(materiaControlDao.getMateria().getDescipcionMateria());
-                cbxCicloPertenece.setSelectedItem(materiaControlDao.getMateria().getCicloMateria().getIdCiclo());
+                cbxCiclo.setSelectedItem(materiaControlDao.getMateria().getCicloMateria().getIdCiclo());
             } 
             catch (Exception e) {
                 
@@ -89,7 +88,7 @@ public class VistaGestionMateria extends javax.swing.JFrame {
             materiaControlDao.getMateria().setIdMateria(IdPersona);
             materiaControlDao.getMateria().setNombreMateria(NombreAsignatura);
             materiaControlDao.getMateria().setDescipcionMateria(Descripcion);
-            materiaControlDao.getMateria().setCicloMateria(UtilVista.obtenerCicloControl(cbxCicloPertenece));
+            materiaControlDao.getMateria().setCicloMateria(UtilVista.obtenerCicloControl(cbxCiclo));
 
             
             if (materiaControlDao.Persist()) {
@@ -132,7 +131,7 @@ public class VistaGestionMateria extends javax.swing.JFrame {
         btnEliminar = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        cbxCicloPertenece = new javax.swing.JComboBox<>();
+        cbxCiclo = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
         cbxParalelo = new javax.swing.JComboBox<>();
 
@@ -262,7 +261,7 @@ public class VistaGestionMateria extends javax.swing.JFrame {
                                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(cbxCicloPertenece, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(cbxCiclo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(cbxParalelo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -298,7 +297,7 @@ public class VistaGestionMateria extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
-                            .addComponent(cbxCicloPertenece, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cbxCiclo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8)
@@ -444,7 +443,7 @@ public class VistaGestionMateria extends javax.swing.JFrame {
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JButton btnSeleccionar;
-    private javax.swing.JComboBox<String> cbxCicloPertenece;
+    private javax.swing.JComboBox<String> cbxCiclo;
     private javax.swing.JComboBox<String> cbxParalelo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

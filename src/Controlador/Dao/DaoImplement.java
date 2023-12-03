@@ -6,12 +6,10 @@ package Controlador.Dao;
 
 import Controlador.Tda.listas.Exepciones.PosicionNoEncontrada;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
-import Controlador.Tda.listas.Exepciones.ListaVacia;
+import Controlador.TDA.ListaDinamica.Nodo;
 import com.thoughtworks.xstream.XStream;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.IOException;
 
 /**
  *
@@ -38,7 +36,7 @@ public class DaoImplement<T> implements DaoInterface<T>{
             conection.toXML(ld,new FileWriter(URL));
             return true;
         } 
-        catch (IOException e) {
+        catch (Exception e) {
             return false;
         }
     }
@@ -57,7 +55,7 @@ public class DaoImplement<T> implements DaoInterface<T>{
                 conection.toXML(ListaModificar, new FileWriter(URL));
                 return true;
             } 
-            catch (IOException e) {
+            catch (Exception e) {
                 return false;
             }
         } 
@@ -72,7 +70,7 @@ public class DaoImplement<T> implements DaoInterface<T>{
         try {
             dl = (ListaDinamica<T>)conection.fromXML(new FileReader(URL));
         } 
-        catch (FileNotFoundException e) {
+        catch (Exception e) {
             
         }
         return dl;
@@ -80,6 +78,27 @@ public class DaoImplement<T> implements DaoInterface<T>{
 
     @Override
     public T get(Integer id) {
+        
+//
+    
+//        ListaDinamica<T> lista = all();
+//
+//        for (int i = 0; i < lista.getLongitud(); i++) {
+//            T elemento = null;
+//            try {
+//                elemento = lista.getInfo(i);
+//                Integer elementoId = (Integer) elemento.getClass().getMethod("getIdPersona").invoke(elemento);
+//
+//                if (elementoId.equals(id)) {
+//                    return elemento;
+//                }
+//            } 
+//            catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        return null;
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
@@ -91,7 +110,7 @@ public class DaoImplement<T> implements DaoInterface<T>{
             conection.toXML(listaActualizada, new FileWriter(URL));
             return true;
         } 
-        catch (ListaVacia | IOException | IndexOutOfBoundsException e) {
+        catch (Exception e) {
             return false;
         }
     }

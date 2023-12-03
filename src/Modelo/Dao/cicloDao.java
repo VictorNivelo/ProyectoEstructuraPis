@@ -44,4 +44,59 @@ public class cicloDao extends DaoImplement<Ciclo>{
         ciclos.setIdCiclo(all().getLongitud()+1);
         return Persist(ciclos);
     }
+    
+    public static void main(String[] args) {
+        cicloDao rc = new cicloDao();
+        rc.getCiclos().setNombreCiclo("Primer ciclo");
+        rc.getCiclos().setNumeroCiclo(1);
+        rc.Persist();
+        rc.setCiclos(null);
+        
+        rc.getCiclos().setNombreCiclo("Segundo ciclo");
+        rc.getCiclos().setNumeroCiclo(2);
+        rc.Persist();
+        rc.setCiclos(null);
+        
+        rc.getCiclos().setNombreCiclo("Tercer ciclo");
+        rc.getCiclos().setNumeroCiclo(3);
+        rc.Persist();
+        rc.setCiclos(null);
+        
+        rc.getCiclos().setNombreCiclo("Cuarto ciclo");
+        rc.getCiclos().setNumeroCiclo(4);
+        rc.Persist();
+        rc.setCiclos(null);
+        
+        rc.getCiclos().setNombreCiclo("Quinto ciclo");
+        rc.getCiclos().setNumeroCiclo(5);
+        rc.Persist();
+        rc.setCiclos(null);
+        
+        rc.getCiclos().setNombreCiclo("Sexto ciclo");
+        rc.getCiclos().setNumeroCiclo(6);
+        rc.Persist();
+        rc.setCiclos(null);
+        
+        rc.getCiclos().setNombreCiclo("Septimo ciclo");
+        rc.getCiclos().setNumeroCiclo(7);
+        rc.Persist();
+        rc.setCiclos(null);
+        
+        rc.getCiclos().setNombreCiclo("Octavo ciclo");
+        rc.getCiclos().setNumeroCiclo(8);
+        rc.Persist();
+        rc.setCiclos(null);
+        
+        rc.getCiclos().setNombreCiclo("Noveno ciclo");
+        rc.getCiclos().setNumeroCiclo(9);
+        rc.Persist();
+        rc.setCiclos(null);
+        
+        rc.getCiclos().setNombreCiclo("Decimo ciclo");
+        rc.getCiclos().setNumeroCiclo(10);
+        rc.Persist();
+        rc.setCiclos(null);
+
+    }
+    
 }

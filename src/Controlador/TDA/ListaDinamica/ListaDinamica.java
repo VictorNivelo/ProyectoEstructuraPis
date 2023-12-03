@@ -10,6 +10,7 @@ import Controlador.Tda.listas.Exepciones.PosicionNoEncontrada;
 /**
  *
  * @author Victor
+ * @param <E>
  */
 public class ListaDinamica<E> {
 

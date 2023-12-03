@@ -8,6 +8,8 @@ import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Controlador.Tda.listas.Exepciones.ListaVacia;
 import Modelo.Ciclo;
 import Modelo.Dao.cicloDao;
+import Modelo.Dao.paraleloDao;
+import Vista.Arreglos.Util.UtilVista;
 import Vista.Modelo.ModeloTablaCiclos;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,9 +27,10 @@ public class VistaGestionCiclos extends javax.swing.JFrame {
     /**
      * Creates new form VistaGestionCicloa
      */
-    public VistaGestionCiclos() {
+    public VistaGestionCiclos() throws ListaVacia {
         initComponents();
         this.setLocationRelativeTo(null);
+        UtilVista.cargarcomboParalelo(cbxParelelo);
         CargarTabla();
     }
     
@@ -56,13 +59,53 @@ public class VistaGestionCiclos extends javax.swing.JFrame {
                 cicloControlDao.setCiclos(mtc.getCicloTabla().getInfo(fila));
                 
                 cbxNombreCiclo.setSelectedIndex(cicloControlDao.getCiclos().getIdCiclo()-1);
-                cbxParelelo.setSelectedIndex(cicloControlDao.getCiclos().getIdCiclo()-1);
                 
             } 
             catch (Exception e) {
                 
             }
         }
+    }
+    
+    public Integer ObtenerNombreCiclo(String NombreCiclo) {
+        Integer ciclo = 0;
+
+        switch (NombreCiclo) {
+            case "Primer ciclo":
+                ciclo = 1;
+                break;
+            case "Segundo ciclo":
+                ciclo = 2;
+                break;
+            case "Tercer ciclo":
+                ciclo = 3;
+                break;
+            case "Cuarto ciclo":
+                ciclo = 4;
+                break;
+            case "Quinto ciclo":
+                ciclo = 5;
+                break;
+            case "Sexto ciclo":
+                ciclo = 6;
+                break;
+            case "Septimo ciclo":
+                ciclo = 7;
+                break;
+            case "Octavo ciclo":
+                ciclo = 8;
+                break;
+            case "Noveno ciclo":
+                ciclo = 9;
+                break;
+            case "Decimo ciclo":
+                ciclo = 10;
+                break;
+            default:
+                ciclo = null;
+                break;
+        }
+        return ciclo;
     }
     
     private void Guardar() throws ListaVacia {
@@ -75,16 +118,23 @@ public class VistaGestionCiclos extends javax.swing.JFrame {
         }
         else {
             Integer idCiclo = listaCiclos.getLongitud()+1;
-            Integer NumeroCiclo = Integer.parseInt(cbxNombreCiclo.getSelectedItem().toString());
-            String NombreCiclo = ObtenerCiclo(NumeroCiclo);
-            String NombreParalelo = cbxParelelo.getSelectedItem().toString();
-                        
+            String NombreCiclo = cbxNombreCiclo.getSelectedItem().toString();
+            Integer NumeroCiclo = ObtenerNombreCiclo(NombreCiclo);
+//            String NombreParalelo = cbxParelelo.getSelectedItem().toString();
+            
             cicloControlDao.getCiclos().setIdCiclo(idCiclo);
             cicloControlDao.getCiclos().setNumeroCiclo(NumeroCiclo);
             cicloControlDao.getCiclos().setNombreCiclo(NombreCiclo);
-            cicloControlDao.getCiclos().setNombreParalelo(NombreParalelo);
+            
+            cicloControlDao.getCiclos().setParaleloCiclo(UtilVista.obtenerParaleloControl(cbxParelelo));
+            
+//            paraleloControlDao.getParalelos().setIdParaleli(idCiclo);
+//            paraleloControlDao.getParalelos().setNombreParalelo(NombreParalelo);
+//            
+//            paraleloControlDao.Persist();
             
             if (cicloControlDao.Persist()) {
+                
                 JOptionPane.showMessageDialog(null, "CICLO GUARDADA EXISTOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
                 cicloControlDao.setCiclos(null);
             } 
@@ -95,46 +145,7 @@ public class VistaGestionCiclos extends javax.swing.JFrame {
         }
     }
     
-    public String ObtenerCiclo(Integer CicloPertenece) {
-        String ciclo = "";
 
-        switch (CicloPertenece) {
-            case 1:
-                ciclo = "Primer ciclo";
-                break;
-            case 2:
-                ciclo = "Segundo ciclo";
-                break;
-            case 3:
-                ciclo = "Tercer ciclo";
-                break;
-            case 4:
-                ciclo = "Cuarto ciclo";
-                break;
-            case 5:
-                ciclo = "Quinto ciclo";
-                break;
-            case 6:
-                ciclo = "Sexto ciclo";
-                break;
-            case 7:
-                ciclo = "Séptimo ciclo";
-                break;
-            case 8:
-                ciclo = "Octavo ciclo";
-                break;
-            case 9:
-                ciclo = "Noveno ciclo";
-                break;
-            case 10:
-                ciclo = "Decimo ciclo";
-                break;
-            default:
-                ciclo = "Ciclo desconocido";
-                break;
-        }
-        return ciclo;
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -179,9 +190,9 @@ public class VistaGestionCiclos extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel5.setText("Paralelo");
 
-        cbxNombreCiclo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }));
+        cbxNombreCiclo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Primer ciclo", "Segundo ciclo", "Tercer ciclo", "Cuarto ciclo", "Quinto ciclo", "Sexto ciclo", "Septimo ciclo", "Octavo ciclo", "Noveno ciclo", "Decimo ciclo" }));
 
-        cbxParelelo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A", "B", "C", "D", "E", "F", "G" }));
+        cbxParelelo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "G" }));
 
         jLabel6.setFont(new java.awt.Font("Candara Light", 1, 32)); // NOI18N
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -303,7 +314,7 @@ public class VistaGestionCiclos extends javax.swing.JFrame {
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
                             .addComponent(cbxParelelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 372, Short.MAX_VALUE))
+                        .addGap(0, 411, Short.MAX_VALUE))
                     .addComponent(jScrollPane1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -400,7 +411,11 @@ public class VistaGestionCiclos extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VistaGestionCiclos().setVisible(true);
+                try {
+                    new VistaGestionCiclos().setVisible(true);
+                } catch (ListaVacia ex) {
+                    Logger.getLogger(VistaGestionCiclos.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

@@ -49,7 +49,7 @@ public class ModeloTablaCiclos extends AbstractTableModel {
                 case 2:
                     return (p != null) ? p.getNumeroCiclo(): "";
                 case 3:
-                    return (p != null) ? p.getNombreParalelo(): "";
+                    return (p != null) ? p.getParaleloCiclo().getNombreParalelo(): "";
                 default:
                     return null;
             }

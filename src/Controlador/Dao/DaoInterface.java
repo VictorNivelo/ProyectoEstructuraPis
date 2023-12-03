@@ -9,6 +9,7 @@ import Controlador.TDA.ListaDinamica.ListaDinamica;
 /**
  *
  * @author Victor
+ * @param <T>
  */
 public interface DaoInterface <T> {
     public Boolean Persist(T dato);

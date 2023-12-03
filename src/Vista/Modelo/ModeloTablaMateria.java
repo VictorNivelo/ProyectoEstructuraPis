@@ -51,7 +51,7 @@ public class ModeloTablaMateria extends AbstractTableModel {
                 case 3:
                     return (p != null) ? p.getCicloMateria().getNombreCiclo() : "";
                 case 4:
-                    return (p != null) ? p.getCicloMateria().getNombreParalelo(): "";
+                    return (p != null) ? p.getCicloMateria().getParaleloCiclo().getNombreParalelo(): "";
                 default:
                     return null;
             }
