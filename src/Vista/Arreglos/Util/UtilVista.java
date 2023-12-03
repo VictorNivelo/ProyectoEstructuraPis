@@ -54,16 +54,19 @@ public class UtilVista {
         return (Materia) cbx.getSelectedItem();
     }
     
-    public static void cargarComboCiclo(JComboBox cbx) throws ListaVacia{
+    
+    public static void cargarComboCiclo(JComboBox cbxC) throws ListaVacia{
         cicloDao rc = new cicloDao();
-        cbx.removeAllItems();
+        cbxC.removeAllItems();
+
         
         if(rc.getListaCiclos().EstaVacio()){
             throw new ListaVacia("No hay ciclos que mostrar");
         }
         else{
            for (int i = 0; i < rc.getListaCiclos().getLongitud(); i++) {
-            cbx.addItem(rc.getListaCiclos().getInfo(i));
+            cbxC.addItem(rc.getListaCiclos().getInfo(i));
+            
            }
         }
     }
@@ -71,4 +74,23 @@ public class UtilVista {
     public static Ciclo obtenerCicloControl(JComboBox cbx){
         return (Ciclo) cbx.getSelectedItem();
     }
+    
+    public static void cargarComboParalelo(JComboBox cbxC) throws ListaVacia{
+        cicloDao rc = new cicloDao();
+        cbxC.removeAllItems();
+        
+        if(rc.getListaCiclos().EstaVacio()){
+            throw new ListaVacia("No hay ciclos que mostrar");
+        }
+        else{
+           for (int i = 0; i < rc.getListaCiclos().getLongitud(); i++) {
+            cbxC.addItem(rc.getListaCiclos().getInfo(i).getNombreParalelo());
+           }
+        }
+    }
+    
+    public static Ciclo obtenerParaleloControl(JComboBox cbx){
+        return (Ciclo) cbx.getSelectedItem();
+    }
+    
 }

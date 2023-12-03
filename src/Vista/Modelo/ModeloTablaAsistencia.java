@@ -7,7 +7,7 @@ package Vista.Modelo;
 
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Controlador.Tda.listas.Exepciones.ListaVacia;
-import Modelo.Alumno;
+import Modelo.Asistencia;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -16,13 +16,13 @@ import javax.swing.table.AbstractTableModel;
  */
 public class ModeloTablaAsistencia extends AbstractTableModel {
 
-    private ListaDinamica<Alumno> asistenciaTabla;
+    private ListaDinamica<Asistencia> asistenciaTabla;
 
-    public ListaDinamica<Alumno> getAsistenciaTabla() {
+    public ListaDinamica<Asistencia> getAsistenciaTabla() {
         return asistenciaTabla;
     }
 
-    public void setAsistenciaTabla(ListaDinamica<Alumno> asistenciaTabla) {
+    public void setAsistenciaTabla(ListaDinamica<Asistencia> asistenciaTabla) {
         this.asistenciaTabla = asistenciaTabla;
     }
 
@@ -38,9 +38,9 @@ public class ModeloTablaAsistencia extends AbstractTableModel {
     
     private String EstadoCuenta(int i) throws ListaVacia {
         
-        Alumno p = asistenciaTabla.getInfo(i);
+        Asistencia p = asistenciaTabla.getInfo(i);
         
-        if (p.getEstado()) {
+        if (p.getEstadoAsistencia()) {
             return "Matriculado";
         } 
         else {
@@ -52,15 +52,15 @@ public class ModeloTablaAsistencia extends AbstractTableModel {
     public Object getValueAt(int Fila, int Columna) {
 
         try {
-            Alumno p = asistenciaTabla.getInfo(Fila);
+            Asistencia p = asistenciaTabla.getInfo(Fila);
 
             switch (Columna) {
                 case 0:
-                    return (p != null) ? p.getIdAlumno(): "";
+                    return (p != null) ? p.getIdAsistencia(): "";
                 case 1:
-                    return (p != null) ? p.getDatosAlumno().getNombre(): "";
+                    return (p != null) ? p.getDiaAsistencia(): "";
                 case 2:
-                    return (p != null) ? p.getDatosAlumno().getApellido(): "";
+                    return (p != null) ? p.getAsistenciaCurso(): "";
                 case 3:
                     return (p != null) ? EstadoCuenta(Fila): "";
                 default:

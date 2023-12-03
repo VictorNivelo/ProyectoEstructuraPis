@@ -64,8 +64,6 @@ public class ListaDinamica<E> {
         AgregarFinal(info);
     }
     
-    
-    
     private E getPrimero() throws ListaVacia{
         if(EstaVacio()){
             throw new ListaVacia("La lista esta vacia");

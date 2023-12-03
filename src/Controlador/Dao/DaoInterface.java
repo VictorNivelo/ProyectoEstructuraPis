@@ -16,5 +16,4 @@ public interface DaoInterface <T> {
     public ListaDinamica<T> all();
     public T get(Integer id);
     
-    
 }

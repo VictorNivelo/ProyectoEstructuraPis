@@ -11,8 +11,9 @@ package Modelo;
 public class Ciclo {
     private Integer idCiclo;
     private String NombreCiclo;
-    private Integer NumeroCiclo;
     private String NombreParalelo;
+    private Integer NumeroCiclo;
+    private MallaCurricular mallaCiclo;
 
     public Ciclo() {
         
@@ -59,7 +60,7 @@ public class Ciclo {
 
     @Override
     public String toString() {
-        return NombreCiclo +" "+ NombreParalelo;
+        return NombreCiclo;
     }
     
 }

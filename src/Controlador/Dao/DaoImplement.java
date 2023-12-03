@@ -6,16 +6,17 @@ package Controlador.Dao;
 
 import Controlador.Tda.listas.Exepciones.PosicionNoEncontrada;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
+import Controlador.Tda.listas.Exepciones.ListaVacia;
 import com.thoughtworks.xstream.XStream;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
+import java.io.IOException;
 
 /**
  *
  * @author Victor
+ * @param <T>
  */
 public class DaoImplement<T> implements DaoInterface<T>{
     private Class<T> clazz;
@@ -28,8 +29,6 @@ public class DaoImplement<T> implements DaoInterface<T>{
         URL = Bridge.URL + clazz.getSimpleName() + ".json";
     }
     
-    
-    
     @Override
     public Boolean Persist(T dato) {
         ListaDinamica<T> ld = all();
@@ -39,7 +38,7 @@ public class DaoImplement<T> implements DaoInterface<T>{
             conection.toXML(ld,new FileWriter(URL));
             return true;
         } 
-        catch (Exception e) {
+        catch (IOException e) {
             return false;
         }
     }
@@ -53,14 +52,12 @@ public class DaoImplement<T> implements DaoInterface<T>{
                 ListaModificar.modificarPosicion(data, indice);
             } 
             catch (PosicionNoEncontrada ex) {
-                Logger.getLogger(DaoImplement.class.getName()).log(Level.SEVERE, null, ex);
             }
-
             try {
                 conection.toXML(ListaModificar, new FileWriter(URL));
                 return true;
             } 
-            catch (Exception e) {
+            catch (IOException e) {
                 return false;
             }
         } 
@@ -75,7 +72,7 @@ public class DaoImplement<T> implements DaoInterface<T>{
         try {
             dl = (ListaDinamica<T>)conection.fromXML(new FileReader(URL));
         } 
-        catch (Exception e) {
+        catch (FileNotFoundException e) {
             
         }
         return dl;
@@ -91,12 +88,10 @@ public class DaoImplement<T> implements DaoInterface<T>{
 
         try {
             listaActualizada.eliminar(index);
-
             conection.toXML(listaActualizada, new FileWriter(URL));
-
             return true;
         } 
-        catch (Exception e) {
+        catch (ListaVacia | IOException | IndexOutOfBoundsException e) {
             return false;
         }
     }

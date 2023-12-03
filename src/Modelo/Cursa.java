@@ -16,12 +16,13 @@ public class Cursa {
     private MallaCurricular mallaCurso;
     private Materia materiaCurso;
     private Horario horarioCurso;
+    private Asistencia asistenciaCurso;
 
     public Cursa() {
         
     }
 
-    public Cursa(Integer idCurso, String nombreCurso, String DescripcionCurso, Ciclo cicloCurso, MallaCurricular mallaCurso, Materia materiaCurso, Horario horarioCurso) {
+    public Cursa(Integer idCurso, String nombreCurso, String DescripcionCurso, Ciclo cicloCurso, MallaCurricular mallaCurso, Materia materiaCurso, Horario horarioCurso, Asistencia asistenciaCurso) {
         this.idCurso = idCurso;
         this.nombreCurso = nombreCurso;
         this.DescripcionCurso = DescripcionCurso;
@@ -29,6 +30,7 @@ public class Cursa {
         this.mallaCurso = mallaCurso;
         this.materiaCurso = materiaCurso;
         this.horarioCurso = horarioCurso;
+        this.asistenciaCurso = asistenciaCurso;
     }
 
     public Integer getIdCurso() {
@@ -87,9 +89,17 @@ public class Cursa {
         this.horarioCurso = horarioCurso;
     }
 
+    public Asistencia getAsistenciaCurso() {
+        return asistenciaCurso;
+    }
+
+    public void setAsistenciaCurso(Asistencia asistenciaCurso) {
+        this.asistenciaCurso = asistenciaCurso;
+    }
+
     @Override
     public String toString() {
-        return "Cursa{" + "idCurso=" + idCurso + ", nombreCurso=" + nombreCurso + ", DescripcionCurso=" + DescripcionCurso + ", cicloCurso=" + cicloCurso + ", mallaCurso=" + mallaCurso + ", materiaCurso=" + materiaCurso + ", horarioCurso=" + horarioCurso + '}';
+        return "Cursa{" + "idCurso=" + idCurso + ", nombreCurso=" + nombreCurso + ", DescripcionCurso=" + DescripcionCurso + ", cicloCurso=" + cicloCurso + ", mallaCurso=" + mallaCurso + ", materiaCurso=" + materiaCurso + ", horarioCurso=" + horarioCurso + ", asistenciaCurso=" + asistenciaCurso + '}';
     }
     
 }

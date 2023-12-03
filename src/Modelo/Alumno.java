@@ -12,17 +12,19 @@ public class Alumno {
     private Integer idAlumno;
     private Persona datosAlumno;
     private Boolean estado;
+    private Matricula matriculaAlumno;
 
     public Alumno() {
         
     }
 
-    public Alumno(Integer idAlumno, Persona datosAlumno, Boolean estado) {
+    public Alumno(Integer idAlumno, Persona datosAlumno, Boolean estado, Matricula matriculaAlumno) {
         this.idAlumno = idAlumno;
         this.datosAlumno = datosAlumno;
         this.estado = estado;
+        this.matriculaAlumno = matriculaAlumno;
     }
-    
+
     public Integer getIdAlumno() {
         return idAlumno;
     }
@@ -45,6 +47,19 @@ public class Alumno {
 
     public void setEstado(Boolean estado) {
         this.estado = estado;
+    }
+
+    public Matricula getMatriculaAlumno() {
+        return matriculaAlumno;
+    }
+
+    public void setMatriculaAlumno(Matricula matriculaAlumno) {
+        this.matriculaAlumno = matriculaAlumno;
+    }
+
+    @Override
+    public String toString() {
+        return "Alumno{" + "idAlumno=" + idAlumno + ", datosAlumno=" + datosAlumno + ", estado=" + estado + ", matriculaAlumno=" + matriculaAlumno + '}';
     }
     
 }

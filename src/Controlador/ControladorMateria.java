@@ -12,22 +12,67 @@ import Modelo.Materia;
  * @author Victor
  */
 public class ControladorMateria {
-    private ListaDinamica<Materia> materias;
+    private ListaDinamica<Materia> listaMaterias;
+    private Materia materias;
     
     public ControladorMateria() {
-//        materias = new ListaDinamica<>();
-//        materias.Agregar(new Materia(1, "Estructura de datos", "Materia principal"));
-//        materias.Agregar(new Materia(2, "Base de datos", "Materia principal"));
-//        materias.Agregar(new Materia(3, "Requisitos de software", "Materia principal"));
-//        materias.Agregar(new Materia(4, "Arquitectura de ordenadores", "Materia principal"));
-//        materias.Agregar(new Materia(5, "Relleno", "Materia principal"));
+        
+    }
+    
+    public ControladorMateria(Integer tamano) {
+        this.listaMaterias = new ListaDinamica<>();
+    }
+    
+    public Boolean Guardar(){
+        Integer pos = VerificarPosicion();
+        if (pos > -1) {
+            materias.setIdMateria(pos+1);
+            listaMaterias.getCabezera();
+            return true;
+        } 
+        else {
+            return false;
+        }
+    }
+    
+    public Integer VerificarPosicion(){
+        
+        Integer band = -1;
+        
+        for(int i = 0; i < this.listaMaterias.getLongitud(); i++){
+            if(this.listaMaterias.getLongitud() == null){
+                band = i;
+                break;
+            }
+            else{
+                band = 1;
+            }
+        }
+        return band;
+    }
+    
+    public void Imprimir() {
+        for (int i = 0; i > this.getListaMaterias().getLongitud(); i++) {
+            System.out.println(getListaMaterias().getLongitud());
+        }
     }
 
-    public ListaDinamica<Materia> getMaterias() {
+    public ListaDinamica<Materia> getListaMaterias() {
+        return listaMaterias;
+    }
+
+    public void setListaMaterias(ListaDinamica<Materia> listaMaterias) {
+        this.listaMaterias = listaMaterias;
+    }
+
+    public Materia getMaterias() {
+        if (materias == null){
+            materias = new Materia();
+        }
         return materias;
     }
 
-    public void setMaterias(ListaDinamica<Materia> materias) {
+    public void setMaterias(Materia materias) {
         this.materias = materias;
     }
     

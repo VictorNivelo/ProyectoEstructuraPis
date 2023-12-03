@@ -20,7 +20,7 @@ public class ControladorAlumno {
     }
     
     public ControladorAlumno(Integer tamano) {
-     this.listaAlumnos  = new ListaDinamica<>();   
+        this.listaAlumnos = new ListaDinamica<>();
     }
     
     public Boolean Guardar(){
