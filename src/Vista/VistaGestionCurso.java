@@ -5,17 +5,20 @@
 package Vista;
 
 import Controlador.Tda.listas.Exepciones.ListaVacia;
-import Modelo.Dao.materiaDao;
+import Modelo.Dao.cursoDao;
 import Vista.Arreglos.Util.UtilVista;
+import Vista.Modelo.ModeloTablaCurso;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Victor
  */
 public class VistaGestionCurso extends javax.swing.JFrame {
-    materiaDao materiaControl = new materiaDao();
+    cursoDao cursoControlDao = new cursoDao();
+    ModeloTablaCurso mtc = new ModeloTablaCurso();
 
     /**
      * Creates new form VistaRegistroMateria
@@ -30,6 +33,57 @@ public class VistaGestionCurso extends javax.swing.JFrame {
         cbxMateria.setSelectedIndex(-1);
         cbxCiclo.setSelectedIndex(-1);
         cbxParalelo.setSelectedIndex(-1);
+    }
+    
+    private void CargarTabla() {
+        mtc.setCursoTabla(cursoControlDao.getListaCursa());
+        cbxMateria.setSelectedIndex(-1);
+        cbxCiclo.setSelectedIndex(-1);
+        cbxParalelo.setSelectedIndex(-1);
+        tblCursos.setModel(mtc);
+        tblCursos.updateUI();
+    }
+    
+    private void Limpiar() throws ListaVacia {
+        cbxMateria.setSelectedItem(-1);
+        cbxNombreDocente.setSelectedItem(-1);
+        cbxEspecialidad.setSelectedItem(-1);
+        cbxCiclo.setSelectedItem(-1);
+        cbxParalelo.setSelectedItem(-1);
+        txtTitulacion.setText("");
+        cursoControlDao.setCursos(null);
+        CargarTabla();
+    }
+    
+    private void Seleccionar(){
+        int fila = tblCursos.getSelectedRow();
+        if(fila < 0){
+            JOptionPane.showMessageDialog(null, "Escoga un registro");
+        }
+        else{
+            try {
+                cursoControlDao.setCursos(mtc.getCursoTabla().getInfo(fila));
+                
+                
+//                
+//                cbxNombreDocente.setSelectedIndex(cursoControlDao.getCursos().get);
+//                
+//                txtNumeroCedula.setText(personaControlDao.getPersona().getNumeroCedula());
+//                txtNombre.setText(personaControlDao.getPersona().getNombre());
+//                txtApellido.setText(personaControlDao.getPersona().getApellido());
+//                cbxGenero.setSelectedItem(personaControlDao.getPersona().getGenero());
+//                txtFechaNacimiento.setText(personaControlDao.getPersona().getFechaNacimineto());
+//                txtDireccion.setText(personaControlDao.getPersona().getDireccion());
+//                txtTelefono.setText(personaControlDao.getPersona().getTelefono());
+//                cbxRol.setSelectedIndex(personaControlDao.getPersona().getRolPersona().getIdRol()-1);
+//                txtUsuario.setText(personaControlDao.getPersona().getCuentaPersona().getCorreo());
+//                txtContrasena.setText(personaControlDao.getPersona().getCuentaPersona().getContrasena());
+
+            } 
+            catch (Exception e) {
+                
+            }
+        }
     }
     
 
@@ -56,12 +110,12 @@ public class VistaGestionCurso extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         cbxNombreDocente = new javax.swing.JComboBox<>();
         txtTitulacion = new javax.swing.JTextField();
-        txtEspecialidad = new javax.swing.JComboBox<>();
+        cbxEspecialidad = new javax.swing.JComboBox<>();
         cbxCiclo = new javax.swing.JComboBox<>();
         btnAsignarMateria = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblCursos = new javax.swing.JTable();
         cbxMateria = new javax.swing.JComboBox<>();
         btnRegresar = new javax.swing.JButton();
         btnSeleccionar = new javax.swing.JButton();
@@ -140,7 +194,7 @@ public class VistaGestionCurso extends javax.swing.JFrame {
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel13.setText("LISTA DE CURSOS");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblCursos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -148,7 +202,7 @@ public class VistaGestionCurso extends javax.swing.JFrame {
 
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblCursos);
 
         btnRegresar.setText("REGRESAR");
         btnRegresar.addActionListener(new java.awt.event.ActionListener() {
@@ -158,6 +212,11 @@ public class VistaGestionCurso extends javax.swing.JFrame {
         });
 
         btnSeleccionar.setText("SELECCIONAR");
+        btnSeleccionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSeleccionarActionPerformed(evt);
+            }
+        });
 
         btnModificar.setText("MODIFICAR");
 
@@ -188,7 +247,7 @@ public class VistaGestionCurso extends javax.swing.JFrame {
                             .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtEspecialidad, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbxEspecialidad, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(cbxNombreDocente, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txtTitulacion, javax.swing.GroupLayout.Alignment.TRAILING)))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
@@ -243,7 +302,7 @@ public class VistaGestionCurso extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel9)
-                            .addComponent(txtEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cbxEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -291,6 +350,11 @@ public class VistaGestionCurso extends javax.swing.JFrame {
         abrirLogin.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnRegresarActionPerformed
+
+    private void btnSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarActionPerformed
+        // TODO add your handling code here:
+        Seleccionar();
+    }//GEN-LAST:event_btnSeleccionarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -340,6 +404,7 @@ public class VistaGestionCurso extends javax.swing.JFrame {
     private javax.swing.JButton btnRegresar;
     private javax.swing.JButton btnSeleccionar;
     private javax.swing.JComboBox<String> cbxCiclo;
+    private javax.swing.JComboBox<String> cbxEspecialidad;
     private javax.swing.JComboBox<String> cbxMateria;
     private javax.swing.JComboBox<String> cbxNombreDocente;
     private javax.swing.JComboBox<String> cbxParalelo;
@@ -358,8 +423,7 @@ public class VistaGestionCurso extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JComboBox<String> txtEspecialidad;
+    private javax.swing.JTable tblCursos;
     private javax.swing.JTextField txtTitulacion;
     // End of variables declaration//GEN-END:variables
 }

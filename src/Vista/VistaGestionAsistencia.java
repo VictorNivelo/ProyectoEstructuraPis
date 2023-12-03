@@ -37,6 +37,8 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
         tblAsistencia.setModel(mta);
         tblAsistencia.updateUI();
     }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
