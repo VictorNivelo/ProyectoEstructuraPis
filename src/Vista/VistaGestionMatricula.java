@@ -20,7 +20,7 @@ import javax.swing.JOptionPane;
  */
 public class VistaGestionMatricula extends javax.swing.JFrame {
     private ControladorMatricula controladorMatricula = new ControladorMatricula();
-    private Modelo.Dao.matriculaDao control = new Modelo.Dao.matriculaDao();
+    private Controlador.Dao.Modelo.matriculaDao control = new Controlador.Dao.Modelo.matriculaDao();
     private ModeloTablaMatriculas tbm = new ModeloTablaMatriculas(); 
     
     public Boolean verificar() {

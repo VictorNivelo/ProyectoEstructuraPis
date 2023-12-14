@@ -6,10 +6,10 @@ package Vista.Arreglos.Util;
 
 import Controlador.Tda.listas.Exepciones.ListaVacia;
 import Modelo.Ciclo;
-import Modelo.Dao.cicloDao;
-import Modelo.Dao.materiaDao;
-import Modelo.Dao.paraleloDao;
-import Modelo.Dao.rolDao;
+import Controlador.Dao.Modelo.cicloDao;
+import Controlador.Dao.Modelo.materiaDao;
+import Controlador.Dao.Modelo.paraleloDao;
+import Controlador.Dao.Modelo.rolDao;
 import Modelo.Materia;
 import Modelo.Paralelo;
 import Modelo.Rol;

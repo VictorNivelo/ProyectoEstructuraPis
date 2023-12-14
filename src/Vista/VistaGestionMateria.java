@@ -6,7 +6,7 @@ package Vista;
 
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Controlador.Tda.listas.Exepciones.ListaVacia;
-import Modelo.Dao.materiaDao;
+import Controlador.Dao.Modelo.materiaDao;
 import Modelo.Materia;
 import Vista.Arreglos.Util.UtilVista;
 import Vista.Modelo.ModeloTablaMateria;

@@ -5,7 +5,7 @@
 package Vista;
 
 import Controlador.Tda.listas.Exepciones.ListaVacia;
-import Modelo.Dao.cursoDao;
+import Controlador.Dao.Modelo.cursoDao;
 import Vista.Arreglos.Util.UtilVista;
 import Vista.Modelo.ModeloTablaCurso;
 import java.util.logging.Level;

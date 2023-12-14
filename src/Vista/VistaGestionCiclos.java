@@ -7,8 +7,8 @@ package Vista;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Controlador.Tda.listas.Exepciones.ListaVacia;
 import Modelo.Ciclo;
-import Modelo.Dao.cicloDao;
-import Modelo.Dao.paraleloDao;
+import Controlador.Dao.Modelo.cicloDao;
+import Controlador.Dao.Modelo.paraleloDao;
 import Vista.Arreglos.Util.UtilVista;
 import Vista.Modelo.ModeloTablaCiclos;
 import java.util.logging.Level;
@@ -26,6 +26,7 @@ public class VistaGestionCiclos extends javax.swing.JFrame {
 
     /**
      * Creates new form VistaGestionCicloa
+     * @throws Controlador.Tda.listas.Exepciones.ListaVacia
      */
     public VistaGestionCiclos() throws ListaVacia {
         initComponents();
@@ -191,8 +192,6 @@ public class VistaGestionCiclos extends javax.swing.JFrame {
         jLabel5.setText("Paralelo");
 
         cbxNombreCiclo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Primer ciclo", "Segundo ciclo", "Tercer ciclo", "Cuarto ciclo", "Quinto ciclo", "Sexto ciclo", "Septimo ciclo", "Octavo ciclo", "Noveno ciclo", "Decimo ciclo" }));
-
-        cbxParelelo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "G" }));
 
         jLabel6.setFont(new java.awt.Font("Candara Light", 1, 32)); // NOI18N
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -364,7 +363,7 @@ public class VistaGestionCiclos extends javax.swing.JFrame {
             }
         } 
         catch (ListaVacia ex) {
-            Logger.getLogger(VistaGestionCiclos.class.getName()).log(Level.SEVERE, null, ex);
+            
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
@@ -413,8 +412,9 @@ public class VistaGestionCiclos extends javax.swing.JFrame {
             public void run() {
                 try {
                     new VistaGestionCiclos().setVisible(true);
-                } catch (ListaVacia ex) {
-                    Logger.getLogger(VistaGestionCiclos.class.getName()).log(Level.SEVERE, null, ex);
+                } 
+                catch (ListaVacia ex) {
+
                 }
             }
         });

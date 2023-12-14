@@ -7,7 +7,7 @@ package Vista;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Controlador.Tda.listas.Exepciones.ListaVacia;
 import Modelo.Cuenta;
-import Modelo.Dao.personaDao;
+import Controlador.Dao.Modelo.personaDao;
 import Modelo.Persona;
 import Modelo.Rol;
 import Vista.Arreglos.Util.UtilVista;

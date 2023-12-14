@@ -5,7 +5,7 @@
 package Vista;
 
 import Controlador.Tda.listas.Exepciones.ListaVacia;
-import Modelo.Dao.asistenciaDao;
+import Controlador.Dao.Modelo.asistenciaDao;
 import Vista.Arreglos.Util.UtilVista;
 import Vista.Modelo.ModeloTablaAsistencia;
 

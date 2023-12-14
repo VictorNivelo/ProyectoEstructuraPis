@@ -6,7 +6,7 @@ package Vista;
 
 
 import Controlador.ControladorPeriodo;
-import Modelo.Dao.periodoAcademicoDao;
+import Controlador.Dao.Modelo.periodoAcademicoDao;
 import Vista.Modelo.ModeloTablaPeriodo;
 import javax.swing.JOptionPane;
 
