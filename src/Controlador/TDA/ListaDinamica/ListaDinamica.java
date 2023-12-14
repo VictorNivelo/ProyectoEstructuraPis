@@ -10,6 +10,7 @@ import Controlador.Tda.listas.Exepciones.PosicionNoEncontrada;
 /**
  *
  * @author Victor
+ * @param <E>
  */
 public class ListaDinamica<E> {
 
@@ -63,8 +64,6 @@ public class ListaDinamica<E> {
     public void Agregar(E info){
         AgregarFinal(info);
     }
-    
-    
     
     private E getPrimero() throws ListaVacia{
         if(EstaVacio()){

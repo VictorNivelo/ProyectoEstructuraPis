@@ -6,10 +6,12 @@ package Vista.Arreglos.Util;
 
 import Controlador.Tda.listas.Exepciones.ListaVacia;
 import Modelo.Ciclo;
-import Modelo.Dao.cicloDao;
-import Modelo.Dao.materiaDao;
-import Modelo.Dao.rolDao;
+import Controlador.Dao.Modelo.cicloDao;
+import Controlador.Dao.Modelo.materiaDao;
+import Controlador.Dao.Modelo.paraleloDao;
+import Controlador.Dao.Modelo.rolDao;
 import Modelo.Materia;
+import Modelo.Paralelo;
 import Modelo.Rol;
 import javax.swing.JComboBox;
 
@@ -54,16 +56,19 @@ public class UtilVista {
         return (Materia) cbx.getSelectedItem();
     }
     
-    public static void cargarComboCiclo(JComboBox cbx) throws ListaVacia{
+    
+    public static void cargarComboCiclo(JComboBox cbxC) throws ListaVacia{
         cicloDao rc = new cicloDao();
-        cbx.removeAllItems();
+        cbxC.removeAllItems();
+
         
         if(rc.getListaCiclos().EstaVacio()){
             throw new ListaVacia("No hay ciclos que mostrar");
         }
         else{
            for (int i = 0; i < rc.getListaCiclos().getLongitud(); i++) {
-            cbx.addItem(rc.getListaCiclos().getInfo(i));
+            cbxC.addItem(rc.getListaCiclos().getInfo(i));
+            
            }
         }
     }
@@ -71,4 +76,23 @@ public class UtilVista {
     public static Ciclo obtenerCicloControl(JComboBox cbx){
         return (Ciclo) cbx.getSelectedItem();
     }
+    
+    public static void cargarcomboParalelo(JComboBox cbx) throws ListaVacia{
+        paraleloDao rc = new paraleloDao();
+        cbx.removeAllItems();
+        
+        if(rc.getListaParalelos().EstaVacio()){
+            throw new ListaVacia("No hay paralelos que mostrar");
+        }
+        else{
+           for (int i = 0; i < rc.getListaParalelos().getLongitud(); i++) {
+            cbx.addItem(rc.getListaParalelos().getInfo(i));
+           }
+        }
+    }
+    
+    public static Paralelo obtenerParaleloControl(JComboBox cbx){
+        return (Paralelo) cbx.getSelectedItem();
+    }
+    
 }

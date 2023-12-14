@@ -11,11 +11,11 @@ import Modelo.PeriodoAcademico;
  *
  * @author romer
  */
-public class ControlPeriodo {
+public class ControladorPeriodo {
     private ListaDinamica<PeriodoAcademico> periodos;
     private PeriodoAcademico periodoAcademico;
     
-    public ControlPeriodo(){
+    public ControladorPeriodo(){
         periodos = new ListaDinamica<>();
     }
     

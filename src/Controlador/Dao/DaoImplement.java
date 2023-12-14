@@ -6,16 +6,15 @@ package Controlador.Dao;
 
 import Controlador.Tda.listas.Exepciones.PosicionNoEncontrada;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
+import Controlador.TDA.ListaDinamica.Nodo;
 import com.thoughtworks.xstream.XStream;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 
 /**
  *
  * @author Victor
+ * @param <T>
  */
 public class DaoImplement<T> implements DaoInterface<T>{
     private Class<T> clazz;
@@ -27,8 +26,6 @@ public class DaoImplement<T> implements DaoInterface<T>{
         conection = Bridge.getConection();
         URL = Bridge.URL + clazz.getSimpleName() + ".json";
     }
-    
-    
     
     @Override
     public Boolean Persist(T dato) {
@@ -53,9 +50,7 @@ public class DaoImplement<T> implements DaoInterface<T>{
                 ListaModificar.modificarPosicion(data, indice);
             } 
             catch (PosicionNoEncontrada ex) {
-                Logger.getLogger(DaoImplement.class.getName()).log(Level.SEVERE, null, ex);
             }
-
             try {
                 conection.toXML(ListaModificar, new FileWriter(URL));
                 return true;
@@ -83,6 +78,27 @@ public class DaoImplement<T> implements DaoInterface<T>{
 
     @Override
     public T get(Integer id) {
+        
+//
+    
+//        ListaDinamica<T> lista = all();
+//
+//        for (int i = 0; i < lista.getLongitud(); i++) {
+//            T elemento = null;
+//            try {
+//                elemento = lista.getInfo(i);
+//                Integer elementoId = (Integer) elemento.getClass().getMethod("getIdPersona").invoke(elemento);
+//
+//                if (elementoId.equals(id)) {
+//                    return elemento;
+//                }
+//            } 
+//            catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        return null;
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
@@ -91,9 +107,7 @@ public class DaoImplement<T> implements DaoInterface<T>{
 
         try {
             listaActualizada.eliminar(index);
-
             conection.toXML(listaActualizada, new FileWriter(URL));
-
             return true;
         } 
         catch (Exception e) {

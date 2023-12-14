@@ -7,6 +7,7 @@ package Controlador.TDA.ListaDinamica;
 /**
  *
  * @author Victor
+ * @param <E>
  */
 public class Nodo<E> {
 

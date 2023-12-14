@@ -29,5 +29,4 @@ public class Bridge {
         Bridge.conection = conection;
     }
     
-    
 }

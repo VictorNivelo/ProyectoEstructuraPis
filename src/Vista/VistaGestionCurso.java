@@ -5,17 +5,20 @@
 package Vista;
 
 import Controlador.Tda.listas.Exepciones.ListaVacia;
-import Modelo.Dao.materiaDao;
+import Controlador.Dao.Modelo.cursoDao;
 import Vista.Arreglos.Util.UtilVista;
+import Vista.Modelo.ModeloTablaCurso;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Victor
  */
 public class VistaGestionCurso extends javax.swing.JFrame {
-    materiaDao materiaControl = new materiaDao();
+    cursoDao cursoControlDao = new cursoDao();
+    ModeloTablaCurso mtc = new ModeloTablaCurso();
 
     /**
      * Creates new form VistaRegistroMateria
@@ -26,8 +29,61 @@ public class VistaGestionCurso extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         UtilVista.CargarComboMateria(cbxMateria);
         UtilVista.cargarComboCiclo(cbxCiclo);
+        UtilVista.cargarcomboParalelo(cbxParalelo);
         cbxMateria.setSelectedIndex(-1);
         cbxCiclo.setSelectedIndex(-1);
+        cbxParalelo.setSelectedIndex(-1);
+    }
+    
+    private void CargarTabla() {
+        mtc.setCursoTabla(cursoControlDao.getListaCursa());
+        cbxMateria.setSelectedIndex(-1);
+        cbxCiclo.setSelectedIndex(-1);
+        cbxParalelo.setSelectedIndex(-1);
+        tblCursos.setModel(mtc);
+        tblCursos.updateUI();
+    }
+    
+    private void Limpiar() throws ListaVacia {
+        cbxMateria.setSelectedItem(-1);
+        cbxNombreDocente.setSelectedItem(-1);
+        cbxEspecialidad.setSelectedItem(-1);
+        cbxCiclo.setSelectedItem(-1);
+        cbxParalelo.setSelectedItem(-1);
+        txtTitulacion.setText("");
+        cursoControlDao.setCursos(null);
+        CargarTabla();
+    }
+    
+    private void Seleccionar(){
+        int fila = tblCursos.getSelectedRow();
+        if(fila < 0){
+            JOptionPane.showMessageDialog(null, "Escoga un registro");
+        }
+        else{
+            try {
+                cursoControlDao.setCursos(mtc.getCursoTabla().getInfo(fila));
+                
+                
+//                
+//                cbxNombreDocente.setSelectedIndex(cursoControlDao.getCursos().get);
+//                
+//                txtNumeroCedula.setText(personaControlDao.getPersona().getNumeroCedula());
+//                txtNombre.setText(personaControlDao.getPersona().getNombre());
+//                txtApellido.setText(personaControlDao.getPersona().getApellido());
+//                cbxGenero.setSelectedItem(personaControlDao.getPersona().getGenero());
+//                txtFechaNacimiento.setText(personaControlDao.getPersona().getFechaNacimineto());
+//                txtDireccion.setText(personaControlDao.getPersona().getDireccion());
+//                txtTelefono.setText(personaControlDao.getPersona().getTelefono());
+//                cbxRol.setSelectedIndex(personaControlDao.getPersona().getRolPersona().getIdRol()-1);
+//                txtUsuario.setText(personaControlDao.getPersona().getCuentaPersona().getCorreo());
+//                txtContrasena.setText(personaControlDao.getPersona().getCuentaPersona().getContrasena());
+
+            } 
+            catch (Exception e) {
+                
+            }
+        }
     }
     
 
@@ -54,17 +110,19 @@ public class VistaGestionCurso extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         cbxNombreDocente = new javax.swing.JComboBox<>();
         txtTitulacion = new javax.swing.JTextField();
-        txtEspecialidad = new javax.swing.JComboBox<>();
+        cbxEspecialidad = new javax.swing.JComboBox<>();
         cbxCiclo = new javax.swing.JComboBox<>();
         btnAsignarMateria = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblCursos = new javax.swing.JTable();
         cbxMateria = new javax.swing.JComboBox<>();
         btnRegresar = new javax.swing.JButton();
         btnSeleccionar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        cbxParalelo = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("GESTION CURSOS");
@@ -136,7 +194,7 @@ public class VistaGestionCurso extends javax.swing.JFrame {
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel13.setText("LISTA DE CURSOS");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblCursos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -144,7 +202,7 @@ public class VistaGestionCurso extends javax.swing.JFrame {
 
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblCursos);
 
         btnRegresar.setText("REGRESAR");
         btnRegresar.addActionListener(new java.awt.event.ActionListener() {
@@ -154,10 +212,18 @@ public class VistaGestionCurso extends javax.swing.JFrame {
         });
 
         btnSeleccionar.setText("SELECCIONAR");
+        btnSeleccionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSeleccionarActionPerformed(evt);
+            }
+        });
 
         btnModificar.setText("MODIFICAR");
 
         btnEliminar.setText("ELIMNAR");
+
+        jLabel5.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel5.setText("Paralelo");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -181,7 +247,7 @@ public class VistaGestionCurso extends javax.swing.JFrame {
                             .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtEspecialidad, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbxEspecialidad, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(cbxNombreDocente, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txtTitulacion, javax.swing.GroupLayout.Alignment.TRAILING)))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
@@ -189,9 +255,13 @@ public class VistaGestionCurso extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cbxMateria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cbxCiclo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbxCiclo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbxParalelo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -232,13 +302,17 @@ public class VistaGestionCurso extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel9)
-                            .addComponent(txtEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cbxEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel11)
                             .addComponent(cbxCiclo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(cbxParalelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 463, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -276,6 +350,11 @@ public class VistaGestionCurso extends javax.swing.JFrame {
         abrirLogin.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnRegresarActionPerformed
+
+    private void btnSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarActionPerformed
+        // TODO add your handling code here:
+        Seleccionar();
+    }//GEN-LAST:event_btnSeleccionarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -325,8 +404,10 @@ public class VistaGestionCurso extends javax.swing.JFrame {
     private javax.swing.JButton btnRegresar;
     private javax.swing.JButton btnSeleccionar;
     private javax.swing.JComboBox<String> cbxCiclo;
+    private javax.swing.JComboBox<String> cbxEspecialidad;
     private javax.swing.JComboBox<String> cbxMateria;
     private javax.swing.JComboBox<String> cbxNombreDocente;
+    private javax.swing.JComboBox<String> cbxParalelo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -334,6 +415,7 @@ public class VistaGestionCurso extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -341,8 +423,7 @@ public class VistaGestionCurso extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JComboBox<String> txtEspecialidad;
+    private javax.swing.JTable tblCursos;
     private javax.swing.JTextField txtTitulacion;
     // End of variables declaration//GEN-END:variables
 }

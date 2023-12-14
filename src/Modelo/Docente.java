@@ -12,21 +12,21 @@ public class Docente {
     private Integer idDocente;
     private Persona datosDocente;
     private String especialidad;
-    private Cursa cursoAsignado;
     private String titulacion;
+    private Cursa cursoAsignado;
 
     public Docente() {
         
     }
 
-    public Docente(Integer idDocente, Persona datosDocente, String especialidad, Cursa cursoAsignado, String titulacion) {
+    public Docente(Integer idDocente, Persona datosDocente, String especialidad, String titulacion, Cursa cursoAsignado) {
         this.idDocente = idDocente;
         this.datosDocente = datosDocente;
         this.especialidad = especialidad;
-        this.cursoAsignado = cursoAsignado;
         this.titulacion = titulacion;
+        this.cursoAsignado = cursoAsignado;
     }
-
+    
     public Integer getIdDocente() {
         return idDocente;
     }
