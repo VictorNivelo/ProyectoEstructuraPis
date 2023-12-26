@@ -1,5 +1,10 @@
 package Vista;
 
+import Controlador.Tda.listas.Exepciones.ListaVacia;
+import Vista.Arreglos.Util.UtilVista;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author FA506ICB-HN114W
@@ -13,6 +18,13 @@ public class VistaEvaAlumno extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
+        try {
+            UtilVista.CargarComboMateria(cbxMaterias);
+        } catch (ListaVacia ex) {
+            Logger.getLogger(VistaEvaAlumno.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        cbxMaterias.setSelectedIndex(0);
+        
     }
 
 
@@ -30,7 +42,7 @@ public class VistaEvaAlumno extends javax.swing.JDialog {
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        cbxMaterias = new javax.swing.JComboBox<>();
         jPanel4 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         btnPrincipal = new javax.swing.JButton();
@@ -111,12 +123,12 @@ public class VistaEvaAlumno extends javax.swing.JDialog {
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/libro-abierto.png"))); // NOI18N
 
-        jComboBox2.setBackground(new java.awt.Color(232, 241, 242));
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox2.setBorder(null);
-        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+        cbxMaterias.setBackground(new java.awt.Color(232, 241, 242));
+        cbxMaterias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar" }));
+        cbxMaterias.setBorder(null);
+        cbxMaterias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox2ActionPerformed(evt);
+                cbxMateriasActionPerformed(evt);
             }
         });
 
@@ -131,7 +143,7 @@ public class VistaEvaAlumno extends javax.swing.JDialog {
                         .addComponent(jLabel3)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbxMaterias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(45, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -142,7 +154,7 @@ public class VistaEvaAlumno extends javax.swing.JDialog {
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cbxMaterias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -155,6 +167,11 @@ public class VistaEvaAlumno extends javax.swing.JDialog {
         btnPrincipal.setBackground(new java.awt.Color(0, 100, 148));
         btnPrincipal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/colegio.png"))); // NOI18N
         btnPrincipal.setBorder(null);
+        btnPrincipal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrincipalActionPerformed(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Rockstar Extra Bold", 0, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
@@ -177,6 +194,11 @@ public class VistaEvaAlumno extends javax.swing.JDialog {
         btnPerfil.setBackground(new java.awt.Color(0, 100, 148));
         btnPerfil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/perfil.png"))); // NOI18N
         btnPerfil.setBorder(null);
+        btnPerfil.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPerfilActionPerformed(evt);
+            }
+        });
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/unlLogo (2).png"))); // NOI18N
 
@@ -201,7 +223,7 @@ public class VistaEvaAlumno extends javax.swing.JDialog {
                 .addComponent(jLabel4)
                 .addGap(222, 222, 222)
                 .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 358, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 357, Short.MAX_VALUE)
                 .addComponent(jLabel6)
                 .addGap(70, 70, 70))
         );
@@ -240,8 +262,7 @@ public class VistaEvaAlumno extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 148, Short.MAX_VALUE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -252,7 +273,7 @@ public class VistaEvaAlumno extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -262,9 +283,9 @@ public class VistaEvaAlumno extends javax.swing.JDialog {
       dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
 
-    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+    private void cbxMateriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxMateriasActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox2ActionPerformed
+    }//GEN-LAST:event_cbxMateriasActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
@@ -276,6 +297,19 @@ public class VistaEvaAlumno extends javax.swing.JDialog {
         fc.setVisible(true);
         
     }//GEN-LAST:event_btnCalendarioActionPerformed
+
+    private void btnPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrincipalActionPerformed
+        VistaPrincipalSistema vps = new VistaPrincipalSistema();
+        dispose();
+        vps.setVisible(true);
+        
+    }//GEN-LAST:event_btnPrincipalActionPerformed
+
+    private void btnPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPerfilActionPerformed
+        VistaPerfil vp = new VistaPerfil();
+        dispose();
+        vp.setVisible(true);
+    }//GEN-LAST:event_btnPerfilActionPerformed
 
     /**
      * @param args the command line arguments
@@ -327,8 +361,8 @@ public class VistaEvaAlumno extends javax.swing.JDialog {
     private javax.swing.JButton btnPerfil;
     private javax.swing.JButton btnPrincipal;
     private javax.swing.JButton btnSalir;
+    private javax.swing.JComboBox<String> cbxMaterias;
     private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
