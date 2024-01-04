@@ -45,10 +45,10 @@ public class Eva extends javax.swing.JFrame {
         });
         jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 10, 660, 30));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\jhost\\OneDrive\\Imágenes\\cielo.jpg")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/cielo.jpg"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 50));
 
-        jLabel5.setIcon(new javax.swing.ImageIcon("C:\\Users\\jhost\\OneDrive\\Imágenes\\fsdfs.jpg")); // NOI18N
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/fsdfs.jpg"))); // NOI18N
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 740));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
