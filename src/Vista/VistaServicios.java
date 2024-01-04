@@ -58,7 +58,7 @@ public class VistaServicios extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/LojoUNL.png"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 160, 150));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\jhost\\OneDrive\\Imágenes\\servicio.png")); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/servicio.png"))); // NOI18N
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 30, 710, 100));
 
         jLabel7.setFont(new java.awt.Font("Haettenschweiler", 0, 18)); // NOI18N
@@ -98,11 +98,11 @@ public class VistaServicios extends javax.swing.JFrame {
         });
         jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 530, -1, -1));
 
-        jLabel17.setIcon(new javax.swing.ImageIcon("C:\\Users\\jhost\\Downloads\\pngtree-black-record-book-icon-f (1).jpg")); // NOI18N
+        jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/pngtree-black-record-book-icon-f (1).jpg"))); // NOI18N
         jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 420, 98, 100));
 
-        jLabel16.setIcon(new javax.swing.ImageIcon("C:\\Users\\jhost\\Downloads\\cursos.jpg")); // NOI18N
-        jPanel1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 210, -1, 90));
+        jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/cursos.jpg"))); // NOI18N
+        jPanel1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 210, 100, 90));
 
         jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/materias (1).png"))); // NOI18N
         jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 420, 100, 100));
@@ -110,7 +110,7 @@ public class VistaServicios extends javax.swing.JFrame {
         jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/unnamed.png"))); // NOI18N
         jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 220, 100, 80));
 
-        jLabel5.setIcon(new javax.swing.ImageIcon("C:\\Users\\jhost\\OneDrive\\Imágenes\\descarga.png")); // NOI18N
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/descarga.png"))); // NOI18N
         jLabel5.setText("jLabel5");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 180, 260, 160));
 
@@ -119,30 +119,30 @@ public class VistaServicios extends javax.swing.JFrame {
         jLabel8.setText("Registro de Curso");
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 190, -1, -1));
 
-        jLabel6.setIcon(new javax.swing.ImageIcon("C:\\Users\\jhost\\OneDrive\\Imágenes\\descarga.png")); // NOI18N
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 180, -1, 160));
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/descarga.png"))); // NOI18N
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 180, 260, 160));
 
         jLabel12.setFont(new java.awt.Font("Haettenschweiler", 0, 18)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setText("Servicio de Materias");
         jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 400, -1, -1));
 
-        jLabel10.setIcon(new javax.swing.ImageIcon("C:\\Users\\jhost\\OneDrive\\Imágenes\\descarga.png")); // NOI18N
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 390, -1, 170));
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/descarga.png"))); // NOI18N
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 390, 260, 170));
 
         jLabel13.setFont(new java.awt.Font("Haettenschweiler", 0, 18)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("Registro de Personas");
         jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 390, -1, -1));
 
-        jLabel9.setIcon(new javax.swing.ImageIcon("C:\\Users\\jhost\\OneDrive\\Imágenes\\descarga.png")); // NOI18N
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 390, -1, 170));
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/descarga.png"))); // NOI18N
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 390, 260, 170));
 
         jLabel3.setBackground(new java.awt.Color(187, 187, 187));
-        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\jhost\\OneDrive\\Imágenes\\gris3.png")); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/gris3.png"))); // NOI18N
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 930, 430));
 
-        jLabel4.setIcon(new javax.swing.ImageIcon("C:\\Users\\jhost\\OneDrive\\Imágenes\\cielo.jpg")); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/cielo.jpg"))); // NOI18N
         jLabel4.setText("jLabel4");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 930, 150));
 
