@@ -104,10 +104,10 @@ public class VistaServicios extends javax.swing.JFrame {
         jLabel16.setIcon(new javax.swing.ImageIcon("C:\\Users\\jhost\\Downloads\\cursos.jpg")); // NOI18N
         jPanel1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 210, -1, 90));
 
-        jLabel14.setIcon(new javax.swing.ImageIcon("C:\\Users\\jhost\\Downloads\\materias (1).png")); // NOI18N
+        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/materias (1).png"))); // NOI18N
         jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 420, 100, 100));
 
-        jLabel15.setIcon(new javax.swing.ImageIcon("C:\\Users\\jhost\\Downloads\\unnamed.png")); // NOI18N
+        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/unnamed.png"))); // NOI18N
         jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 220, 100, 80));
 
         jLabel5.setIcon(new javax.swing.ImageIcon("C:\\Users\\jhost\\OneDrive\\Imágenes\\descarga.png")); // NOI18N

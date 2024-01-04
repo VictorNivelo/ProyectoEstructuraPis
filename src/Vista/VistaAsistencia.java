@@ -24,11 +24,11 @@ public class VistaAsistencia extends javax.swing.JFrame {
 //        CargarTabla();
     }
     
-    private void CargarTabla() {
-        mta.setPasajerosTabla(AlumnosControlDao.getListaAlumnos());
-        tblAsistencia.setModel(mta);
-        tblAsistencia.updateUI();
-    }
+//    private void CargarTabla() {
+//        mta.setPasajerosTabla(AlumnosControlDao.getListaAlumnos());
+//        tblAsistencia.setModel(mta);
+//        tblAsistencia.updateUI();
+//    }
 
     /**
      * This method is called from within the constructor to initialize the form.
