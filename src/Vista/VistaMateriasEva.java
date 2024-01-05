@@ -4,8 +4,11 @@
  */
 package Vista;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JLabel;
 
 /**
  *
@@ -14,6 +17,7 @@ import java.awt.event.ActionListener;
 public class VistaMateriasEva extends javax.swing.JFrame {
 
     private String nombreMateria;
+    private JLabel nuevoLabel;
 
     public VistaMateriasEva() {
         initComponents();
@@ -55,6 +59,7 @@ public class VistaMateriasEva extends javax.swing.JFrame {
         txtSilabo.setVisible(false);
         btnDocente.setVisible(false);
         txtDocente.setVisible(false);
+        nuevoLabel.setVisible(false);
 
         // Cambiar el texto del componente txtSeccion
         txtSeccion.setText("Actividades");
@@ -63,13 +68,10 @@ public class VistaMateriasEva extends javax.swing.JFrame {
         // Mostrar/ajustar componentes específicos de la unidad
         if (unidadNumber == 1) {
             // Mostrar/ajustar componentes para la Unidad 1
-            // ...
         } else if (unidadNumber == 2) {
             // Mostrar/ajustar componentes para la Unidad 2
-            // ...
         } else if (unidadNumber == 3) {
             // Mostrar/ajustar componentes para la Unidad 3
-            // ...
         }
     }
 
@@ -83,6 +85,25 @@ public class VistaMateriasEva extends javax.swing.JFrame {
 
     private void u3() {
         handleUnidadButtonClick(3);
+    }
+    
+    private void Calificacion(){
+        btnSilabo1.setVisible(false);
+        txtSilabo.setVisible(false);
+        btnDocente.setVisible(false);
+        txtDocente.setVisible(false);
+        
+        txtSeccion.setText("CALIFICACIONES");
+        
+        nuevoLabel = new JLabel();
+        nuevoLabel.setSize(200,50);
+        nuevoLabel.setForeground(Color.WHITE);
+        nuevoLabel.setFont(new Font("ROCKSTAR EXTRA BOLD", Font.PLAIN,28));
+        jPanel4.add(nuevoLabel);
+        
+        String texto = "USUARIO";
+        nuevoLabel.setText(texto);
+        nuevoLabel.setVisible(true);
     }
 
     @SuppressWarnings("unchecked")
@@ -149,9 +170,9 @@ public class VistaMateriasEva extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(44, 44, 44)
                 .addComponent(btnSalir)
-                .addGap(46, 46, 46)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 445, Short.MAX_VALUE)
                 .addComponent(txtnombreMateria)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 98, Short.MAX_VALUE)
+                .addGap(309, 309, 309)
                 .addComponent(jLabel1)
                 .addGap(36, 36, 36)
                 .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -176,7 +197,7 @@ public class VistaMateriasEva extends javax.swing.JFrame {
         );
 
         jPanel1.add(jPanel2);
-        jPanel2.setBounds(-5, 0, 600, 42);
+        jPanel2.setBounds(-5, 0, 1210, 42);
 
         jPanel3.setBackground(new java.awt.Color(232, 241, 242));
 
@@ -186,6 +207,11 @@ public class VistaMateriasEva extends javax.swing.JFrame {
         btnCalificaciones.setBackground(new java.awt.Color(232, 241, 242));
         btnCalificaciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/los-grados.png"))); // NOI18N
         btnCalificaciones.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnCalificaciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCalificacionesActionPerformed(evt);
+            }
+        });
 
         btnUnidad1.setBackground(new java.awt.Color(232, 241, 242));
         btnUnidad1.setFont(new java.awt.Font("Rockstar Extra Bold", 0, 12)); // NOI18N
@@ -255,21 +281,21 @@ public class VistaMateriasEva extends javax.swing.JFrame {
                 .addComponent(btnCalificaciones)
                 .addGap(18, 18, 18)
                 .addComponent(btnInicio)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
-                .addComponent(btnUnidad1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnUnidad2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnUnidad3)
-                .addGap(16, 16, 16))
+                .addGap(18, 18, 18)
+                .addComponent(btnUnidad1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnUnidad2, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnUnidad3, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(303, Short.MAX_VALUE))
         );
 
         jPanel1.add(jPanel3);
-        jPanel3.setBounds(0, 40, 160, 250);
+        jPanel3.setBounds(0, 40, 160, 660);
 
         jPanel4.setBackground(new java.awt.Color(16, 35, 105));
 
-        txtSeccion.setFont(new java.awt.Font("Rockstar Extra Bold", 0, 12)); // NOI18N
+        txtSeccion.setFont(new java.awt.Font("Rockstar Extra Bold", 0, 24)); // NOI18N
         txtSeccion.setForeground(new java.awt.Color(255, 255, 255));
         txtSeccion.setText("Seccion de informacion");
 
@@ -277,53 +303,55 @@ public class VistaMateriasEva extends javax.swing.JFrame {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(17, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(376, 376, 376)
                 .addComponent(txtSeccion)
-                .addGap(18, 18, 18))
+                .addContainerGap(390, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(11, Short.MAX_VALUE)
                 .addComponent(txtSeccion)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jPanel1.add(jPanel4);
-        jPanel4.setBounds(180, 50, 160, 24);
+        jPanel4.setBounds(180, 50, 1020, 40);
 
         txtDocente.setFont(new java.awt.Font("Rockstar Extra Bold", 0, 12)); // NOI18N
         txtDocente.setText("COnoce al docente");
         jPanel1.add(txtDocente);
-        txtDocente.setBounds(230, 130, 110, 12);
+        txtDocente.setBounds(230, 190, 110, 12);
 
         txtSilabo.setFont(new java.awt.Font("Rockstar Extra Bold", 0, 12)); // NOI18N
         txtSilabo.setText("SILABO");
         jPanel1.add(txtSilabo);
-        txtSilabo.setBounds(230, 90, 40, 12);
+        txtSilabo.setBounds(240, 130, 40, 12);
 
         btnDocente.setBackground(new java.awt.Color(190, 193, 197));
         btnDocente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/documentos.png"))); // NOI18N
         btnDocente.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel1.add(btnDocente);
-        btnDocente.setBounds(180, 120, 30, 30);
+        btnDocente.setBounds(180, 180, 30, 30);
 
         btnSilabo1.setBackground(new java.awt.Color(190, 193, 197));
         btnSilabo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/pdf.png"))); // NOI18N
         btnSilabo1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel1.add(btnSilabo1);
-        btnSilabo1.setBounds(180, 80, 30, 30);
+        btnSilabo1.setBounds(180, 120, 30, 30);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 597, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1200, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -354,6 +382,11 @@ public class VistaMateriasEva extends javax.swing.JFrame {
     private void btnInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioActionPerformed
 
     }//GEN-LAST:event_btnInicioActionPerformed
+
+    private void btnCalificacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalificacionesActionPerformed
+        Calificacion();
+        
+    }//GEN-LAST:event_btnCalificacionesActionPerformed
 
     /**
      * @param args the command line arguments
