@@ -21,5 +21,5 @@ El proyecto se basa en el desarrollo de un Tipo de Dato Abstracto conforme a los
 
 ## TDA.
 
-![This is an image](https://raw.githubusercontent.com/VictorNivelo/ProyectoEstructuraPis/Victor-Nivelo/Estructura-TDA-Pis.png)
+![This is an image](https://raw.githubusercontent.com/VictorNivelo/ProyectoEstructuraPis/main/TDA%20-%20PIS%20-%20ESTRUCTURA_DE_DATOS.png)
 

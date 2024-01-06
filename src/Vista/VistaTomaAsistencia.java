@@ -12,6 +12,7 @@ import Modelo.Persona;
 import Vista.Utiles.UtilVista;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
@@ -36,6 +37,7 @@ public class VistaTomaAsistencia extends javax.swing.JFrame {
         CargarTabla();
         tblt.setModel(dtm);
         AgregarCheckbox(3, tblt);
+        setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
     }
         
     private void CargarTabla() {
