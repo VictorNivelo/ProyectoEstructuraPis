@@ -15,6 +15,7 @@ public class VistaServicios extends javax.swing.JFrame {
      */
     public VistaServicios() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**

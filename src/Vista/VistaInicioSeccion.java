@@ -205,7 +205,7 @@ public class VistaInicioSeccion extends javax.swing.JFrame {
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         // TODO add your handling code here:
-        VistaPrincipalSistema newframe = new VistaPrincipalSistema();
+        EvaPrincipal newframe = new EvaPrincipal();
         newframe.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed

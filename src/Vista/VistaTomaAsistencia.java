@@ -12,6 +12,7 @@ import Modelo.Persona;
 import Vista.Utiles.UtilVista;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
@@ -36,6 +37,7 @@ public class VistaTomaAsistencia extends javax.swing.JFrame {
         CargarTabla();
         tblt.setModel(dtm);
         AgregarCheckbox(3, tblt);
+        setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
     }
         
     private void CargarTabla() {
@@ -172,6 +174,11 @@ public class VistaTomaAsistencia extends javax.swing.JFrame {
         jButton3.setText("ELIMINAR");
 
         jButton4.setText("REGRESAR");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("SELECCIONAR");
 
@@ -328,6 +335,13 @@ public class VistaTomaAsistencia extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        VistaServicios abrirLogin = new VistaServicios();
+        abrirLogin.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments

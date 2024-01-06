@@ -8,12 +8,45 @@ import Controlador.TDA.ListaDinamica.Exepciones.ListaVacia;
 import Controlador.TDA.ListaDinamica.Exepciones.PosicionNoEncontrada;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import java.lang.reflect.Field;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import javax.swing.JTextField;
 
 /**
  *
  * @author Victor
  */
 public class UtilesControlador {
+    
+    public static boolean validarFecha(String fecha) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.ENGLISH);
+        sdf.setLenient(false);
+
+        try {
+            sdf.parse(fecha);
+            return true;
+        } catch (ParseException e) {
+            System.out.println("Error al parsear la fecha: " + e.getMessage());
+            return false;
+        }
+    }
+    
+    public static Date setDateFormat(JTextField texto) throws ParseException{
+        return new SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.ENGLISH).parse(texto.getText());
+    }
+    
+    public static String obtenerFechaHoraActualFormateada() {
+        // Obtén la fecha y hora actual
+        Date fechaHoraActual = new Date();
+
+        // Crea un formateador de fecha con el formato deseado y el idioma especificado
+        SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.ENGLISH);
+
+        // Formatea la fecha y hora actual
+        return formateador.format(fechaHoraActual);
+    }
     
     private static Field getField(Class<?> clazz, String fieldName) {
         while (clazz != null) {

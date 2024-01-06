@@ -1,9 +1,9 @@
 
 package Vista;
 
-import Controlador.Tda.listas.Exepciones.ListaVacia;
+import Controlador.TDA.ListaDinamica.Exepciones.ListaVacia;
 import Modelo.Materia;
-import Vista.Arreglos.Util.UtilVista;
+import Vista.Utiles.UtilVista;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.logging.Level;
