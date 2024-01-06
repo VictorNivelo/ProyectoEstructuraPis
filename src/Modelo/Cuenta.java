@@ -12,13 +12,13 @@ public class Cuenta {
     private Integer idCuenta;
     private String Correo;
     private String Contrasena;
-    private Boolean EstadoCuenta;
+    private String EstadoCuenta;
 
     public Cuenta() {
         
     }
 
-    public Cuenta(Integer idCuenta, String Correo, String Contrasena, Boolean EstadoCuenta) {
+    public Cuenta(Integer idCuenta, String Correo, String Contrasena, String EstadoCuenta) {
         this.idCuenta = idCuenta;
         this.Correo = Correo;
         this.Contrasena = Contrasena;
@@ -49,17 +49,17 @@ public class Cuenta {
         this.Contrasena = Contrasena;
     }
 
-    public Boolean getEstadoCuenta() {
+    public String getEstadoCuenta() {
         return EstadoCuenta;
     }
 
-    public void setEstadoCuenta(Boolean EstadoCuenta) {
+    public void setEstadoCuenta(String EstadoCuenta) {
         this.EstadoCuenta = EstadoCuenta;
     }
-
+    
     @Override
     public String toString() {
-        return "Cuenta{" + "idCuenta=" + idCuenta + ", Correo=" + Correo + ", Contrasena=" + Contrasena + ", EstadoCuenta=" + EstadoCuenta + '}';
+        return "idCuenta=" + idCuenta + ", Correo=" + Correo + ", Contrasena=" + Contrasena + ", EstadoCuenta=" + EstadoCuenta;
     }
     
 }

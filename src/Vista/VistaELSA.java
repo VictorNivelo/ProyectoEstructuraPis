@@ -4,6 +4,8 @@
  */
 package Vista;
 
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author Jhostin Roja
@@ -15,6 +17,7 @@ public class VistaELSA extends javax.swing.JFrame {
      */
     public VistaELSA() {
         initComponents();
+        setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
         this.setLocationRelativeTo(null);
     }
 

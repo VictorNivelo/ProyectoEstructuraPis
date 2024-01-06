@@ -6,10 +6,9 @@ package Vista;
 
 
 import Controlador.ControladorMatricula;
-import Controlador.Tda.listas.Exepciones.ListaVacia;
-import Vista.Modelo.ModeloTablaMatriculas;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import Controlador.TDA.ListaDinamica.Exepciones.ListaVacia;
+import Vista.ModeloTabla.ModeloTablaMatriculas;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 
@@ -22,6 +21,17 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
     private ControladorMatricula controladorMatricula = new ControladorMatricula();
     private Controlador.Dao.Modelo.matriculaDao control = new Controlador.Dao.Modelo.matriculaDao();
     private ModeloTablaMatriculas tbm = new ModeloTablaMatriculas(); 
+        
+    /**
+     * Creates new form Matricula
+     * @throws Controlador.TDA.ListaDinamica.Exepciones.ListaVacia
+     */
+    public VistaGestionMatricula() throws ListaVacia {
+        initComponents();
+        setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
+        cargarTabla();
+        this.setLocationRelativeTo(null);
+    }
     
     public Boolean verificar() {
         if (txtFechaMatricula.getText().trim().isEmpty()) {
@@ -54,21 +64,13 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
                 control.Persist(controladorMatricula.getMatricula());
                 JOptionPane.showMessageDialog(null, "Datos guardados");
                 cargarTabla();
-            }else{
+            }
+            else{
                 JOptionPane.showMessageDialog(null, "No se pudo guardar, hubo un error");
             }
         }else{
             JOptionPane.showMessageDialog(null, "Falta llenar campos", "Error", JOptionPane.ERROR_MESSAGE);
         }
-    }
-    
-    /**
-     * Creates new form Matricula
-     */
-    public VistaGestionMatricula() throws ListaVacia {
-        initComponents();
-        cargarTabla();
-        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -298,7 +300,7 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
                 try {
                     new VistaGestionMatricula().setVisible(true);
                 } catch (ListaVacia ex) {
-                    Logger.getLogger(VistaGestionMatricula.class.getName()).log(Level.SEVERE, null, ex);
+
                 }
             }
         });

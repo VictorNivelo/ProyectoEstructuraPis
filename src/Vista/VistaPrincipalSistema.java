@@ -4,6 +4,8 @@
  */
 package Vista;
 
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author Jhostin Roja
@@ -16,6 +18,7 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
     public VistaPrincipalSistema() {
         initComponents();
         this.setLocationRelativeTo(null);
+        setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
     }
 
     /**
@@ -37,6 +40,7 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Pagina principal");
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 

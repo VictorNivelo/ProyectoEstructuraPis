@@ -13,20 +13,20 @@ import Modelo.PeriodoAcademico;
  * @author Victor
  */
 public class periodoAcademicoDao extends DaoImplement<PeriodoAcademico> {
-    private ListaDinamica<PeriodoAcademico> periodos;
+    private ListaDinamica<PeriodoAcademico> ListaPeriodos;
     private PeriodoAcademico periodo;
     
     public periodoAcademicoDao(){
         super(PeriodoAcademico.class);
     }
 
-    public ListaDinamica<PeriodoAcademico> getPeriodos() {
-        periodos  = all();
-        return periodos;
+    public ListaDinamica<PeriodoAcademico> getListaPeriodos() {
+        ListaPeriodos  = all();
+        return ListaPeriodos;
     }
 
-    public void setPeriodos(ListaDinamica<PeriodoAcademico> periodos) {
-        this.periodos = periodos;
+    public void setListaPeriodos(ListaDinamica<PeriodoAcademico> periodos) {
+        this.ListaPeriodos = periodos;
     }
 
     public PeriodoAcademico getPeriodo() {

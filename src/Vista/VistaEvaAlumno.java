@@ -1,5 +1,7 @@
 package Vista;
 
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author FA506ICB-HN114W
@@ -8,10 +10,13 @@ public class VistaEvaAlumno extends javax.swing.JDialog {
 
     /**
      * Creates new form FrmEva
+     * @param parent
+     * @param modal
      */
     public VistaEvaAlumno(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
         this.setLocationRelativeTo(null);
     }
 

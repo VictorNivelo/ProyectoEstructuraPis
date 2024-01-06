@@ -2,11 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Controlador.Tda.Pilas;
+package Controlador.TDA.Pilas;
 
+import Controlador.TDA.ListaDinamica.Exepciones.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
-import Controlador.Tda.Pilas.Excepcion.FullStackException;
-import Controlador.Tda.listas.Exepciones.ListaVacia;
+import Controlador.TDA.Pilas.Excepcion.FullStackException;
 /**
  *
  * @author Victor
@@ -15,7 +15,7 @@ class Stack<E> extends ListaDinamica<E>{
     private Integer tope;
 
     public Stack(Integer Tope) {
-        this.tope = tope;
+        this.tope = Tope;
     }
     
     public Boolean isFull(){
