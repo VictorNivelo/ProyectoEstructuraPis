@@ -22,6 +22,7 @@ public class VistaMateriasEva extends javax.swing.JFrame {
     public VistaMateriasEva() {
         initComponents();
         addListenersToButtons();
+        this.setLocationRelativeTo(null);
 
     }
 

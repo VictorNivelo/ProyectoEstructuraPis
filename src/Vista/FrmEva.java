@@ -16,6 +16,7 @@ public class FrmEva extends javax.swing.JDialog {
     public FrmEva(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
 
@@ -48,7 +49,7 @@ public class FrmEva extends javax.swing.JDialog {
         jPanel2.setBackground(new java.awt.Color(19, 41, 61));
 
         btnSalir.setBackground(new java.awt.Color(19, 41, 61));
-        btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/images/x.png"))); // NOI18N
+        btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/x.png"))); // NOI18N
         btnSalir.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -103,7 +104,7 @@ public class FrmEva extends javax.swing.JDialog {
         jLabel2.setFont(new java.awt.Font("Rockstar Extra Bold", 0, 12)); // NOI18N
         jLabel2.setText("MATERIAS");
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/images/libro-abierto.png"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/libro-abierto_1.png"))); // NOI18N
 
         jComboBox2.setBackground(new java.awt.Color(232, 241, 242));
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -149,7 +150,7 @@ public class FrmEva extends javax.swing.JDialog {
         jLabel4.setText("PAGINA PRINCIPAL");
 
         btnPrincipal.setBackground(new java.awt.Color(0, 100, 148));
-        btnPrincipal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/images/colegio.png"))); // NOI18N
+        btnPrincipal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/colegio.png"))); // NOI18N
         btnPrincipal.setBorder(null);
 
         jLabel5.setFont(new java.awt.Font("Rockstar Extra Bold", 0, 18)); // NOI18N
@@ -157,7 +158,7 @@ public class FrmEva extends javax.swing.JDialog {
         jLabel5.setText("CALENDARIO");
 
         btnCalendario.setBackground(new java.awt.Color(0, 100, 148));
-        btnCalendario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/images/calendario-3d.png"))); // NOI18N
+        btnCalendario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/calendario-3d.png"))); // NOI18N
         btnCalendario.setBorder(null);
 
         jLabel6.setBackground(new java.awt.Color(0, 100, 148));
@@ -166,10 +167,10 @@ public class FrmEva extends javax.swing.JDialog {
         jLabel6.setText("PERFIL");
 
         btnPerfil.setBackground(new java.awt.Color(0, 100, 148));
-        btnPerfil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/images/perfil.png"))); // NOI18N
+        btnPerfil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/perfil.png"))); // NOI18N
         btnPerfil.setBorder(null);
 
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/images/unlLogo (2).png"))); // NOI18N
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/unlLogo (2).png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -179,22 +180,23 @@ public class FrmEva extends javax.swing.JDialog {
                 .addGap(15, 15, 15)
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(75, 75, 75)
-                .addComponent(btnPrincipal)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnCalendario)
-                .addGap(148, 148, 148)
-                .addComponent(btnPerfil)
-                .addGap(62, 62, 62))
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addComponent(jLabel4)
-                .addGap(131, 131, 131)
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 147, Short.MAX_VALUE)
-                .addComponent(jLabel6)
-                .addGap(70, 70, 70))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addComponent(jLabel4)
+                        .addGap(131, 131, 131)
+                        .addComponent(jLabel5))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(75, 75, 75)
+                        .addComponent(btnPrincipal)
+                        .addGap(205, 205, 205)
+                        .addComponent(btnCalendario)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 139, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnPerfil)
+                    .addComponent(jLabel6))
+                .addGap(68, 68, 68))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -206,7 +208,7 @@ public class FrmEva extends javax.swing.JDialog {
                     .addComponent(jLabel4)
                     .addComponent(jLabel5)
                     .addComponent(jLabel6))
-                .addGap(18, 18, 18)
+                .addGap(88, 88, 88)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnPrincipal)
                     .addComponent(btnCalendario)
