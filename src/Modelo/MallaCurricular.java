@@ -12,15 +12,17 @@ public class MallaCurricular {
     private Integer idMallaCurricular;
     private String NombreMallaCurricular;
     private Integer duracionMallaCurricular;
+    private Carrera carreraMalla;
 
     public MallaCurricular() {
         
     }
 
-    public MallaCurricular(Integer idMallaCurricular, String NombreMallaCurricular, Integer duracionMallaCurricular) {
+    public MallaCurricular(Integer idMallaCurricular, String NombreMallaCurricular, Integer duracionMallaCurricular, Carrera carreraMalla) {
         this.idMallaCurricular = idMallaCurricular;
         this.NombreMallaCurricular = NombreMallaCurricular;
         this.duracionMallaCurricular = duracionMallaCurricular;
+        this.carreraMalla = carreraMalla;
     }
 
     public Integer getIdMallaCurricular() {
@@ -47,9 +49,17 @@ public class MallaCurricular {
         this.duracionMallaCurricular = duracionMallaCurricular;
     }
 
+    public Carrera getCarreraMalla() {
+        return carreraMalla;
+    }
+
+    public void setCarreraMalla(Carrera carreraMalla) {
+        this.carreraMalla = carreraMalla;
+    }
+
     @Override
     public String toString() {
-        return "MallaCurricular{" + "idMallaCurricular=" + idMallaCurricular + ", NombreMallaCurricular=" + NombreMallaCurricular + ", duracionMallaCurricular=" + duracionMallaCurricular + '}';
+        return NombreMallaCurricular +  "\n";
     }
     
 }

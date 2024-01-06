@@ -2,6 +2,7 @@ package Vista;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import javax.swing.ImageIcon;
 
 
 /**
@@ -12,10 +13,13 @@ public class VistaCalendario extends javax.swing.JDialog {
 
     /**
      * Creates new form FrmCalendario
+     * @param parent
+     * @param modal
      */
     public VistaCalendario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
         mostrarFechaActual();
         this.setLocationRelativeTo(null);
     }

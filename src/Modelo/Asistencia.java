@@ -11,18 +11,22 @@ package Modelo;
 public class Asistencia {
     private Integer idAsistencia;
     private String DiaAsistencia;
-    private Cursa asistenciaCurso;
-    private Boolean EstadoAsistencia;
+    private String HoraAsistencia;
+    private EstadoAsistencia estadoAsistencia;
+    private String Observacion;
+    private Horario HorarioAsistencia;
 
     public Asistencia() {
         
     }
 
-    public Asistencia(Integer idAsistencia, String DiaAsistencia, Cursa asistenciaCurso, Boolean EstadoAsistencia) {
+    public Asistencia(Integer idAsistencia, String DiaAsistencia, String HoraAsistencia, EstadoAsistencia estadoAsistencia, String Observacion, Horario HorarioAsistencia) {
         this.idAsistencia = idAsistencia;
         this.DiaAsistencia = DiaAsistencia;
-        this.asistenciaCurso = asistenciaCurso;
-        this.EstadoAsistencia = EstadoAsistencia;
+        this.HoraAsistencia = HoraAsistencia;
+        this.estadoAsistencia = estadoAsistencia;
+        this.Observacion = Observacion;
+        this.HorarioAsistencia = HorarioAsistencia;
     }
 
     public Integer getIdAsistencia() {
@@ -41,26 +45,41 @@ public class Asistencia {
         this.DiaAsistencia = DiaAsistencia;
     }
 
-    public Cursa getAsistenciaCurso() {
-        return asistenciaCurso;
+    public String getHoraAsistencia() {
+        return HoraAsistencia;
     }
 
-    public void setAsistenciaCurso(Cursa asistenciaCurso) {
-        this.asistenciaCurso = asistenciaCurso;
+    public void setHoraAsistencia(String HoraAsistencia) {
+        this.HoraAsistencia = HoraAsistencia;
     }
 
-    public Boolean getEstadoAsistencia() {
-        return EstadoAsistencia;
+    public EstadoAsistencia getEstadoAsistencia() {
+        return estadoAsistencia;
     }
 
-    public void setEstadoAsistencia(Boolean EstadoAsistencia) {
-        this.EstadoAsistencia = EstadoAsistencia;
+    public void setEstadoAsistencia(EstadoAsistencia estadoAsistencia) {
+        this.estadoAsistencia = estadoAsistencia;
     }
 
+    public String getObservacion() {
+        return Observacion;
+    }
+
+    public void setObservacion(String Observacion) {
+        this.Observacion = Observacion;
+    }
+
+    public Horario getHorarioAsistencia() {
+        return HorarioAsistencia;
+    }
+
+    public void setHorarioAsistencia(Horario HorarioAsistencia) {
+        this.HorarioAsistencia = HorarioAsistencia;
+    }
+    
     @Override
     public String toString() {
-        return "Asistencia{" + "idAsistencia=" + idAsistencia + ", DiaAsistencia=" + DiaAsistencia + ", asistenciaCurso=" + asistenciaCurso + ", EstadoAsistencia=" + EstadoAsistencia + '}';
+        return "Dia:" + DiaAsistencia + ", Hora:" + HoraAsistencia  + "\n";
     }
-    
-    
+                
 }

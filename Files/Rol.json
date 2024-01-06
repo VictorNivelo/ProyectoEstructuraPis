@@ -1,1 +1,40 @@
-{"Controlador.TDA.ListaDinamica.ListaDinamica":{"cabezera":{"info":{"@class":"Modelo.Rol","idRol":1,"nombreRol":"Administrador","DescripcionRol":"Es un administrador"},"Siguiente":{"info":{"@class":"Modelo.Rol","idRol":2,"nombreRol":"Personal administrativo","DescripcionRol":"Es personal administrativo"},"Siguiente":{"info":{"@class":"Modelo.Rol","idRol":3,"nombreRol":"Docente","DescripcionRol":"Es un docente"},"Siguiente":{"info":{"@class":"Modelo.Rol","idRol":4,"nombreRol":"Estudiante","DescripcionRol":"Es un estudiante"}}}}},"ultimo":{"@reference":"..\/cabezera\/Siguiente\/Siguiente\/Siguiente"},"Longitud":4}}
+{
+    "Controlador.TDA.ListaDinamica.ListaDinamica": {
+        "cabezera": {
+            "info": {
+                "@class": "Modelo.Rol",
+                "idRol": 1,
+                "nombreRol": "Administrador",
+                "DescripcionRol": "Es un administrador"
+            },
+            "Siguiente": {
+                "info": {
+                    "@class": "Modelo.Rol",
+                    "idRol": 2,
+                    "nombreRol": "Personal administrativo",
+                    "DescripcionRol": "Es personal administrativo"
+                },
+                "Siguiente": {
+                    "info": {
+                        "@class": "Modelo.Rol",
+                        "idRol": 3,
+                        "nombreRol": "Docente",
+                        "DescripcionRol": "Es un docente"
+                    },
+                    "Siguiente": {
+                        "info": {
+                            "@class": "Modelo.Rol",
+                            "idRol": 4,
+                            "nombreRol": "Estudiante",
+                            "DescripcionRol": "Es un estudiante"
+                        }
+                    }
+                }
+            }
+        },
+        "ultimo": {
+            "@reference": "..\/cabezera\/Siguiente\/Siguiente\/Siguiente"
+        },
+        "Longitud": 4
+    }
+}

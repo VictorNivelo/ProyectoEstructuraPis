@@ -49,7 +49,7 @@ public class Carrera {
 
     @Override
     public String toString() {
-        return "Carrera{" + "idCarrera=" + idCarrera + ", NombreCarrera=" + NombreCarrera + ", duracion=" + duracion + '}';
+        return NombreCarrera + "\n";
     }
     
 }

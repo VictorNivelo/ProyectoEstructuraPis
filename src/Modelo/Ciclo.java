@@ -11,19 +11,16 @@ package Modelo;
 public class Ciclo {
     private Integer idCiclo;
     private String NombreCiclo;
-    private Integer NumeroCiclo;
-    private Paralelo paraleloCiclo;
     private MallaCurricular mallaCiclo;
 
     public Ciclo() {
         
     }
 
-    public Ciclo(Integer idCiclo, String NombreCiclo, Integer NumeroCiclo, Paralelo paraleloCiclo) {
+    public Ciclo(Integer idCiclo, String NombreCiclo, MallaCurricular mallaCiclo) {
         this.idCiclo = idCiclo;
         this.NombreCiclo = NombreCiclo;
-        this.NumeroCiclo = NumeroCiclo;
-        this.paraleloCiclo = paraleloCiclo;
+        this.mallaCiclo = mallaCiclo;
     }
 
     public Integer getIdCiclo() {
@@ -42,22 +39,6 @@ public class Ciclo {
         this.NombreCiclo = NombreCiclo;
     }
 
-    public Integer getNumeroCiclo() {
-        return NumeroCiclo;
-    }
-
-    public void setNumeroCiclo(Integer NumeroCiclo) {
-        this.NumeroCiclo = NumeroCiclo;
-    }
-
-    public Paralelo getParaleloCiclo() {
-        return paraleloCiclo;
-    }
-
-    public void setParaleloCiclo(Paralelo paraleloCiclo) {
-        this.paraleloCiclo = paraleloCiclo;
-    }
-
     public MallaCurricular getMallaCiclo() {
         return mallaCiclo;
     }
@@ -68,7 +49,7 @@ public class Ciclo {
     
     @Override
     public String toString() {
-        return NombreCiclo;
+        return NombreCiclo+"\n";
     }
     
 }

@@ -2,11 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Controlador.Tda.Colas;
+package Controlador.TDA.Colas;
 
+import Controlador.TDA.ListaDinamica.Exepciones.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
-import Controlador.Tda.Pilas.Excepcion.FullStackException;
-import Controlador.Tda.listas.Exepciones.ListaVacia;
+import Controlador.TDA.Pilas.Excepcion.FullStackException;
 /**
  *
  * @author Victor
@@ -14,8 +14,8 @@ import Controlador.Tda.listas.Exepciones.ListaVacia;
 class Queue<E> extends ListaDinamica<E>{
     private Integer cima;
 
-    public Queue(Integer Tope) {
-        this.cima = cima;
+    public Queue(Integer Cima) {
+        this.cima = Cima;
     }
     
     public Boolean isFull(){

@@ -69,7 +69,7 @@ public class Docente {
 
     @Override
     public String toString() {
-        return "Docente{" + "idDocente=" + idDocente + ", datosDocente=" + datosDocente + ", especialidad=" + especialidad + ", cursoAsignado=" + cursoAsignado + ", titulacion=" + titulacion + '}';
+        return "idDocente=" + idDocente + ", datosDocente=" + datosDocente + ", especialidad=" + especialidad + ", cursoAsignado=" + cursoAsignado + ", titulacion=" + titulacion + "\n";
     }
     
 }

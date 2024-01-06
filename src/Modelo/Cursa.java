@@ -4,33 +4,31 @@
  */
 package Modelo;
 
+import Controlador.TDA.ListaDinamica.Exepciones.ListaVacia;
+import Controlador.TDA.ListaDinamica.ListaDinamica;
+
 /**
  *
  * @author Victor
  */
 public class Cursa {
     private Integer idCurso;
-    private String nombreCurso;
-    private String DescripcionCurso;
-    private Ciclo cicloCurso;
-    private MallaCurricular mallaCurso;
+    private String codigoCurso;
+    private String paralelo;
     private Materia materiaCurso;
-    private Horario horarioCurso;
-    private Asistencia asistenciaCurso;
+    private ListaDinamica<Materia> listaMateriasCurso;
+    private PeriodoAcademico periodoAcademicoCurso;
 
     public Cursa() {
         
     }
 
-    public Cursa(Integer idCurso, String nombreCurso, String DescripcionCurso, Ciclo cicloCurso, MallaCurricular mallaCurso, Materia materiaCurso, Horario horarioCurso, Asistencia asistenciaCurso) {
+    public Cursa(Integer idCurso, String codigoCurso, String paralelo, Materia materiaCurso, PeriodoAcademico periodoAcademicoCurso) {
         this.idCurso = idCurso;
-        this.nombreCurso = nombreCurso;
-        this.DescripcionCurso = DescripcionCurso;
-        this.cicloCurso = cicloCurso;
-        this.mallaCurso = mallaCurso;
+        this.codigoCurso = codigoCurso;
+        this.paralelo = paralelo;
         this.materiaCurso = materiaCurso;
-        this.horarioCurso = horarioCurso;
-        this.asistenciaCurso = asistenciaCurso;
+        this.periodoAcademicoCurso = periodoAcademicoCurso;
     }
 
     public Integer getIdCurso() {
@@ -41,36 +39,20 @@ public class Cursa {
         this.idCurso = idCurso;
     }
 
-    public String getNombreCurso() {
-        return nombreCurso;
+    public String getCodigoCurso() {
+        return codigoCurso;
     }
 
-    public void setNombreCurso(String nombreCurso) {
-        this.nombreCurso = nombreCurso;
+    public void setCodigoCurso(String codigoCurso) {
+        this.codigoCurso = codigoCurso;
     }
 
-    public String getDescripcionCurso() {
-        return DescripcionCurso;
+    public String getParalelo() {
+        return paralelo;
     }
 
-    public void setDescripcionCurso(String DescripcionCurso) {
-        this.DescripcionCurso = DescripcionCurso;
-    }
-
-    public Ciclo getCicloCurso() {
-        return cicloCurso;
-    }
-
-    public void setCicloCurso(Ciclo cicloCurso) {
-        this.cicloCurso = cicloCurso;
-    }
-
-    public MallaCurricular getMallaCurso() {
-        return mallaCurso;
-    }
-
-    public void setMallaCurso(MallaCurricular mallaCurso) {
-        this.mallaCurso = mallaCurso;
+    public void setParalelo(String paralelo) {
+        this.paralelo = paralelo;
     }
 
     public Materia getMateriaCurso() {
@@ -81,25 +63,38 @@ public class Cursa {
         this.materiaCurso = materiaCurso;
     }
 
-    public Horario getHorarioCurso() {
-        return horarioCurso;
+    public PeriodoAcademico getPeriodoAcademicoCurso() {
+        return periodoAcademicoCurso;
     }
 
-    public void setHorarioCurso(Horario horarioCurso) {
-        this.horarioCurso = horarioCurso;
+    public void setPeriodoAcademicoCurso(PeriodoAcademico periodoAcademicoCurso) {
+        this.periodoAcademicoCurso = periodoAcademicoCurso;
     }
 
-    public Asistencia getAsistenciaCurso() {
-        return asistenciaCurso;
+    public ListaDinamica<Materia> getListaMateriasCurso() {
+        return listaMateriasCurso;
     }
 
-    public void setAsistenciaCurso(Asistencia asistenciaCurso) {
-        this.asistenciaCurso = asistenciaCurso;
+    public void setListaMateriasCurso(ListaDinamica<Materia> listaMateriasCurso) {
+        this.listaMateriasCurso = listaMateriasCurso;
+    }
+    
+    //Codigo para usar en la lista de materjas
+    public void agregarMateria(Materia materia) {
+        listaMateriasCurso.Agregar(materia);
     }
 
+    public Materia obtenerMateria(Integer indice) throws ListaVacia, IndexOutOfBoundsException {
+        return listaMateriasCurso.getInfo(indice);
+    }
+
+    public void eliminarMateria(Integer indice) throws ListaVacia, IndexOutOfBoundsException {
+        listaMateriasCurso.eliminar(indice);
+    }
+    
     @Override
     public String toString() {
-        return "Cursa{" + "idCurso=" + idCurso + ", nombreCurso=" + nombreCurso + ", DescripcionCurso=" + DescripcionCurso + ", cicloCurso=" + cicloCurso + ", mallaCurso=" + mallaCurso + ", materiaCurso=" + materiaCurso + ", horarioCurso=" + horarioCurso + ", asistenciaCurso=" + asistenciaCurso + '}';
+        return materiaCurso.getCicloMateria().getNombreCiclo() +" "+paralelo+ "\n";
     }
     
 }

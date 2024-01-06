@@ -79,7 +79,7 @@ public class Universidad {
 
     @Override
     public String toString() {
-        return "Universidad{" + "idUniversidad=" + idUniversidad + ", NimbreUniversidad=" + NimbreUniversidad + ", amioFundacion=" + amioFundacion + ", Ubicacion=" + Ubicacion + ", Correo=" + Correo + ", NumeroTelefonico=" + NumeroTelefonico + '}';
+        return "idUniversidad=" + idUniversidad + ", NimbreUniversidad=" + NimbreUniversidad + ", amioFundacion=" + amioFundacion + ", Ubicacion=" + Ubicacion + ", Correo=" + Correo + ", NumeroTelefonico=" + NumeroTelefonico + "\n";
     }
     
 }

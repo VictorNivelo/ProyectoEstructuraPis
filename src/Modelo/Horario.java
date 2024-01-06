@@ -13,16 +13,18 @@ public class Horario {
     private String Dias;
     private String horaIncio;
     private String horaFin;
+    private String tematicaHorario;
 
     public Horario() {
         
     }
 
-    public Horario(Integer idHorario, String Dias, String horaIncio, String horaFin) {
+    public Horario(Integer idHorario, String Dias, String horaIncio, String horaFin, String tematicaHorario) {
         this.idHorario = idHorario;
         this.Dias = Dias;
         this.horaIncio = horaIncio;
         this.horaFin = horaFin;
+        this.tematicaHorario = tematicaHorario;
     }
 
     public Integer getIdHorario() {
@@ -57,9 +59,17 @@ public class Horario {
         this.horaFin = horaFin;
     }
 
+    public String getTematicaHorario() {
+        return tematicaHorario;
+    }
+
+    public void setTematicaHorario(String tematicaHorario) {
+        this.tematicaHorario = tematicaHorario;
+    }
+    
     @Override
     public String toString() {
-        return "Horario{" + "idHorario=" + idHorario + ", Dias=" + Dias + ", horaIncio=" + horaIncio + ", horaFin=" + horaFin + '}';
+        return "Dia:" + Dias + ",Hora Incio:" + horaIncio + ", Fin:" + horaFin + "\n";
     }
     
 }
