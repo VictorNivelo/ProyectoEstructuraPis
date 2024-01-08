@@ -24,21 +24,9 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="339" max="-2" attributes="0"/>
-                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                      <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-                  </Group>
-              </Group>
-              <EmptySpace pref="324" max="32767" attributes="0"/>
-          </Group>
+          <Component id="jPanel3" pref="1331" max="32767" attributes="0"/>
+          <Component id="jPanel4" alignment="0" max="32767" attributes="0"/>
+
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -167,7 +155,12 @@
             <Property name="text" type="java.lang.String" value="Fecha de la matricula:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txtFechaMatricula">
+
+        <Component class="javax.swing.JButton" name="btnCancelar">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Seleccionar"/>
+          </Properties>
+
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>
@@ -178,7 +171,8 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Periodo academico:"/>
+            <Property name="text" type="java.lang.String" value="Cancelar"/>
+
           </Properties>
         </Component>
         <Component class="javax.swing.JComboBox" name="cbxPeriodo">

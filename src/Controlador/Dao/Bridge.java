@@ -14,7 +14,7 @@ import java.io.File;
  * @author Victor
  */
 public class Bridge {
-    public static String URL = "files"+ File.separatorChar;
+    public static String URL = "Files"+ File.separatorChar;
     private static XStream conection;
 
     public static XStream getConection() {

@@ -5,9 +5,14 @@
 package Vista;
 
 
-import Controlador.ControladorMatricula;
-import Controlador.TDA.ListaDinamica.Exepciones.ListaVacia;
-import Vista.ModeloTabla.ModeloTablaMatriculas;
+import Controlador.Dao.Modelo.matriculaDao;
+import Controlador.TDA.ListaDinamica.ListaDinamica;
+import Controlador.TDA.listas.Exepciones.ListaVacia;
+import Controlador.util.Utiles;
+import Modelo.Matricula;
+import Vista.Modelo.ModeloTablaMatriculas;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -18,9 +23,9 @@ import javax.swing.JOptionPane;
  * @author romer
  */
 public class VistaGestionMatricula extends javax.swing.JFrame {
-    private ControladorMatricula controladorMatricula = new ControladorMatricula();
-    private Controlador.Dao.Modelo.matriculaDao control = new Controlador.Dao.Modelo.matriculaDao();
-    private ModeloTablaMatriculas tbm = new ModeloTablaMatriculas(); 
+    ListaDinamica<Matricula> listaMatricula = new ListaDinamica<>();
+    matriculaDao control = new matriculaDao();
+    ModeloTablaMatriculas tbm = new ModeloTablaMatriculas(); 
         
     /**
      * Creates new form Matricula
@@ -57,11 +62,14 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
     
     public void guardar(){
         if (verificar()) {
-            controladorMatricula.getMatricula().setEstadoMatricula(chckEstado.isSelected());
-            controladorMatricula.getMatricula().setFechaMatricula(txtFechaMatricula.getText());
             
-            if (controladorMatricula.guardarMatricula()) {
-                control.Persist(controladorMatricula.getMatricula());
+            control.getMatricula().setEstadoMatricula(chckEstado.isSelected());
+            control.getMatricula().setFechaMatricula(Utiles.obtenerFechaHoraActualFormateada());
+            control.getMatricula().setIdMatricula(listaMatricula.getLongitud()+1);
+            control.getMatricula().setMatriculaCursa(null);
+            control.getMatricula().setMatriculaPeriodoAcademico(null);
+            
+            if (control.persist()) {
                 JOptionPane.showMessageDialog(null, "Datos guardados");
                 cargarTabla();
             }
@@ -121,11 +129,12 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
 
         jLabel2.setText("Fecha de la matricula:");
 
-        jLabel4.setText("Activo:");
+        btnCancelar.setText("Seleccionar");
+
 
         jLabel5.setText("Periodo academico:");
 
-        cbxPeriodo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Abril 2023" }));
+        btnEliminar.setText("Cancelar");
 
         jLabel6.setText("Cursa:");
 
@@ -229,17 +238,9 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(339, 339, 339)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(324, Short.MAX_VALUE))
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 1331, Short.MAX_VALUE)
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
