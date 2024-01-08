@@ -38,13 +38,8 @@ public class UtilesControlador {
     }
     
     public static String obtenerFechaHoraActualFormateada() {
-        // Obtén la fecha y hora actual
         Date fechaHoraActual = new Date();
-
-        // Crea un formateador de fecha con el formato deseado y el idioma especificado
         SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.ENGLISH);
-
-        // Formatea la fecha y hora actual
         return formateador.format(fechaHoraActual);
     }
     

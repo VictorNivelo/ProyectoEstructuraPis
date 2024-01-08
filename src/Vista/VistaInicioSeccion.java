@@ -4,6 +4,11 @@
  */
 package Vista;
 
+import Controlador.Dao.Modelo.personaDao;
+import Controlador.TDA.ListaDinamica.ListaDinamica;
+import Modelo.Cuenta;
+import Modelo.Persona;
+import Modelo.Rol;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -12,6 +17,7 @@ import javax.swing.JOptionPane;
  * @author Victor
  */
 public class VistaInicioSeccion extends javax.swing.JFrame {
+    personaDao personaControlDao = new personaDao();
 
     /**
      * Creates new form VistaInicioSeccion
@@ -20,6 +26,93 @@ public class VistaInicioSeccion extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
+    }
+    
+    public static void DetectarRol(Persona persona) {
+        Rol rolPersona = persona.getRolPersona();
+        if (rolPersona != null) {
+            String nombreRol = rolPersona.getNombreRol();
+
+            switch (nombreRol) {
+                case "Administrador":
+                    procesarAdministrador();
+                    break;
+                case "Personal administrativo":
+                    procesarPersonalAdministrativo();
+                    break;
+                case "Docente":
+                    procesarDocente();
+                    break;
+                case "Estudiante":
+                    procesarEstudiante();
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+    
+    private void VerificarUsuario() {
+        ListaDinamica<Persona> listaPersonas = personaControlDao.all();
+        
+        String usuarioIngresado = txtCorreo.getText();
+        String contrasenaIngresada = txtContraseña.getText();        
+
+        boolean credencialesCorrectas = false;
+
+        for (Persona persona : listaPersonas.toArray()) {
+            Cuenta cuenta = persona.getCuentaPersona();
+            if (cuenta != null && cuenta.getCorreo().equals(usuarioIngresado) && cuenta.getContrasena().equals(contrasenaIngresada)) {
+                credencialesCorrectas = true;
+                DetectarRol(persona);
+                dispose();
+                break;
+            }
+        }
+        if (!credencialesCorrectas) {
+            JOptionPane.showMessageDialog(this, "Inicio de sesión fallido. Verifique sus credenciales.");
+//            txtCorreo.setText("");
+//            txtContraseña.setText("");
+        }
+    }
+    
+    private static void procesarAdministrador() {
+        System.out.println("Es un administrador");
+    }
+
+    private static void procesarPersonalAdministrativo() {
+        VistaAdministracion abrirAsistencia = new VistaAdministracion();
+        abrirAsistencia.setVisible(true);
+    }
+
+    private static void procesarDocente() {
+        try {
+            VistaTomaAsistencia abrirAsistencia = new VistaTomaAsistencia();
+            abrirAsistencia.setVisible(true);
+        }
+        catch (Exception e) {
+            
+        }
+    }
+
+    private static void procesarEstudiante() {
+        try {
+            VistaEvaAlumno abrirAsistencia = new VistaEvaAlumno(null, true);
+            abrirAsistencia.setVisible(true);
+        } 
+        catch (Exception e) {
+        }
+    }
+    
+    private static void AutentificarUsuario(ListaDinamica<Persona> listaPersonas, String usuarioIngresado, String contrasenaIngresada) {
+        for (Persona persona : listaPersonas.toArray()) {
+            Cuenta cuenta = persona.getCuentaPersona();
+            if (cuenta != null && cuenta.getCorreo().equals(usuarioIngresado) && cuenta.getContrasena().equals(contrasenaIngresada)) {
+                DetectarRol(persona);
+                return;
+            }
+        }
+        JOptionPane.showMessageDialog(null, "Autenticación fallida. Verifique sus credenciales.");
     }
 
     /**
@@ -190,16 +283,14 @@ public class VistaInicioSeccion extends javax.swing.JFrame {
 
     private void btnIniciarSeccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSeccionActionPerformed
         // TODO add your handling code here:
-        if(txtCorreo.getText().isEmpty()){
+        if (txtCorreo.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Correo vacio", "CAMPO VACIO", JOptionPane.INFORMATION_MESSAGE);
-        }
-        else if(txtContraseña.getText().isEmpty()){
+        } 
+        else if (txtContraseña.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Contraseña vacia", "CAMPO VACIO", JOptionPane.INFORMATION_MESSAGE);
-        }
-        else{
-            VistaAdministracion abrirAsistencia = new VistaAdministracion();
-            abrirAsistencia.setVisible(true);
-            this.setVisible(false);
+        } 
+        else {
+            VerificarUsuario();
         }
     }//GEN-LAST:event_btnIniciarSeccionActionPerformed
 
