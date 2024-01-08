@@ -392,6 +392,7 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
         jLabel19.setText("Estado de cuenta");
 
         cbxGenero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Masculino", "Femenino", "No definido" }));
+        cbxGenero.setSelectedIndex(-1);
 
         cbxEstadoCuenta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Activa", "No funcional", "Suspendida" }));
         cbxEstadoCuenta.setSelectedIndex(-1);
