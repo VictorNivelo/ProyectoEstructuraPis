@@ -49,7 +49,7 @@ public class PeriodoAcademico {
 
     @Override
     public String toString() {
-        return "PeriodoAcademico{" + "idPeriodoAcademino=" + idPeriodoAcademino + ", fechaInicio=" + fechaInicio + ", FechaFin=" + FechaFin + '}';
+        return  fechaInicio + " - " + FechaFin + "\n";
     }
     
 }

@@ -4,7 +4,6 @@
  */
 package Controlador.Dao;
 
-import Controlador.Tda.listas.Exepciones.PosicionNoEncontrada;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import com.thoughtworks.xstream.XStream;
 import java.io.FileReader;
@@ -48,7 +47,8 @@ public class DaoImplement<T> implements DaoInterface<T>{
             try {
                 ListaModificar.modificarPosicion(data, indice);
             } 
-            catch (PosicionNoEncontrada ex) {
+            catch (Exception e) {
+                
             }
             try {
                 conection.toXML(ListaModificar, new FileWriter(URL));
@@ -77,28 +77,26 @@ public class DaoImplement<T> implements DaoInterface<T>{
 
     @Override
     public T get(Integer id) {
+
+        ListaDinamica<T> lista = all();
+
+        for (int i = 0; i < lista.getLongitud(); i++) {
+            
+            try {
+                T elemento = lista.getInfo(i);
+                Integer elementoId = (Integer) elemento.getClass().getMethod("getId").invoke(elemento);
+
+                if (elementoId.equals(id)) {
+                    return elemento;
+                }
+            } 
+            catch (Exception e) {
+                
+            }
+        }
+        return null;
         
-//
-    
-//        ListaDinamica<T> lista = all();
-//
-//        for (int i = 0; i < lista.getLongitud(); i++) {
-//            T elemento = null;
-//            try {
-//                elemento = lista.getInfo(i);
-//                Integer elementoId = (Integer) elemento.getClass().getMethod("getIdPersona").invoke(elemento);
-//
-//                if (elementoId.equals(id)) {
-//                    return elemento;
-//                }
-//            } 
-//            catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-//
-//        return null;
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
     public Boolean Eliminar(Integer index) {

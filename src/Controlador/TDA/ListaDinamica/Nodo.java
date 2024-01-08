@@ -17,19 +17,16 @@ public class Nodo<E> {
     public Nodo(E info) {
         this.info = info;
         Siguiente = null;
-
     }
 
     public Nodo(E info, Nodo<E> siguiente) {
         this.info = info;
         this.Siguiente = siguiente;
-
     }
 
     public Nodo() {
         Siguiente = null;
         info = null;
-
     }
 
     public E getInfo() {
@@ -48,6 +45,7 @@ public class Nodo<E> {
         this.Siguiente = siguiente;
     }
     
+    @Override
     public String toString() {
         if (info != null) {
             return info.toString();

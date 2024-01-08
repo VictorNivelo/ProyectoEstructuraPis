@@ -4,6 +4,8 @@
  */
 package Vista;
 
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author Jhostin Roja
@@ -16,6 +18,7 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
     public VistaPrincipalSistema() {
         initComponents();
         this.setLocationRelativeTo(null);
+        setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
     }
 
     /**
@@ -37,6 +40,7 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Pagina principal");
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -101,31 +105,31 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       VistaELSA newframe = new VistaELSA();
+       VistaPrincipalELSA newframe = new VistaPrincipalELSA();
         newframe.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnSGAEstudiantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSGAEstudiantesActionPerformed
-        VistaInicioSeccion newframe = new VistaInicioSeccion();
+        VistaInicioSesion newframe = new VistaInicioSesion();
         newframe.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnSGAEstudiantesActionPerformed
 
     private void btnEVAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEVAActionPerformed
-        VistaInicioSeccion newframe = new VistaInicioSeccion();
+        VistaInicioSesion newframe = new VistaInicioSesion();
         newframe.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnEVAActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        VistaInicioSeccion newframe = new VistaInicioSeccion();
+        VistaInicioSesion newframe = new VistaInicioSesion();
         newframe.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void btnSGADocentesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSGADocentesActionPerformed
-        VistaInicioSeccion newframe = new VistaInicioSeccion();
+        VistaInicioSesion newframe = new VistaInicioSesion();
         newframe.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnSGADocentesActionPerformed
