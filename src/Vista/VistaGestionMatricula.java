@@ -26,6 +26,12 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
     matriculaDao control = new matriculaDao();
     ModeloTablaMatriculas tbm = new ModeloTablaMatriculas(); 
     
+    public VistaGestionMatricula() throws ListaVacia {
+        initComponents();
+        cargarTabla();
+        this.setLocationRelativeTo(null);
+    }
+    
     public Boolean verificar() {
         if (cbxCursa.getSelectedItem() == null) {
             JOptionPane.showMessageDialog(this, "Debe seleccionar un Cursa.");
@@ -67,11 +73,7 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
     /**
      * Creates new form Matricula
      */
-    public VistaGestionMatricula() throws ListaVacia {
-        initComponents();
-        cargarTabla();
-        this.setLocationRelativeTo(null);
-    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
