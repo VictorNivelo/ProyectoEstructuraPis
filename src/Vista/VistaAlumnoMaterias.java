@@ -14,12 +14,12 @@ import javax.swing.JLabel;
  *
  * @author FA506ICB-HN114W
  */
-public class VistaMateriasEva extends javax.swing.JFrame {
+public class VistaAlumnoMaterias extends javax.swing.JFrame {
 
     private String nombreMateria;
     private JLabel nuevoLabel;
 
-    public VistaMateriasEva() {
+    public VistaAlumnoMaterias() {
         initComponents();
         addListenersToButtons();
         this.setLocationRelativeTo(null);
@@ -184,7 +184,7 @@ public class VistaMateriasEva extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnSalir, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                    .addComponent(btnSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(1, 1, 1)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -198,7 +198,7 @@ public class VistaMateriasEva extends javax.swing.JFrame {
         );
 
         jPanel1.add(jPanel2);
-        jPanel2.setBounds(-5, 0, 1210, 42);
+        jPanel2.setBounds(-5, 0, 1210, 45);
 
         jPanel3.setBackground(new java.awt.Color(232, 241, 242));
 
@@ -312,7 +312,7 @@ public class VistaMateriasEva extends javax.swing.JFrame {
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(11, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(txtSeccion)
                 .addContainerGap())
         );
@@ -323,12 +323,12 @@ public class VistaMateriasEva extends javax.swing.JFrame {
         txtDocente.setFont(new java.awt.Font("Rockstar Extra Bold", 0, 12)); // NOI18N
         txtDocente.setText("COnoce al docente");
         jPanel1.add(txtDocente);
-        txtDocente.setBounds(230, 190, 110, 12);
+        txtDocente.setBounds(230, 190, 110, 16);
 
         txtSilabo.setFont(new java.awt.Font("Rockstar Extra Bold", 0, 12)); // NOI18N
         txtSilabo.setText("SILABO");
         jPanel1.add(txtSilabo);
-        txtSilabo.setBounds(240, 130, 40, 12);
+        txtSilabo.setBounds(240, 130, 40, 16);
 
         btnDocente.setBackground(new java.awt.Color(190, 193, 197));
         btnDocente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/documentos.png"))); // NOI18N
@@ -363,7 +363,7 @@ public class VistaMateriasEva extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        VistaEvaAlumno ea = new VistaEvaAlumno(null, true);
+        VistaAlumnoEva ea = new VistaAlumnoEva(null, true);
         dispose();
         ea.setVisible(true);
     }//GEN-LAST:event_btnRegresarActionPerformed
@@ -396,7 +396,7 @@ public class VistaMateriasEva extends javax.swing.JFrame {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VistaMateriasEva().setVisible(true);
+                new VistaAlumnoMaterias().setVisible(true);
             }
         });
     }

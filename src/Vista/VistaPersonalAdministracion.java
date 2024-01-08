@@ -15,12 +15,12 @@ import javax.swing.JPanel;
  *
  * @author Victor
  */
-public class VistaAdministracion extends javax.swing.JFrame {
+public class VistaPersonalAdministracion extends javax.swing.JFrame {
     
     /**
      * Creates new form VistaAdministracion
      */
-    public VistaAdministracion() {
+    public VistaPersonalAdministracion() {
         initComponents();
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
@@ -365,7 +365,7 @@ public class VistaAdministracion extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        VistaInicioSeccion abrirLogin = new VistaInicioSeccion();
+        VistaInicioSesion abrirLogin = new VistaInicioSesion();
         abrirLogin.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton5ActionPerformed
@@ -440,7 +440,7 @@ public class VistaAdministracion extends javax.swing.JFrame {
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
         // TODO add your handling code here:
         try {
-            VistaTomaAsistencia abrirAsistencia = new VistaTomaAsistencia();
+            VistaDocentesTomaAsistencia abrirAsistencia = new VistaDocentesTomaAsistencia();
             abrirAsistencia.setVisible(true);
             this.setVisible(false);
         } 
@@ -461,7 +461,7 @@ public class VistaAdministracion extends javax.swing.JFrame {
 
     private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
         // TODO add your handling code here:
-        VistaPerfil abrirAsistencia = new VistaPerfil();
+        VistaAlumnoPerfil abrirAsistencia = new VistaAlumnoPerfil();
         abrirAsistencia.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton14ActionPerformed
@@ -483,20 +483,21 @@ public class VistaAdministracion extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VistaAdministracion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaPersonalAdministracion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VistaAdministracion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaPersonalAdministracion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VistaAdministracion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaPersonalAdministracion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VistaAdministracion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaPersonalAdministracion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VistaAdministracion().setVisible(true);
+                new VistaPersonalAdministracion().setVisible(true);
             }
         });
     }

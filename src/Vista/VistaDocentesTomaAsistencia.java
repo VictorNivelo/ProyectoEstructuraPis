@@ -22,14 +22,14 @@ import javax.swing.table.TableColumn;
  *
  * @author Victor
  */
-public class VistaTomaAsistencia extends javax.swing.JFrame {
+public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
     DefaultTableModel dtm = new DefaultTableModel();
     personaDao alumnoControlDao = new personaDao();
 
     /**
      * Creates new form VistaTomaAsistencia
      */
-    public VistaTomaAsistencia() throws ListaVacia {
+    public VistaDocentesTomaAsistencia() throws ListaVacia {
         initComponents();
         this.setLocationRelativeTo(null);
         UtilVista.cargarcomboCurso(cbxCurso);
@@ -338,7 +338,7 @@ public class VistaTomaAsistencia extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        VistaServicios abrirLogin = new VistaServicios();
+        VistaPrincipalServicios abrirLogin = new VistaPrincipalServicios();
         abrirLogin.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton4ActionPerformed
@@ -360,23 +360,24 @@ public class VistaTomaAsistencia extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VistaTomaAsistencia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaDocentesTomaAsistencia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VistaTomaAsistencia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaDocentesTomaAsistencia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VistaTomaAsistencia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaDocentesTomaAsistencia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VistaTomaAsistencia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaDocentesTomaAsistencia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    new VistaTomaAsistencia().setVisible(true);
+                    new VistaDocentesTomaAsistencia().setVisible(true);
                 } catch (ListaVacia ex) {
-                    Logger.getLogger(VistaTomaAsistencia.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(VistaDocentesTomaAsistencia.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
