@@ -13,19 +13,19 @@ import java.util.logging.Logger;
  *
  * @author FA506ICB-HN114W
  */
-public class VistaEvaAlumno extends javax.swing.JDialog {
+public class VistaAlumnoEva extends javax.swing.JDialog {
 
     /**
      * Creates new form FrmEva
      */
-    public VistaEvaAlumno(java.awt.Frame parent, boolean modal) {
+    public VistaAlumnoEva(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
         try {
             UtilVista.CargarComboMateria(cbxMaterias);
         } catch (ListaVacia ex) {
-            Logger.getLogger(VistaEvaAlumno.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VistaAlumnoEva.class.getName()).log(Level.SEVERE, null, ex);
         }
         cbxMaterias.setSelectedIndex(0);
 
@@ -37,7 +37,7 @@ public class VistaEvaAlumno extends javax.swing.JDialog {
                     Materia materiaSeleccionada = (Materia) cbxMaterias.getSelectedItem();
                     if (materiaSeleccionada != null) {
                         String nombreMateriaSeleccionada = materiaSeleccionada.getNombreMateria();
-                        VistaMateriasEva vistaMateriasEva = new VistaMateriasEva();
+                        VistaAlumnoMaterias vistaMateriasEva = new VistaAlumnoMaterias();
                         vistaMateriasEva.setNombreMateria(nombreMateriaSeleccionada);
                         vistaMateriasEva.setVisible(true);
                     }
@@ -316,7 +316,7 @@ public class VistaEvaAlumno extends javax.swing.JDialog {
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void btnCalendarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalendarioActionPerformed
-        VistaCalendario fc = new VistaCalendario(null, true);
+        VistaAlumnoCalendario fc = new VistaAlumnoCalendario(null, true);
         dispose();
         fc.setVisible(true);
 
@@ -330,7 +330,7 @@ public class VistaEvaAlumno extends javax.swing.JDialog {
     }//GEN-LAST:event_btnPrincipalActionPerformed
 
     private void btnPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPerfilActionPerformed
-        VistaPerfil vp = new VistaPerfil();
+        VistaAlumnoPerfil vp = new VistaAlumnoPerfil();
         dispose();
         vp.setVisible(true);
     }//GEN-LAST:event_btnPerfilActionPerformed
@@ -353,21 +353,25 @@ public class VistaEvaAlumno extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VistaEvaAlumno.class
+            java.util.logging.Logger.getLogger(VistaAlumnoEva.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VistaEvaAlumno.class
+            java.util.logging.Logger.getLogger(VistaAlumnoEva.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VistaEvaAlumno.class
+            java.util.logging.Logger.getLogger(VistaAlumnoEva.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VistaEvaAlumno.class
+            java.util.logging.Logger.getLogger(VistaAlumnoEva.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -376,7 +380,7 @@ public class VistaEvaAlumno extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                VistaEvaAlumno dialog = new VistaEvaAlumno(new javax.swing.JFrame(), true);
+                VistaAlumnoEva dialog = new VistaAlumnoEva(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

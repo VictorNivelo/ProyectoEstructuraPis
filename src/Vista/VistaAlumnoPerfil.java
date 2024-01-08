@@ -8,12 +8,12 @@ package Vista;
  *
  * @author FA506ICB-HN114W
  */
-public class VistaPerfil extends javax.swing.JFrame {
+public class VistaAlumnoPerfil extends javax.swing.JFrame {
 
     /**
      * Creates new form VistaPerfil
      */
-    public VistaPerfil() {
+    public VistaAlumnoPerfil() {
         initComponents();
         this.setLocationRelativeTo(null);
     }
@@ -197,7 +197,7 @@ public class VistaPerfil extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        VistaEvaAlumno ea = new VistaEvaAlumno(null, true);
+        VistaAlumnoEva ea = new VistaAlumnoEva(null, true);
         dispose();
         ea.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -219,21 +219,23 @@ public class VistaPerfil extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VistaPerfil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaAlumnoPerfil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VistaPerfil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaAlumnoPerfil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VistaPerfil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaAlumnoPerfil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VistaPerfil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaAlumnoPerfil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VistaPerfil().setVisible(true);
+                new VistaAlumnoPerfil().setVisible(true);
             }
         });
     }

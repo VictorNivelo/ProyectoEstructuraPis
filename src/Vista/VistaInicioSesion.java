@@ -16,13 +16,13 @@ import javax.swing.JOptionPane;
  *
  * @author Victor
  */
-public class VistaInicioSeccion extends javax.swing.JFrame {
+public class VistaInicioSesion extends javax.swing.JFrame {
     personaDao personaControlDao = new personaDao();
 
     /**
      * Creates new form VistaInicioSeccion
      */
-    public VistaInicioSeccion() {
+    public VistaInicioSesion() {
         initComponents();
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
@@ -81,13 +81,13 @@ public class VistaInicioSeccion extends javax.swing.JFrame {
     }
 
     private static void procesarPersonalAdministrativo() {
-        VistaAdministracion abrirAsistencia = new VistaAdministracion();
+        VistaPersonalAdministracion abrirAsistencia = new VistaPersonalAdministracion();
         abrirAsistencia.setVisible(true);
     }
 
     private static void procesarDocente() {
         try {
-            VistaTomaAsistencia abrirAsistencia = new VistaTomaAsistencia();
+            VistaDocentesTomaAsistencia abrirAsistencia = new VistaDocentesTomaAsistencia();
             abrirAsistencia.setVisible(true);
         }
         catch (Exception e) {
@@ -97,7 +97,7 @@ public class VistaInicioSeccion extends javax.swing.JFrame {
 
     private static void procesarEstudiante() {
         try {
-            VistaEvaAlumno abrirAsistencia = new VistaEvaAlumno(null, true);
+            VistaAlumnoEva abrirAsistencia = new VistaAlumnoEva(null, true);
             abrirAsistencia.setVisible(true);
         } 
         catch (Exception e) {
@@ -296,7 +296,7 @@ public class VistaInicioSeccion extends javax.swing.JFrame {
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         // TODO add your handling code here:
-        EvaPrincipal newframe = new EvaPrincipal();
+        VistaPrincipalSGA newframe = new VistaPrincipalSGA();
         newframe.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
@@ -318,20 +318,21 @@ public class VistaInicioSeccion extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VistaInicioSeccion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaInicioSesion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VistaInicioSeccion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaInicioSesion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VistaInicioSeccion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaInicioSesion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VistaInicioSeccion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaInicioSesion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VistaInicioSeccion().setVisible(true);
+                new VistaInicioSesion().setVisible(true);
             }
         });
     }

@@ -9,14 +9,14 @@ import javax.swing.ImageIcon;
  *
  * @author FA506ICB-HN114W
  */
-public class VistaCalendario extends javax.swing.JDialog {
+public class VistaAlumnoCalendario extends javax.swing.JDialog {
 
     /**
      * Creates new form FrmCalendario
      * @param parent
      * @param modal
      */
-    public VistaCalendario(java.awt.Frame parent, boolean modal) {
+    public VistaAlumnoCalendario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
@@ -156,7 +156,7 @@ public class VistaCalendario extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        VistaEvaAlumno fe = new VistaEvaAlumno(null, true);
+        VistaAlumnoEva fe = new VistaAlumnoEva(null, true);
         dispose();
         fe.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -178,21 +178,23 @@ public class VistaCalendario extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VistaCalendario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaAlumnoCalendario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VistaCalendario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaAlumnoCalendario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VistaCalendario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaAlumnoCalendario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VistaCalendario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaAlumnoCalendario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                VistaCalendario dialog = new VistaCalendario(new javax.swing.JFrame(), true);
+                VistaAlumnoCalendario dialog = new VistaAlumnoCalendario(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
