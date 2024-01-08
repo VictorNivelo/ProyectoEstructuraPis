@@ -7,6 +7,7 @@ package Vista;
 import Controlador.TDA.ListaDinamica.Exepciones.ListaVacia;
 import java.awt.Graphics;
 import java.awt.Image;
+
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
@@ -456,6 +457,7 @@ public class VistaPersonalAdministracion extends javax.swing.JFrame {
             this.setVisible(false);
         } 
         catch (Exception e) {
+        
         }
     }//GEN-LAST:event_jButton13ActionPerformed
 

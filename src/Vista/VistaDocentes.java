@@ -143,13 +143,13 @@ public class VistaDocentes extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnTutoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTutoriasActionPerformed
-        VistaTutorias vt = new VistaTutorias();
+        VistaDocenteTutorias vt = new VistaDocenteTutorias();
         vt.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnTutoriasActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        VistaAdministracion abrirLogin = new VistaAdministracion();
+        VistaPersonalAdministracion abrirLogin = new VistaPersonalAdministracion();
         abrirLogin.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnRegresarActionPerformed
