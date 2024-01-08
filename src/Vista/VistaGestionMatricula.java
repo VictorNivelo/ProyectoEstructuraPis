@@ -5,9 +5,11 @@
 package Vista;
 
 
-import Controlador.ControladorMatricula;
+import Controlador.Dao.Modelo.matriculaDao;
+import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Controlador.Tda.listas.Exepciones.ListaVacia;
 import Controlador.util.Utiles;
+import Modelo.Matricula;
 import Vista.Modelo.ModeloTablaMatriculas;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,9 +22,9 @@ import javax.swing.JOptionPane;
  * @author romer
  */
 public class VistaGestionMatricula extends javax.swing.JFrame {
-    private ControladorMatricula controladorMatricula = new ControladorMatricula();
-    private Controlador.Dao.Modelo.matriculaDao control = new Controlador.Dao.Modelo.matriculaDao();
-    private ModeloTablaMatriculas tbm = new ModeloTablaMatriculas(); 
+    ListaDinamica<Matricula> listaMatricula = new ListaDinamica<>();
+    matriculaDao control = new matriculaDao();
+    ModeloTablaMatriculas tbm = new ModeloTablaMatriculas(); 
     
     public Boolean verificar() {
         if (cbxCursa.getSelectedItem() == null) {
@@ -44,11 +46,14 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
     
     public void guardar(){
         if (verificar()) {
-            controladorMatricula.getMatricula().setEstadoMatricula(chckEstado.isSelected());
-            controladorMatricula.getMatricula().setFechaMatricula(Utiles.obtenerFechaHoraActualFormateada());
             
-            if (controladorMatricula.guardarMatricula()) {
-                control.Persist(controladorMatricula.getMatricula());
+            control.getMatricula().setEstadoMatricula(chckEstado.isSelected());
+            control.getMatricula().setFechaMatricula(Utiles.obtenerFechaHoraActualFormateada());
+            control.getMatricula().setIdMatricula(listaMatricula.getLongitud()+1);
+            control.getMatricula().setMatriculaCursa(null);
+            control.getMatricula().setMatriculaPeriodoAcademico(null);
+            
+            if (control.persist()) {
                 JOptionPane.showMessageDialog(null, "Datos guardados");
                 cargarTabla();
             }else{
