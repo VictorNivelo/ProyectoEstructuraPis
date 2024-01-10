@@ -45,7 +45,7 @@ public class VistaDocentes extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel3.setBackground(new java.awt.Color(16, 35, 105));
+        jPanel3.setBackground(new java.awt.Color(61, 90, 134));
         jPanel3.setPreferredSize(new java.awt.Dimension(0, 140));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/LojoUNL.png"))); // NOI18N
