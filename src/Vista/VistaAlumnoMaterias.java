@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 /**
@@ -23,6 +24,7 @@ public class VistaAlumnoMaterias extends javax.swing.JFrame {
         initComponents();
         addListenersToButtons();
         this.setLocationRelativeTo(null);
+        setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
 
     }
 

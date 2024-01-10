@@ -4,6 +4,8 @@
  */
 package Vista;
 
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author Jhostin Roja
@@ -16,6 +18,7 @@ public class VistaPrincipalSGA extends javax.swing.JFrame {
     public VistaPrincipalSGA() {
         initComponents();
         this.setLocationRelativeTo(null);
+        setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
     }
 
     /**

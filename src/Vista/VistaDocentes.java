@@ -4,6 +4,8 @@
  */
 package Vista;
 
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author romer
@@ -16,6 +18,7 @@ public class VistaDocentes extends javax.swing.JFrame {
     public VistaDocentes() {
         initComponents();
         this.setLocationRelativeTo(null);
+        setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
     }
 
     /**
@@ -31,7 +34,6 @@ public class VistaDocentes extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        btnTutorias = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         btnAsistencias = new javax.swing.JButton();
@@ -76,15 +78,6 @@ public class VistaDocentes extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        btnTutorias.setFont(new java.awt.Font("Candara Light", 1, 32)); // NOI18N
-        btnTutorias.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/business-meeting_2666466 (1).png"))); // NOI18N
-        btnTutorias.setText("Tutorias");
-        btnTutorias.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTutoriasActionPerformed(evt);
-            }
-        });
-
         btnRegresar.setText("Regresar");
         btnRegresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -120,9 +113,7 @@ public class VistaDocentes extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(116, 116, 116)
                 .addComponent(btnAsistencias)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnTutorias)
-                .addGap(125, 125, 125))
+                .addGap(125, 689, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -131,9 +122,7 @@ public class VistaDocentes extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1)
                 .addGap(49, 49, 49)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnTutorias, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAsistencias, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(btnAsistencias, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 167, Short.MAX_VALUE)
                 .addComponent(btnRegresar)
                 .addContainerGap())
@@ -141,12 +130,6 @@ public class VistaDocentes extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnTutoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTutoriasActionPerformed
-        VistaDocenteTutorias vt = new VistaDocenteTutorias();
-        vt.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_btnTutoriasActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         VistaPersonalAdministracion abrirLogin = new VistaPersonalAdministracion();
@@ -200,7 +183,6 @@ public class VistaDocentes extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAsistencias;
     private javax.swing.JButton btnRegresar;
-    private javax.swing.JButton btnTutorias;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;

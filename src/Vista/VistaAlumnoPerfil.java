@@ -4,6 +4,8 @@
  */
 package Vista;
 
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author FA506ICB-HN114W
@@ -16,6 +18,7 @@ public class VistaAlumnoPerfil extends javax.swing.JFrame {
     public VistaAlumnoPerfil() {
         initComponents();
         this.setLocationRelativeTo(null);
+        setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
     }
 
     /**

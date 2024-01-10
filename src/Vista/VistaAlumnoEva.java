@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -22,6 +23,7 @@ public class VistaAlumnoEva extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
+        setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
         try {
             UtilVista.CargarComboMateria(cbxMaterias);
         } catch (ListaVacia ex) {
@@ -323,7 +325,7 @@ public class VistaAlumnoEva extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCalendarioActionPerformed
 
     private void btnPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrincipalActionPerformed
-        VistaPrincipalSistema vps = new VistaPrincipalSistema();
+        VistaPrincipalSGA vps = new VistaPrincipalSGA();
         dispose();
         vps.setVisible(true);
 
