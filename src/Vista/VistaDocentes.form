@@ -47,9 +47,7 @@
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace min="-2" pref="116" max="-2" attributes="0"/>
               <Component id="btnAsistencias" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
-              <Component id="btnTutorias" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="125" max="-2" attributes="0"/>
+              <EmptySpace min="125" pref="689" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -60,10 +58,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="btnTutorias" alignment="3" min="-2" pref="285" max="-2" attributes="0"/>
-                  <Component id="btnAsistencias" alignment="3" min="-2" pref="285" max="-2" attributes="0"/>
-              </Group>
+              <Component id="btnAsistencias" min="-2" pref="285" max="-2" attributes="0"/>
               <EmptySpace pref="167" max="32767" attributes="0"/>
               <Component id="btnRegresar" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
@@ -129,20 +124,6 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="btnTutorias">
-      <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Candara Light" size="32" style="1"/>
-        </Property>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/Vista/RecursosGraficos/business-meeting_2666466 (1).png"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="Tutorias"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTutoriasActionPerformed"/>
-      </Events>
-    </Component>
     <Component class="javax.swing.JButton" name="btnRegresar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Regresar"/>
