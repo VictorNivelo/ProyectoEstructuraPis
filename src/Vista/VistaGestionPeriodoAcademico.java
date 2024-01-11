@@ -10,6 +10,8 @@ import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Controlador.Utiles.UtilesControlador;
 import Modelo.PeriodoAcademico;
 import Vista.ModeloTabla.ModeloTablaPeriodo;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -21,6 +23,7 @@ public class VistaGestionPeriodoAcademico extends javax.swing.JFrame {
     periodoAcademicoDao periodoControlDao = new periodoAcademicoDao();
     ModeloTablaPeriodo mtp = new ModeloTablaPeriodo();
     ListaDinamica<PeriodoAcademico> listaPeriodos = new ListaDinamica<>();
+    SimpleDateFormat Formato = new SimpleDateFormat("dd/MM/yyyy");
 
     /**
      * Creates new form VistaGestionPeriodoAcademico
@@ -30,6 +33,8 @@ public class VistaGestionPeriodoAcademico extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
         cargarTabla();
+        DateInicio.setDateFormatString("dd/MM/yyyy");
+        DateFin.setDateFormatString("dd/MM/yyyy");
     }
     
     public void cargarTabla(){
@@ -40,14 +45,14 @@ public class VistaGestionPeriodoAcademico extends javax.swing.JFrame {
         
     }
     
-    public Boolean verificar() {
-        return (!txtInicio.getText().trim().isEmpty()
-                && !txtFin.getText().trim().isEmpty());
-    }
-    
+//    public Boolean verificar() {
+//        return (!txtInicio.getText().trim().isEmpty()
+//                && !txtFin.getText().trim().isEmpty());
+//    }
+//    
     public void Limpiar() {
-        txtInicio.setText("");
-        txtFin.setText("");
+        DateInicio.setDate(null);
+        DateFin.setDate(null);
         periodoControlDao.setPeriodo(null);
         cargarTabla();
     }
@@ -60,9 +65,10 @@ public class VistaGestionPeriodoAcademico extends javax.swing.JFrame {
         else{
             try {
                 periodoControlDao.setPeriodo(mtp.getPeriodos().getInfo(fila));
-                
-                txtInicio.setText(periodoControlDao.getPeriodo().getFechaInicio());
-                txtFin.setText(periodoControlDao.getPeriodo().getFechaFin());
+                Date Inicio = Formato.parse(periodoControlDao.getPeriodo().getFechaInicio());
+                Date Fin = Formato.parse(periodoControlDao.getPeriodo().getFechaFin());
+                DateInicio.setDate(Inicio);
+                DateFin.setDate(Fin);
             } 
             catch (Exception e) {
                 
@@ -72,16 +78,19 @@ public class VistaGestionPeriodoAcademico extends javax.swing.JFrame {
     
     private void Guardar() throws ListaVacia {
 
-        if (txtInicio.getText().isEmpty()) {
+        if (DateInicio.getDate() == null) {
             JOptionPane.showMessageDialog(null, "Falta llenar decha de inicio", "Error", JOptionPane.ERROR_MESSAGE);
         } 
-        else if (txtFin.getText().isEmpty()) {
+        else if (DateFin.getDate() == null) {
             JOptionPane.showMessageDialog(null, "Falta llenar fecha fin", "Error", JOptionPane.ERROR_MESSAGE);
         }
         else {
             Integer IdPeriodo = listaPeriodos.getLongitud() + 1;
-            String Inicio = txtInicio.getText();
-            String Fin = txtFin.getText();
+            
+            Date InicioD = DateInicio.getDate();
+            Date FinD = DateFin.getDate();
+            String Inicio = Formato.format(InicioD);
+            String Fin = Formato.format(FinD);
             
             periodoControlDao.getPeriodo().setIdPeriodoAcademino(IdPeriodo);
             periodoControlDao.getPeriodo().setFechaInicio(Inicio);
@@ -126,8 +135,8 @@ public class VistaGestionPeriodoAcademico extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
-        txtInicio = new javax.swing.JTextField();
-        txtFin = new javax.swing.JTextField();
+        DateInicio = new com.toedter.calendar.JDateChooser();
+        DateFin = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("GESTION DE PERIODOS ACADEMICOS");
@@ -267,11 +276,11 @@ public class VistaGestionPeriodoAcademico extends javax.swing.JFrame {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtFin))
+                                .addComponent(DateFin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtInicio)))))
+                                .addComponent(DateInicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
@@ -314,13 +323,13 @@ public class VistaGestionPeriodoAcademico extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(txtInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(DateInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
-                            .addComponent(txtFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(DateFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -388,8 +397,10 @@ public class VistaGestionPeriodoAcademico extends javax.swing.JFrame {
         }
         else {
             Integer IdMateria = periodoControlDao.getPeriodo().getIdPeriodoAcademino();
-            String Inicio = txtInicio.getText();
-            String Fin = txtFin.getText();
+            Date InicioD = DateInicio.getDate();
+            Date FinD = DateFin.getDate();
+            String Inicio = Formato.format(InicioD);
+            String Fin = Formato.format(FinD);
 
             PeriodoAcademico periodoModificado = new PeriodoAcademico(IdMateria, Inicio, Fin);
 
@@ -425,10 +436,10 @@ public class VistaGestionPeriodoAcademico extends javax.swing.JFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
         try {
-            if (txtInicio.getText().isEmpty()) {
+            if (DateInicio.getDate() == null) {
                 JOptionPane.showMessageDialog(null, "Falta llenar decha de inicio", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-            else if (txtFin.getText().isEmpty()) {
+            } 
+            else if (DateFin.getDate() == null) {
                 JOptionPane.showMessageDialog(null, "Falta llenar fecha fin", "Error", JOptionPane.ERROR_MESSAGE);
             }
             else {
@@ -475,6 +486,8 @@ public class VistaGestionPeriodoAcademico extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.toedter.calendar.JDateChooser DateFin;
+    private com.toedter.calendar.JDateChooser DateInicio;
     private javax.swing.JComboBox<String> cbxTipoBusqueda;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -494,7 +507,5 @@ public class VistaGestionPeriodoAcademico extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblPeriodos;
     private javax.swing.JTextField txtBuscar;
-    private javax.swing.JTextField txtFin;
-    private javax.swing.JTextField txtInicio;
     // End of variables declaration//GEN-END:variables
 }

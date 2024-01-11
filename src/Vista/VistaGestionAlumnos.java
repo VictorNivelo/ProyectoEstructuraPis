@@ -163,6 +163,9 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
         jButton5.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jButton5.setText("ELIMINAR");
 
+        Estado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cursando", "Retirado" }));
+        Estado.setSelectedIndex(-1);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
