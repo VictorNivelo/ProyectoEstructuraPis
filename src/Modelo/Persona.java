@@ -4,12 +4,15 @@
  */
 package Modelo;
 
+import Controlador.TDA.ListaDinamica.ListaDinamica;
+
 /**
  *
  * @author Victor
  */
 public class Persona {
     private Integer idPersona;
+    private String TipoDni;
     private String NumeroCedula;
     private String Nombre;
     private String Apellido;
@@ -19,10 +22,15 @@ public class Persona {
     private String Telefono;
     private Rol rolPersona;
     private Cuenta cuentaPersona;
+    private ListaDinamica<Cursa> cursosAsignados;
 
     public Persona() {
         
     }
+    
+//    public Persona() {
+//        cursosAsignados = new ListaDinamica<>();
+//    }
 
     public Persona(Integer idPersona, String NumeroCedula, String Nombre, String Apellido, String Genero, String FechaNacimineto, String direccion, String Telefono, Rol rolPersona, Cuenta cuentaPersona) {
         this.idPersona = idPersona;
@@ -116,6 +124,14 @@ public class Persona {
     public void setCuentaPersona(Cuenta cuentaPersona) {
         this.cuentaPersona = cuentaPersona;
     }
+
+    public String getTipoDni() {
+        return TipoDni;
+    }
+
+    public void setTipoDni(String TipoDni) {
+        this.TipoDni = TipoDni;
+    }
     
     public Boolean comparar(Persona p, String campo, Integer tipo) {
         switch (tipo) {
@@ -144,6 +160,16 @@ public class Persona {
             default:
                 throw new IllegalArgumentException("Campo no válido para la comparación");
         }
+    }
+    
+
+
+    public void inscribirCurso(Cursa curso) {
+        cursosAsignados.Agregar(curso);
+    }
+
+    public ListaDinamica<Cursa> getCursosAsignados() {
+        return cursosAsignados;
     }
 
     @Override

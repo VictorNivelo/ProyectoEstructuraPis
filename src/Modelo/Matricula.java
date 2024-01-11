@@ -69,7 +69,7 @@ public class Matricula {
 
     @Override
     public String toString() {
-        return "idMatricula=" + idMatricula + ", fechaMatricula=" + fechaMatricula + ", EstadoMatricula=" + EstadoMatricula + ", matriculaPeriodoAcademico=" + matriculaPeriodoAcademico + ", matriculaCursa=" + matriculaCursa + "\n";
+        return "Fecha:" + fechaMatricula + "\n";
     }
     
 }

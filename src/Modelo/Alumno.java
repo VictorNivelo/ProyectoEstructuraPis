@@ -4,6 +4,9 @@
  */
 package Modelo;
 
+import Controlador.TDA.ListaDinamica.Exepciones.ListaVacia;
+import Controlador.TDA.ListaDinamica.ListaDinamica;
+
 /**
  *
  * @author Victor
@@ -13,6 +16,7 @@ public class Alumno {
     private Persona datosAlumno;
     private Boolean estado;
     private Matricula matriculaAlumno;
+    private ListaDinamica<Cursa> cursosAsignados;
 
     public Alumno() {
         
@@ -55,6 +59,22 @@ public class Alumno {
 
     public void setMatriculaAlumno(Matricula matriculaAlumno) {
         this.matriculaAlumno = matriculaAlumno;
+    }
+    
+    public void agregarCursoAsignado(Cursa curso) {
+        cursosAsignados.Agregar(curso);
+    }
+
+    public ListaDinamica<Cursa> getCursosAsignados() {
+        return cursosAsignados;
+    }
+
+    public Cursa obtenerCursoAsignado(Integer indice) throws ListaVacia, IndexOutOfBoundsException {
+        return cursosAsignados.getInfo(indice);
+    }
+
+    public void eliminarCursoAsignado(Integer indice) throws ListaVacia, IndexOutOfBoundsException {
+        cursosAsignados.eliminar(indice);
     }
 
     @Override
