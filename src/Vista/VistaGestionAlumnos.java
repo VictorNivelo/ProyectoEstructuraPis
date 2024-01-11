@@ -65,7 +65,16 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
                 
                 cbxAlumnos.setSelectedIndex(alumnoControlDao.getAlumnos().getIdAlumno()-1);
                 cbxMatricula.setSelectedIndex(alumnoControlDao.getAlumnos().getMatriculaAlumno().getIdMatricula()-1);
-                cbxEstado.setSelectedItem(alumnoControlDao.getAlumnos().getEstado());
+                
+                String Estado = "";
+                if (alumnoControlDao.getAlumnos().getEstado() == true) {
+                    Estado = "Cursando";
+                }
+                if (alumnoControlDao.getAlumnos().getEstado() == false) {
+                    Estado = "Retirado";
+                }
+
+                cbxEstado.setSelectedItem(Estado);
 
             } 
             catch (Exception e) {
@@ -264,6 +273,11 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
 
         jButton5.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jButton5.setText("ELIMINAR");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         cbxEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cursando", "Retirado" }));
         cbxEstado.setSelectedIndex(-1);
@@ -408,8 +422,79 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        
+        int fila = tblAlumnos.getSelectedRow();
+        if (fila < 0) {
+            JOptionPane.showMessageDialog(null, "Escoga un registro");
+        } 
+        else {
+            if (cbxAlumnos.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Falta seleccionar alumno", "Error", JOptionPane.INFORMATION_MESSAGE);
+            } 
+            else if (cbxEstado.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Falta seleccionar estado", "Error", JOptionPane.INFORMATION_MESSAGE);
+            } 
+            else if (cbxMatricula.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Falta seleccionar matricula", "Error", JOptionPane.INFORMATION_MESSAGE);
+            }
+            else {
+                Integer IdAlumno = alumnoControlDao.getAlumnos().getIdAlumno();
+                Boolean Estado = false;
+                if (cbxEstado.getSelectedItem().toString() == "Cursando") {
+                    Estado = true;
+                }
+                if (cbxEstado.getSelectedItem().toString() == "Retirado") {
+                    Estado = false;
+                }
+                
+                
+                
+                Alumno personaModiPersona = new Alumno(IdAlumno, UtilVista.obtenerAlumnosControl(cbxAlumnos),Estado, UtilVista.obtenerMatriculaControl(cbxMatricula));
+
+                alumnoControlDao.Merge(personaModiPersona, fila);
+
+                CargarTabla();
+
+                try {
+                    Limpiar();
+                } 
+                catch (Exception e) {
+
+                }
+            }
+        }
+        /*
+                Cuenta c = new Cuenta(alumnoControlDao.getAlumnos().getCuentaPersona().getIdCuenta(), alumnoControlDao.getAlumnos().getCuentaPersona().getCorreo(), alumnoControlDao.getAlumnos().getCuentaPersona().getContrasena(), alumnoControlDao.getAlumnos().getCuentaPersona().getEstadoCuenta());
+                
+                Rol r = new Rol(alumnoControlDao.getAlumnos().getRolPersona().getIdRol(), alumnoControlDao.getAlumnos().getRolPersona().getNombreRol(), alumnoControlDao.getAlumnos().getRolPersona().getDescripcionRol());
+
+                Alumno personaModiPersona = new Alumno(
+                        IdAlumno, 
+                        Estado, 
+                        UtilVista.obtenerMatriculaControl(cbxMatricula),
+                        alumnoControlDao.getAlumnos().getIdPersona(),
+                        alumnoControlDao.getAlumnos().getNumeroCedula(),
+                        alumnoControlDao.getAlumnos().getNombre(),
+                        alumnoControlDao.getAlumnos().getApellido(),
+                        alumnoControlDao.getAlumnos().getGenero(),
+                        alumnoControlDao.getAlumnos().getFechaNacimineto(),
+                        alumnoControlDao.getAlumnos().getDireccion(),
+                        alumnoControlDao.getAlumnos().getTelefono(),
+                        r,
+                        c);
+                */
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        int fila = tblAlumnos.getSelectedRow();
+        if (fila < 0) {
+            JOptionPane.showMessageDialog(null, "Escoga un registro");
+        }
+        else {
+            alumnoControlDao.Eliminar(fila);
+            CargarTabla();
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments

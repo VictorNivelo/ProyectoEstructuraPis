@@ -5,7 +5,6 @@
 package Vista;
 
 import Controlador.Dao.Modelo.alumnoDao;
-import Controlador.Dao.Modelo.personaDao;
 import Controlador.TDA.ListaDinamica.Exepciones.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Controlador.Utiles.UtilesControlador;
@@ -14,9 +13,6 @@ import Modelo.Ciclo;
 import Modelo.Cursa;
 import Modelo.Matricula;
 import Modelo.Persona;
-import Vista.Utiles.UtilVista;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -491,8 +487,9 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
             public void run() {
                 try {
                     new VistaDocentesTomaAsistencia().setVisible(true);
-                } catch (ListaVacia ex) {
-                    Logger.getLogger(VistaDocentesTomaAsistencia.class.getName()).log(Level.SEVERE, null, ex);
+                } 
+                catch (ListaVacia ex) {
+                    
                 }
             }
         });
