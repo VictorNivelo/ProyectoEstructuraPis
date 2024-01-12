@@ -17,7 +17,7 @@ import javax.swing.JPanel;
  *
  * @author Victor
  */
-public class BordesRedondeados extends JPanel {
+public class BordesRedondos extends JPanel {
 
     public int getRoundTopLeft() {
         return roundTopLeft;
@@ -60,7 +60,7 @@ public class BordesRedondeados extends JPanel {
     private int roundBottomLeft = 0;
     private int roundBottomRight = 0;
 
-    public BordesRedondeados() {
+    public BordesRedondos() {
         setOpaque(false);
     }
 

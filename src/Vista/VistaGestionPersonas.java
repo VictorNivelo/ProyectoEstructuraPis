@@ -87,7 +87,8 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
                 txtUsuario.setText(personaControlDao.getPersona().getCuentaPersona().getCorreo());
                 txtContrasena.setText(personaControlDao.getPersona().getCuentaPersona().getContrasena());
                 cbxEstadoCuenta.setSelectedItem(personaControlDao.getPersona().getCuentaPersona().getEstadoCuenta());
-
+                
+                cbxEstadoCuenta.setEnabled(true);
             } 
             catch (Exception e) {
                 
