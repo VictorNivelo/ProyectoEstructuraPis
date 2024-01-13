@@ -94,7 +94,6 @@ public class VistaGestionCurso extends javax.swing.JFrame {
             cursoControlDao.getCursos().setParalelo(Paralelo);
             cursoControlDao.getCursos().setMateriaCurso(UtilVista.obtenerComboMateria(cbxMateria));
             cursoControlDao.getCursos().setPeriodoAcademicoCurso(UtilVista.obtenerPeriodoControl(cbxPeriodo));
-            
                                    
             if (cursoControlDao.Persist()) {
                 JOptionPane.showMessageDialog(null, "CURSO GUARDADA EXISTOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
@@ -438,7 +437,7 @@ public class VistaGestionCurso extends javax.swing.JFrame {
                         
             Cursa cursoModificado = new Cursa(IdCurso, Nombre, Paralelo, UtilVista.obtenerComboMateria(cbxMateria), UtilVista.obtenerPeriodoControl(cbxPeriodo));
             
-            cursoControlDao.Merge(cursoModificado, fila);
+            cursoControlDao.Merge(cursoModificado, IdCurso-1);
             
             CargarTabla();
             

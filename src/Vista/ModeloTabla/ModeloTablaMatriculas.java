@@ -23,7 +23,7 @@ public class ModeloTablaMatriculas extends AbstractTableModel{
 
     @Override
     public int getColumnCount() {
-        return 4;
+        return 5;
     }
 
     @Override
@@ -36,13 +36,16 @@ public class ModeloTablaMatriculas extends AbstractTableModel{
                 case 1:
                      return (matricula != null)? matricula.getEstadoMatricula(): "";
                 case 2:
-                     return (matricula != null)? matricula.getMatriculaPeriodoAcademico(): "";
+                     return (matricula != null)? matricula.getMatriculaPeriodoAcademico().getFechaInicio(): "";
                 case 3:
-                    return (matricula != null)? matricula.getMatriculaCursa(): "";
+                     return (matricula != null)? matricula.getMatriculaPeriodoAcademico().getFechaFin(): "";
+                case 4:
+                    return (matricula != null)? matricula.getMatriculaCursa().getCodigoCurso(): "";
                 default:
                     return null;
             }
-        } catch (ListaVacia ex) {
+        } 
+        catch (ListaVacia ex) {
             return null;
         }   
     }
@@ -55,8 +58,10 @@ public class ModeloTablaMatriculas extends AbstractTableModel{
             case 1:
                 return "Estado";
             case 2:
-                return "Periodo Academico";
+                return "Periodo inicio";
             case 3:
+                return "Periodo fin";
+            case 4:
                 return "Cursa";
             default:
                 return null;

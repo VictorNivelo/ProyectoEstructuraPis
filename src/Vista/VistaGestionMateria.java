@@ -407,7 +407,7 @@ public class VistaGestionMateria extends javax.swing.JFrame {
             
             Materia materiaModificada = new Materia(IdMateria, NombreMateria, DescipcionMateria, UtilVista.obtenerCicloControl(cbxCiclo), UtilVista.obtenerHorarioControl(cbxHorario));
             
-            materiaControlDao.Merge(materiaModificada, fila);
+            materiaControlDao.Merge(materiaModificada, IdMateria-1);
             
             CargarTabla();
             

@@ -55,6 +55,7 @@ public class ModeloTablaMateria extends AbstractTableModel {
             }
         } 
         catch (ListaVacia | IndexOutOfBoundsException ex) {
+            
         }
         return materiaTabla;
     }

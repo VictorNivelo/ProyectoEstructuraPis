@@ -4,18 +4,19 @@
  */
 package Vista;
 
-import Controlador.Dao.Modelo.personaDao;
+import Controlador.Dao.Modelo.alumnoDao;
 import Controlador.TDA.ListaDinamica.Exepciones.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Controlador.Utiles.UtilesControlador;
-import Modelo.Persona;
-import Vista.Utiles.UtilVista;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.ImageIcon;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
+import javax.swing.ImageIcon;
+import javax.swing.JTable;
+import Modelo.Matricula;
+import Modelo.Alumno;
+import Modelo.Ciclo;
+import Modelo.Cursa;
+import Modelo.Persona;
 
 
 /**
@@ -24,26 +25,30 @@ import javax.swing.table.TableColumn;
  */
 public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
     DefaultTableModel dtm = new DefaultTableModel();
-    personaDao alumnoControlDao = new personaDao();
+    alumnoDao alumnoControlDao = new alumnoDao();
 
     /**
      * Creates new form VistaTomaAsistencia
+     * @throws Controlador.TDA.ListaDinamica.Exepciones.ListaVacia
      */
     public VistaDocentesTomaAsistencia() throws ListaVacia {
         initComponents();
         this.setLocationRelativeTo(null);
-        UtilVista.cargarcomboCurso(cbxCurso);
-        dtm.setColumnIdentifiers(new String[]{"#","Nombre","Apellido", "Asistencia"});
+//        UtilVista.cargarcomboCurso(cbxCursoddddddd);
+        dtm.setColumnIdentifiers(new String[]{"#", "Nombre", "Apellido", "Asistencia"});
         CargarTabla();
         tblt.setModel(dtm);
         AgregarCheckbox(3, tblt);
+//        CargarTabla();
+//        tblt.setModel(dtm);
+        
         setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
     }
         
     private void CargarTabla() {
         
         try {
-            Object[] datosLista = alumnoControlDao.getListaPersonas().CovertirEnArreglo();
+            Object[] datosLista = alumnoControlDao.getListaAlumnos().CovertirEnArreglo();
             for (Object dato : datosLista) {
                 if (dato instanceof Persona) { 
                     Persona persona = (Persona) dato;
@@ -53,6 +58,8 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
         } catch (Exception e) {
 
         }
+
+
 //        try {
 //            Object[] datosLista = alumnoControlDao.getListaPersonas().CovertirEnArreglo();
 //            for (Object dato : datosLista) {
@@ -62,6 +69,30 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
 //        catch (Exception e) {
 //
 //        }
+    }
+    
+    public ListaDinamica<Alumno> getAlumnosPorCicloParalelo(Ciclo cicloSeleccionado, String paralelo) throws ListaVacia {
+        ListaDinamica<Alumno> listaFiltrada = new ListaDinamica<>();
+
+        ListaDinamica<Alumno> listaCompleta = alumnoControlDao.getListaAlumnos();
+
+        for (int i = 0; i < listaCompleta.getLongitud(); i++) {
+            Alumno alumno = listaCompleta.getInfo(i);
+
+            ListaDinamica<Cursa> cursosAsignados = alumno.getCursosAsignados();
+
+            for (int j = 0; j < cursosAsignados.getLongitud(); j++) {
+                Cursa cursa = cursosAsignados.getInfo(j);
+
+                if (cursa.getMateriaCurso().getCicloMateria().getNombreCiclo().equals(cicloSeleccionado) &&
+                    cursa.getParalelo().equals(paralelo)) {
+                    listaFiltrada.Agregar(alumno);
+                    break;
+                }
+            }
+        }
+
+        return listaFiltrada;
     }
     
     public void AgregarCheckbox(int columna, JTable tabla) {
@@ -88,8 +119,6 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        cbxCurso = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblt = new javax.swing.JTable();
@@ -102,6 +131,10 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        cbxCiclo = new javax.swing.JComboBox<>();
+        jLabel9 = new javax.swing.JLabel();
+        cbxParalelo = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -135,9 +168,6 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Curso");
 
-        jLabel3.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        jLabel3.setText("Curso");
-
         jLabel4.setFont(new java.awt.Font("Candara Light", 0, 32)); // NOI18N
         jLabel4.setText("Lista de alumnos");
 
@@ -155,6 +185,7 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
         jLabel5.setText("Buscar por");
 
         cbxTipoBusqueda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "Apellido" }));
+        cbxTipoBusqueda.setSelectedIndex(-1);
 
         jLabel6.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel6.setText("Busqueda");
@@ -169,10 +200,16 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
 
         jButton2.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jButton2.setText("MODIFICAR");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jButton3.setText("ELIMINAR");
 
+        jButton4.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jButton4.setText("REGRESAR");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -180,7 +217,25 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
             }
         });
 
+        jButton5.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jButton5.setText("SELECCIONAR");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel8.setText("Ciclo");
+
+        cbxCiclo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Primer ciclo", "Segundo ciclo", "Tercer ciclo", "Cuarto ciclo" }));
+        cbxCiclo.setSelectedIndex(-1);
+
+        jLabel9.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel9.setText("Paralelo");
+
+        cbxParalelo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A", "B", "C", "D", "E", "F" }));
+        cbxParalelo.setSelectedIndex(-1);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -189,17 +244,23 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel9))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addComponent(cbxParalelo, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cbxCiclo, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jButton4)
-                        .addGap(46, 46, 46)
-                        .addComponent(jButton5))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel3)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(cbxCurso, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton5)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -213,7 +274,7 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
                         .addComponent(txtBuscar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 937, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 934, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton3)
@@ -230,23 +291,33 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(cbxCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5)
-                    .addComponent(cbxTipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6)
-                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4)
-                    .addComponent(jButton5))
-                .addContainerGap())
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel5)
+                        .addComponent(cbxTipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel6)
+                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton1))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel8)
+                        .addComponent(cbxCiclo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton2)
+                            .addComponent(jButton3)
+                            .addComponent(jButton4)
+                            .addComponent(jButton5))
+                        .addContainerGap())
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel9)
+                            .addComponent(cbxParalelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -266,64 +337,39 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         try {
-            ListaDinamica<Persona> lista = alumnoControlDao.all();
+            ListaDinamica<Alumno> lista = alumnoControlDao.all();
 
             String Campo = txtBuscar.getText();
             String TipoCampo = cbxTipoBusqueda.getSelectedItem().toString();
 
             switch (TipoCampo) {
-//                case "Numero cedula":
-//                    TipoCampo = "NumeroCedula";
-//                    break;
                 case "Nombre":
                     TipoCampo = "Nombre";
                     break;
                 case "Apellido":
                     TipoCampo = "Apellido";
                     break;
-//                case "Genero":
-//                    TipoCampo = "Genero";
-//                    break;
-//                case "Telefono":
-//                    TipoCampo = "Telefono";
-//                    break;
-//                case "Direccion":
-//                    TipoCampo = "direccion";
-//                    break;
-//                case "Rol":
-//                    TipoCampo = "rolPersona.nombreRol";
-//                    break;
-//                case "Estado de cuenta":
-//                    TipoCampo = "cuentaPersona.EstadoCuenta";
-//                    break;
-//                case "Correo":
-//                    TipoCampo = "cuentaPersona.Correo";
-//                    break;
                 default:
                     throw new AssertionError();
             }
-            
-            
 
-            ListaDinamica<Persona> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
+            ListaDinamica<Alumno> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
             
             Object[][] datos = new Object[ResultadoBusqueda.getLongitud()][3];
             
             for (int i = 0; i < ResultadoBusqueda.getLongitud(); i++) {
-                Persona p = ResultadoBusqueda.getInfo(i);
+                Alumno p = ResultadoBusqueda.getInfo(i);
                 datos[i] = new Object[]{
-                    p.getIdPersona(),
-                    p.getNombre(),
-                    p.getApellido(),
+                    p.getIdAlumno(),
+                    p.getDatosAlumno().getNombre(),
+                    p.getDatosAlumno().getApellido(),
 
                 };
             }
 
-
             Object[] columnas = {"#", "Nombre", "Apellido", "Asistencia"};
 
             DefaultTableModel modeloTabla = new DefaultTableModel(datos, columnas);
-            
             
             tblt.setModel(modeloTabla);
             AgregarCheckbox(3, tblt);
@@ -331,7 +377,8 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
 //            dtm.setPersonasTabla(ResultadoBusqueda);
 //            mtp.fireTableDataChanged();
 
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
 
         }
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -342,6 +389,53 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
         abrirLogin.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        
+        dtm.setRowCount(0);
+
+        String cicloSeleccionado = cbxCiclo.getSelectedItem().toString();
+        String paraleloSeleccionado = cbxParalelo.getSelectedItem().toString();
+
+        try {
+            Object[] datosLista = alumnoControlDao.getListaAlumnos().CovertirEnArreglo();
+            for (Object dato : datosLista) {
+                try {
+                    if (dato instanceof Alumno) {
+                        Alumno alumno = (Alumno) dato;
+
+                        if (alumno.getDatosAlumno().getRolPersona().getNombreRol().equalsIgnoreCase("estudiante")) {
+                            Matricula matricula = alumno.getMatriculaAlumno();
+
+                            if (matricula != null && matricula.getMatriculaCursa() != null) {
+                                Cursa cursoAsignado = matricula.getMatriculaCursa();
+                                if (cursoAsignado.getMateriaCurso().getCicloMateria().getNombreCiclo().equalsIgnoreCase(cicloSeleccionado)
+                                        && cursoAsignado.getParalelo().equalsIgnoreCase(paraleloSeleccionado)) {
+                                    dtm.addRow(new Object[]{alumno.getIdAlumno(), alumno.getDatosAlumno().getNombre(),
+                                            alumno.getDatosAlumno().getApellido(), false});
+                                }
+                            }
+                        }
+                    }
+                } 
+                catch (NullPointerException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        } 
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        tblt.setModel(dtm);
+    
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -376,15 +470,17 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
             public void run() {
                 try {
                     new VistaDocentesTomaAsistencia().setVisible(true);
-                } catch (ListaVacia ex) {
-                    Logger.getLogger(VistaDocentesTomaAsistencia.class.getName()).log(Level.SEVERE, null, ex);
+                } 
+                catch (ListaVacia ex) {
+                    
                 }
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> cbxCurso;
+    private javax.swing.JComboBox<String> cbxCiclo;
+    private javax.swing.JComboBox<String> cbxParalelo;
     private javax.swing.JComboBox<String> cbxTipoBusqueda;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -393,11 +489,12 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;

@@ -14,21 +14,21 @@ import Modelo.Matricula;
  */
 public class matriculaDao extends DaoImplement<Matricula>{
     
-    private ListaDinamica<Matricula> matriculas;
+    private ListaDinamica<Matricula> ListaMatriculas;
     private Matricula matricula;
     
     public matriculaDao() {
         super(Matricula.class);
     }
 
-    public ListaDinamica<Matricula> getMatriculas() {
-        matriculas = all();
-        return matriculas;
+    public ListaDinamica<Matricula> getListaMatriculas() {
+        ListaMatriculas = all();
+        return ListaMatriculas;
     }
 
-    public void setMatriculas(ListaDinamica<Matricula> matriculas) {
-        this.matriculas = matriculas;
-    }
+    public void setListaMatriculas(ListaDinamica<Matricula> ListaMatriculas) {
+        this.ListaMatriculas = ListaMatriculas;
+    } 
 
     public Matricula getMatricula() {
         if (matricula == null) {

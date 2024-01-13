@@ -505,7 +505,7 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
 
             Asistencia personaModiPersona = new Asistencia(IdAsistencia, Dia, Hora, estadoSeleccionado, Observacion, UtilVista.obtenerHorarioControl(cbxHorario));
 
-            AsistenciaControl.Merge(personaModiPersona, fila);
+            AsistenciaControl.Merge(personaModiPersona, IdAsistencia-1);
 
             CargarTabla();
 
@@ -521,8 +521,25 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
     private void btnRegistrarAsistenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarAsistenciasActionPerformed
         // TODO add your handling code here:
         try {
-            Guardar();
-        }
+            if (txtDia.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Falta llenar nombre de la carrera", "Error", JOptionPane.INFORMATION_MESSAGE);
+            } 
+            else if (txtHora.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Falta llenar nombre de la carrera", "Error", JOptionPane.INFORMATION_MESSAGE);
+            } 
+            else if (cbxAsistencia.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Falta seleccionar la asistencia", "Error", JOptionPane.INFORMATION_MESSAGE);
+            } 
+            else if (txtObservacion.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Falta llenar duracion", "Error", JOptionPane.INFORMATION_MESSAGE);
+            } 
+            else if (cbxHorario.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Falta seleccionar la horario", "Error", JOptionPane.INFORMATION_MESSAGE);
+            } 
+            else {
+                Guardar();
+            }
+        } 
         catch (Exception e) {
 
         }
@@ -581,6 +598,7 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
                     new VistaGestionAsistencia().setVisible(true);
                 } 
                 catch (ListaVacia ex) {
+                    
                 }
             }
         });

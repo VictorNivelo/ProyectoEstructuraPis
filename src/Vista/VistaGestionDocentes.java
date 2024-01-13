@@ -459,7 +459,7 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
                 
                 Docente personaModiPersona = new Docente(IdDocente, UtilVista.obtenerDocentesControl(cbxDocente), Especialidad, Titulacion, UtilVista.obtenerCursoControl(cbxCurso));
 
-                docenteControlDao.Merge(personaModiPersona, fila);
+                docenteControlDao.Merge(personaModiPersona, IdDocente-1);
 
                 CargarTabla();
 

@@ -12,6 +12,7 @@ import Controlador.Dao.Modelo.cursoDao;
 import Controlador.Dao.Modelo.horarioDao;
 import Controlador.Dao.Modelo.mallaCurricularDao;
 import Controlador.Dao.Modelo.materiaDao;
+import Controlador.Dao.Modelo.matriculaDao;
 import Controlador.Dao.Modelo.periodoAcademicoDao;
 import Controlador.Dao.Modelo.personaDao;
 import Controlador.Dao.Modelo.rolDao;
@@ -22,6 +23,7 @@ import Modelo.Cursa;
 import Modelo.Horario;
 import Modelo.MallaCurricular;
 import Modelo.Materia;
+import Modelo.Matricula;
 import Modelo.PeriodoAcademico;
 import Modelo.Persona;
 import Modelo.Rol;
@@ -170,7 +172,7 @@ public class UtilVista {
         }
         else{
            for (int i = 0; i < rc.getListaCursa().getLongitud(); i++) {
-            cbx.addItem(rc.getListaCursa().getInfo(i));
+            cbx.addItem(rc.getListaCursa().getInfo(i) +" "+ rc.getListaCursa().getInfo(i).getMateriaCurso().getNombreMateria());
            }
         }
     }
@@ -213,6 +215,24 @@ public class UtilVista {
     
     public static Asistencia obtenerAsistenciaControl(JComboBox cbx){
         return (Asistencia) cbx.getSelectedItem();
+    }
+    
+    public static void cargarcomboMatricula(JComboBox cbx) throws ListaVacia{
+        matriculaDao rc = new matriculaDao();
+        cbx.removeAllItems();
+        
+        if(rc.getListaMatriculas().EstaVacio()){
+            throw new ListaVacia("No hay asistencias que mostrar");
+        }
+        else{
+           for (int i = 0; i < rc.getListaMatriculas().getLongitud(); i++) {
+            cbx.addItem(rc.getListaMatriculas().getInfo(i));
+           }
+        }
+    }
+    
+    public static Matricula obtenerMatriculaControl(JComboBox cbx){
+        return (Matricula) cbx.getSelectedItem();
     }
     
     //cargar combos especificos por rol

@@ -13,11 +13,19 @@ import javax.swing.table.AbstractTableModel;
  * @author romer
  */
 public class ModeloTablaAlumnos extends AbstractTableModel {
-    ListaDinamica<Alumno> alumnos;
+    ListaDinamica<Alumno> alumnosTabla;
+
+    public ListaDinamica<Alumno> getAlumnosTabla() {
+        return alumnosTabla;
+    }
+
+    public void setAlumnosTabla(ListaDinamica<Alumno> alumnosTabla) {
+        this.alumnosTabla = alumnosTabla;
+    }
 
     @Override
     public int getRowCount() {
-        return alumnos.getLongitud();
+        return alumnosTabla.getLongitud();
     }
 
     @Override
@@ -28,7 +36,7 @@ public class ModeloTablaAlumnos extends AbstractTableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         try {
-            Alumno alumno = alumnos.getInfo(rowIndex);
+            Alumno alumno = alumnosTabla.getInfo(rowIndex);
             switch (columnIndex) {
                 case 0:
                     return (alumno != null)? alumno.getDatosAlumno().getNombre() + " " + alumno.getDatosAlumno().getApellido() : " ";
@@ -43,7 +51,8 @@ public class ModeloTablaAlumnos extends AbstractTableModel {
                 default:
                     return null;
             }
-        } catch (Exception e) {
+        } 
+        catch (Exception e) {
             return null;
         }
     }
@@ -64,14 +73,6 @@ public class ModeloTablaAlumnos extends AbstractTableModel {
             default:
                 return null;
         }
-    }
-
-    public ListaDinamica<Alumno> getAlumnos() {
-        return alumnos;
-    }
-
-    public void setAlumnos(ListaDinamica<Alumno> alumnos) {
-        this.alumnos = alumnos;
     }
     
 }

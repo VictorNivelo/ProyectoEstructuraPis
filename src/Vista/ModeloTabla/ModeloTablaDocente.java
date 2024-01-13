@@ -32,7 +32,7 @@ public class ModeloTablaDocente extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 9;
+        return 10;
     }
     
     @Override
@@ -60,12 +60,15 @@ public class ModeloTablaDocente extends AbstractTableModel {
                     return (d != null) ? d.getCursoAsignado().getMateriaCurso().getCicloMateria().getNombreCiclo(): "";
                 case 8:
                     return (d != null) ? d.getCursoAsignado().getParalelo(): "";
+                case 9:
+                    return (d != null) ? d.getCursoAsignado().getMateriaCurso().getNombreMateria(): "";
 
                 default:
                     return null;
             }
         } 
         catch (ListaVacia | IndexOutOfBoundsException ex) {
+            
         }
         return docenteTabla;
     }
@@ -92,10 +95,10 @@ public class ModeloTablaDocente extends AbstractTableModel {
                 return "Curso";
             case 8:
                 return "Paralelo";
-
+            case 9:
+                return "Materia";
             default:
                 return null;
         }
     }
-    
 }

@@ -11,6 +11,10 @@ import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Controlador.Utiles.UtilesControlador;
 import Modelo.Matricula;
 import Vista.ModeloTabla.ModeloTablaMatriculas;
+import Vista.Utiles.UtilVista;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -26,15 +30,29 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
     ListaDinamica<Matricula> listaMatricula = new ListaDinamica<>();
     matriculaDao MatriculaControlDao = new matriculaDao();
     ModeloTablaMatriculas mtm = new ModeloTablaMatriculas(); 
+    SimpleDateFormat Formato = new SimpleDateFormat("dd/MM/yyyy");
     
     /**
      * Creates new form Matricula
+     * @throws Controlador.TDA.ListaDinamica.Exepciones.ListaVacia
      */
     public VistaGestionMatricula() throws ListaVacia {
         initComponents();
-        cargarTabla();
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
+        DateFecha.setDateFormatString("dd/MM/yyyy");
+        UtilVista.cargarcomboPeriodo(cbxPeriodo);
+        UtilVista.cargarcomboCurso(cbxCursa);
+        CargarTabla();
+    }
+    
+    private void CargarTabla() {
+        mtm.setMatriculas(MatriculaControlDao.all());
+        tbMatriculas.setModel(mtm);
+        tbMatriculas.updateUI();
+        cbxCursa.setSelectedIndex(-1);
+        cbxPeriodo.setSelectedIndex(-1);
+        DateFecha.setDate(null);
     }
     
     public Boolean verificar() {
@@ -49,28 +67,55 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
         return true;
     }
     
-    public void cargarTabla(){
-        mtm.setMatriculas(MatriculaControlDao.all());
-        tbMatriculas.setModel(mtm);
-        tbMatriculas.updateUI();
+    private void Limpiar() throws ListaVacia {
+        cbxCursa.setSelectedIndex(-1);
+        cbxPeriodo.setSelectedIndex(-1);
+        DateFecha.setDate(null);
+        MatriculaControlDao.setMatricula(null);
+        CargarTabla();
     }
     
-    public void guardar(){
+    private void Seleccionar(){
+        int fila = tbMatriculas.getSelectedRow();
+        if(fila < 0){
+            JOptionPane.showMessageDialog(null, "Escoga un registro");
+        }
+        else{
+            try {
+                MatriculaControlDao.setMatricula(mtm.getMatriculas().getInfo(fila));
+                
+                cbxCursa.setSelectedIndex(MatriculaControlDao.getMatricula().getIdMatricula()-1);
+                cbxPeriodo.setSelectedIndex(MatriculaControlDao.getMatricula().getMatriculaPeriodoAcademico().getIdPeriodoAcademino()-1);
+                Date Fecha = Formato.parse(MatriculaControlDao.getMatricula().getFechaMatricula());
+                DateFecha.setDate(Fecha);
+
+            } 
+            catch (Exception e) {
+                
+            }
+        }
+    }
+    
+    public void guardar() throws ParseException{
         if (verificar()) {
-            
+            Date obtenerFecha = DateFecha.getDate();
+            String FechaNacimiento = Formato.format(obtenerFecha);
+
             MatriculaControlDao.getMatricula().setEstadoMatricula(chckEstado.isSelected());
-            MatriculaControlDao.getMatricula().setFechaMatricula(UtilesControlador.obtenerFechaHoraActualFormateada());
+            MatriculaControlDao.getMatricula().setFechaMatricula(FechaNacimiento);
             MatriculaControlDao.getMatricula().setIdMatricula(listaMatricula.getLongitud()+1);
-            MatriculaControlDao.getMatricula().setMatriculaCursa(null);
-            MatriculaControlDao.getMatricula().setMatriculaPeriodoAcademico(null);
+            MatriculaControlDao.getMatricula().setMatriculaCursa(UtilVista.obtenerCursoControl(cbxCursa));
+            MatriculaControlDao.getMatricula().setMatriculaPeriodoAcademico(UtilVista.obtenerPeriodoControl(cbxPeriodo));
             
             if (MatriculaControlDao.persist()) {
                 JOptionPane.showMessageDialog(null, "Datos guardados");
-                cargarTabla();
-            }else{
+                CargarTabla();
+            }
+            else{
                 JOptionPane.showMessageDialog(null, "No se pudo guardar, hubo un error");
             }
-        }else{
+        }
+        else{
             JOptionPane.showMessageDialog(null, "Falta llenar campos", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -108,8 +153,8 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
+        DateFecha = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("GESTION MATRICULA");
@@ -121,14 +166,8 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel5.setText("Periodo:");
 
-        cbxPeriodo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Abril 2023" }));
-        cbxPeriodo.setSelectedIndex(-1);
-
         jLabel6.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel6.setText("Cursa:");
-
-        cbxCursa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cursa 1" }));
-        cbxCursa.setSelectedIndex(-1);
 
         jLabel4.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel4.setText("Activo:");
@@ -158,6 +197,11 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
 
         btnModificar.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         btnModificar.setText("MODIFICAR");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         btnEliminar.setText("ELIMINAR");
@@ -247,25 +291,26 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
                         .addComponent(btnModificar))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(jPanel4Layout.createSequentialGroup()
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(chckEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(cbxCursa, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                                    .addComponent(jLabel2)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(jTextField2))
-                                .addGroup(jPanel4Layout.createSequentialGroup()
-                                    .addComponent(jLabel5)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(cbxPeriodo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addComponent(btnGuardar, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addGap(13, 13, 13)
+                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jPanel4Layout.createSequentialGroup()
+                                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(chckEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(cbxCursa, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel4Layout.createSequentialGroup()
+                                        .addComponent(jLabel5)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(cbxPeriodo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(btnGuardar, javax.swing.GroupLayout.Alignment.TRAILING))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(18, 18, 18)
+                                .addComponent(DateFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addComponent(jLabel1)
@@ -303,9 +348,9 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel2)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(DateFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel4)
@@ -313,11 +358,9 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
-                            .addComponent(cbxPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 428, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)))
+                            .addComponent(cbxPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 428, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEliminar)
                     .addComponent(btnModificar)
@@ -343,7 +386,12 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        guardar();
+        try {
+            guardar();
+        } 
+        catch (ParseException ex) {
+            Logger.getLogger(VistaGestionMatricula.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -392,8 +440,35 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
 
     private void tbMatriculasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbMatriculasMouseClicked
         // TODO add your handling code here:
-        
+        Seleccionar();
     }//GEN-LAST:event_tbMatriculasMouseClicked
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        // TODO add your handling code here:
+        int fila = tbMatriculas.getSelectedRow();
+        if (fila < 0) {
+            JOptionPane.showMessageDialog(null, "Escoga un registro");
+        } else {
+
+            Integer IdMatricula = MatriculaControlDao.getMatricula().getIdMatricula();
+            Date formattedDate = DateFecha.getDate();
+            String FechaNacimiento = Formato.format(formattedDate);
+
+            Matricula personaModiPersona = new Matricula(IdMatricula, FechaNacimiento, true,UtilVista.obtenerPeriodoControl(cbxPeriodo), UtilVista.obtenerCursoControl(cbxCursa));
+
+            MatriculaControlDao.Merge(personaModiPersona, IdMatricula-1);
+
+            CargarTabla();
+
+            try {
+                Limpiar();
+            } 
+            catch (Exception e) {
+
+            }
+
+        }
+    }//GEN-LAST:event_btnModificarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -425,17 +500,20 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 try {
                     new VistaGestionMatricula().setVisible(true);
-                } catch (ListaVacia ex) {
-                    Logger.getLogger(VistaGestionMatricula.class.getName()).log(Level.SEVERE, null, ex);
+                } 
+                catch (ListaVacia ex) {
+                    
                 }
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.toedter.calendar.JDateChooser DateFecha;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
@@ -458,7 +536,6 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTable tbMatriculas;
     private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
