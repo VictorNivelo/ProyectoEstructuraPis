@@ -375,7 +375,7 @@ public class VistaGestionCarrera extends javax.swing.JFrame {
             
             Carrera carreraModificada = new Carrera(IdCarrera,Nombre,Duracion);
             
-            carreraControlDao.Merge(carreraModificada, fila);
+            carreraControlDao.Merge(carreraModificada, IdCarrera-1);
             
             CargarTabla();
             
@@ -464,6 +464,7 @@ public class VistaGestionCarrera extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new VistaGestionCarrera().setVisible(true);
             }

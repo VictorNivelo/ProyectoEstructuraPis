@@ -13,11 +13,19 @@ import javax.swing.table.AbstractTableModel;
  * @author romer
  */
 public class ModeloTablaPeriodo extends AbstractTableModel {
-    ListaDinamica<PeriodoAcademico> periodos;
+    ListaDinamica<PeriodoAcademico> periodosTabla;
 
+    public ListaDinamica<PeriodoAcademico> getPeriodosTabla() {
+        return periodosTabla;
+    }
+
+    public void setPeriodosTabla(ListaDinamica<PeriodoAcademico> periodosTabla) {
+        this.periodosTabla = periodosTabla;
+    }
+    
     @Override
     public int getRowCount() {
-        return periodos.getLongitud();
+        return periodosTabla.getLongitud();
     }
 
     @Override
@@ -28,7 +36,7 @@ public class ModeloTablaPeriodo extends AbstractTableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         try {
-            PeriodoAcademico periodo = periodos.getInfo(rowIndex);
+            PeriodoAcademico periodo = periodosTabla.getInfo(rowIndex);
             switch (columnIndex) {
                 case 0:
                     return (periodo != null) ? periodo.getIdPeriodoAcademino() : "";
@@ -39,7 +47,8 @@ public class ModeloTablaPeriodo extends AbstractTableModel {
                 default:
                     return null;
             }
-        } catch (Exception e) {
+        } 
+        catch (Exception e) {
             return null;
         }
         
@@ -58,14 +67,4 @@ public class ModeloTablaPeriodo extends AbstractTableModel {
                 return null;
         }
     }
-
-    public ListaDinamica<PeriodoAcademico> getPeriodos() {
-        return periodos;
-    }
-
-    public void setPeriodos(ListaDinamica<PeriodoAcademico> periodos) {
-        this.periodos = periodos;
-    }
-    
-    
 }

@@ -16,11 +16,19 @@ import javax.swing.table.TableColumn;
  * @author Victor
  */
 public class ModeloTablaTomaAsistencia extends AbstractTableModel {
-    ListaDinamica<Asistencia> asistencias;
+    ListaDinamica<Asistencia> asistenciasTabla;
 
+    public ListaDinamica<Asistencia> getAsistenciasTabla() {
+        return asistenciasTabla;
+    }
+
+    public void setAsistenciasTabla(ListaDinamica<Asistencia> asistenciasTabla) {
+        this.asistenciasTabla = asistenciasTabla;
+    }
+    
     @Override
     public int getRowCount() {
-        return asistencias.getLongitud();
+        return asistenciasTabla.getLongitud();
     }
 
     @Override
@@ -30,7 +38,7 @@ public class ModeloTablaTomaAsistencia extends AbstractTableModel {
     
     private Boolean EstadoCuenta(int i) throws ListaVacia {
         
-        Asistencia p = asistencias.getInfo(i);
+        Asistencia p = asistenciasTabla.getInfo(i);
         
         switch (p.getEstadoAsistencia().getDescripcion()) {
             case "Presente":
@@ -59,7 +67,7 @@ public class ModeloTablaTomaAsistencia extends AbstractTableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         try {
-            Asistencia periodo = asistencias.getInfo(rowIndex);
+            Asistencia periodo = asistenciasTabla.getInfo(rowIndex);
             switch (columnIndex) {
                 case 0:
                     return (periodo != null) ? periodo.getIdAsistencia(): "";
@@ -101,7 +109,7 @@ public class ModeloTablaTomaAsistencia extends AbstractTableModel {
     public void setValueAt(Object value, int rowIndex, int columnIndex) {
         if (columnIndex == 2) {
             try {
-                asistencias.getInfo(rowIndex);
+                asistenciasTabla.getInfo(rowIndex);
                 fireTableCellUpdated(rowIndex, columnIndex);
             } 
             catch (Exception e) {
@@ -119,13 +127,4 @@ public class ModeloTablaTomaAsistencia extends AbstractTableModel {
             return super.getColumnClass(columnIndex);
         }
     }
-
-    public ListaDinamica<Asistencia> getAsistencias() {
-        return asistencias;
-    }
-
-    public void setAsistencias(ListaDinamica<Asistencia> asistencias) {
-        this.asistencias = asistencias;
-    }
-
 }

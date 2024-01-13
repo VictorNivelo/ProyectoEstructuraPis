@@ -407,7 +407,7 @@ public class VistaGestionMalla extends javax.swing.JFrame {
                         
             MallaCurricular carreraModificada = new MallaCurricular(IdMalla,Nombre,Duracion,mallaControlDao.getMallaCurricular().getCarreraMalla());
             
-            mallaControlDao.Merge(carreraModificada, fila);
+            mallaControlDao.Merge(carreraModificada, IdMalla-1);
             
             CargarTabla();
             

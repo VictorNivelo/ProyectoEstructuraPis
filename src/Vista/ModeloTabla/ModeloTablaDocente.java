@@ -68,6 +68,7 @@ public class ModeloTablaDocente extends AbstractTableModel {
             }
         } 
         catch (ListaVacia | IndexOutOfBoundsException ex) {
+            
         }
         return docenteTabla;
     }
@@ -100,5 +101,4 @@ public class ModeloTablaDocente extends AbstractTableModel {
                 return null;
         }
     }
-    
 }

@@ -420,7 +420,7 @@ public class VistaGestionHorario extends javax.swing.JFrame {
             
             Horario horarioModiPersona = new Horario(IdHorario, Dia, Inicio, Fin, tematica);
             
-            horarioControlDao.Merge(horarioModiPersona, fila);
+            horarioControlDao.Merge(horarioModiPersona, IdHorario-1);
             
             CargarTabla();
             

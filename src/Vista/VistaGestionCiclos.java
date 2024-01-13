@@ -136,8 +136,6 @@ public class VistaGestionCiclos extends javax.swing.JFrame {
             Limpiar();
         }
     }
-    
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -460,7 +458,7 @@ public class VistaGestionCiclos extends javax.swing.JFrame {
                         
             Ciclo personaModiPersona = new Ciclo(IdCiclo, NombreCiclo, UtilVista.obtenerMallaControl(cbxMalla));
             
-            cicloControlDao.Merge(personaModiPersona, fila);
+            cicloControlDao.Merge(personaModiPersona, IdCiclo-1);
             
             CargarTabla();
             

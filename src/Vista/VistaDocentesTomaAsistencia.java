@@ -8,15 +8,15 @@ import Controlador.Dao.Modelo.alumnoDao;
 import Controlador.TDA.ListaDinamica.Exepciones.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Controlador.Utiles.UtilesControlador;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+import javax.swing.ImageIcon;
+import javax.swing.JTable;
+import Modelo.Matricula;
 import Modelo.Alumno;
 import Modelo.Ciclo;
 import Modelo.Cursa;
-import Modelo.Matricula;
 import Modelo.Persona;
-import javax.swing.ImageIcon;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
 
 
 /**
@@ -29,6 +29,7 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
 
     /**
      * Creates new form VistaTomaAsistencia
+     * @throws Controlador.TDA.ListaDinamica.Exepciones.ListaVacia
      */
     public VistaDocentesTomaAsistencia() throws ListaVacia {
         initComponents();
@@ -73,26 +74,20 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
     public ListaDinamica<Alumno> getAlumnosPorCicloParalelo(Ciclo cicloSeleccionado, String paralelo) throws ListaVacia {
         ListaDinamica<Alumno> listaFiltrada = new ListaDinamica<>();
 
-        // Obtén la lista completa de alumnos
         ListaDinamica<Alumno> listaCompleta = alumnoControlDao.getListaAlumnos();
 
-        // Itera sobre la lista completa para filtrar por ciclo y paralelo
         for (int i = 0; i < listaCompleta.getLongitud(); i++) {
             Alumno alumno = listaCompleta.getInfo(i);
 
-            // Obtén la lista de cursos asignados al alumno
             ListaDinamica<Cursa> cursosAsignados = alumno.getCursosAsignados();
 
-            // Itera sobre la lista de cursos asignados para verificar ciclo y paralelo
             for (int j = 0; j < cursosAsignados.getLongitud(); j++) {
                 Cursa cursa = cursosAsignados.getInfo(j);
 
-                // Verifica si el ciclo y paralelo coinciden
                 if (cursa.getMateriaCurso().getCicloMateria().getNombreCiclo().equals(cicloSeleccionado) &&
                     cursa.getParalelo().equals(paralelo)) {
-                    // Agrega el alumno a la lista filtrada
                     listaFiltrada.Agregar(alumno);
-                    break; // Rompe el bucle interno si ya se encontró una coincidencia
+                    break;
                 }
             }
         }
@@ -205,6 +200,11 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
 
         jButton2.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jButton2.setText("MODIFICAR");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jButton3.setText("ELIMINAR");
@@ -343,38 +343,15 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
             String TipoCampo = cbxTipoBusqueda.getSelectedItem().toString();
 
             switch (TipoCampo) {
-//                case "Numero cedula":
-//                    TipoCampo = "NumeroCedula";
-//                    break;
                 case "Nombre":
                     TipoCampo = "Nombre";
                     break;
                 case "Apellido":
                     TipoCampo = "Apellido";
                     break;
-//                case "Genero":
-//                    TipoCampo = "Genero";
-//                    break;
-//                case "Telefono":
-//                    TipoCampo = "Telefono";
-//                    break;
-//                case "Direccion":
-//                    TipoCampo = "direccion";
-//                    break;
-//                case "Rol":
-//                    TipoCampo = "rolPersona.nombreRol";
-//                    break;
-//                case "Estado de cuenta":
-//                    TipoCampo = "cuentaPersona.EstadoCuenta";
-//                    break;
-//                case "Correo":
-//                    TipoCampo = "cuentaPersona.Correo";
-//                    break;
                 default:
                     throw new AssertionError();
             }
-            
-            
 
             ListaDinamica<Alumno> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
             
@@ -390,7 +367,6 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
                 };
             }
 
-
             Object[] columnas = {"#", "Nombre", "Apellido", "Asistencia"};
 
             DefaultTableModel modeloTabla = new DefaultTableModel(datos, columnas);
@@ -401,7 +377,8 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
 //            dtm.setPersonasTabla(ResultadoBusqueda);
 //            mtp.fireTableDataChanged();
 
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
 
         }
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -454,6 +431,11 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
         tblt.setModel(dtm);
     
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

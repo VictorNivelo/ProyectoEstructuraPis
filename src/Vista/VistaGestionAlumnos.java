@@ -34,8 +34,9 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
         UtilVista.cargarcomboMatricula(cbxMatricula);
         CargarTabla();
     }
+    
     private void CargarTabla() {
-        mta.setAlumnos(alumnoControlDao.getListaAlumnos());
+        mta.setAlumnosTabla(alumnoControlDao.getListaAlumnos());
         tblAlumnos.setModel(mta);
         tblAlumnos.updateUI();
         cbxAlumnos.setSelectedIndex(-1);
@@ -43,7 +44,6 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
         cbxMatricula.setSelectedIndex(-1);
         cbxTipoBusqueda.setSelectedIndex(-1);
     }
-    
     
     private void Limpiar() throws ListaVacia {
         cbxAlumnos.setSelectedIndex(-1);
@@ -61,7 +61,7 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
         }
         else{
             try {
-                alumnoControlDao.setAlumnos(mta.getAlumnos().getInfo(fila));
+                alumnoControlDao.setAlumnos(mta.getAlumnosTabla().getInfo(fila));
                 
                 cbxAlumnos.setSelectedIndex(alumnoControlDao.getAlumnos().getIdAlumno()-1);
                 cbxMatricula.setSelectedIndex(alumnoControlDao.getAlumnos().getMatriculaAlumno().getIdMatricula()-1);
@@ -425,7 +425,7 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
         // TODO add your handling code here:
         int fila = tblAlumnos.getSelectedRow();
         if (fila < 0) {
-            JOptionPane.showMessageDialog(null, "Escoga un registro");
+            JOptionPane.showMessageDialog(null, "Escoga un registro","REGISTRO NO SELECCIONADO",JOptionPane.WARNING_MESSAGE);
         } 
         else {
             if (cbxAlumnos.getSelectedIndex() == -1) {
@@ -447,11 +447,9 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
                     Estado = false;
                 }
                 
-                
-                
                 Alumno personaModiPersona = new Alumno(IdAlumno, UtilVista.obtenerAlumnosControl(cbxAlumnos),Estado, UtilVista.obtenerMatriculaControl(cbxMatricula));
 
-                alumnoControlDao.Merge(personaModiPersona, fila);
+                alumnoControlDao.Merge(personaModiPersona, IdAlumno-1);
 
                 CargarTabla();
 
@@ -489,7 +487,7 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
         // TODO add your handling code here:
         int fila = tblAlumnos.getSelectedRow();
         if (fila < 0) {
-            JOptionPane.showMessageDialog(null, "Escoga un registro");
+            JOptionPane.showMessageDialog(null, "Escoga un registro","REGISTRO NO SELECCIONADO",JOptionPane.WARNING_MESSAGE);
         }
         else {
             alumnoControlDao.Eliminar(fila);

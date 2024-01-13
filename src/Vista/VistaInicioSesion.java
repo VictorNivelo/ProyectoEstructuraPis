@@ -71,9 +71,9 @@ public class VistaInicioSesion extends javax.swing.JFrame {
             }
         }
         if (!credencialesCorrectas) {
-            JOptionPane.showMessageDialog(this, "Inicio de sesión fallido. Verifique sus credenciales.","CREDENCIALES INCORRECTAS",JOptionPane.WARNING_MESSAGE);
-//            txtCorreo.setText("");
-//            txtContraseña.setText("");
+            JOptionPane.showMessageDialog(null, "Inicio de sesión fallido. Verifique sus credenciales.","CREDENCIALES INCORRECTAS",JOptionPane.WARNING_MESSAGE);
+            txtCorreo.setText("");
+            txtContrasenia.setText("");
         }
     }
     
@@ -102,6 +102,7 @@ public class VistaInicioSesion extends javax.swing.JFrame {
             abrirAsistencia.setVisible(true);
         } 
         catch (Exception e) {
+            
         }
     }
     
@@ -113,7 +114,7 @@ public class VistaInicioSesion extends javax.swing.JFrame {
                 return;
             }
         }
-        JOptionPane.showMessageDialog(null, "Autenticación fallida. Verifique sus credenciales.");
+        JOptionPane.showMessageDialog(null, "Autenticación fallida. Verifique sus credenciales.","CREDENCIALES NO VALIDAS",JOptionPane.WARNING_MESSAGE);
     }
 
     /**
@@ -336,6 +337,7 @@ public class VistaInicioSesion extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new VistaInicioSesion().setVisible(true);
             }

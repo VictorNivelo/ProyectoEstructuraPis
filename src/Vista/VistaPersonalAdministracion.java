@@ -444,6 +444,7 @@ public class VistaPersonalAdministracion extends javax.swing.JFrame {
             this.setVisible(false);
         } 
         catch (Exception e) {
+            
         }
     }//GEN-LAST:event_jButton12ActionPerformed
 
@@ -496,6 +497,7 @@ public class VistaPersonalAdministracion extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new VistaPersonalAdministracion().setVisible(true);
             }

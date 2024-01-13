@@ -32,29 +32,23 @@ public class VistaGestionPeriodoAcademico extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
-        cargarTabla();
         DateInicio.setDateFormatString("dd/MM/yyyy");
         DateFin.setDateFormatString("dd/MM/yyyy");
+        CargarTabla();
     }
     
-    public void cargarTabla(){
-        mtp.setPeriodos(periodoControlDao.all());
+    private void CargarTabla(){
+        mtp.setPeriodosTabla(periodoControlDao.all());
         tblPeriodos.setModel(mtp);
         tblPeriodos.updateUI();
         cbxTipoBusqueda.setSelectedIndex(-1);
-        
     }
     
-//    public Boolean verificar() {
-//        return (!txtInicio.getText().trim().isEmpty()
-//                && !txtFin.getText().trim().isEmpty());
-//    }
-//    
     public void Limpiar() {
         DateInicio.setDate(null);
         DateFin.setDate(null);
         periodoControlDao.setPeriodo(null);
-        cargarTabla();
+        CargarTabla();
     }
     
     private void Seleccionar(){
@@ -64,7 +58,7 @@ public class VistaGestionPeriodoAcademico extends javax.swing.JFrame {
         }
         else{
             try {
-                periodoControlDao.setPeriodo(mtp.getPeriodos().getInfo(fila));
+                periodoControlDao.setPeriodo(mtp.getPeriodosTabla().getInfo(fila));
                 Date Inicio = Formato.parse(periodoControlDao.getPeriodo().getFechaInicio());
                 Date Fin = Formato.parse(periodoControlDao.getPeriodo().getFechaFin());
                 DateInicio.setDate(Inicio);
@@ -380,7 +374,7 @@ public class VistaGestionPeriodoAcademico extends javax.swing.JFrame {
 
             ListaDinamica<PeriodoAcademico> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
 
-            mtp.setPeriodos(ResultadoBusqueda);
+            mtp.setPeriodosTabla(ResultadoBusqueda);
             mtp.fireTableDataChanged();
 
         }
@@ -404,9 +398,9 @@ public class VistaGestionPeriodoAcademico extends javax.swing.JFrame {
 
             PeriodoAcademico periodoModificado = new PeriodoAcademico(IdMateria, Inicio, Fin);
 
-            periodoControlDao.Merge(periodoModificado, fila);
+            periodoControlDao.Merge(periodoModificado, IdMateria-1);
 
-            cargarTabla();
+            CargarTabla();
 
             Limpiar();
 
@@ -421,7 +415,7 @@ public class VistaGestionPeriodoAcademico extends javax.swing.JFrame {
         }
         else {
             periodoControlDao.Eliminar(fila);
-            cargarTabla();
+            CargarTabla();
         }
 
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -447,6 +441,7 @@ public class VistaGestionPeriodoAcademico extends javax.swing.JFrame {
             }
         }
         catch (Exception e) {
+            
         }
     }//GEN-LAST:event_jButton5ActionPerformed
 
@@ -479,6 +474,7 @@ public class VistaGestionPeriodoAcademico extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new VistaGestionPeriodoAcademico().setVisible(true);
             }

@@ -44,7 +44,8 @@ public class ModeloTablaMatriculas extends AbstractTableModel{
                 default:
                     return null;
             }
-        } catch (ListaVacia ex) {
+        } 
+        catch (ListaVacia ex) {
             return null;
         }   
     }

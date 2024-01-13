@@ -36,8 +36,8 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
         UtilVista.cargarcomboRoles(cbxRol);
-        CargarTabla();
         DateFechaNacimiento.setDateFormatString("dd/MM/yyyy");
+        CargarTabla();
     }
     
     private void CargarTabla() {
@@ -676,8 +676,8 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
                 Cuenta cuenta = new Cuenta(idCuenta, Usuario, Contrasena, EstadoCuenta);
 
                 Persona personaModiPersona = new Persona(IdPersona, NumeroCedula, Nombre, Apellido, Genero, FechaNacimiento, Direccion, Telefono, UtilVista.obtenerRolControl(cbxRol), cuenta);
-
-                personaControlDao.Merge(personaModiPersona, fila);
+                
+                personaControlDao.Merge(personaModiPersona, IdPersona-1);
 
                 CargarTabla();
 
@@ -847,6 +847,7 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 try {
                     new VistaGestionPersonas().setVisible(true);

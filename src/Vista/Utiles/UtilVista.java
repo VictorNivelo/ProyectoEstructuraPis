@@ -172,7 +172,7 @@ public class UtilVista {
         }
         else{
            for (int i = 0; i < rc.getListaCursa().getLongitud(); i++) {
-            cbx.addItem(rc.getListaCursa().getInfo(i));
+            cbx.addItem(rc.getListaCursa().getInfo(i) +" "+ rc.getListaCursa().getInfo(i).getMateriaCurso().getNombreMateria());
            }
         }
     }

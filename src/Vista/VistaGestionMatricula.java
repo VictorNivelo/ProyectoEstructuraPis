@@ -34,6 +34,7 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
     
     /**
      * Creates new form Matricula
+     * @throws Controlador.TDA.ListaDinamica.Exepciones.ListaVacia
      */
     public VistaGestionMatricula() throws ListaVacia {
         initComponents();
@@ -43,6 +44,15 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
         UtilVista.cargarcomboPeriodo(cbxPeriodo);
         UtilVista.cargarcomboCurso(cbxCursa);
         CargarTabla();
+    }
+    
+    private void CargarTabla() {
+        mtm.setMatriculas(MatriculaControlDao.all());
+        tbMatriculas.setModel(mtm);
+        tbMatriculas.updateUI();
+        cbxCursa.setSelectedIndex(-1);
+        cbxPeriodo.setSelectedIndex(-1);
+        DateFecha.setDate(null);
     }
     
     public Boolean verificar() {
@@ -55,16 +65,6 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
             return false;
         }
         return true;
-    }
-    
-    public void CargarTabla(){
-        mtm.setMatriculas(MatriculaControlDao.all());
-        tbMatriculas.setModel(mtm);
-        tbMatriculas.updateUI();
-        cbxCursa.setSelectedIndex(-1);
-        cbxPeriodo.setSelectedIndex(-1);
-        DateFecha.setDate(null);
-        
     }
     
     private void Limpiar() throws ListaVacia {
@@ -450,13 +450,13 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Escoga un registro");
         } else {
 
-            Integer IdPersona = MatriculaControlDao.getMatricula().getIdMatricula();
+            Integer IdMatricula = MatriculaControlDao.getMatricula().getIdMatricula();
             Date formattedDate = DateFecha.getDate();
             String FechaNacimiento = Formato.format(formattedDate);
 
-            Matricula personaModiPersona = new Matricula(IdPersona, FechaNacimiento, true,UtilVista.obtenerPeriodoControl(cbxPeriodo), UtilVista.obtenerCursoControl(cbxCursa));
+            Matricula personaModiPersona = new Matricula(IdMatricula, FechaNacimiento, true,UtilVista.obtenerPeriodoControl(cbxPeriodo), UtilVista.obtenerCursoControl(cbxCursa));
 
-            MatriculaControlDao.Merge(personaModiPersona, fila);
+            MatriculaControlDao.Merge(personaModiPersona, IdMatricula-1);
 
             CargarTabla();
 
@@ -500,6 +500,7 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 try {
                     new VistaGestionMatricula().setVisible(true);
