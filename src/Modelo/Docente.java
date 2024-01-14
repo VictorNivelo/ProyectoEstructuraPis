@@ -13,6 +13,7 @@ public class Docente {
     private Persona datosDocente;
     private String especialidad;
     private String titulacion;
+    
     private Cursa cursoAsignado;
 
     public Docente() {

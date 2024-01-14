@@ -11,7 +11,9 @@ package Modelo;
 public class Carrera {
     private Integer idCarrera;
     private String NombreCarrera;
+    private Integer NumeroCiclos;
     private Integer duracion;
+    private MallaCurricular CarreraMalla;
 
     public Carrera() {
         

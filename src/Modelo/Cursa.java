@@ -16,6 +16,7 @@ public class Cursa {
     private String codigoCurso;
     private String paralelo;
     private Materia materiaCurso;
+    
     private ListaDinamica<Materia> listaMateriasCurso;
     private PeriodoAcademico periodoAcademicoCurso;
 
@@ -94,7 +95,7 @@ public class Cursa {
     
     @Override
     public String toString() {
-        return materiaCurso.getCicloMateria().getNombreCiclo() +" "+paralelo+ "\n";
+        return materiaCurso.getCicloMateria().getNombreCiclo() +" "+paralelo+ " " + materiaCurso.getNombreMateria()+"\n";
     }
     
 }

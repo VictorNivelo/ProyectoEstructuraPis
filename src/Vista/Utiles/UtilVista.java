@@ -172,7 +172,7 @@ public class UtilVista {
         }
         else{
            for (int i = 0; i < rc.getListaCursa().getLongitud(); i++) {
-            cbx.addItem(rc.getListaCursa().getInfo(i) +" "+ rc.getListaCursa().getInfo(i).getMateriaCurso().getNombreMateria());
+            cbx.addItem(rc.getListaCursa().getInfo(i));
            }
         }
     }
@@ -181,17 +181,17 @@ public class UtilVista {
         return (Cursa) cbx.getSelectedItem();
     }
     
-     public static void cargarcomboPersona(JComboBox cbx) throws ListaVacia{
+    public static void cargarcomboPersona(JComboBox cbx) throws ListaVacia {
         personaDao rc = new personaDao();
         cbx.removeAllItems();
-        
-        if(rc.getListaPersonas().EstaVacio()){
+
+        if (rc.getListaPersonas().EstaVacio()) {
             throw new ListaVacia("No hay personas que mostrar");
-        }
-        else{
-           for (int i = 0; i < rc.getListaPersonas().getLongitud(); i++) {
-            cbx.addItem(rc.getListaPersonas().getInfo(i));
-           }
+        } 
+        else {
+            for (int i = 0; i < rc.getListaPersonas().getLongitud(); i++) {
+                cbx.addItem(rc.getListaPersonas().getInfo(i));
+            }
         }
     }
     
@@ -242,7 +242,8 @@ public class UtilVista {
 
         if (rc.getListaPersonas().EstaVacio()) {
             throw new ListaVacia("No hay alumnos que mostrar");
-        } else {
+        } 
+        else {
             for (int i = 0; i < rc.getListaPersonas().getLongitud(); i++) {
                 Persona persona = rc.getListaPersonas().getInfo(i);
 
@@ -263,7 +264,8 @@ public class UtilVista {
 
         if (rc.getListaPersonas().EstaVacio()) {
             throw new ListaVacia("No hay docentes que mostrar");
-        } else {
+        } 
+        else {
             for (int i = 0; i < rc.getListaPersonas().getLongitud(); i++) {
                 Persona persona = rc.getListaPersonas().getInfo(i);
 

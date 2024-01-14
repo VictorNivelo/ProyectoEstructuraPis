@@ -4,6 +4,8 @@
  */
 package Modelo;
 
+import Controlador.TDA.ListaDinamica.ListaDinamica;
+
 /**
  *
  * @author Victor
@@ -12,8 +14,11 @@ public class MallaCurricular {
     private Integer idMallaCurricular;
     private String NombreMallaCurricular;
     private Integer duracionMallaCurricular;
+    private Ciclo MallaCiclo;
+    private ListaDinamica<Ciclo> ListaCiclos;
+    
     private Carrera carreraMalla;
-
+    
     public MallaCurricular() {
         
     }

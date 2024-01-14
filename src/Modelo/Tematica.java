@@ -4,14 +4,17 @@
  */
 package Modelo;
 
+import java.util.Date;
+
 /**
  *
  * @author Victor
  */
 public class Tematica {
     private Integer idTematica;
-    private String DiaTematica;
     private String NombreTematica;
+    private Date FechaTematica;
+    private String DiaTematica;
 
     public Tematica() {
         

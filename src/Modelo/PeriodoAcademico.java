@@ -4,12 +4,17 @@
  */
 package Modelo;
 
+import java.util.Date;
+
 /**
  *
  * @author Victor
  */
 public class PeriodoAcademico {
     private Integer idPeriodoAcademino;
+    private Date FechaInicioP;
+    private Date FechaFinP;
+    
     private String fechaInicio;
     private String FechaFin;
 

@@ -10,10 +10,13 @@ package Modelo;
  */
 public class Asistencia {
     private Integer idAsistencia;
-    private String DiaAsistencia;
-    private String HoraAsistencia;
     private EstadoAsistencia estadoAsistencia;
     private String Observacion;
+    private Tematica AsistenciaTematica;
+    
+    private String DiaAsistencia;
+    private String HoraAsistencia;
+    
     private Horario HorarioAsistencia;
 
     public Asistencia() {

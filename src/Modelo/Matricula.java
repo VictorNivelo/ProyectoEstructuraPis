@@ -4,16 +4,26 @@
  */
 package Modelo;
 
+import Controlador.TDA.ListaDinamica.ListaDinamica;
+import java.util.Date;
+
 /**
  *
  * @author Victor
  */
 public class Matricula {
     private Integer idMatricula;
-    private String fechaMatricula;
+    private Date FechaMatricula;
     private Boolean EstadoMatricula;
-    private PeriodoAcademico matriculaPeriodoAcademico;
+    
     private Cursa matriculaCursa;
+    private PeriodoAcademico matriculaPeriodoAcademico;
+    
+    private ListaDinamica<PeriodoAcademico> ListaPeriodos;
+    private ListaDinamica<Cursa> ListaCursos;
+    
+    private String fechaMatricula;
+    
 
     public Matricula() {
         

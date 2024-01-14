@@ -16,6 +16,8 @@ public class Alumno {
     private Persona datosAlumno;
     private Boolean estado;
     private Matricula matriculaAlumno;
+    private ListaDinamica<Matricula> ListaMatriculas;
+    
     private ListaDinamica<Cursa> cursosAsignados;
 
     public Alumno() {

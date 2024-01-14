@@ -85,14 +85,15 @@ public class VistaInicioSesion extends javax.swing.JFrame {
         VistaPersonalAdministracion abrirAsistencia = new VistaPersonalAdministracion();
         abrirAsistencia.setVisible(true);
     }
-
+    
     private static void procesarDocente() {
+
         try {
             VistaDocentesTomaAsistencia abrirAsistencia = new VistaDocentesTomaAsistencia();
             abrirAsistencia.setVisible(true);
-        }
+        } 
         catch (Exception e) {
-            
+
         }
     }
 
@@ -289,10 +290,14 @@ public class VistaInicioSesion extends javax.swing.JFrame {
 
     private void btnIniciarSeccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSeccionActionPerformed
         // TODO add your handling code here:
+
+        char[] contrasena = txtContrasenia.getPassword();
+        String contrasenaIngresada = new String(contrasena);
+
         if (txtCorreo.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Correo vacio", "CAMPO VACIO", JOptionPane.INFORMATION_MESSAGE);
         } 
-        else if (txtContrasenia.getText().isEmpty()) {
+        else if (contrasenaIngresada.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Contraseña vacia", "CAMPO VACIO", JOptionPane.INFORMATION_MESSAGE);
         } 
         else {
@@ -337,7 +342,6 @@ public class VistaInicioSesion extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
             public void run() {
                 new VistaInicioSesion().setVisible(true);
             }

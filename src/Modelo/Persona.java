@@ -22,6 +22,7 @@ public class Persona {
     private String Telefono;
     private Rol rolPersona;
     private Cuenta cuentaPersona;
+    
     private ListaDinamica<Cursa> cursosAsignados;
 
     public Persona() {
@@ -51,6 +52,14 @@ public class Persona {
 
     public void setIdPersona(Integer idPersona) {
         this.idPersona = idPersona;
+    }
+
+    public String getTipoDni() {
+        return TipoDni;
+    }
+
+    public void setTipoDni(String TipoDni) {
+        this.TipoDni = TipoDni;
     }
 
     public String getNumeroCedula() {
@@ -125,52 +134,46 @@ public class Persona {
         this.cuentaPersona = cuentaPersona;
     }
 
-    public String getTipoDni() {
-        return TipoDni;
-    }
-
-    public void setTipoDni(String TipoDni) {
-        this.TipoDni = TipoDni;
-    }
     
-    public Boolean comparar(Persona p, String campo, Integer tipo) {
-        switch (tipo) {
-            case 0:
-                return compararCampo(p, campo) < 0;
-            case 1:
-                return compararCampo(p, campo) > 0;
-            default:
-                throw new IllegalArgumentException("Tipo de comparación no válido");
-        }
-    }
-
-    private int compararCampo(Persona p, String campo) {
-        switch (campo.toLowerCase()) {
-            case "numerocedula":
-                return NumeroCedula.compareTo(p.getNumeroCedula());
-            case "nombre":
-                return Nombre.compareTo(p.getNombre());
-            case "apellido":
-                return Apellido.compareTo(p.getApellido());
-            case "genero":
-                return Genero.compareTo(p.getGenero());
-            case "rol":
-                return rolPersona.getNombreRol().compareTo(p.getRolPersona().getNombreRol());
-
-            default:
-                throw new IllegalArgumentException("Campo no válido para la comparación");
-        }
-    }
     
-
-
-    public void inscribirCurso(Cursa curso) {
-        cursosAsignados.Agregar(curso);
-    }
-
-    public ListaDinamica<Cursa> getCursosAsignados() {
-        return cursosAsignados;
-    }
+//    public Boolean comparar(Persona p, String campo, Integer tipo) {
+//        switch (tipo) {
+//            case 0:
+//                return compararCampo(p, campo) < 0;
+//            case 1:
+//                return compararCampo(p, campo) > 0;
+//            default:
+//                throw new IllegalArgumentException("Tipo de comparación no válido");
+//        }
+//    }
+//
+//    private int compararCampo(Persona p, String campo) {
+//        switch (campo.toLowerCase()) {
+//            case "numerocedula":
+//                return NumeroCedula.compareTo(p.getNumeroCedula());
+//            case "nombre":
+//                return Nombre.compareTo(p.getNombre());
+//            case "apellido":
+//                return Apellido.compareTo(p.getApellido());
+//            case "genero":
+//                return Genero.compareTo(p.getGenero());
+//            case "rol":
+//                return rolPersona.getNombreRol().compareTo(p.getRolPersona().getNombreRol());
+//
+//            default:
+//                throw new IllegalArgumentException("Campo no válido para la comparación");
+//        }
+//    }
+//    
+//
+//
+//    public void inscribirCurso(Cursa curso) {
+//        cursosAsignados.Agregar(curso);
+//    }
+//
+//    public ListaDinamica<Cursa> getCursosAsignados() {
+//        return cursosAsignados;
+//    }
 
     @Override
     public String toString() {

@@ -27,7 +27,8 @@ public class UtilesControlador {
         try {
             sdf.parse(fecha);
             return true;
-        } catch (ParseException e) {
+        } 
+        catch (ParseException e) {
             System.out.println("Error al parsear la fecha: " + e.getMessage());
             return false;
         }
@@ -281,13 +282,14 @@ public class UtilesControlador {
     private static boolean ClaseCampoEspecifico(Object valorCampo) {
         return valorCampo.getClass().getDeclaredFields().length > 0;
     }
+}
     
 //    private static boolean buscarTipoEspecifico(String texto, String busqueda) {
 //        String textoSinEspacios = texto.replaceAll("\\s", "").replaceAll("[^a-zA-Z0-9]", "");
 //        String busquedaSinEspacios = busqueda.replaceAll("\\s", "").replaceAll("[^a-zA-Z0-9]", "");
 //        return textoSinEspacios.toLowerCase().contains(busquedaSinEspacios.toLowerCase());
 //    }
-}
+//}
     
 //    public static <T> ListaDinamica<T> BusquedaLineal(ListaDinamica<T> lista, String busqueda, String campo) throws ListaVacia, PosicionNoEncontrada {
 //        ListaDinamica<T> result = new ListaDinamica<>();

@@ -4,15 +4,21 @@
  */
 package Modelo;
 
+import Controlador.TDA.ListaDinamica.ListaDinamica;
+import java.util.Date;
+
 /**
  *
  * @author Victor
  */
 public class Horario {
     private Integer idHorario;
-    private String Dias;
+    private Date DiaSemana;
     private String horaIncio;
     private String horaFin;
+    private Asistencia HorarioAsistencia;
+        
+    private String Dias;
     private String tematicaHorario;
 
     public Horario() {

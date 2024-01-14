@@ -4,6 +4,8 @@
  */
 package Modelo;
 
+import Controlador.TDA.ListaDinamica.ListaDinamica;
+
 /**
  *
  * @author Victor
@@ -12,8 +14,10 @@ public class Materia {
     private Integer idMateria;
     private String NombreMateria;
     private String DescipcionMateria;
-    private Ciclo cicloMateria;
     private Horario HorarioMateria;
+    private ListaDinamica<Horario> ListaHorarios;
+    
+    private Ciclo cicloMateria;
 
     public Materia() {
         
