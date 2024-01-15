@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package Vista;
 
 import Controlador.Dao.Modelo.carreraDao;
@@ -356,14 +353,14 @@ public class VistaGestionCarrera extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
+        
         VistaPersonalAdministracion abrirLogin = new VistaPersonalAdministracion();
         abrirLogin.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+        
         try {
             if (txtNombreCarrera.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Falta llenar nombre de la carrera", "Error", JOptionPane.ERROR_MESSAGE);
@@ -381,7 +378,7 @@ public class VistaGestionCarrera extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        
         int fila = tblCarreras.getSelectedRow();
         if (fila < 0) {
             JOptionPane.showMessageDialog(null, "Escoga un registro");
@@ -407,7 +404,7 @@ public class VistaGestionCarrera extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        
         int fila = tblCarreras.getSelectedRow();
         if (fila < 0) {
             JOptionPane.showMessageDialog(null, "Escoga un registro");
@@ -419,7 +416,7 @@ public class VistaGestionCarrera extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
+        
         try {
             ListaDinamica<Carrera> lista = carreraControlDao.all();
             
@@ -449,7 +446,7 @@ public class VistaGestionCarrera extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void tblCarrerasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCarrerasMouseClicked
-        // TODO add your handling code here:
+        
         Seleccionar();
     }//GEN-LAST:event_tblCarrerasMouseClicked
 

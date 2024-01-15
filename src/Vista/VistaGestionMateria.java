@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package Vista;
 
 import Controlador.TDA.ListaDinamica.ListaDinamica;
@@ -395,6 +392,7 @@ public class VistaGestionMateria extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarMateriaActionPerformed
+        
         if(txtNombreMateria.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "Nombre de materia vacio", "CAMPO VACIO", JOptionPane.INFORMATION_MESSAGE);
         }
@@ -412,7 +410,7 @@ public class VistaGestionMateria extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGuardarMateriaActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        // TODO add your handling code here:
+        
         int fila = tblMaterias.getSelectedRow();
         if (fila < 0) {
             JOptionPane.showMessageDialog(null, "Escoga un registro");
@@ -439,7 +437,7 @@ public class VistaGestionMateria extends javax.swing.JFrame {
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
+        
         int fila = tblMaterias.getSelectedRow();
         if (fila < 0) {
             JOptionPane.showMessageDialog(null, "Escoga un registro");
@@ -451,14 +449,14 @@ public class VistaGestionMateria extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        // TODO add your handling code here:
+        
         VistaPersonalAdministracion abrirLogin = new VistaPersonalAdministracion();
         abrirLogin.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        
         try {
             ListaDinamica<Materia> lista = materiaControlDao.all();
             
@@ -492,7 +490,7 @@ public class VistaGestionMateria extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void tblMateriasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMateriasMouseClicked
-        // TODO add your handling code here:
+        
         Seleccionar();
     }//GEN-LAST:event_tblMateriasMouseClicked
 

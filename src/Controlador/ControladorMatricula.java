@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Controlador;
 
 import Controlador.TDA.ListaDinamica.ListaDinamica;
@@ -12,25 +9,25 @@ import Modelo.Matricula;
  * @author romer
  */
 public class ControladorMatricula {
-    private ListaDinamica<Matricula> matriculas;
+    private ListaDinamica<Matricula> ListaMatriculas;
     private Matricula matricula;
 
     public ControladorMatricula() {
-        matriculas = new ListaDinamica<>();
+        ListaMatriculas = new ListaDinamica<>();
     }
     
     public Boolean guardarMatricula(){
-        getMatricula().setIdMatricula(getMatriculas().getLongitud());
-        getMatriculas().Agregar(getMatricula());
+        getMatricula().setIdMatricula(getListaMatriculas().getLongitud());
+        getListaMatriculas().Agregar(getMatricula());
         return true;
     }
 
-    public ListaDinamica<Matricula> getMatriculas() {
-        return matriculas;
+    public ListaDinamica<Matricula> getListaMatriculas() {
+        return ListaMatriculas;
     }
 
-    public void setMatriculas(ListaDinamica<Matricula> matriculas) {
-        this.matriculas = matriculas;
+    public void setListaMatriculas(ListaDinamica<Matricula> matriculas) {
+        this.ListaMatriculas = matriculas;
     }
 
     public Matricula getMatricula() {

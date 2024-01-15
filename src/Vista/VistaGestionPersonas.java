@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package Vista;
 
 import Controlador.TDA.ListaDinamica.ListaDinamica;
@@ -604,7 +601,7 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
+        
         int fila = tblPersonas.getSelectedRow();
         if (fila < 0) {
             JOptionPane.showMessageDialog(null, "Escoga un registro");
@@ -616,7 +613,7 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        // TODO add your handling code here:
+        
         int fila = tblPersonas.getSelectedRow();
         if (fila < 0) {
             JOptionPane.showMessageDialog(null, "Escoga un registro");
@@ -695,14 +692,14 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        // TODO add your handling code here:
+        
         VistaPersonalAdministracion abrirLogin = new VistaPersonalAdministracion();
         abrirLogin.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void btnGuardarPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarPersonaActionPerformed
-        // TODO add your handling code here:
+        
         if (txtNumeroCedula.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Falta llenar numero dni", "Error", JOptionPane.INFORMATION_MESSAGE);
         } 
@@ -747,7 +744,7 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGuardarPersonaActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        
         try {
             ListaDinamica<Persona> lista = personaControlDao.all();
             
@@ -799,7 +796,7 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void tblPersonasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPersonasMouseClicked
-        // TODO add your handling code here:
+        
         Seleccionar();
     }//GEN-LAST:event_tblPersonasMouseClicked
 

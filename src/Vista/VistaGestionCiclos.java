@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package Vista;
 
 import Controlador.TDA.ListaDinamica.ListaDinamica;
@@ -413,6 +410,7 @@ public class VistaGestionCiclos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        
         try {
             if (cbxMalla.getSelectedIndex() == -1) {
                 JOptionPane.showMessageDialog(null, "Falta seleccionar malla", "Error", JOptionPane.ERROR_MESSAGE);
@@ -430,14 +428,14 @@ public class VistaGestionCiclos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        // TODO add your handling code here:
+        
         VistaPersonalAdministracion abrirLogin = new VistaPersonalAdministracion();
         abrirLogin.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        
         try {
             ListaDinamica<Ciclo> lista = cicloControlDao.all();
             
@@ -467,7 +465,7 @@ public class VistaGestionCiclos extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        // TODO add your handling code here:
+        
         int fila = tblCIclos.getSelectedRow();
         if (fila < 0) {
             JOptionPane.showMessageDialog(null, "Escoga un registro");
@@ -492,7 +490,7 @@ public class VistaGestionCiclos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
+        
         int fila = tblCIclos.getSelectedRow();
         if (fila < 0) {
             JOptionPane.showMessageDialog(null, "Escoga un registro");
@@ -504,7 +502,7 @@ public class VistaGestionCiclos extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void tblCIclosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCIclosMouseClicked
-        // TODO add your handling code here:
+        
         Seleccionar();
     }//GEN-LAST:event_tblCIclosMouseClicked
 

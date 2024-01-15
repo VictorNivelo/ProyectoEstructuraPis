@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package Vista;
 
 import Controlador.Dao.Modelo.personaDao;
@@ -289,7 +286,7 @@ public class VistaInicioSesion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIniciarSeccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSeccionActionPerformed
-        // TODO add your handling code here:
+        
 
         char[] contrasena = txtContrasenia.getPassword();
         String contrasenaIngresada = new String(contrasena);
@@ -306,7 +303,7 @@ public class VistaInicioSesion extends javax.swing.JFrame {
     }//GEN-LAST:event_btnIniciarSeccionActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        // TODO add your handling code here:
+        
         VistaPrincipalServicios newframe = new VistaPrincipalServicios();
         newframe.setVisible(true);
         this.dispose();

@@ -1,10 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Vista.ModeloTabla;
 
-import Controlador.TDA.ListaDinamica.Exepciones.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Modelo.Asistencia;
 import javax.swing.JTable;
@@ -36,23 +32,22 @@ public class ModeloTablaTomaAsistencia extends AbstractTableModel {
         return 3;
     }
     
-    private Boolean EstadoCuenta(int i) throws ListaVacia {
-        
-        Asistencia p = asistenciasTabla.getInfo(i);
-        
-        switch (p.getEstadoAsistencia().getDescripcion()) {
-            case "Presente":
-                return Boolean.TRUE;
-            case "Ausente":
-                    return Boolean.FALSE;
-            case "Justificado":
-                return Boolean.TRUE;
-                    
-            default:
-                throw new AssertionError();
-        }
-
-    }
+//    private Boolean EstadoCuenta(int i) throws ListaVacia {
+//        
+//        Asistencia p = asistenciasTabla.getInfo(i);
+//        
+//        switch (p.getEstadoAsistencia().getDescripcion()) {
+//            case "Presente":
+//                return Boolean.TRUE;
+//            case "Ausente":
+//                    return Boolean.FALSE;
+//            case "Justificado":
+//                return Boolean.TRUE;
+//                    
+//            default:
+//                throw new AssertionError();
+//        }
+//    }
     
     public void agregarCheckBox(int columna, JTable tabla){
         TableColumn tc = tabla.getColumnModel().getColumn(columna);

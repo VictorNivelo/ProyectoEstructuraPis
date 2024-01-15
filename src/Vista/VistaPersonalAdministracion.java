@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package Vista;
 
 import Controlador.TDA.ListaDinamica.Exepciones.ListaVacia;
@@ -310,7 +307,6 @@ public class VistaPersonalAdministracion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
         
         try {
             VistaGestionAsistencia abrirAsistencia;
@@ -325,8 +321,8 @@ public class VistaPersonalAdministracion extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        
         try {
-            // TODO add your handling code here:
             VistaGestionCurso abrirAsistencia = new VistaGestionCurso();
             abrirAsistencia.setVisible(true);
             this.setVisible(false);
@@ -337,7 +333,7 @@ public class VistaPersonalAdministracion extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        
         try {
             VistaGestionMateria abrirAsistencia = new VistaGestionMateria();
             abrirAsistencia.setVisible(true);
@@ -349,8 +345,8 @@ public class VistaPersonalAdministracion extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        
         try {
-            // TODO add your handling code here:
             VistaGestionPersonas abrirAsistencia = new VistaGestionPersonas();
             abrirAsistencia.setVisible(true);
             this.setVisible(false);
@@ -362,9 +358,9 @@ public class VistaPersonalAdministracion extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void btnAdministrarCiclosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministrarCiclosActionPerformed
-        // TODO add your handling code here:
-        VistaGestionCiclos abrirLogin;
+        
         try {
+            VistaGestionCiclos abrirLogin;
             abrirLogin = new VistaGestionCiclos();
             abrirLogin.setVisible(true);
             this.setVisible(false);
@@ -376,14 +372,14 @@ public class VistaPersonalAdministracion extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAdministrarCiclosActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
+        
         VistaInicioSesion abrirLogin = new VistaInicioSesion();
         abrirLogin.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
+        
         try {
             VistaGestionDocentes abrirLogin = new VistaGestionDocentes();
             abrirLogin.setVisible(true);
@@ -395,7 +391,7 @@ public class VistaPersonalAdministracion extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
+        
         try {
             VistaGestionAlumnos abrirLogin = new VistaGestionAlumnos();
             abrirLogin.setVisible(true);
@@ -407,7 +403,7 @@ public class VistaPersonalAdministracion extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
+        
         try {
             VistaGestionCarrera abrirLogin = new VistaGestionCarrera();
             abrirLogin.setVisible(true);
@@ -419,7 +415,7 @@ public class VistaPersonalAdministracion extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        // TODO add your handling code here:
+        
         try {
             VistaGestionMalla abrirLogin = new VistaGestionMalla();
             abrirLogin.setVisible(true);
@@ -431,7 +427,7 @@ public class VistaPersonalAdministracion extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-        // TODO add your handling code here:
+        
         try {
             VistaGestionHorario abrirLogin = new VistaGestionHorario();
             abrirLogin.setVisible(true);
@@ -443,7 +439,7 @@ public class VistaPersonalAdministracion extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-        // TODO add your handling code here:
+        
         try {
             VistaGestionPeriodoAcademico abrirLogin = new VistaGestionPeriodoAcademico();
             abrirLogin.setVisible(true);
@@ -455,7 +451,7 @@ public class VistaPersonalAdministracion extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton11ActionPerformed
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
-        // TODO add your handling code here:
+        
         try {
             VistaDocentesTomaAsistencia abrirAsistencia = new VistaDocentesTomaAsistencia();
             abrirAsistencia.setVisible(true);
@@ -467,7 +463,7 @@ public class VistaPersonalAdministracion extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton12ActionPerformed
 
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
-        // TODO add your handling code here:
+        
         try {
             VistaGestionMatricula abrirAsistencia = new VistaGestionMatricula();
             abrirAsistencia.setVisible(true);
@@ -479,14 +475,14 @@ public class VistaPersonalAdministracion extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton13ActionPerformed
 
     private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
-        // TODO add your handling code here:
+        
         VistaAlumnoPerfil abrirAsistencia = new VistaAlumnoPerfil();
         abrirAsistencia.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton14ActionPerformed
 
     private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
-        // TODO add your handling code here:
+        
         try {
             VistaGestionFacultad abrirAsistencia = new VistaGestionFacultad();
             abrirAsistencia.setVisible(true);
