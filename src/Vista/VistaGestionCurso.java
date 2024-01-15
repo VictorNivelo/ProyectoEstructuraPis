@@ -203,7 +203,7 @@ public class VistaGestionCurso extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Candara Light", 1, 32)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("DATOS DEL CURSO");
+        jLabel4.setText("Informacion");
 
         jLabel3.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
@@ -216,7 +216,7 @@ public class VistaGestionCurso extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Candara Light", 1, 32)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("DATOS MATERIA");
+        jLabel6.setText("Materia");
 
         jLabel7.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 0, 0));
@@ -224,7 +224,7 @@ public class VistaGestionCurso extends javax.swing.JFrame {
 
         jLabel8.setFont(new java.awt.Font("Candara Light", 1, 32)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel8.setText("LISTA DE CURSOS");
+        jLabel8.setText("Lista de cursos");
 
         tblCursos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -265,7 +265,7 @@ public class VistaGestionCurso extends javax.swing.JFrame {
         jLabel11.setFont(new java.awt.Font("Candara Light", 1, 32)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(0, 0, 0));
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel11.setText("DATOS PERIODO");
+        jLabel11.setText("Periodo");
 
         jLabel12.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(0, 0, 0));

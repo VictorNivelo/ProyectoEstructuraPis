@@ -149,7 +149,6 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SISTEMA DE GESTION DE FACULTADES");
-        setPreferredSize(new java.awt.Dimension(1200, 700));
 
         jPanel1.setBackground(new java.awt.Color(190, 193, 197));
 
@@ -185,7 +184,7 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Candara Light", 1, 32)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("INFORMACION");
+        jLabel3.setText("Informacion");
 
         jLabel4.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
@@ -201,7 +200,7 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
 
         jLabel7.setFont(new java.awt.Font("Candara Light", 1, 32)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel7.setText("LISTA DE FACULTADES");
+        jLabel7.setText("Lista de facultades");
 
         jButton1.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jButton1.setText("REGRESAR");

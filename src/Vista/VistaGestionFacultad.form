@@ -222,7 +222,7 @@
               <Color blue="0" green="0" red="0" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="INFORMACION"/>
+            <Property name="text" type="java.lang.String" value="Informacion"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
@@ -272,7 +272,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="0" green="0" red="0" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="LISTA DE FACULTADES"/>
+            <Property name="text" type="java.lang.String" value="Lista de facultades"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="jButton1">

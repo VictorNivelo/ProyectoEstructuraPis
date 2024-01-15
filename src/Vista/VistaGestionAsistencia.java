@@ -229,11 +229,11 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Candara Light", 1, 32)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("SELECCIONAR CURSO");
+        jLabel2.setText("Informacion");
 
         jLabel7.setFont(new java.awt.Font("Candara Light", 1, 32)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel7.setText("LISTA DE ASISTENCIA");
+        jLabel7.setText("Lista de asistencia");
 
         btnRegresar.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         btnRegresar.setText("REGRESAR");

@@ -191,7 +191,7 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Candara Light", 1, 32)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("ALUMNO");
+        jLabel3.setText("Alumno");
 
         jButton1.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jButton1.setText("REGRESAR");
@@ -208,7 +208,7 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Candara Light", 1, 32)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("MATRICULA");
+        jLabel5.setText("Matricula");
 
         jLabel6.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
@@ -228,7 +228,7 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
 
         jLabel8.setFont(new java.awt.Font("Candara Light", 1, 32)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel8.setText("LISTA DE ALUMNOS");
+        jLabel8.setText("Lista de alumnos");
 
         jLabel9.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(0, 0, 0));

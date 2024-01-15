@@ -186,7 +186,7 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Candara Light", 1, 32)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("INFORMACION");
+        jLabel4.setText("Informacion");
 
         jLabel5.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
@@ -199,7 +199,7 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
         jLabel8.setFont(new java.awt.Font("Candara Light", 1, 32)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(0, 0, 0));
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setText("CURSO");
+        jLabel8.setText("Curso");
 
         jLabel9.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(0, 0, 0));
@@ -223,7 +223,7 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
 
         jLabel10.setFont(new java.awt.Font("Candara Light", 1, 32)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel10.setText("LISTA DE DOCENTES");
+        jLabel10.setText("Lista de docentes");
 
         tblDocentes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -280,7 +280,8 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
         jLabel13.setFont(new java.awt.Font("Candara Light", 1, 32)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(0, 0, 0));
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel13.setText("DOCENTE");
+        jLabel13.setText("Docente");
+        jLabel13.setToolTipText("");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -374,7 +375,7 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
                             .addComponent(jButton1)
                             .addComponent(jButton2)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton4)

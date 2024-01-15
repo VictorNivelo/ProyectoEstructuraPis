@@ -192,11 +192,11 @@ public class VistaGestionMateria extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Candara Light", 1, 32)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("MATERIA");
+        jLabel6.setText("Informacion");
 
         jLabel7.setFont(new java.awt.Font("Candara Light", 1, 32)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel7.setText("LISTA DE MATERIAS");
+        jLabel7.setText("Lista de materias");
 
         tblMaterias.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

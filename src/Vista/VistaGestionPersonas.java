@@ -280,12 +280,12 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
         jLabel14.setFont(new java.awt.Font("Candara Light", 1, 32)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(0, 0, 0));
         jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel14.setText("ROL DE PERSONA");
+        jLabel14.setText("Rol");
 
         jLabel15.setFont(new java.awt.Font("Candara Light", 1, 32)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(0, 0, 0));
         jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel15.setText("CREDENCIALES");
+        jLabel15.setText("Credenciales");
 
         jPanel2.setBackground(new java.awt.Color(61, 90, 134));
 
@@ -340,7 +340,7 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
         jLabel17.setFont(new java.awt.Font("Candara Light", 1, 32)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(0, 0, 0));
         jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel17.setText("DATOS PERSONA");
+        jLabel17.setText("Datos de personas");
         jLabel17.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
 
         btnModificar.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
@@ -408,7 +408,7 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
 
         jLabel13.setFont(new java.awt.Font("Candara Light", 1, 32)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel13.setText("LISTA DE PERSONAS");
+        jLabel13.setText("Lista de personas");
 
         jLabel20.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(0, 0, 0));
@@ -447,7 +447,7 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
                             .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, 342, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(DateFechaNacimiento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)

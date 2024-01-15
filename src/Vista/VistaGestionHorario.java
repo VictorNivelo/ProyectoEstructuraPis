@@ -197,11 +197,11 @@ public class VistaGestionHorario extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Candara Light", 1, 32)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setText("INFORMACION");
+        jLabel7.setText("Informacion");
 
         jLabel8.setFont(new java.awt.Font("Candara Light", 1, 32)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel8.setText("LISTA DE HORARIOS");
+        jLabel8.setText("Lista de horarios");
 
         tblHorario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

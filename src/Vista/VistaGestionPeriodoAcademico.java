@@ -167,7 +167,7 @@ public class VistaGestionPeriodoAcademico extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Candara Light", 1, 32)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("DATOS PERIODO");
+        jLabel3.setText("Informacion");
 
         jLabel4.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
@@ -179,7 +179,7 @@ public class VistaGestionPeriodoAcademico extends javax.swing.JFrame {
 
         jLabel6.setFont(new java.awt.Font("Candara Light", 1, 32)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel6.setText("LISTA PERIODOS");
+        jLabel6.setText("Lista de periodos academicos");
 
         tblPeriodos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

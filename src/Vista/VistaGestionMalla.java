@@ -152,7 +152,7 @@ public class VistaGestionMalla extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Candara Light", 1, 32)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("INFORMACION");
+        jLabel6.setText("Informacion");
 
         jLabel3.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
@@ -196,7 +196,7 @@ public class VistaGestionMalla extends javax.swing.JFrame {
 
         jLabel7.setFont(new java.awt.Font("Candara Light", 1, 32)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel7.setText("LISTA DE MALLAS CURRICULARES");
+        jLabel7.setText("Lista de malla curriculares");
 
         tblMalla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
