@@ -4,6 +4,7 @@ package Vista;
 import Controlador.Dao.Modelo.alumnoDao;
 import Controlador.TDA.ListaDinamica.Exepciones.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
+import Controlador.Utiles.UtilesControlador;
 import Modelo.Alumno;
 import Vista.ModeloTabla.ModeloTablaAlumnos;
 import Vista.Utiles.UtilVista;
@@ -143,7 +144,7 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
         cbxTipoBusqueda = new javax.swing.JComboBox<>();
         jButton3 = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        txtBuscar = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblAlumnos = new javax.swing.JTable();
         jButton4 = new javax.swing.JButton();
@@ -314,7 +315,7 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField3)
+                        .addComponent(txtBuscar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton3))
                     .addComponent(jScrollPane1)
@@ -341,7 +342,7 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
                     .addComponent(cbxTipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3)
                     .addComponent(jLabel10)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -384,16 +385,65 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
         VistaPersonalAdministracion abrirLogin = new VistaPersonalAdministracion();
         abrirLogin.setVisible(true);
         this.setVisible(false);
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         
+        try {
+            ListaDinamica<Alumno> lista = alumnoControlDao.all();
+            
+            String Campo = txtBuscar.getText();
+            String TipoCampo = cbxTipoBusqueda.getSelectedItem().toString();
+            
+            switch (TipoCampo) {
+                case "Numero cedula":
+                    TipoCampo = "NumeroCedula";
+                    break;
+                case "Nombre":
+                    TipoCampo = "Nombre";
+                    break;
+                case "Apellido":
+                    TipoCampo = "Apellido";
+                    break;
+                case "Genero":
+                    TipoCampo = "Genero";
+                    break;
+                case "Telefono":
+                    TipoCampo = "Telefono";
+                    break;
+                case "Direccion":
+                    TipoCampo = "direccion";
+                    break;
+                case "Rol":
+                    TipoCampo = "rolPersona.nombreRol";
+                    break;
+                case "Estado de cuenta":
+                    TipoCampo = "cuentaPersona.EstadoCuenta";
+                    break;
+                case "Correo":
+                    TipoCampo = "cuentaPersona.Correo";
+                    break;
+                default:
+                    throw new AssertionError();
+            }
+            
+            ListaDinamica<Alumno> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
+                        
+            mta.setAlumnosTabla(ResultadoBusqueda);
+            mta.fireTableDataChanged();
+            
+        } 
+        catch (Exception e) {
+            
+        }
         
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void tblAlumnosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAlumnosMouseClicked
         
         Seleccionar();
+        
     }//GEN-LAST:event_tblAlumnosMouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -415,6 +465,7 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
         catch (Exception e) {
             
         }
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -477,6 +528,7 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
                         r,
                         c);
                 */
+        
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -489,6 +541,7 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
             alumnoControlDao.Eliminar(fila);
             CargarTabla();
         }
+        
     }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
@@ -554,7 +607,7 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JTable tblAlumnos;
+    private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
 }

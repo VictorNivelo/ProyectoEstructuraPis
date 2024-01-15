@@ -8,6 +8,7 @@ import Controlador.Utiles.UtilesControlador;
 import Modelo.Cursa;
 import Vista.Utiles.UtilVista;
 import Vista.ModeloTabla.ModeloTablaCurso;
+import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -267,6 +268,12 @@ public class VistaGestionCurso extends javax.swing.JFrame {
         jLabel12.setForeground(new java.awt.Color(0, 0, 0));
         jLabel12.setText("Periodo");
 
+        txtParalelo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtParaleloKeyTyped(evt);
+            }
+        });
+
         jButton2.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jButton2.setText("REGRESAR");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -406,6 +413,7 @@ public class VistaGestionCurso extends javax.swing.JFrame {
         catch (Exception e) {
             
         }
+        
     }//GEN-LAST:event_btnAsignarMateriaActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -418,6 +426,7 @@ public class VistaGestionCurso extends javax.swing.JFrame {
             cursoControlDao.Eliminar(fila);
             CargarTabla();
         }
+        
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
@@ -444,6 +453,7 @@ public class VistaGestionCurso extends javax.swing.JFrame {
 
             }
         }
+        
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -487,11 +497,13 @@ public class VistaGestionCurso extends javax.swing.JFrame {
         catch (Exception e) {
 
         }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void tblCursosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCursosMouseClicked
         
         Seleccionar();
+        
     }//GEN-LAST:event_tblCursosMouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -499,7 +511,22 @@ public class VistaGestionCurso extends javax.swing.JFrame {
         VistaPersonalAdministracion abrirLogin = new VistaPersonalAdministracion();
         abrirLogin.setVisible(true);
         this.setVisible(false);
+        
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void txtParaleloKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtParaleloKeyTyped
+        
+        char c = evt.getKeyChar();
+
+        if (!Character.isLetter(c) && c != KeyEvent.VK_BACK_SPACE && c != ' ') {
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Solo ingreso de letras", "CARACTER NO VALIDO", JOptionPane.WARNING_MESSAGE);
+        }
+        if (c != KeyEvent.VK_BACK_SPACE) {
+
+        }
+        
+    }//GEN-LAST:event_txtParaleloKeyTyped
 
     /**
      * @param args the command line arguments

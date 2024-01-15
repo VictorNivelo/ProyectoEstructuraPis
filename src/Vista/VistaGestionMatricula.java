@@ -386,6 +386,7 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
         catch (ParseException ex) {
             Logger.getLogger(VistaGestionMatricula.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -393,6 +394,7 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
         VistaPersonalAdministracion abrirLogin = new VistaPersonalAdministracion();
         abrirLogin.setVisible(true);
         this.setVisible(false);
+        
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
@@ -430,11 +432,13 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
         catch (Exception e) {
             
         }
+        
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void tbMatriculasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbMatriculasMouseClicked
         
         Seleccionar();
+        
     }//GEN-LAST:event_tbMatriculasMouseClicked
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
@@ -462,6 +466,7 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
             }
 
         }
+        
     }//GEN-LAST:event_btnModificarActionPerformed
 
     /**

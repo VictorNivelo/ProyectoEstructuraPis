@@ -7,6 +7,7 @@ import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Modelo.Facultad;
 import Vista.ModeloTabla.ModeloTablaFacultad;
 import Vista.Utiles.UtilVista;
+import java.awt.event.KeyEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -193,6 +194,18 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Decano");
+
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
+            }
+        });
+
+        txtDecano.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDecanoKeyTyped(evt);
+            }
+        });
 
         jLabel7.setFont(new java.awt.Font("Candara Light", 1, 32)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 0, 0));
@@ -410,6 +423,7 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
                 }
             }
         }
+        
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -422,6 +436,7 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
             facultadControlDao.Eliminar(fila);
             CargarTabla();
         }
+        
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -429,6 +444,7 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
         VistaPersonalAdministracion abrirLogin = new VistaPersonalAdministracion();
         abrirLogin.setVisible(true);
         this.setVisible(false);
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -450,12 +466,42 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
         catch (Exception e) {
             
         }
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void tblDocentesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDocentesMouseClicked
         
         Seleccionar();
+        
     }//GEN-LAST:event_tblDocentesMouseClicked
+
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
+        
+        char c = evt.getKeyChar();
+
+        if (!Character.isLetter(c) && c != KeyEvent.VK_BACK_SPACE && c != ' ') {
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Solo ingreso de letras", "CARACTER NO VALIDO", JOptionPane.WARNING_MESSAGE);
+        }
+        if (c != KeyEvent.VK_BACK_SPACE) {
+
+        }
+        
+    }//GEN-LAST:event_txtNombreKeyTyped
+
+    private void txtDecanoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDecanoKeyTyped
+        
+        char c = evt.getKeyChar();
+
+        if (!Character.isLetter(c) && c != KeyEvent.VK_BACK_SPACE && c != ' ') {
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Solo ingreso de letras", "CARACTER NO VALIDO", JOptionPane.WARNING_MESSAGE);
+        }
+        if (c != KeyEvent.VK_BACK_SPACE) {
+
+        }
+        
+    }//GEN-LAST:event_txtDecanoKeyTyped
 
     /**
      * @param args the command line arguments

@@ -392,6 +392,7 @@ public class VistaGestionHorario extends javax.swing.JFrame {
         catch (Exception e) {
 
         }
+        
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -399,6 +400,7 @@ public class VistaGestionHorario extends javax.swing.JFrame {
         VistaPersonalAdministracion abrirLogin = new VistaPersonalAdministracion();
         abrirLogin.setVisible(true);
         this.setVisible(false);
+        
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -427,6 +429,7 @@ public class VistaGestionHorario extends javax.swing.JFrame {
 
             }
         }
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -439,11 +442,13 @@ public class VistaGestionHorario extends javax.swing.JFrame {
             horarioControlDao.Eliminar(fila);
             CargarTabla();
         }
+        
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void tblHorarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblHorarioMouseClicked
         
         Seleccionar();
+        
     }//GEN-LAST:event_tblHorarioMouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -480,6 +485,7 @@ public class VistaGestionHorario extends javax.swing.JFrame {
         catch (Exception e) {
             
         }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

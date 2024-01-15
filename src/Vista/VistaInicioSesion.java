@@ -286,19 +286,19 @@ public class VistaInicioSesion extends javax.swing.JFrame {
 
     private void btnIniciarSeccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSeccionActionPerformed
         
-
         char[] contrasena = txtContrasenia.getPassword();
         String contrasenaIngresada = new String(contrasena);
 
         if (txtCorreo.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Correo vacio", "CAMPO VACIO", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Por favor, ingrese su correo.", "CORREO VACIO", JOptionPane.INFORMATION_MESSAGE);
         } 
         else if (contrasenaIngresada.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Contraseña vacia", "CAMPO VACIO", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Por favor, ingrese su contraseña.", "CONTRESEÑA VACIA", JOptionPane.INFORMATION_MESSAGE);
         } 
         else {
             VerificarUsuario();
         }
+        
     }//GEN-LAST:event_btnIniciarSeccionActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
@@ -306,6 +306,7 @@ public class VistaInicioSesion extends javax.swing.JFrame {
         VistaPrincipalServicios newframe = new VistaPrincipalServicios();
         newframe.setVisible(true);
         this.dispose();
+        
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     /**

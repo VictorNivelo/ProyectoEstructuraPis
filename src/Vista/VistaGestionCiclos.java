@@ -424,6 +424,7 @@ public class VistaGestionCiclos extends javax.swing.JFrame {
         catch (ListaVacia ex) {
             
         }
+        
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
@@ -431,6 +432,7 @@ public class VistaGestionCiclos extends javax.swing.JFrame {
         VistaPersonalAdministracion abrirLogin = new VistaPersonalAdministracion();
         abrirLogin.setVisible(true);
         this.setVisible(false);
+        
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -461,6 +463,7 @@ public class VistaGestionCiclos extends javax.swing.JFrame {
         catch (Exception e) {
             
         }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
@@ -486,6 +489,7 @@ public class VistaGestionCiclos extends javax.swing.JFrame {
 
             }
         }
+        
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -498,11 +502,13 @@ public class VistaGestionCiclos extends javax.swing.JFrame {
             cicloControlDao.Eliminar(fila);
             CargarTabla();
         }
+        
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void tblCIclosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCIclosMouseClicked
         
         Seleccionar();
+        
     }//GEN-LAST:event_tblCIclosMouseClicked
 
     /**

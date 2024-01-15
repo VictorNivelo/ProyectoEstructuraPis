@@ -8,6 +8,7 @@ import Controlador.Utiles.UtilesControlador;
 import Modelo.MallaCurricular;
 import Vista.ModeloTabla.ModeloTablaMallaCurricular;
 import Vista.Utiles.UtilVista;
+import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -158,6 +159,18 @@ public class VistaGestionMalla extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Duracion");
+
+        txtNombreMalla.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreMallaKeyTyped(evt);
+            }
+        });
+
+        txtDuracionMalla.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDuracionMallaKeyTyped(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
@@ -387,6 +400,7 @@ public class VistaGestionMalla extends javax.swing.JFrame {
         VistaPersonalAdministracion abrirLogin = new VistaPersonalAdministracion();
         abrirLogin.setVisible(true);
         this.setVisible(false);
+        
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -405,6 +419,7 @@ public class VistaGestionMalla extends javax.swing.JFrame {
         catch (Exception e) {
             
         }
+        
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -431,6 +446,7 @@ public class VistaGestionMalla extends javax.swing.JFrame {
 
             }
         }
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -443,6 +459,7 @@ public class VistaGestionMalla extends javax.swing.JFrame {
             mallaControlDao.Eliminar(fila);
             CargarTabla();
         }
+        
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -476,12 +493,39 @@ public class VistaGestionMalla extends javax.swing.JFrame {
         catch (Exception e) {
             
         }
+        
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void tblMallaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMallaMouseClicked
         
         Seleccionar();
+        
     }//GEN-LAST:event_tblMallaMouseClicked
+
+    private void txtNombreMallaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreMallaKeyTyped
+        
+        char c = evt.getKeyChar();
+
+        if (!Character.isLetter(c) && c != KeyEvent.VK_BACK_SPACE && c != ' ') {
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Solo ingreso de letras", "CARACTER NO VALIDO", JOptionPane.WARNING_MESSAGE);
+        }
+        if (c != KeyEvent.VK_BACK_SPACE) {
+
+        }
+        
+    }//GEN-LAST:event_txtNombreMallaKeyTyped
+
+    private void txtDuracionMallaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDuracionMallaKeyTyped
+
+        Character c = evt.getKeyChar();
+
+        if (!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE) {
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Solo ingreso de numeros", "CARACTER NO VALIDO", JOptionPane.WARNING_MESSAGE);
+        }
+        
+    }//GEN-LAST:event_txtDuracionMallaKeyTyped
 
     /**
      * @param args the command line arguments
