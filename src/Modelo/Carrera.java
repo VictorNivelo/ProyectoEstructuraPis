@@ -46,6 +46,22 @@ public class Carrera {
         this.duracion = duracion;
     }
 
+    public Integer getNumeroCiclos() {
+        return NumeroCiclos;
+    }
+
+    public void setNumeroCiclos(Integer NumeroCiclos) {
+        this.NumeroCiclos = NumeroCiclos;
+    }
+
+    public MallaCurricular getCarreraMalla() {
+        return CarreraMalla;
+    }
+
+    public void setCarreraMalla(MallaCurricular CarreraMalla) {
+        this.CarreraMalla = CarreraMalla;
+    }
+
     @Override
     public String toString() {
         return NombreCarrera + "\n";

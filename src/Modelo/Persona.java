@@ -131,7 +131,13 @@ public class Persona {
         this.cuentaPersona = cuentaPersona;
     }
 
-    
+    public ListaDinamica<Cursa> getCursosAsignados() {
+        return cursosAsignados;
+    }
+
+    public void setCursosAsignados(ListaDinamica<Cursa> cursosAsignados) {
+        this.cursosAsignados = cursosAsignados;
+    }
     
 //    public Boolean comparar(Persona p, String campo, Integer tipo) {
 //        switch (tipo) {

@@ -49,6 +49,22 @@ public class PeriodoAcademico {
         this.FechaFin = FechaFin;
     }
 
+    public Date getFechaInicioP() {
+        return FechaInicioP;
+    }
+
+    public void setFechaInicioP(Date FechaInicioP) {
+        this.FechaInicioP = FechaInicioP;
+    }
+
+    public Date getFechaFinP() {
+        return FechaFinP;
+    }
+
+    public void setFechaFinP(Date FechaFinP) {
+        this.FechaFinP = FechaFinP;
+    }
+
     @Override
     public String toString() {
         return  fechaInicio + " - " + FechaFin + "\n";

@@ -68,6 +68,14 @@ public class Alumno {
         return cursosAsignados;
     }
 
+    public ListaDinamica<Matricula> getListaMatriculas() {
+        return ListaMatriculas;
+    }
+
+    public void setListaMatriculas(ListaDinamica<Matricula> ListaMatriculas) {
+        this.ListaMatriculas = ListaMatriculas;
+    }
+    
     public Cursa obtenerCursoAsignado(Integer indice) throws ListaVacia, IndexOutOfBoundsException {
         return cursosAsignados.getInfo(indice);
     }

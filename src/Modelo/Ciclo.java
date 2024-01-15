@@ -49,6 +49,30 @@ public class Ciclo {
     public void setMallaCiclo(MallaCurricular mallaCiclo) {
         this.mallaCiclo = mallaCiclo;
     }
+
+    public Integer getNumeroCiclo() {
+        return NumeroCiclo;
+    }
+
+    public void setNumeroCiclo(Integer NumeroCiclo) {
+        this.NumeroCiclo = NumeroCiclo;
+    }
+
+    public Materia getCicloMateria() {
+        return CicloMateria;
+    }
+
+    public void setCicloMateria(Materia CicloMateria) {
+        this.CicloMateria = CicloMateria;
+    }
+
+    public ListaDinamica<Materia> getListaMaterias() {
+        return ListaMaterias;
+    }
+
+    public void setListaMaterias(ListaDinamica<Materia> ListaMaterias) {
+        this.ListaMaterias = ListaMaterias;
+    }
     
     @Override
     public String toString() {

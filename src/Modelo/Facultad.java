@@ -67,6 +67,14 @@ public class Facultad {
         this.FacultadCarrera = FacultadCarrera;
     }
 
+    public ListaDinamica<Carrera> getListaCarreras() {
+        return ListaCarreras;
+    }
+
+    public void setListaCarreras(ListaDinamica<Carrera> ListaCarreras) {
+        this.ListaCarreras = ListaCarreras;
+    }
+
     @Override
     public String toString() {
         return "Facultad{" + "idFacultad=" + idFacultad + ", NombreFacultad=" + NombreFacultad + ", NombreDecano=" + NombreDecano + ", FechaCreacion=" + FechaCreacion + ", FacultadCarrera=" + FacultadCarrera + '}';

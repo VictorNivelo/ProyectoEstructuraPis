@@ -68,6 +68,22 @@ public class Horario {
     public void setTematicaHorario(String tematicaHorario) {
         this.tematicaHorario = tematicaHorario;
     }
+
+    public Date getDiaSemana() {
+        return DiaSemana;
+    }
+
+    public void setDiaSemana(Date DiaSemana) {
+        this.DiaSemana = DiaSemana;
+    }
+
+    public Asistencia getHorarioAsistencia() {
+        return HorarioAsistencia;
+    }
+
+    public void setHorarioAsistencia(Asistencia HorarioAsistencia) {
+        this.HorarioAsistencia = HorarioAsistencia;
+    }
     
     @Override
     public String toString() {

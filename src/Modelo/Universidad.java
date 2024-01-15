@@ -78,6 +78,14 @@ public class Universidad {
         this.FechaFundacion = FechaFundacion;
     }
 
+    public ListaDinamica<Facultad> getListaFacultades() {
+        return ListaFacultades;
+    }
+
+    public void setListaFacultades(ListaDinamica<Facultad> ListaFacultades) {
+        this.ListaFacultades = ListaFacultades;
+    }
+
     @Override
     public String toString() {
         return "Universidad{" + "idUniversidad=" + idUniversidad + ", NimbreUniversidad=" + NimbreUniversidad + ", DireccionUniversidad=" + DireccionUniversidad + ", NumeroTelefono=" + NumeroTelefono + ", CorreoUniversidad=" + CorreoUniversidad + ", FechaFundacion=" + FechaFundacion + '}';

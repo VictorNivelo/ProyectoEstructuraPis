@@ -59,6 +59,22 @@ public class MallaCurricular {
         this.carreraMalla = carreraMalla;
     }
 
+    public Ciclo getMallaCiclo() {
+        return MallaCiclo;
+    }
+
+    public void setMallaCiclo(Ciclo MallaCiclo) {
+        this.MallaCiclo = MallaCiclo;
+    }
+
+    public ListaDinamica<Ciclo> getListaCiclos() {
+        return ListaCiclos;
+    }
+
+    public void setListaCiclos(ListaDinamica<Ciclo> ListaCiclos) {
+        this.ListaCiclos = ListaCiclos;
+    }
+    
     @Override
     public String toString() {
         return NombreMallaCurricular +  "\n";

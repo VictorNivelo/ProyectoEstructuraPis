@@ -69,7 +69,7 @@ public class UtilesControlador {
             }
         } 
         catch (IllegalAccessException e) {
-            e.printStackTrace();
+            
             return false;
         }
     }
@@ -215,7 +215,7 @@ public class UtilesControlador {
                 }
             } 
             catch (IllegalAccessException e) {
-                e.printStackTrace();
+                
             }
         }
         return ListaElementos;
@@ -264,7 +264,7 @@ public class UtilesControlador {
                 }
             } 
             catch (IllegalAccessException e) {
-                e.printStackTrace();
+                
             }
         }
         return resultado;
@@ -276,9 +276,9 @@ public class UtilesControlador {
         return textoSinEspacios.toLowerCase().startsWith(busquedaSinEspacios.toLowerCase());
     }
     
-    private static boolean ClaseCampoEspecifico(Object valorCampo) {
-        return valorCampo.getClass().getDeclaredFields().length > 0;
-    }
+//    private static boolean ClaseCampoEspecifico(Object valorCampo) {
+//        return valorCampo.getClass().getDeclaredFields().length > 0;
+//    }
 }
     
 //    private static boolean buscarTipoEspecifico(String texto, String busqueda) {

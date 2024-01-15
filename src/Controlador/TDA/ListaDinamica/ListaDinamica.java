@@ -58,19 +58,19 @@ public class ListaDinamica<E> {
         AgregarFinal(info);
     }
     
-    private E getPrimero() throws ListaVacia {
-        if (EstaVacio()) {
-            throw new ListaVacia("La lista esta vacia");
-        }
-        return cabezera.getInfo();
-    }
-    
-    private E getFinal() throws ListaVacia{
-        if(EstaVacio()){
-            throw new ListaVacia("La lista esta vacia");
-        }
-        return ultimo.getInfo();
-    }
+//    private E getPrimero() throws ListaVacia {
+//        if (EstaVacio()) {
+//            throw new ListaVacia("La lista esta vacia");
+//        }
+//        return cabezera.getInfo();
+//    }
+//    
+//    private E getFinal() throws ListaVacia{
+//        if(EstaVacio()){
+//            throw new ListaVacia("La lista esta vacia");
+//        }
+//        return ultimo.getInfo();
+//    }
     
     public E getInfo(Integer indice)throws ListaVacia, IndexOutOfBoundsException{
         return getNodo(indice).getInfo();

@@ -76,6 +76,14 @@ public class Asistencia {
     public void setHorarioAsistencia(Horario HorarioAsistencia) {
         this.HorarioAsistencia = HorarioAsistencia;
     }
+
+    public Tematica getAsistenciaTematica() {
+        return AsistenciaTematica;
+    }
+
+    public void setAsistenciaTematica(Tematica AsistenciaTematica) {
+        this.AsistenciaTematica = AsistenciaTematica;
+    }
     
     @Override
     public String toString() {

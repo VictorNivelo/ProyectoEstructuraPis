@@ -106,7 +106,6 @@ public class VistaAlumnoMaterias extends javax.swing.JFrame {
         nuevoLabel.setVisible(true);
     }
 
-    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
