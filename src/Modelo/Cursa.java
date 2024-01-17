@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Modelo;
 
 import Controlador.TDA.ListaDinamica.Exepciones.ListaVacia;
@@ -16,6 +13,7 @@ public class Cursa {
     private String codigoCurso;
     private String paralelo;
     private Materia materiaCurso;
+    
     private ListaDinamica<Materia> listaMateriasCurso;
     private PeriodoAcademico periodoAcademicoCurso;
 
@@ -94,7 +92,7 @@ public class Cursa {
     
     @Override
     public String toString() {
-        return materiaCurso.getCicloMateria().getNombreCiclo() +" "+paralelo+ "\n";
+        return materiaCurso.getCicloMateria().getNombreCiclo() +" "+paralelo+ " " + materiaCurso.getNombreMateria()+"\n";
     }
     
 }

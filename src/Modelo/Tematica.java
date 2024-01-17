@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Modelo;
 
 /**
@@ -10,8 +7,10 @@ package Modelo;
  */
 public class Tematica {
     private Integer idTematica;
-    private String DiaTematica;
     private String NombreTematica;
+    private String FechaTematica;
+    
+    private String DiaTematica;
 
     public Tematica() {
         
@@ -47,6 +46,14 @@ public class Tematica {
         this.NombreTematica = NombreTematica;
     }
 
+    public String getFechaTematica() {
+        return FechaTematica;
+    }
+
+    public void setFechaTematica(String FechaTematica) {
+        this.FechaTematica = FechaTematica;
+    }
+    
     @Override
     public String toString() {
         return "idTematica=" + idTematica + ", DiaTematica=" + DiaTematica + ", NombreTematica=" + NombreTematica + "\n";

@@ -1,8 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Modelo;
+
+import Controlador.TDA.ListaDinamica.ListaDinamica;
+import java.util.Date;
 
 /**
  *
@@ -11,22 +11,23 @@ package Modelo;
 public class Universidad {
     private Integer idUniversidad;
     private String NimbreUniversidad;
-    private Integer amioFundacion;
-    private String Ubicacion;
-    private String Correo;
-    private String NumeroTelefonico;
+    private String DireccionUniversidad;
+    private String NumeroTelefono;
+    private String CorreoUniversidad;
+    private Date FechaFundacion;
+    private ListaDinamica<Facultad> ListaFacultades;
 
     public Universidad() {
         
     }
 
-    public Universidad(Integer idUniversidad, String NimbreUniversidad, Integer amioFundacion, String Ubicacion, String Correo, String NumeroTelefonico) {
+    public Universidad(Integer idUniversidad, String NimbreUniversidad, String DireccionUniversidad, String NumeroTelefono, String CorreoUniversidad, Date FechaFundacion) {
         this.idUniversidad = idUniversidad;
         this.NimbreUniversidad = NimbreUniversidad;
-        this.amioFundacion = amioFundacion;
-        this.Ubicacion = Ubicacion;
-        this.Correo = Correo;
-        this.NumeroTelefonico = NumeroTelefonico;
+        this.DireccionUniversidad = DireccionUniversidad;
+        this.NumeroTelefono = NumeroTelefono;
+        this.CorreoUniversidad = CorreoUniversidad;
+        this.FechaFundacion = FechaFundacion;
     }
 
     public Integer getIdUniversidad() {
@@ -45,41 +46,49 @@ public class Universidad {
         this.NimbreUniversidad = NimbreUniversidad;
     }
 
-    public Integer getAmioFundacion() {
-        return amioFundacion;
+    public String getDireccionUniversidad() {
+        return DireccionUniversidad;
     }
 
-    public void setAmioFundacion(Integer amioFundacion) {
-        this.amioFundacion = amioFundacion;
+    public void setDireccionUniversidad(String DireccionUniversidad) {
+        this.DireccionUniversidad = DireccionUniversidad;
     }
 
-    public String getUbicacion() {
-        return Ubicacion;
+    public String getNumeroTelefono() {
+        return NumeroTelefono;
     }
 
-    public void setUbicacion(String Ubicacion) {
-        this.Ubicacion = Ubicacion;
+    public void setNumeroTelefono(String NumeroTelefono) {
+        this.NumeroTelefono = NumeroTelefono;
     }
 
-    public String getCorreo() {
-        return Correo;
+    public String getCorreoUniversidad() {
+        return CorreoUniversidad;
     }
 
-    public void setCorreo(String Correo) {
-        this.Correo = Correo;
+    public void setCorreoUniversidad(String CorreoUniversidad) {
+        this.CorreoUniversidad = CorreoUniversidad;
     }
 
-    public String getNumeroTelefonico() {
-        return NumeroTelefonico;
+    public Date getFechaFundacion() {
+        return FechaFundacion;
     }
 
-    public void setNumeroTelefonico(String NumeroTelefonico) {
-        this.NumeroTelefonico = NumeroTelefonico;
+    public void setFechaFundacion(Date FechaFundacion) {
+        this.FechaFundacion = FechaFundacion;
+    }
+
+    public ListaDinamica<Facultad> getListaFacultades() {
+        return ListaFacultades;
+    }
+
+    public void setListaFacultades(ListaDinamica<Facultad> ListaFacultades) {
+        this.ListaFacultades = ListaFacultades;
     }
 
     @Override
     public String toString() {
-        return "idUniversidad=" + idUniversidad + ", NimbreUniversidad=" + NimbreUniversidad + ", amioFundacion=" + amioFundacion + ", Ubicacion=" + Ubicacion + ", Correo=" + Correo + ", NumeroTelefonico=" + NumeroTelefonico + "\n";
+        return "Universidad{" + "idUniversidad=" + idUniversidad + ", NimbreUniversidad=" + NimbreUniversidad + ", DireccionUniversidad=" + DireccionUniversidad + ", NumeroTelefono=" + NumeroTelefono + ", CorreoUniversidad=" + CorreoUniversidad + ", FechaFundacion=" + FechaFundacion + '}';
     }
-    
+        
 }

@@ -3,56 +3,58 @@ package Vista.ModeloTabla;
 
 import Controlador.TDA.ListaDinamica.Exepciones.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
-import Modelo.Ciclo;
+import Modelo.Facultad;
 import javax.swing.table.AbstractTableModel;
 
 /**
  *
  * @author Victor
  */
-public class ModeloTablaCiclos extends AbstractTableModel {
+public class ModeloTablaFacultad extends AbstractTableModel {
 
-    private ListaDinamica<Ciclo> cicloTabla;
+    private ListaDinamica<Facultad> facultadTabla;
 
-    public ListaDinamica<Ciclo> getCicloTabla() {
-        return cicloTabla;
+    public ListaDinamica<Facultad> getFacultadTabla() {
+        return facultadTabla;
     }
 
-    public void setCicloTabla(ListaDinamica<Ciclo> cicloTabla) {
-        this.cicloTabla = cicloTabla;
+    public void setFacultadTabla(ListaDinamica<Facultad> facultadTabla) {
+        this.facultadTabla = facultadTabla;
     }
     
     @Override
     public int getRowCount() {
-        return cicloTabla.getLongitud();
+        return facultadTabla.getLongitud();
     }
 
     @Override
     public int getColumnCount() {
-        return 3;
+        return 4;
     }
     
     @Override
     public Object getValueAt(int Fila, int Columna) {
 
         try {
-            Ciclo p = cicloTabla.getInfo(Fila);
+            Facultad f = facultadTabla.getInfo(Fila);
 
             switch (Columna) {
                 case 0:
-                    return (p != null) ? p.getIdCiclo(): "";
+                    return (f != null) ? f.getIdFacultad(): "";
                 case 1:
-                    return (p != null) ? p.getNombreCiclo(): "";
+                    return (f != null) ? f.getNombreFacultad(): "";
                 case 2:
-                    return (p != null) ? p.getMallaCiclo().getNombreMallaCurricular(): "";
+                    return (f != null) ? f.getNombreDecano(): "";
+                case 3:
+                    return (f != null) ? f.getFechaCreacion(): "";
                 default:
                     return null;
             }
-        } 
+        }
         catch (ListaVacia | IndexOutOfBoundsException ex) {
             
         }
-        return cicloTabla;
+        return facultadTabla;
     }
 
 
@@ -62,9 +64,11 @@ public class ModeloTablaCiclos extends AbstractTableModel {
             case 0:
                 return "#";
             case 1:
-                return "Nombre ciclo";
+                return "Nombre";
             case 2:
-                return "Malla";
+                return "Decano";
+            case 3:
+                return "Fecha creacion";
             default:
                 return null;
         }

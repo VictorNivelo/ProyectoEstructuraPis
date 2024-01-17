@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Modelo;
 
 /**
@@ -11,7 +8,9 @@ package Modelo;
 public class Carrera {
     private Integer idCarrera;
     private String NombreCarrera;
+    private Integer NumeroCiclos;
     private Integer duracion;
+    private MallaCurricular CarreraMalla;
 
     public Carrera() {
         
@@ -45,6 +44,22 @@ public class Carrera {
 
     public void setDuracion(Integer duracion) {
         this.duracion = duracion;
+    }
+
+    public Integer getNumeroCiclos() {
+        return NumeroCiclos;
+    }
+
+    public void setNumeroCiclos(Integer NumeroCiclos) {
+        this.NumeroCiclos = NumeroCiclos;
+    }
+
+    public MallaCurricular getCarreraMalla() {
+        return CarreraMalla;
+    }
+
+    public void setCarreraMalla(MallaCurricular CarreraMalla) {
+        this.CarreraMalla = CarreraMalla;
     }
 
     @Override

@@ -1,8 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Modelo;
+
+import java.util.Date;
 
 /**
  *
@@ -10,6 +9,9 @@ package Modelo;
  */
 public class PeriodoAcademico {
     private Integer idPeriodoAcademino;
+    private Date FechaInicioP;
+    private Date FechaFinP;
+    
     private String fechaInicio;
     private String FechaFin;
 
@@ -45,6 +47,22 @@ public class PeriodoAcademico {
 
     public void setFechaFin(String FechaFin) {
         this.FechaFin = FechaFin;
+    }
+
+    public Date getFechaInicioP() {
+        return FechaInicioP;
+    }
+
+    public void setFechaInicioP(Date FechaInicioP) {
+        this.FechaInicioP = FechaInicioP;
+    }
+
+    public Date getFechaFinP() {
+        return FechaFinP;
+    }
+
+    public void setFechaFinP(Date FechaFinP) {
+        this.FechaFinP = FechaFinP;
     }
 
     @Override

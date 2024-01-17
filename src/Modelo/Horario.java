@@ -1,8 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Modelo;
+
+import java.util.Date;
 
 /**
  *
@@ -10,9 +9,12 @@ package Modelo;
  */
 public class Horario {
     private Integer idHorario;
-    private String Dias;
+    private Date DiaSemana;
     private String horaIncio;
     private String horaFin;
+    private Asistencia HorarioAsistencia;
+        
+    private String Dias;
     private String tematicaHorario;
 
     public Horario() {
@@ -65,6 +67,22 @@ public class Horario {
 
     public void setTematicaHorario(String tematicaHorario) {
         this.tematicaHorario = tematicaHorario;
+    }
+
+    public Date getDiaSemana() {
+        return DiaSemana;
+    }
+
+    public void setDiaSemana(Date DiaSemana) {
+        this.DiaSemana = DiaSemana;
+    }
+
+    public Asistencia getHorarioAsistencia() {
+        return HorarioAsistencia;
+    }
+
+    public void setHorarioAsistencia(Asistencia HorarioAsistencia) {
+        this.HorarioAsistencia = HorarioAsistencia;
     }
     
     @Override

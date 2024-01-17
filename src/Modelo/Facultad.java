@@ -1,8 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Modelo;
+
+import Controlador.TDA.ListaDinamica.ListaDinamica;
 
 /**
  *
@@ -10,19 +9,22 @@ package Modelo;
  */
 public class Facultad {
     private Integer idFacultad;
-    private String nombreFacultad;
-    private String decano;
-    private String ubicacionFacultad;
+    private String NombreFacultad;
+    private String NombreDecano;
+    private String FechaCreacion;
+    private Carrera FacultadCarrera;
+    private ListaDinamica<Carrera> ListaCarreras;
 
     public Facultad() {
-        
+
     }
 
-    public Facultad(Integer idFacultad, String nombreFacultad, String decano, String ubicacionFacultad) {
+    public Facultad(Integer idFacultad, String NombreFacultad, String NombreDecano, String FechaCreacion, Carrera FacultadCarrera) {
         this.idFacultad = idFacultad;
-        this.nombreFacultad = nombreFacultad;
-        this.decano = decano;
-        this.ubicacionFacultad = ubicacionFacultad;
+        this.NombreFacultad = NombreFacultad;
+        this.NombreDecano = NombreDecano;
+        this.FechaCreacion = FechaCreacion;
+        this.FacultadCarrera = FacultadCarrera;
     }
 
     public Integer getIdFacultad() {
@@ -34,32 +36,48 @@ public class Facultad {
     }
 
     public String getNombreFacultad() {
-        return nombreFacultad;
+        return NombreFacultad;
     }
 
-    public void setNombreFacultad(String nombreFacultad) {
-        this.nombreFacultad = nombreFacultad;
+    public void setNombreFacultad(String NombreFacultad) {
+        this.NombreFacultad = NombreFacultad;
     }
 
-    public String getDecano() {
-        return decano;
+    public String getNombreDecano() {
+        return NombreDecano;
     }
 
-    public void setDecano(String decano) {
-        this.decano = decano;
+    public void setNombreDecano(String NombreDecano) {
+        this.NombreDecano = NombreDecano;
     }
 
-    public String getUbicacionFacultad() {
-        return ubicacionFacultad;
+    public String getFechaCreacion() {
+        return FechaCreacion;
     }
 
-    public void setUbicacionFacultad(String ubicacionFacultad) {
-        this.ubicacionFacultad = ubicacionFacultad;
+    public void setFechaCreacion(String FechaCreacion) {
+        this.FechaCreacion = FechaCreacion;
+    }
+
+    public Carrera getFacultadCarrera() {
+        return FacultadCarrera;
+    }
+
+    public void setFacultadCarrera(Carrera FacultadCarrera) {
+        this.FacultadCarrera = FacultadCarrera;
+    }
+
+    public ListaDinamica<Carrera> getListaCarreras() {
+        return ListaCarreras;
+    }
+
+    public void setListaCarreras(ListaDinamica<Carrera> ListaCarreras) {
+        this.ListaCarreras = ListaCarreras;
     }
 
     @Override
     public String toString() {
-        return  "idFacultad=" + idFacultad + ", nombreFacultad=" + nombreFacultad + ", decano=" + decano + ", ubicacionFacultad=" + ubicacionFacultad + "\n";
+        return "Facultad{" + "idFacultad=" + idFacultad + ", NombreFacultad=" + NombreFacultad + ", NombreDecano=" + NombreDecano + ", FechaCreacion=" + FechaCreacion + ", FacultadCarrera=" + FacultadCarrera + '}';
     }
     
 }

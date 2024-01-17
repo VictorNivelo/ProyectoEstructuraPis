@@ -1,8 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Modelo;
+
+import Controlador.TDA.ListaDinamica.ListaDinamica;
 
 /**
  *
@@ -11,6 +10,10 @@ package Modelo;
 public class Ciclo {
     private Integer idCiclo;
     private String NombreCiclo;
+    private Integer NumeroCiclo;
+    private Materia CicloMateria;
+    private ListaDinamica<Materia> ListaMaterias;
+    
     private MallaCurricular mallaCiclo;
 
     public Ciclo() {
@@ -45,6 +48,30 @@ public class Ciclo {
 
     public void setMallaCiclo(MallaCurricular mallaCiclo) {
         this.mallaCiclo = mallaCiclo;
+    }
+
+    public Integer getNumeroCiclo() {
+        return NumeroCiclo;
+    }
+
+    public void setNumeroCiclo(Integer NumeroCiclo) {
+        this.NumeroCiclo = NumeroCiclo;
+    }
+
+    public Materia getCicloMateria() {
+        return CicloMateria;
+    }
+
+    public void setCicloMateria(Materia CicloMateria) {
+        this.CicloMateria = CicloMateria;
+    }
+
+    public ListaDinamica<Materia> getListaMaterias() {
+        return ListaMaterias;
+    }
+
+    public void setListaMaterias(ListaDinamica<Materia> ListaMaterias) {
+        this.ListaMaterias = ListaMaterias;
     }
     
     @Override

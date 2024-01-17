@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Modelo;
 
 /**
@@ -10,10 +7,13 @@ package Modelo;
  */
 public class Asistencia {
     private Integer idAsistencia;
-    private String DiaAsistencia;
-    private String HoraAsistencia;
     private EstadoAsistencia estadoAsistencia;
     private String Observacion;
+    private Tematica AsistenciaTematica;
+    
+    private String DiaAsistencia;
+    private String HoraAsistencia;
+    
     private Horario HorarioAsistencia;
 
     public Asistencia() {
@@ -75,6 +75,14 @@ public class Asistencia {
 
     public void setHorarioAsistencia(Horario HorarioAsistencia) {
         this.HorarioAsistencia = HorarioAsistencia;
+    }
+
+    public Tematica getAsistenciaTematica() {
+        return AsistenciaTematica;
+    }
+
+    public void setAsistenciaTematica(Tematica AsistenciaTematica) {
+        this.AsistenciaTematica = AsistenciaTematica;
     }
     
     @Override

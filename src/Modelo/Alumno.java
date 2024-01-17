@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Modelo;
 
 import Controlador.TDA.ListaDinamica.Exepciones.ListaVacia;
@@ -16,6 +13,8 @@ public class Alumno {
     private Persona datosAlumno;
     private Boolean estado;
     private Matricula matriculaAlumno;
+    private ListaDinamica<Matricula> ListaMatriculas;
+    
     private ListaDinamica<Cursa> cursosAsignados;
 
     public Alumno() {
@@ -69,6 +68,14 @@ public class Alumno {
         return cursosAsignados;
     }
 
+    public ListaDinamica<Matricula> getListaMatriculas() {
+        return ListaMatriculas;
+    }
+
+    public void setListaMatriculas(ListaDinamica<Matricula> ListaMatriculas) {
+        this.ListaMatriculas = ListaMatriculas;
+    }
+    
     public Cursa obtenerCursoAsignado(Integer indice) throws ListaVacia, IndexOutOfBoundsException {
         return cursosAsignados.getInfo(indice);
     }

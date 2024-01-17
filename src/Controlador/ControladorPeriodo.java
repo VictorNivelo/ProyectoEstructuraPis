@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Controlador;
 
 import Controlador.TDA.ListaDinamica.ListaDinamica;
@@ -12,25 +9,25 @@ import Modelo.PeriodoAcademico;
  * @author romer
  */
 public class ControladorPeriodo {
-    private ListaDinamica<PeriodoAcademico> periodos;
+    private ListaDinamica<PeriodoAcademico> ListaPeriodos;
     private PeriodoAcademico periodoAcademico;
     
     public ControladorPeriodo(){
-        periodos = new ListaDinamica<>();
+        ListaPeriodos = new ListaDinamica<>();
     }
     
     public Boolean guardarPeriodo(){
-        getPeriodoAcademico().setIdPeriodoAcademino(getPeriodos().getLongitud());
-        getPeriodos().Agregar(getPeriodoAcademico());
+        getPeriodoAcademico().setIdPeriodoAcademino(getListaPeriodos().getLongitud());
+        getListaPeriodos().Agregar(getPeriodoAcademico());
         return true;
     }
 
-    public ListaDinamica<PeriodoAcademico> getPeriodos() {
-        return periodos;
+    public ListaDinamica<PeriodoAcademico> getListaPeriodos() {
+        return ListaPeriodos;
     }
 
-    public void setPeriodos(ListaDinamica<PeriodoAcademico> periodos) {
-        this.periodos = periodos;
+    public void setListaPeriodos(ListaDinamica<PeriodoAcademico> periodos) {
+        this.ListaPeriodos = periodos;
     }
 
     public PeriodoAcademico getPeriodoAcademico() {
@@ -43,7 +40,5 @@ public class ControladorPeriodo {
     public void setPeriodoAcademico(PeriodoAcademico periodoAcademico) {
         this.periodoAcademico = periodoAcademico;
     }
-    
-    
-    
+        
 }

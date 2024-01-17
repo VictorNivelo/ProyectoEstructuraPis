@@ -1,8 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Modelo;
+
+import Controlador.TDA.ListaDinamica.ListaDinamica;
+import java.util.Date;
 
 /**
  *
@@ -10,10 +10,17 @@ package Modelo;
  */
 public class Matricula {
     private Integer idMatricula;
-    private String fechaMatricula;
+    private Date FechaMatriculas;
     private Boolean EstadoMatricula;
-    private PeriodoAcademico matriculaPeriodoAcademico;
+    
     private Cursa matriculaCursa;
+    private PeriodoAcademico matriculaPeriodoAcademico;
+    
+    private ListaDinamica<PeriodoAcademico> ListaPeriodos;
+    private ListaDinamica<Cursa> ListaCursos;
+    
+    private String fechaMatricula;
+    
 
     public Matricula() {
         
@@ -35,12 +42,12 @@ public class Matricula {
         this.idMatricula = idMatricula;
     }
 
-    public String getFechaMatricula() {
-        return fechaMatricula;
+    public Date getFechaMatriculas() {
+        return FechaMatriculas;
     }
 
-    public void setFechaMatricula(String fechaMatricula) {
-        this.fechaMatricula = fechaMatricula;
+    public void setFechaMatriculas(Date FechaMatriculas) {
+        this.FechaMatriculas = FechaMatriculas;
     }
 
     public Boolean getEstadoMatricula() {
@@ -51,6 +58,14 @@ public class Matricula {
         this.EstadoMatricula = EstadoMatricula;
     }
 
+    public Cursa getMatriculaCursa() {
+        return matriculaCursa;
+    }
+
+    public void setMatriculaCursa(Cursa matriculaCursa) {
+        this.matriculaCursa = matriculaCursa;
+    }
+
     public PeriodoAcademico getMatriculaPeriodoAcademico() {
         return matriculaPeriodoAcademico;
     }
@@ -59,12 +74,28 @@ public class Matricula {
         this.matriculaPeriodoAcademico = matriculaPeriodoAcademico;
     }
 
-    public Cursa getMatriculaCursa() {
-        return matriculaCursa;
+    public ListaDinamica<PeriodoAcademico> getListaPeriodos() {
+        return ListaPeriodos;
     }
 
-    public void setMatriculaCursa(Cursa matriculaCursa) {
-        this.matriculaCursa = matriculaCursa;
+    public void setListaPeriodos(ListaDinamica<PeriodoAcademico> ListaPeriodos) {
+        this.ListaPeriodos = ListaPeriodos;
+    }
+
+    public ListaDinamica<Cursa> getListaCursos() {
+        return ListaCursos;
+    }
+
+    public void setListaCursos(ListaDinamica<Cursa> ListaCursos) {
+        this.ListaCursos = ListaCursos;
+    }
+
+    public String getFechaMatricula() {
+        return fechaMatricula;
+    }
+
+    public void setFechaMatricula(String fechaMatricula) {
+        this.fechaMatricula = fechaMatricula;
     }
 
     @Override
