@@ -1,93 +1,84 @@
 
 package Modelo;
 
-import java.util.Date;
+import Controlador.TDA.ListaDinamica.ListaDinamica;
 
 /**
  *
  * @author Victor
  */
 public class Horario {
-    private Integer idHorario;
-    private Date DiaSemana;
-    private String horaIncio;
-    private String horaFin;
-    private Asistencia HorarioAsistencia;
+    private Integer IdHorario;
+    private String DiaSemana;
+    private String HoraIncio;
+    private String HoraFin;
+    
+    private Asistencia asistenciaHorario;
+    private ListaDinamica<Asistencia> listaAsistenciaHorario;
         
-    private String Dias;
-    private String tematicaHorario;
-
     public Horario() {
         
     }
 
-    public Horario(Integer idHorario, String Dias, String horaIncio, String horaFin, String tematicaHorario) {
-        this.idHorario = idHorario;
-        this.Dias = Dias;
-        this.horaIncio = horaIncio;
-        this.horaFin = horaFin;
-        this.tematicaHorario = tematicaHorario;
-    }
+    public Horario(Integer IdHorario, String DiaSemana, String HoraIncio, String HoraFin, Asistencia asistenciaHorario) {
+        this.IdHorario = IdHorario;
+        this.DiaSemana = DiaSemana;
+        this.HoraIncio = HoraIncio;
+        this.HoraFin = HoraFin;
+        this.asistenciaHorario = asistenciaHorario;
+    } 
 
     public Integer getIdHorario() {
-        return idHorario;
+        return IdHorario;
     }
 
-    public void setIdHorario(Integer idHorario) {
-        this.idHorario = idHorario;
+    public void setIdHorario(Integer IdHorario) {
+        this.IdHorario = IdHorario;
     }
 
-    public String getDias() {
-        return Dias;
-    }
-
-    public void setDias(String Dias) {
-        this.Dias = Dias;
-    }
-
-    public String getHoraIncio() {
-        return horaIncio;
-    }
-
-    public void setHoraIncio(String horaIncio) {
-        this.horaIncio = horaIncio;
-    }
-
-    public String getHoraFin() {
-        return horaFin;
-    }
-
-    public void setHoraFin(String horaFin) {
-        this.horaFin = horaFin;
-    }
-
-    public String getTematicaHorario() {
-        return tematicaHorario;
-    }
-
-    public void setTematicaHorario(String tematicaHorario) {
-        this.tematicaHorario = tematicaHorario;
-    }
-
-    public Date getDiaSemana() {
+    public String getDiaSemana() {
         return DiaSemana;
     }
 
-    public void setDiaSemana(Date DiaSemana) {
+    public void setDiaSemana(String DiaSemana) {
         this.DiaSemana = DiaSemana;
     }
 
-    public Asistencia getHorarioAsistencia() {
-        return HorarioAsistencia;
+    public String getHoraIncio() {
+        return HoraIncio;
     }
 
-    public void setHorarioAsistencia(Asistencia HorarioAsistencia) {
-        this.HorarioAsistencia = HorarioAsistencia;
+    public void setHoraIncio(String HoraIncio) {
+        this.HoraIncio = HoraIncio;
+    }
+
+    public String getHoraFin() {
+        return HoraFin;
+    }
+
+    public void setHoraFin(String HoraFin) {
+        this.HoraFin = HoraFin;
+    }
+
+    public Asistencia getAsistenciaHorario() {
+        return asistenciaHorario;
+    }
+
+    public void setAsistenciaHorario(Asistencia asistenciaHorario) {
+        this.asistenciaHorario = asistenciaHorario;
+    }
+
+    public ListaDinamica<Asistencia> getListaAsistenciaHorario() {
+        return listaAsistenciaHorario;
+    }
+
+    public void setListaAsistenciaHorario(ListaDinamica<Asistencia> listaAsistenciaHorario) {
+        this.listaAsistenciaHorario = listaAsistenciaHorario;
     }
     
     @Override
     public String toString() {
-        return "Dia:" + Dias + ",Hora Incio:" + horaIncio + ", Fin:" + horaFin + "\n";
+        return "DiaSemana:" + DiaSemana + ", Incio:" + HoraIncio + ", horaFin:" + HoraFin + "\n";
     }
     
 }

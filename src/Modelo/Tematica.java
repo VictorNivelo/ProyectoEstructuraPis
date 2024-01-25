@@ -6,36 +6,26 @@ package Modelo;
  * @author Victor
  */
 public class Tematica {
-    private Integer idTematica;
+    private Integer IdTematica;
     private String NombreTematica;
     private String FechaTematica;
     
-    private String DiaTematica;
-
     public Tematica() {
         
     }
 
-    public Tematica(Integer idTematica, String DiaTematica, String NombreTematica) {
-        this.idTematica = idTematica;
-        this.DiaTematica = DiaTematica;
+    public Tematica(Integer IdTematica, String NombreTematica, String FechaTematica) {
+        this.IdTematica = IdTematica;
         this.NombreTematica = NombreTematica;
+        this.FechaTematica = FechaTematica;
     }
 
     public Integer getIdTematica() {
-        return idTematica;
+        return IdTematica;
     }
 
-    public void setIdTematica(Integer idTematica) {
-        this.idTematica = idTematica;
-    }
-
-    public String getDiaTematica() {
-        return DiaTematica;
-    }
-
-    public void setDiaTematica(String DiaTematica) {
-        this.DiaTematica = DiaTematica;
+    public void setIdTematica(Integer IdTematica) {
+        this.IdTematica = IdTematica;
     }
 
     public String getNombreTematica() {
@@ -56,7 +46,7 @@ public class Tematica {
     
     @Override
     public String toString() {
-        return "idTematica=" + idTematica + ", DiaTematica=" + DiaTematica + ", NombreTematica=" + NombreTematica + "\n";
+        return "idTematica=" + IdTematica + ", DiaTematica=" + FechaTematica + ", NombreTematica=" + NombreTematica + "\n";
     }
      
 }

@@ -2,105 +2,104 @@
 package Modelo;
 
 import Controlador.TDA.ListaDinamica.ListaDinamica;
-import java.util.Date;
 
 /**
  *
  * @author Victor
  */
 public class Matricula {
-    private Integer idMatricula;
-    private Date FechaMatriculas;
-    private Boolean EstadoMatricula;
+    private Integer IdMatricula;
+    private String CodigoMatricula;
+    private String FechaMatricula;
+    private String EstadoMatricula;
     
-    private Cursa matriculaCursa;
-    private PeriodoAcademico matriculaPeriodoAcademico;
+    private Cursa cursoMatricula;
+    private PeriodoAcademico periodoAcademicoMatricula;
     
-    private ListaDinamica<PeriodoAcademico> ListaPeriodos;
-    private ListaDinamica<Cursa> ListaCursos;
+    private ListaDinamica<Cursa> listaCursoMatricula;
+    private ListaDinamica<PeriodoAcademico> listaPeriodoMatricula;
     
-    private String fechaMatricula;
-    
-
     public Matricula() {
         
     }
 
-    public Matricula(Integer idMatricula, String fechaMatricula, Boolean EstadoMatricula, PeriodoAcademico matriculaPeriodoAcademico, Cursa matriculaCursa) {
-        this.idMatricula = idMatricula;
-        this.fechaMatricula = fechaMatricula;
+    public Matricula(Integer IdMatricula, String CodigoMatricula, String FechaMatricula, String EstadoMatricula, Cursa cursoMatricula, PeriodoAcademico periodoAcademicoMatricula) {
+        this.IdMatricula = IdMatricula;
+        this.CodigoMatricula = CodigoMatricula;
+        this.FechaMatricula = FechaMatricula;
         this.EstadoMatricula = EstadoMatricula;
-        this.matriculaPeriodoAcademico = matriculaPeriodoAcademico;
-        this.matriculaCursa = matriculaCursa;
+        this.cursoMatricula = cursoMatricula;
+        this.periodoAcademicoMatricula = periodoAcademicoMatricula;
     }
 
     public Integer getIdMatricula() {
-        return idMatricula;
+        return IdMatricula;
     }
 
-    public void setIdMatricula(Integer idMatricula) {
-        this.idMatricula = idMatricula;
+    public void setIdMatricula(Integer IdMatricula) {
+        this.IdMatricula = IdMatricula;
     }
 
-    public Date getFechaMatriculas() {
-        return FechaMatriculas;
+    public String getCodigoMatricula() {
+        return CodigoMatricula;
     }
 
-    public void setFechaMatriculas(Date FechaMatriculas) {
-        this.FechaMatriculas = FechaMatriculas;
-    }
-
-    public Boolean getEstadoMatricula() {
-        return EstadoMatricula;
-    }
-
-    public void setEstadoMatricula(Boolean EstadoMatricula) {
-        this.EstadoMatricula = EstadoMatricula;
-    }
-
-    public Cursa getMatriculaCursa() {
-        return matriculaCursa;
-    }
-
-    public void setMatriculaCursa(Cursa matriculaCursa) {
-        this.matriculaCursa = matriculaCursa;
-    }
-
-    public PeriodoAcademico getMatriculaPeriodoAcademico() {
-        return matriculaPeriodoAcademico;
-    }
-
-    public void setMatriculaPeriodoAcademico(PeriodoAcademico matriculaPeriodoAcademico) {
-        this.matriculaPeriodoAcademico = matriculaPeriodoAcademico;
-    }
-
-    public ListaDinamica<PeriodoAcademico> getListaPeriodos() {
-        return ListaPeriodos;
-    }
-
-    public void setListaPeriodos(ListaDinamica<PeriodoAcademico> ListaPeriodos) {
-        this.ListaPeriodos = ListaPeriodos;
-    }
-
-    public ListaDinamica<Cursa> getListaCursos() {
-        return ListaCursos;
-    }
-
-    public void setListaCursos(ListaDinamica<Cursa> ListaCursos) {
-        this.ListaCursos = ListaCursos;
+    public void setCodigoMatricula(String CodigoMatricula) {
+        this.CodigoMatricula = CodigoMatricula;
     }
 
     public String getFechaMatricula() {
-        return fechaMatricula;
+        return FechaMatricula;
     }
 
-    public void setFechaMatricula(String fechaMatricula) {
-        this.fechaMatricula = fechaMatricula;
+    public void setFechaMatricula(String FechaMatricula) {
+        this.FechaMatricula = FechaMatricula;
     }
+
+    public String getEstadoMatricula() {
+        return EstadoMatricula;
+    }
+
+    public void setEstadoMatricula(String EstadoMatricula) {
+        this.EstadoMatricula = EstadoMatricula;
+    }
+
+    public Cursa getCursoMatricula() {
+        return cursoMatricula;
+    }
+
+    public void setCursoMatricula(Cursa cursoMatricula) {
+        this.cursoMatricula = cursoMatricula;
+    }
+
+    public PeriodoAcademico getPeriodoAcademicoMatricula() {
+        return periodoAcademicoMatricula;
+    }
+
+    public void setPeriodoAcademicoMatricula(PeriodoAcademico periodoAcademicoMatricula) {
+        this.periodoAcademicoMatricula = periodoAcademicoMatricula;
+    }
+
+    public ListaDinamica<Cursa> getListaCursoMatricula() {
+        return listaCursoMatricula;
+    }
+
+    public void setListaCursoMatricula(ListaDinamica<Cursa> listaCursoMatricula) {
+        this.listaCursoMatricula = listaCursoMatricula;
+    }
+
+    public ListaDinamica<PeriodoAcademico> getListaPeriodoMatricula() {
+        return listaPeriodoMatricula;
+    }
+
+    public void setListaPeriodoMatricula(ListaDinamica<PeriodoAcademico> listaPeriodoMatricula) {
+        this.listaPeriodoMatricula = listaPeriodoMatricula;
+    }
+  
 
     @Override
     public String toString() {
-        return "Fecha:" + fechaMatricula + "\n";
+        return "Codigo:" + CodigoMatricula +  ", Estado:" + EstadoMatricula +"\n";
     }
     
 }

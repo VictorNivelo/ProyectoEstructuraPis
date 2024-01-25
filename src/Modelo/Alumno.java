@@ -1,7 +1,6 @@
 
 package Modelo;
 
-import Controlador.TDA.ListaDinamica.Exepciones.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 
 /**
@@ -9,47 +8,47 @@ import Controlador.TDA.ListaDinamica.ListaDinamica;
  * @author Victor
  */
 public class Alumno {
-    private Integer idAlumno;
-    private Persona datosAlumno;
-    private Boolean estado;
-    private Matricula matriculaAlumno;
-    private ListaDinamica<Matricula> ListaMatriculas;
+    private Integer IdAlumno;
+    private String EstadoAlumno;
     
-    private ListaDinamica<Cursa> cursosAsignados;
+    private Persona DatosAlumno;
+    
+    private Matricula matriculaAlumno;
+    private ListaDinamica<Matricula> listaMatriculaAlumno;
 
     public Alumno() {
         
     }
 
-    public Alumno(Integer idAlumno, Persona datosAlumno, Boolean estado, Matricula matriculaAlumno) {
-        this.idAlumno = idAlumno;
-        this.datosAlumno = datosAlumno;
-        this.estado = estado;
+    public Alumno(Integer IdAlumno, Persona DatosAlumno, String Estado, Matricula matriculaAlumno) {
+        this.IdAlumno = IdAlumno;
+        this.DatosAlumno = DatosAlumno;
+        this.EstadoAlumno = Estado;
         this.matriculaAlumno = matriculaAlumno;
     }
 
     public Integer getIdAlumno() {
-        return idAlumno;
+        return IdAlumno;
     }
 
-    public void setIdAlumno(Integer idAlumno) {
-        this.idAlumno = idAlumno;
+    public void setIdAlumno(Integer IdAlumno) {
+        this.IdAlumno = IdAlumno;
+    }
+
+    public String getEstadoAlumno() {
+        return EstadoAlumno;
+    }
+
+    public void setEstadoAlumno(String EstadoAlumno) {
+        this.EstadoAlumno = EstadoAlumno;
     }
 
     public Persona getDatosAlumno() {
-        return datosAlumno;
+        return DatosAlumno;
     }
 
-    public void setDatosAlumno(Persona datosAlumno) {
-        this.datosAlumno = datosAlumno;
-    }
-
-    public Boolean getEstado() {
-        return estado;
-    }
-
-    public void setEstado(Boolean estado) {
-        this.estado = estado;
+    public void setDatosAlumno(Persona DatosAlumno) {
+        this.DatosAlumno = DatosAlumno;
     }
 
     public Matricula getMatriculaAlumno() {
@@ -59,34 +58,18 @@ public class Alumno {
     public void setMatriculaAlumno(Matricula matriculaAlumno) {
         this.matriculaAlumno = matriculaAlumno;
     }
-    
-    public void agregarCursoAsignado(Cursa curso) {
-        cursosAsignados.Agregar(curso);
+
+    public ListaDinamica<Matricula> getListaMatriculaAlumno() {
+        return listaMatriculaAlumno;
     }
 
-    public ListaDinamica<Cursa> getCursosAsignados() {
-        return cursosAsignados;
-    }
-
-    public ListaDinamica<Matricula> getListaMatriculas() {
-        return ListaMatriculas;
-    }
-
-    public void setListaMatriculas(ListaDinamica<Matricula> ListaMatriculas) {
-        this.ListaMatriculas = ListaMatriculas;
+    public void setListaMatriculaAlumno(ListaDinamica<Matricula> listaMatriculaAlumno) {
+        this.listaMatriculaAlumno = listaMatriculaAlumno;
     }
     
-    public Cursa obtenerCursoAsignado(Integer indice) throws ListaVacia, IndexOutOfBoundsException {
-        return cursosAsignados.getInfo(indice);
-    }
-
-    public void eliminarCursoAsignado(Integer indice) throws ListaVacia, IndexOutOfBoundsException {
-        cursosAsignados.eliminar(indice);
-    }
-
     @Override
     public String toString() {
-        return "idAlumno=" + idAlumno + ", datosAlumno=" + datosAlumno + ", estado=" + estado + ", matriculaAlumno=" + matriculaAlumno + "\n";
+        return "DNI" + DatosAlumno.getNumeroCedula() + " Nombres: " + DatosAlumno.getNombre() +" " +DatosAlumno.getApellido()+ "\n";
     }
     
 }

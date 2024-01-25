@@ -2,7 +2,7 @@
 package Vista;
 
 import Controlador.Dao.Modelo.alumnoDao;
-import Controlador.TDA.ListaDinamica.Exepciones.ListaVacia;
+import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Controlador.Utiles.UtilesControlador;
 import Modelo.Alumno;
@@ -22,7 +22,7 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
 
     /**
      * Creates new form VistaGestionAlumnos
-     * @throws Controlador.TDA.ListaDinamica.Exepciones.ListaVacia
+     * @throws Controlador.TDA.ListaDinamica.Excepcion.ListaVacia
      */
     public VistaGestionAlumnos() throws ListaVacia {
         initComponents();
@@ -62,18 +62,9 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
                 alumnoControlDao.setAlumnos(mta.getAlumnosTabla().getInfo(fila));
                 
                 cbxAlumnos.setSelectedIndex(alumnoControlDao.getAlumnos().getIdAlumno()-1);
+                cbxEstado.setSelectedItem(alumnoControlDao.getAlumnos().getEstadoAlumno());
                 cbxMatricula.setSelectedIndex(alumnoControlDao.getAlumnos().getMatriculaAlumno().getIdMatricula()-1);
                 
-                String Estado = "";
-                if (alumnoControlDao.getAlumnos().getEstado() == true) {
-                    Estado = "Cursando";
-                }
-                if (alumnoControlDao.getAlumnos().getEstado() == false) {
-                    Estado = "Retirado";
-                }
-
-                cbxEstado.setSelectedItem(Estado);
-
             } 
             catch (Exception e) {
                 
@@ -94,18 +85,11 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
         } 
         else {
             Integer IdAlumno = listaAlumnos.getLongitud() + 1;
-            
-            Boolean Estado = false;
-            if(cbxEstado.getSelectedItem().toString() == "Cursando"){
-                Estado = true;
-            }
-            if(cbxEstado.getSelectedItem().toString() == "Retirado"){
-                Estado = false;
-            }
+            String Estado = cbxEstado.getSelectedItem().toString();
                                    
             alumnoControlDao.getAlumnos().setIdAlumno(IdAlumno);
             alumnoControlDao.getAlumnos().setDatosAlumno(UtilVista.obtenerAlumnosControl(cbxAlumnos));
-            alumnoControlDao.getAlumnos().setEstado(Estado);
+            alumnoControlDao.getAlumnos().setEstadoAlumno(Estado);
             alumnoControlDao.getAlumnos().setMatriculaAlumno(UtilVista.obtenerMatriculaControl(cbxMatricula));
 
             if (alumnoControlDao.Persist()) {
@@ -231,6 +215,9 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
         jLabel9.setForeground(new java.awt.Color(0, 0, 0));
         jLabel9.setText("Buscar por");
 
+        cbxTipoBusqueda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Numero de cedula", "Nombre", "Apellido", "Genero", "Estado", "Telefono", "Correo", "Codido matricula" }));
+        cbxTipoBusqueda.setSelectedIndex(-1);
+
         jButton3.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jButton3.setText("BUSCAR");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -346,16 +333,16 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
                             .addComponent(cbxEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
                             .addComponent(cbxMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 326, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -398,31 +385,28 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
             
             switch (TipoCampo) {
                 case "Numero cedula":
-                    TipoCampo = "NumeroCedula";
+                    TipoCampo = "DatosAlumno.NumeroCedula";
                     break;
                 case "Nombre":
-                    TipoCampo = "Nombre";
+                    TipoCampo = "DatosAlumno.Nombre";
                     break;
                 case "Apellido":
-                    TipoCampo = "Apellido";
+                    TipoCampo = "DatosAlumno.Apellido";
                     break;
                 case "Genero":
-                    TipoCampo = "Genero";
+                    TipoCampo = "DatosAlumno.Genero";
                     break;
                 case "Telefono":
-                    TipoCampo = "Telefono";
+                    TipoCampo = "DatosAlumno.Telefono";
                     break;
-                case "Direccion":
-                    TipoCampo = "direccion";
-                    break;
-                case "Rol":
-                    TipoCampo = "rolPersona.nombreRol";
-                    break;
-                case "Estado de cuenta":
-                    TipoCampo = "cuentaPersona.EstadoCuenta";
+                case "Estado":
+                    TipoCampo = "Estado";
                     break;
                 case "Correo":
-                    TipoCampo = "cuentaPersona.Correo";
+                    TipoCampo = "DatosAlumno.cuentaPersona.Correo";
+                    break;
+                case "Codigo de matricula":
+                    TipoCampo = "matriculaAlumno.CodigoMatricula";
                     break;
                 default:
                     throw new AssertionError();
@@ -486,13 +470,7 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
             }
             else {
                 Integer IdAlumno = alumnoControlDao.getAlumnos().getIdAlumno();
-                Boolean Estado = false;
-                if (cbxEstado.getSelectedItem().toString() == "Cursando") {
-                    Estado = true;
-                }
-                if (cbxEstado.getSelectedItem().toString() == "Retirado") {
-                    Estado = false;
-                }
+                String Estado = cbxEstado.getSelectedItem().toString();
                 
                 Alumno personaModiPersona = new Alumno(IdAlumno, UtilVista.obtenerAlumnosControl(cbxAlumnos),Estado, UtilVista.obtenerMatriculaControl(cbxMatricula));
 

@@ -1,7 +1,7 @@
 
 package Controlador.TDA.Pilas;
 
-import Controlador.TDA.ListaDinamica.Exepciones.ListaVacia;
+import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.Pilas.Excepcion.FullStackException;
 
 /**
@@ -37,4 +37,5 @@ public class StackUltimate<E> {
         System.out.println(stack.toString());
         System.out.println("");
     }
+    
 }

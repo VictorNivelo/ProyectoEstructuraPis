@@ -2,7 +2,7 @@
 package Vista;
 
 import Controlador.TDA.ListaDinamica.ListaDinamica;
-import Controlador.TDA.ListaDinamica.Exepciones.ListaVacia;
+import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.Dao.Modelo.personaDao;
 import Controlador.Utiles.UtilesControlador;
 import Modelo.Cuenta;
@@ -27,7 +27,7 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
 
     /**
      * Creates new form VistaRegistroAlumnos
-     * @throws Controlador.TDA.ListaDinamica.Exepciones.ListaVacia
+     * @throws Controlador.TDA.ListaDinamica.Excepcion.ListaVacia
      */
     public VistaGestionPersonas() throws ListaVacia {
         initComponents();
@@ -46,6 +46,7 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
         cbxRol.setSelectedIndex(-1);
         cbxTipoBusqueda.setSelectedIndex(-1);
         cbxEstadoCuenta.setSelectedIndex(0);
+        cbxTipoDni.setSelectedIndex(-1);
     }
     
     private void Limpiar() throws ListaVacia {
@@ -53,6 +54,7 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
         txtNombre.setText("");
         txtApellido.setText("");
         cbxGenero.setSelectedIndex(-1);
+        cbxTipoDni.setSelectedIndex(-1);
         DateFechaNacimiento.setDate(null);
         txtDireccion.setText("");
         txtTelefono.setText("");
@@ -73,6 +75,7 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
             try {
                 personaControlDao.setPersona(mtp.getPersonasTabla().getInfo(fila));
                 
+                cbxTipoDni.setSelectedItem(personaControlDao.getPersona().getTipoDni());
                 txtNumeroCedula.setText(personaControlDao.getPersona().getNumeroCedula());
                 txtNombre.setText(personaControlDao.getPersona().getNombre());
                 txtApellido.setText(personaControlDao.getPersona().getApellido());
@@ -135,6 +138,7 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
         else {
             //Datos de persona a registrar
             Integer IdPersona = listaPersonas.getLongitud() + 1;
+            String TipoDni = cbxTipoDni.getSelectedItem().toString();
             String NumeroCedula = txtNumeroCedula.getText();
             String Nombre = txtNombre.getText();
             String Apellido = txtApellido.getText();
@@ -155,6 +159,7 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
 //            Persona datosPersona = new Persona(IdPersona, NumeroCedula, Nombre, Apellido, Genero, FechaNacimiento, Direccion, Telefono, rolPersona, cuenta);
             
             personaControlDao.getPersona().setIdPersona(IdPersona);
+            personaControlDao.getPersona().setTipoDni(TipoDni);
             personaControlDao.getPersona().setNumeroCedula(NumeroCedula);
             personaControlDao.getPersona().setNombre(Nombre);
             personaControlDao.getPersona().setApellido(Apellido);
@@ -238,7 +243,7 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel3.setText("Numero");
+        jLabel3.setText("Nro DNI");
 
         jLabel4.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
@@ -292,7 +297,7 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Haettenschweiler", 0, 48)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("SERVICIO DE REGISTRO DE PERSONAS");
+        jLabel2.setText("SERVICIO DE GESTION DE PERSONAS");
         jLabel2.setToolTipText("");
 
         jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -432,13 +437,14 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
             }
         });
 
-        cbxEstadoCuenta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Activa", "No funcional", "Suspendida" }));
-        cbxEstadoCuenta.setSelectedIndex(-1);
+        cbxEstadoCuenta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Activa", "Inactiva", "Suspendida" }));
         cbxEstadoCuenta.setEnabled(false);
 
         jLabel13.setFont(new java.awt.Font("Candara Light", 1, 32)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(0, 0, 0));
         jLabel13.setText("Lista de personas");
+
+        DateFechaNacimiento.setDateFormatString("dd mm yyyy");
 
         jLabel20.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(0, 0, 0));
@@ -487,8 +493,8 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
                                     .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
                                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(txtApellido)
@@ -695,6 +701,7 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
             else {
 
                 Integer IdPersona = personaControlDao.getPersona().getIdPersona();
+                String TipoDni = cbxTipoDni.getSelectedItem().toString();
                 String NumeroCedula = txtNumeroCedula.getText();
                 String Nombre = txtNombre.getText();
                 String Apellido = txtApellido.getText();
@@ -711,8 +718,8 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
                 String EstadoCuenta = cbxEstadoCuenta.getSelectedItem().toString();
 
                 Cuenta cuenta = new Cuenta(idCuenta, Usuario, Contrasena, EstadoCuenta);
-
-                Persona personaModiPersona = new Persona(IdPersona, NumeroCedula, Nombre, Apellido, Genero, FechaNacimiento, Direccion, Telefono, UtilVista.obtenerRolControl(cbxRol), cuenta);
+                                
+                Persona personaModiPersona = new Persona(IdPersona, TipoDni, NumeroCedula, Nombre, Apellido, Genero, FechaNacimiento, Direccion, Telefono, UtilVista.obtenerRolControl(cbxRol), cuenta);
                 
                 personaControlDao.Merge(personaModiPersona, IdPersona-1);
 
@@ -726,6 +733,7 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
                 }
             }
         }
+        cbxEstadoCuenta.setEnabled(false);
         
 //            JOptionPane.showMessageDialog(null, "No se puede modificar");
 
@@ -797,7 +805,10 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
             String TipoCampo = cbxTipoBusqueda.getSelectedItem().toString();
             
             switch (TipoCampo) {
-                case "Numero cedula":
+                case "Tipo de DNI":
+                    TipoCampo = "TipoDni";
+                    break;
+                case "Numero DNI":
                     TipoCampo = "NumeroCedula";
                     break;
                 case "Nombre":
@@ -813,16 +824,16 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
                     TipoCampo = "Telefono";
                     break;
                 case "Direccion":
-                    TipoCampo = "direccion";
+                    TipoCampo = "Direccion";
                     break;
                 case "Rol":
-                    TipoCampo = "rolPersona.nombreRol";
+                    TipoCampo = "personaRol.NombreRol";
                     break;
                 case "Estado de cuenta":
-                    TipoCampo = "cuentaPersona.EstadoCuenta";
+                    TipoCampo = "personaCuenta.EstadoCuenta";
                     break;
                 case "Correo":
-                    TipoCampo = "cuentaPersona.Correo";
+                    TipoCampo = "personaCuenta.Correo";
                     break;
                 default:
                     throw new AssertionError();

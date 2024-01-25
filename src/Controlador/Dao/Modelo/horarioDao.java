@@ -42,4 +42,5 @@ public class horarioDao extends DaoImplement<Horario> {
         horarios.setIdHorario(all().getLongitud() + 1);
         return Persist(horarios);
     }
+    
 }

@@ -2,7 +2,7 @@
 package Vista;
 
 import Controlador.Dao.Modelo.periodoAcademicoDao;
-import Controlador.TDA.ListaDinamica.Exepciones.ListaVacia;
+import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Controlador.Utiles.UtilesControlador;
 import Modelo.PeriodoAcademico;
@@ -313,14 +313,14 @@ public class VistaGestionPeriodoAcademico extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(DateInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel4)
+                            .addComponent(DateInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel5)
                             .addComponent(DateFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 7, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
@@ -360,7 +360,7 @@ public class VistaGestionPeriodoAcademico extends javax.swing.JFrame {
 
             switch (TipoCampo) {
                 case "Fecha de inicio":
-                    TipoCampo = "fechaInicio";
+                    TipoCampo = "FechaInicio";
                     break;
                 case "Fecha fin":
                     TipoCampo = "FechaFin";
@@ -386,21 +386,29 @@ public class VistaGestionPeriodoAcademico extends javax.swing.JFrame {
         int fila = tblPeriodos.getSelectedRow();
         if (fila < 0) {
             JOptionPane.showMessageDialog(null, "Escoga un registro");
-        }
-        else {
-            Integer IdMateria = periodoControlDao.getPeriodo().getIdPeriodoAcademino();
-            Date InicioD = DateInicio.getDate();
-            Date FinD = DateFin.getDate();
-            String Inicio = Formato.format(InicioD);
-            String Fin = Formato.format(FinD);
+        } else {
 
-            PeriodoAcademico periodoModificado = new PeriodoAcademico(IdMateria, Inicio, Fin);
+            if (DateInicio.getDate() == null) {
+                JOptionPane.showMessageDialog(null, "Falta llenar decha de inicio", "Error", JOptionPane.ERROR_MESSAGE);
+            } 
+            else if (DateFin.getDate() == null) {
+                JOptionPane.showMessageDialog(null, "Falta llenar fecha fin", "Error", JOptionPane.ERROR_MESSAGE);
+            } 
+            else {
+                Integer IdMateria = periodoControlDao.getPeriodo().getIdPeriodoAcademino();
+                Date InicioD = DateInicio.getDate();
+                Date FinD = DateFin.getDate();
+                String Inicio = Formato.format(InicioD);
+                String Fin = Formato.format(FinD);
 
-            periodoControlDao.Merge(periodoModificado, IdMateria-1);
+                PeriodoAcademico periodoModificado = new PeriodoAcademico(IdMateria, Inicio, Fin);
 
-            CargarTabla();
+                periodoControlDao.Merge(periodoModificado, IdMateria - 1);
 
-            Limpiar();
+                CargarTabla();
+
+                Limpiar();
+            }
 
         }
         

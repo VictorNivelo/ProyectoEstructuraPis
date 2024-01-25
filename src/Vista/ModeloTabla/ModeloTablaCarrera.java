@@ -1,7 +1,7 @@
 
 package Vista.ModeloTabla;
 
-import Controlador.TDA.ListaDinamica.Exepciones.ListaVacia;
+import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Modelo.Carrera;
 import javax.swing.table.AbstractTableModel;
@@ -69,4 +69,5 @@ public class ModeloTablaCarrera extends AbstractTableModel {
                 return null;
         }
     }
+    
 }

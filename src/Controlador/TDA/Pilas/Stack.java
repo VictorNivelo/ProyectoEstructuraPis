@@ -1,7 +1,7 @@
 
 package Controlador.TDA.Pilas;
 
-import Controlador.TDA.ListaDinamica.Exepciones.ListaVacia;
+import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Controlador.TDA.Pilas.Excepcion.FullStackException;
 /**
@@ -33,4 +33,5 @@ class Stack<E> extends ListaDinamica<E>{
         E info = extractFirst();        
         return info;
     }
+    
 }

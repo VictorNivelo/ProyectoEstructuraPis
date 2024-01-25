@@ -1,7 +1,7 @@
 
 package Vista.ModeloTabla;
 
-import Controlador.TDA.ListaDinamica.Exepciones.ListaVacia;
+import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Modelo.Horario;
 import javax.swing.table.AbstractTableModel;
@@ -42,13 +42,13 @@ public class ModeloTablaHorario extends AbstractTableModel {
                 case 0:
                     return (p != null) ? p.getIdHorario(): "";
                 case 1:
-                    return (p != null) ? p.getDias(): "";
+                    return (p != null) ? p.getDiaSemana(): "";
                 case 2:
                     return (p != null) ? p.getHoraIncio() : "";
                 case 3:
                     return (p != null) ? p.getHoraFin() : "";
                 case 4:
-                    return (p != null) ? p.getTematicaHorario(): "";
+                    return (p != null) ? p.getAsistenciaHorario().getAsistenciaTematica().getNombreTematica(): "";
                 default:
                     return null;
             }
@@ -77,4 +77,5 @@ public class ModeloTablaHorario extends AbstractTableModel {
                 return null;
         }
     }
+    
 }

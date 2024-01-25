@@ -2,14 +2,16 @@
 package Vista;
 
 import Controlador.Dao.Modelo.asistenciaDao;
-import Controlador.TDA.ListaDinamica.Exepciones.ListaVacia;
+import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Controlador.Utiles.UtilesControlador;
 import Modelo.Asistencia;
 import Modelo.EstadoAsistencia;
+import Modelo.Tematica;
 import Vista.ModeloTabla.ModeloTablaAsistencia;
-import Vista.Utiles.UtilVista;
 import java.awt.event.KeyEvent;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -21,17 +23,18 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
     ModeloTablaAsistencia mta = new ModeloTablaAsistencia();
     asistenciaDao AsistenciaControl = new asistenciaDao();
     ListaDinamica<Asistencia> listaAsistencia = new ListaDinamica<>();
+    SimpleDateFormat Formato = new SimpleDateFormat("dd/MM/yyyy");
 
     /**
      * Creates new form VistaPrincipal
-     * @throws Controlador.TDA.ListaDinamica.Exepciones.ListaVacia
+     * @throws Controlador.TDA.ListaDinamica.Excepcion.ListaVacia
      */
     public VistaGestionAsistencia() throws ListaVacia {
         initComponents();
         this.setLocationRelativeTo(null);
-        UtilVista.cargarcomboHorario(cbxHorario);
         setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
         LlenarComboConEnum();
+        DateFechaTematica.setDateFormatString("dd/MM/yyyy");
         CargarTabla();
     }
         
@@ -39,24 +42,22 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
         mta.setAsistenciaTabla(AsistenciaControl.getListaAsistencia());
         tblAsistencia.setModel(mta);
         tblAsistencia.updateUI();
-        cbxAsistencia.setSelectedIndex(-1);
-        cbxHorario.setSelectedIndex(-1);
+        cbxEstadoAsistencia.setSelectedIndex(-1);
         cbxTipoBusqueda.setSelectedIndex(-1);
+        DateFechaTematica.setDate(null);
     }
     
     public void LlenarComboConEnum() {
         for (EstadoAsistencia tipo : EstadoAsistencia.values()) {
-            cbxAsistencia.addItem(tipo.getDescripcion());
+            cbxEstadoAsistencia.addItem(tipo.getDescripcion());
         }
     }
     
     private void Limpiar() throws ListaVacia {
         txtObservacion.setText("");
-        txtDia.setText("");
-        txtHora.setText("");
-        cbxAsistencia.setSelectedIndex(-1);
-        cbxHorario.setSelectedIndex(-1);
+        cbxEstadoAsistencia.setSelectedIndex(-1);
         cbxTipoBusqueda.setSelectedIndex(-1);
+        DateFechaTematica.setDate(null);
         AsistenciaControl.setAsistencias(null);
         CargarTabla();
     }
@@ -70,12 +71,9 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
             try {
                 AsistenciaControl.setAsistencias(mta.getAsistenciaTabla().getInfo(fila));
                 
-                txtDia.setText(AsistenciaControl.getAsistencias().getDiaAsistencia());
-                txtHora.setText(AsistenciaControl.getAsistencias().getHoraAsistencia());
                 txtObservacion.setText(AsistenciaControl.getAsistencias().getObservacion());
-                cbxAsistencia.setSelectedItem(AsistenciaControl.getAsistencias().getEstadoAsistencia().toString());
+                cbxEstadoAsistencia.setSelectedItem(AsistenciaControl.getAsistencias().getEstadoAsistencia().toString());
                 txtObservacion.setText(AsistenciaControl.getAsistencias().getObservacion());
-                cbxHorario.setSelectedIndex(AsistenciaControl.getAsistencias().getHorarioAsistencia().getIdHorario()-1);
 
             } 
             catch (Exception e) {
@@ -86,38 +84,34 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
     
     private void Guardar() throws ListaVacia {
 
-        if (txtDia.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar nombre de la carrera", "Error", JOptionPane.INFORMATION_MESSAGE);
-        } 
-        else if (txtHora.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar nombre de la carrera", "Error", JOptionPane.INFORMATION_MESSAGE);
-        } 
-        else if (cbxAsistencia.getSelectedIndex() == -1) {
+        if (cbxEstadoAsistencia.getSelectedIndex() == -1) {
             JOptionPane.showMessageDialog(null, "Falta seleccionar la asistencia", "Error", JOptionPane.INFORMATION_MESSAGE);
         } 
         else if (txtObservacion.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Falta llenar duracion", "Error", JOptionPane.INFORMATION_MESSAGE);
         }
-        else if(cbxHorario.getSelectedIndex() ==-1){
-            JOptionPane.showMessageDialog(null, "Falta seleccionar la horario", "Error", JOptionPane.INFORMATION_MESSAGE);
+        else if (txtTematica.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Falta llenar duracion", "Error", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else if (DateFechaTematica.getDate() == null) {
+            JOptionPane.showMessageDialog(null, "Falta llenar fecha", "Error", JOptionPane.INFORMATION_MESSAGE);
         }
         else {
             Integer IdAsistencia = listaAsistencia.getLongitud() + 1;
-            String Dia = txtDia.getText();
-            String Hora = txtHora.getText();
             
-            int indiceSeleccionado = cbxAsistencia.getSelectedIndex();
+            int indiceSeleccionado = cbxEstadoAsistencia.getSelectedIndex();
             EstadoAsistencia[] valores = EstadoAsistencia.values();
             EstadoAsistencia estadoSeleccionado = valores[indiceSeleccionado];
-                        
             String Observacion = txtObservacion.getText();
+            Date ft = DateFechaTematica.getDate();
+            String FechaT = Formato.format(ft);
+            String TEM = txtTematica.getText();
+            Tematica t = new Tematica(IdAsistencia, TEM, FechaT);
                                     
             AsistenciaControl.getAsistencias().setIdAsistencia(IdAsistencia);
-            AsistenciaControl.getAsistencias().setDiaAsistencia(Dia);
-            AsistenciaControl.getAsistencias().setHoraAsistencia(Hora);
             AsistenciaControl.getAsistencias().setEstadoAsistencia(estadoSeleccionado);
             AsistenciaControl.getAsistencias().setObservacion(Observacion);
-            AsistenciaControl.getAsistencias().setHorarioAsistencia(UtilVista.obtenerHorarioControl(cbxHorario));
+            AsistenciaControl.getAsistencias().setAsistenciaTematica(t);
                         
             if (AsistenciaControl.Persist()) {
                 JOptionPane.showMessageDialog(null, "ASISTENCIA GUARDADA EXISTOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
@@ -174,22 +168,18 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
         btnModificar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        cbxAsistencia = new javax.swing.JComboBox<>();
+        cbxEstadoAsistencia = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
         txtObservacion = new javax.swing.JTextField();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        txtHora = new javax.swing.JTextField();
-        txtDia = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         cbxTipoBusqueda = new javax.swing.JComboBox<>();
         jLabel13 = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
-        cbxHorario = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtTematica = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        DateFechaTematica = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("GESTION DE ASISTENCIAS");
@@ -283,7 +273,7 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel5.setText("Asistencia");
+        jLabel5.setText("Estado");
 
         jLabel9.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(0, 0, 0));
@@ -294,15 +284,6 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
                 txtObservacionKeyTyped(evt);
             }
         });
-
-        jLabel10.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel10.setText("Dia");
-        jLabel10.setToolTipText("");
-
-        jLabel11.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel11.setText("Hora");
 
         jLabel12.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(0, 0, 0));
@@ -323,19 +304,21 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel4.setText("Horario");
-
         jLabel6.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Tematica");
 
-        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtTematica.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextField1KeyTyped(evt);
+                txtTematicaKeyTyped(evt);
             }
         });
+
+        jLabel4.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel4.setText("Fecha");
+
+        DateFechaTematica.setDateFormatString("dd mm yyyy");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -348,30 +331,24 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
                         .addComponent(btnRegresar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnRegistrarAsistencias))
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cbxAsistencia, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtHora)
-                            .addComponent(txtDia)))
+                        .addComponent(cbxEstadoAsistencia, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtObservacion))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel4)
-                        .addGap(18, 18, 18)
-                        .addComponent(cbxHorario, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtObservacion)
-                            .addComponent(jTextField1))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(DateFechaTematica, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtTematica)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -411,7 +388,7 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
                     .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1)
                     .addComponent(jLabel5)
-                    .addComponent(cbxAsistencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbxEstadoAsistencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 427, Short.MAX_VALUE)
@@ -422,19 +399,11 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(149, 149, 149)
+                            .addComponent(txtTematica, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel4)
-                            .addComponent(cbxHorario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel10)
-                            .addComponent(txtDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel11)
-                            .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(DateFechaTematica, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -514,29 +483,47 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
         int fila = tblAsistencia.getSelectedRow();
         if (fila < 0) {
             JOptionPane.showMessageDialog(null, "Escoga un registro");
-        }
+        } 
         else {
-            Integer IdAsistencia = AsistenciaControl.getAsistencias().getIdAsistencia();
-            String Dia = txtDia.getText();
-            String Hora = txtHora.getText();
 
-            int indiceSeleccionado = cbxAsistencia.getSelectedIndex();
-            EstadoAsistencia[] valores = EstadoAsistencia.values();
-            EstadoAsistencia estadoSeleccionado = valores[indiceSeleccionado];
+            if (cbxEstadoAsistencia.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Falta seleccionar la asistencia", "Error", JOptionPane.INFORMATION_MESSAGE);
+            } 
+            else if (txtObservacion.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Falta llenar duracion", "Error", JOptionPane.INFORMATION_MESSAGE);
+            } 
+            else if (txtTematica.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Falta llenar duracion", "Error", JOptionPane.INFORMATION_MESSAGE);
+            } 
+            else if (DateFechaTematica.getDate() == null) {
+                JOptionPane.showMessageDialog(null, "Falta llenar fecha", "Error", JOptionPane.INFORMATION_MESSAGE);
+            } 
+            else {
 
-            String Observacion = txtObservacion.getText();
+                Integer IdAsistencia = AsistenciaControl.getAsistencias().getIdAsistencia();
 
-            Asistencia personaModiPersona = new Asistencia(IdAsistencia, Dia, Hora, estadoSeleccionado, Observacion, UtilVista.obtenerHorarioControl(cbxHorario));
+                int indiceSeleccionado = cbxEstadoAsistencia.getSelectedIndex();
+                EstadoAsistencia[] valores = EstadoAsistencia.values();
+                EstadoAsistencia estadoSeleccionado = valores[indiceSeleccionado];
+                String Observacion = txtObservacion.getText();
+                Date ft = DateFechaTematica.getDate();
+                String FechaT = Formato.format(ft);
+                String TEM = txtTematica.getText();
 
-            AsistenciaControl.Merge(personaModiPersona, IdAsistencia-1);
+                Tematica t = new Tematica(IdAsistencia, TEM, FechaT);
 
-            CargarTabla();
+                Asistencia personaModiPersona = new Asistencia(IdAsistencia, estadoSeleccionado, Observacion, t);
 
-            try {
-                Limpiar();
-            }
-            catch (ListaVacia ex) {
+                AsistenciaControl.Merge(personaModiPersona, IdAsistencia - 1);
 
+                CargarTabla();
+
+                try {
+                    Limpiar();
+                } 
+                catch (ListaVacia ex) {
+
+                }
             }
         }
         
@@ -545,20 +532,17 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
     private void btnRegistrarAsistenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarAsistenciasActionPerformed
         
         try {
-            if (txtDia.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar nombre de la carrera", "Error", JOptionPane.INFORMATION_MESSAGE);
-            } 
-            else if (txtHora.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar nombre de la carrera", "Error", JOptionPane.INFORMATION_MESSAGE);
-            } 
-            else if (cbxAsistencia.getSelectedIndex() == -1) {
+            if (cbxEstadoAsistencia.getSelectedIndex() == -1) {
                 JOptionPane.showMessageDialog(null, "Falta seleccionar la asistencia", "Error", JOptionPane.INFORMATION_MESSAGE);
             } 
             else if (txtObservacion.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Falta llenar duracion", "Error", JOptionPane.INFORMATION_MESSAGE);
             } 
-            else if (cbxHorario.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar la horario", "Error", JOptionPane.INFORMATION_MESSAGE);
+            else if (txtTematica.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Falta llenar duracion", "Error", JOptionPane.INFORMATION_MESSAGE);
+            } 
+            else if (DateFechaTematica.getDate() == null) {
+                JOptionPane.showMessageDialog(null, "Falta llenar fecha", "Error", JOptionPane.INFORMATION_MESSAGE);
             } 
             else {
                 Guardar();
@@ -598,7 +582,7 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
         
     }//GEN-LAST:event_txtObservacionKeyTyped
 
-    private void jTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyTyped
+    private void txtTematicaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTematicaKeyTyped
         
         char c = evt.getKeyChar();
 
@@ -610,7 +594,7 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
 
         }
         
-    }//GEN-LAST:event_jTextField1KeyTyped
+    }//GEN-LAST:event_txtTematicaKeyTyped
 
     /**
      * @param args the command line arguments
@@ -660,17 +644,15 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.toedter.calendar.JDateChooser DateFechaTematica;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnRegistrarAsistencias;
     private javax.swing.JToggleButton btnRegresar;
-    private javax.swing.JComboBox<String> cbxAsistencia;
-    private javax.swing.JComboBox<String> cbxHorario;
+    private javax.swing.JComboBox<String> cbxEstadoAsistencia;
     private javax.swing.JComboBox<String> cbxTipoBusqueda;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
@@ -683,11 +665,9 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTable tblAsistencia;
     private javax.swing.JTextField txtBuscar;
-    private javax.swing.JTextField txtDia;
-    private javax.swing.JTextField txtHora;
     private javax.swing.JTextField txtObservacion;
+    private javax.swing.JTextField txtTematica;
     // End of variables declaration//GEN-END:variables
 }

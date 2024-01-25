@@ -41,4 +41,5 @@ public class asistenciaDao extends DaoImplement<Asistencia>{
         asistencias.setIdAsistencia(all().getLongitud()+1);
         return Persist(asistencias);
     }
+    
 }

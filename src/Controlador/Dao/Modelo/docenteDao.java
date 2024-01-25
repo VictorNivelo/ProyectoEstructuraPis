@@ -41,4 +41,5 @@ public class docenteDao extends DaoImplement<Docente>{
         docentes.setIdDocente(all().getLongitud()+1);
         return Persist(docentes);
     }
+    
 }

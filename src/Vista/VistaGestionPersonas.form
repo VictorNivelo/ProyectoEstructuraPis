@@ -86,8 +86,8 @@
                                       <Component id="jLabel20" pref="68" max="32767" attributes="0"/>
                                       <Component id="jLabel5" max="32767" attributes="0"/>
                                       <Component id="jLabel4" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="jLabel3" alignment="0" max="32767" attributes="0"/>
                                       <Component id="jLabel6" max="32767" attributes="0"/>
+                                      <Component id="jLabel3" alignment="0" max="32767" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="1" attributes="0">
@@ -275,7 +275,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="0" green="0" red="0" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Numero"/>
+            <Property name="text" type="java.lang.String" value="Nro DNI"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
@@ -443,7 +443,7 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="SERVICIO DE REGISTRO DE PERSONAS"/>
+                <Property name="text" type="java.lang.String" value="SERVICIO DE GESTION DE PERSONAS"/>
                 <Property name="toolTipText" type="java.lang.String" value=""/>
               </Properties>
             </Component>
@@ -672,11 +672,10 @@
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="3">
                 <StringItem index="0" value="Activa"/>
-                <StringItem index="1" value="No funcional"/>
+                <StringItem index="1" value="Inactiva"/>
                 <StringItem index="2" value="Suspendida"/>
               </StringArray>
             </Property>
-            <Property name="selectedIndex" type="int" value="-1"/>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <AuxValues>
@@ -695,6 +694,9 @@
           </Properties>
         </Component>
         <Component class="com.toedter.calendar.JDateChooser" name="DateFechaNacimiento">
+          <Properties>
+            <Property name="dateFormatString" type="java.lang.String" value="dd mm yyyy"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel20">
           <Properties>

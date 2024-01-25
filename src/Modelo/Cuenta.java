@@ -6,7 +6,7 @@ package Modelo;
  * @author Victor
  */
 public class Cuenta {
-    private Integer idCuenta;
+    private Integer IdCuenta;
     private String Correo;
     private String Contrasena;
     private String EstadoCuenta;
@@ -16,18 +16,18 @@ public class Cuenta {
     }
 
     public Cuenta(Integer idCuenta, String Correo, String Contrasena, String EstadoCuenta) {
-        this.idCuenta = idCuenta;
+        this.IdCuenta = idCuenta;
         this.Correo = Correo;
         this.Contrasena = Contrasena;
         this.EstadoCuenta = EstadoCuenta;
     }
 
     public Integer getIdCuenta() {
-        return idCuenta;
+        return IdCuenta;
     }
 
     public void setIdCuenta(Integer idCuenta) {
-        this.idCuenta = idCuenta;
+        this.IdCuenta = idCuenta;
     }
 
     public String getCorreo() {
@@ -56,7 +56,7 @@ public class Cuenta {
     
     @Override
     public String toString() {
-        return "idCuenta=" + idCuenta + ", Correo=" + Correo + ", Contrasena=" + Contrasena + ", EstadoCuenta=" + EstadoCuenta;
+        return "idCuenta=" + IdCuenta + ", Correo=" + Correo + ", Contrasena=" + Contrasena + ", EstadoCuenta=" + EstadoCuenta;
     }
     
 }

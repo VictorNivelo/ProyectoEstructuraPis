@@ -8,47 +8,44 @@ import Controlador.TDA.ListaDinamica.ListaDinamica;
  * @author Victor
  */
 public class Persona {
-    private Integer idPersona;
+    private Integer IdPersona;
     private String TipoDni;
     private String NumeroCedula;
     private String Nombre;
     private String Apellido;
     private String Genero;
     private String FechaNacimineto;
-    private String direccion;
+    private String Direccion;
     private String Telefono;
+    
     private Rol rolPersona;
     private Cuenta cuentaPersona;
-    
-    private ListaDinamica<Cursa> cursosAsignados;
+    private ListaDinamica<Rol> listaRolPersona;
 
     public Persona() {
         
     }
-    
-//    public Persona() {
-//        cursosAsignados = new ListaDinamica<>();
-//    }
 
-    public Persona(Integer idPersona, String NumeroCedula, String Nombre, String Apellido, String Genero, String FechaNacimineto, String direccion, String Telefono, Rol rolPersona, Cuenta cuentaPersona) {
-        this.idPersona = idPersona;
+    public Persona(Integer IdPersona, String TipoDni, String NumeroCedula, String Nombre, String Apellido, String Genero, String FechaNacimineto, String Direccion, String Telefono, Rol rolPersona, Cuenta cuentaPersona) {
+        this.IdPersona = IdPersona;
+        this.TipoDni = TipoDni;
         this.NumeroCedula = NumeroCedula;
         this.Nombre = Nombre;
         this.Apellido = Apellido;
         this.Genero = Genero;
         this.FechaNacimineto = FechaNacimineto;
-        this.direccion = direccion;
+        this.Direccion = Direccion;
         this.Telefono = Telefono;
         this.rolPersona = rolPersona;
         this.cuentaPersona = cuentaPersona;
     }
 
     public Integer getIdPersona() {
-        return idPersona;
+        return IdPersona;
     }
 
-    public void setIdPersona(Integer idPersona) {
-        this.idPersona = idPersona;
+    public void setIdPersona(Integer IdPersona) {
+        this.IdPersona = IdPersona;
     }
 
     public String getTipoDni() {
@@ -100,11 +97,11 @@ public class Persona {
     }
 
     public String getDireccion() {
-        return direccion;
+        return Direccion;
     }
 
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
+    public void setDireccion(String Direccion) {
+        this.Direccion = Direccion;
     }
 
     public String getTelefono() {
@@ -131,52 +128,13 @@ public class Persona {
         this.cuentaPersona = cuentaPersona;
     }
 
-    public ListaDinamica<Cursa> getCursosAsignados() {
-        return cursosAsignados;
+    public ListaDinamica<Rol> getListaRolPersona() {
+        return listaRolPersona;
     }
 
-    public void setCursosAsignados(ListaDinamica<Cursa> cursosAsignados) {
-        this.cursosAsignados = cursosAsignados;
+    public void setListaRolPersona(ListaDinamica<Rol> listaRolPersona) {
+        this.listaRolPersona = listaRolPersona;
     }
-    
-//    public Boolean comparar(Persona p, String campo, Integer tipo) {
-//        switch (tipo) {
-//            case 0:
-//                return compararCampo(p, campo) < 0;
-//            case 1:
-//                return compararCampo(p, campo) > 0;
-//            default:
-//                throw new IllegalArgumentException("Tipo de comparación no válido");
-//        }
-//    }
-//
-//    private int compararCampo(Persona p, String campo) {
-//        switch (campo.toLowerCase()) {
-//            case "numerocedula":
-//                return NumeroCedula.compareTo(p.getNumeroCedula());
-//            case "nombre":
-//                return Nombre.compareTo(p.getNombre());
-//            case "apellido":
-//                return Apellido.compareTo(p.getApellido());
-//            case "genero":
-//                return Genero.compareTo(p.getGenero());
-//            case "rol":
-//                return rolPersona.getNombreRol().compareTo(p.getRolPersona().getNombreRol());
-//
-//            default:
-//                throw new IllegalArgumentException("Campo no válido para la comparación");
-//        }
-//    }
-//    
-//
-//
-//    public void inscribirCurso(Cursa curso) {
-//        cursosAsignados.Agregar(curso);
-//    }
-//
-//    public ListaDinamica<Cursa> getCursosAsignados() {
-//        return cursosAsignados;
-//    }
 
     @Override
     public String toString() {

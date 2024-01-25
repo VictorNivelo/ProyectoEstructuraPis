@@ -2,7 +2,7 @@
 package Vista;
 
 import Controlador.Dao.Modelo.mallaCurricularDao;
-import Controlador.TDA.ListaDinamica.Exepciones.ListaVacia;
+import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Controlador.Utiles.UtilesControlador;
 import Modelo.MallaCurricular;
@@ -23,16 +23,15 @@ public class VistaGestionMalla extends javax.swing.JFrame {
 
     /**
      * Creates new form VistaGestionMalla
-     * @throws Controlador.TDA.ListaDinamica.Exepciones.ListaVacia
+     * @throws Controlador.TDA.ListaDinamica.Excepcion.ListaVacia
      */
     public VistaGestionMalla() throws ListaVacia {
         initComponents();
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
         UtilVista.cargarcomboCarrera(cbxCarrera);
-        UtilVista.cargarComboCiclo(cbxCiclo);
+        cbxEstadoMalla.setEnabled(false);
         CargarTabla();
-        
     }
     
     private void CargarTabla() {
@@ -40,15 +39,15 @@ public class VistaGestionMalla extends javax.swing.JFrame {
         tblMalla.setModel(mtm);
         tblMalla.updateUI();
         cbxCarrera.setSelectedIndex(-1);
-        cbxCiclo.setSelectedIndex(-1);
+        cbxEstadoMalla.setSelectedIndex(0);
         cbxTipoBusqueda.setSelectedIndex(-1);
     }
     
     private void Limpiar() throws ListaVacia {
         txtNombreMalla.setText("");
         txtDuracionMalla.setText("");
+        cbxEstadoMalla.setSelectedIndex(-1);
         cbxCarrera.setSelectedIndex(-1);
-        cbxCiclo.setSelectedIndex(-1);
         cbxTipoBusqueda.setSelectedIndex(-1);
         mallaControlDao.setMallaCurricular(null);
         CargarTabla();
@@ -61,12 +60,13 @@ public class VistaGestionMalla extends javax.swing.JFrame {
         }
         else{
             try {
+                cbxEstadoMalla.setEnabled(true);
                 mallaControlDao.setMallaCurricular(mtm.getMallaTabla().getInfo(fila));
                 
                 txtNombreMalla.setText(mallaControlDao.getMallaCurricular().getNombreMallaCurricular());
                 txtDuracionMalla.setText(mallaControlDao.getMallaCurricular().getDuracionMallaCurricular().toString());
-                cbxCarrera.setSelectedIndex(mallaControlDao.getMallaCurricular().getCarreraMalla().getIdCarrera()-1);
-
+                cbxEstadoMalla.setSelectedItem(mallaControlDao.getMallaCurricular().getEstadoMallaCurricular());
+                cbxCarrera.setSelectedIndex(mallaControlDao.getMallaCurricular().getCarreraMallaCurricula().getIdCarrera()-1);
             } 
             catch (Exception e) {
                 
@@ -82,16 +82,24 @@ public class VistaGestionMalla extends javax.swing.JFrame {
         else if (txtDuracionMalla.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Falta llenar duracion", "Error", JOptionPane.ERROR_MESSAGE);
         } 
+        else if (cbxEstadoMalla.getSelectedIndex() == -1) {
+            JOptionPane.showMessageDialog(null, "Falta seleccionar el estado de la malla", "Error", JOptionPane.ERROR_MESSAGE);
+        } 
+        else if (cbxCarrera.getSelectedIndex() == -1) {
+            JOptionPane.showMessageDialog(null, "Falta seleccionar el ciclo", "Error", JOptionPane.ERROR_MESSAGE);
+        }
         else {
             Integer IdMalla = listaMalla.getLongitud() + 1;
             String Nombre = txtNombreMalla.getText();
-            Integer Duracion = Integer.parseInt(txtDuracionMalla.getText());
+            Integer Duracion = Integer.valueOf(txtDuracionMalla.getText());
+            String EstadoMalla = cbxEstadoMalla.getSelectedItem().toString();
                         
             mallaControlDao.getMallaCurricular().setIdMallaCurricular(IdMalla);
             mallaControlDao.getMallaCurricular().setNombreMallaCurricular(Nombre);
             mallaControlDao.getMallaCurricular().setDuracionMallaCurricular(Duracion);
+            mallaControlDao.getMallaCurricular().setEstadoMallaCurricular(EstadoMalla);
             
-            mallaControlDao.getMallaCurricular().setCarreraMalla(UtilVista.obtenerCarreraControl(cbxCarrera));
+            mallaControlDao.getMallaCurricular().setCarreraMallaCurricula(UtilVista.obtenerCarreraControl(cbxCarrera));
                         
             if (mallaControlDao.Persist()) {
                 JOptionPane.showMessageDialog(null, "MALLA GUARDADA EXISTOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
@@ -119,8 +127,6 @@ public class VistaGestionMalla extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         txtNombreMalla = new javax.swing.JTextField();
         txtDuracionMalla = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        cbxCarrera = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -136,8 +142,10 @@ public class VistaGestionMalla extends javax.swing.JFrame {
         jButton6 = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
-        jLabel10 = new javax.swing.JLabel();
-        cbxCiclo = new javax.swing.JComboBox<>();
+        jLabel11 = new javax.swing.JLabel();
+        cbxEstadoMalla = new javax.swing.JComboBox<>();
+        jLabel5 = new javax.swing.JLabel();
+        cbxCarrera = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("GESTION DE MALLA CURRICULAR");
@@ -171,10 +179,6 @@ public class VistaGestionMalla extends javax.swing.JFrame {
                 txtDuracionMallaKeyTyped(evt);
             }
         });
-
-        jLabel5.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel5.setText("Carrera");
 
         jPanel3.setBackground(new java.awt.Color(61, 90, 134));
 
@@ -262,7 +266,7 @@ public class VistaGestionMalla extends javax.swing.JFrame {
         jLabel8.setForeground(new java.awt.Color(0, 0, 0));
         jLabel8.setText("Buscar por");
 
-        cbxTipoBusqueda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "Duracion", "Carrera" }));
+        cbxTipoBusqueda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "Duracion", "Estado" }));
         cbxTipoBusqueda.setSelectedIndex(-1);
 
         jButton6.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
@@ -277,9 +281,17 @@ public class VistaGestionMalla extends javax.swing.JFrame {
         jLabel9.setForeground(new java.awt.Color(0, 0, 0));
         jLabel9.setText("Busqueda");
 
-        jLabel10.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel10.setText("Ciclo");
+        jLabel11.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel11.setText("Estado");
+        jLabel11.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        cbxEstadoMalla.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Activa", "Inactiva" }));
+        cbxEstadoMalla.setSelectedIndex(-1);
+
+        jLabel5.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel5.setText("Carrera");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -293,18 +305,17 @@ public class VistaGestionMalla extends javax.swing.JFrame {
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton5, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.LEADING))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(txtNombreMalla, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cbxCarrera, 0, 241, Short.MAX_VALUE)
                             .addComponent(txtDuracionMalla)
-                            .addComponent(cbxCiclo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(cbxEstadoMalla, javax.swing.GroupLayout.Alignment.LEADING, 0, 241, Short.MAX_VALUE)
+                            .addComponent(cbxCarrera, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -337,16 +348,16 @@ public class VistaGestionMalla extends javax.swing.JFrame {
                     .addComponent(jLabel6)
                     .addComponent(jLabel7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(cbxCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8)
-                    .addComponent(cbxTipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton6)
-                    .addComponent(jLabel9)
-                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addComponent(cbxTipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton6)
+                            .addComponent(jLabel9)
+                            .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
@@ -357,10 +368,13 @@ public class VistaGestionMalla extends javax.swing.JFrame {
                             .addComponent(txtDuracionMalla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel10)
-                            .addComponent(cbxCiclo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE))
+                            .addComponent(jLabel11)
+                            .addComponent(cbxEstadoMalla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(cbxCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
@@ -412,12 +426,18 @@ public class VistaGestionMalla extends javax.swing.JFrame {
             else if (txtDuracionMalla.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Falta llenar duracion", "Error", JOptionPane.ERROR_MESSAGE);
             } 
+            else if (cbxEstadoMalla.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Falta seleccionar el estado de la malla", "Error", JOptionPane.ERROR_MESSAGE);
+            } 
+            else if (cbxCarrera.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Falta seleccionar el ciclo", "Error", JOptionPane.ERROR_MESSAGE);
+            } 
             else {
                 Guardar();
             }
         } 
         catch (Exception e) {
-            
+
         }
         
     }//GEN-LAST:event_jButton5ActionPerformed
@@ -429,21 +449,41 @@ public class VistaGestionMalla extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Escoga un registro");
         } 
         else {
-            Integer IdMalla = mallaControlDao.getMallaCurricular().getIdMallaCurricular();
-            String Nombre = txtNombreMalla.getText();
-            Integer Duracion = Integer.parseInt(txtDuracionMalla.getText());
-                        
-            MallaCurricular carreraModificada = new MallaCurricular(IdMalla,Nombre,Duracion,mallaControlDao.getMallaCurricular().getCarreraMalla());
-            
-            mallaControlDao.Merge(carreraModificada, IdMalla-1);
-            
-            CargarTabla();
-            
-            try {
-                Limpiar();
+            if (txtNombreMalla.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Falta llenar nombre", "Error", JOptionPane.ERROR_MESSAGE);
             } 
-            catch (ListaVacia ex) {
+            else if (txtDuracionMalla.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Falta llenar duracion", "Error", JOptionPane.ERROR_MESSAGE);
+            } 
+            else if (cbxEstadoMalla.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Falta seleccionar el estado de la malla", "Error", JOptionPane.ERROR_MESSAGE);
+            } 
+            else if (cbxCarrera.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Falta seleccionar el ciclo", "Error", JOptionPane.ERROR_MESSAGE);
+            } 
+            else {
+                Integer IdMalla = mallaControlDao.getMallaCurricular().getIdMallaCurricular();
+                String Nombre = txtNombreMalla.getText();
+                Integer Duracion = Integer.parseInt(txtDuracionMalla.getText());
+                String EstadoMalla = cbxEstadoMalla.getSelectedItem().toString();
 
+                MallaCurricular mallaModificada = new MallaCurricular();
+                mallaModificada.setIdMallaCurricular(IdMalla);
+                mallaModificada.setNombreMallaCurricular(Nombre);
+                mallaModificada.setDuracionMallaCurricular(Duracion);
+                mallaModificada.setEstadoMallaCurricular(EstadoMalla);
+                mallaModificada.setCarreraMallaCurricula(UtilVista.obtenerCarreraControl(cbxCarrera));
+
+                mallaControlDao.Merge(mallaModificada, IdMalla - 1);
+
+                CargarTabla();
+
+                try {
+                    Limpiar();
+                } 
+                catch (ListaVacia ex) {
+
+                }
             }
         }
         
@@ -477,8 +517,8 @@ public class VistaGestionMalla extends javax.swing.JFrame {
                 case "Duracion":
                     TipoCampo = "duracionMallaCurricular";
                     break;
-                case "Carrera":
-                    TipoCampo = "carreraMalla";
+                case "Estado de malla":
+                    TipoCampo = "EstadoMallaCurricular";
                     break;
                 default:
                     throw new AssertionError();
@@ -569,7 +609,7 @@ public class VistaGestionMalla extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cbxCarrera;
-    private javax.swing.JComboBox<String> cbxCiclo;
+    private javax.swing.JComboBox<String> cbxEstadoMalla;
     private javax.swing.JComboBox<String> cbxTipoBusqueda;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -577,7 +617,7 @@ public class VistaGestionMalla extends javax.swing.JFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

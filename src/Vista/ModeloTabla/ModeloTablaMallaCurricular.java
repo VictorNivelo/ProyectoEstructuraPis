@@ -1,7 +1,7 @@
 
 package Vista.ModeloTabla;
 
-import Controlador.TDA.ListaDinamica.Exepciones.ListaVacia;
+import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Modelo.MallaCurricular;
 import javax.swing.table.AbstractTableModel;
@@ -29,7 +29,7 @@ public class ModeloTablaMallaCurricular extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 4;
+        return 5;
     }
     
     @Override
@@ -46,7 +46,9 @@ public class ModeloTablaMallaCurricular extends AbstractTableModel {
                 case 2:
                     return (p != null) ? p.getDuracionMallaCurricular()+" años" : "";
                 case 3:
-                    return (p != null) ? p.getCarreraMalla().getNombreCarrera() : "";
+                    return (p != null) ? p.getEstadoMallaCurricular() : "";
+                case 4:
+                    return (p != null) ? p.getCarreraMallaCurricula().getNombreCarrera(): "";
                 default:
                     return null;
             }
@@ -68,9 +70,12 @@ public class ModeloTablaMallaCurricular extends AbstractTableModel {
             case 2:
                 return "Duracion";
             case 3:
-                return "Carrera";
+                return "Estado";
+            case 4:
+                return "Ciclo";
             default:
                 return null;
         }
     }
+    
 }

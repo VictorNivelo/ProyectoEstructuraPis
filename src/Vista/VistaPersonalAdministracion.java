@@ -1,7 +1,7 @@
 
 package Vista;
 
-import Controlador.TDA.ListaDinamica.Exepciones.ListaVacia;
+import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import java.awt.Graphics;
 import java.awt.Image;
 
@@ -361,8 +361,8 @@ public class VistaPersonalAdministracion extends javax.swing.JFrame {
     private void btnAdministrarCiclosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministrarCiclosActionPerformed
         
         try {
-            VistaGestionCiclos abrirLogin;
-            abrirLogin = new VistaGestionCiclos();
+            VistaGestionCiclo abrirLogin;
+            abrirLogin = new VistaGestionCiclo();
             abrirLogin.setVisible(true);
             this.setVisible(false);
         } 

@@ -2,8 +2,9 @@
 package Vista;
 
 import Controlador.Dao.Modelo.facultadDao;
-import Controlador.TDA.ListaDinamica.Exepciones.ListaVacia;
+import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
+import Controlador.Utiles.UtilesControlador;
 import Modelo.Facultad;
 import Vista.ModeloTabla.ModeloTablaFacultad;
 import Vista.Utiles.UtilVista;
@@ -13,7 +14,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-
 
 
 /**
@@ -28,14 +28,14 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
 
     /**
      * Creates new form VistaGestionFacultad
-     * @throws Controlador.TDA.ListaDinamica.Exepciones.ListaVacia
+     * @throws Controlador.TDA.ListaDinamica.Excepcion.ListaVacia
      */
     public VistaGestionFacultad() throws ListaVacia {
         initComponents();
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
         DateFechaC.setDateFormatString("dd/MM/yyyy");
-        UtilVista.cargarcomboCarrera(cbxCarreras);
+        UtilVista.CargarComboUniversidad(cbxUniversidad);
         CargarTabla();
     }
     
@@ -43,14 +43,13 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
         mtf.setFacultadTabla(facultadControlDao.getListaFacultad());
         tblDocentes.setModel(mtf);
         tblDocentes.updateUI();
-        cbxCarreras.setSelectedIndex(-1);
+        cbxUniversidad.setSelectedIndex(-1);
     }
     
     private void Limpiar() throws ListaVacia {
-        txtDecano.setText("");
         txtNombre.setText("");
-        cbxCarreras.setSelectedIndex(-1);
         DateFechaC.setDate(null);
+        cbxUniversidad.setSelectedIndex(-1);
         facultadControlDao.setFacultades(null);
         CargarTabla();
     }
@@ -65,9 +64,9 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
                 facultadControlDao.setFacultades(mtf.getFacultadTabla().getInfo(fila));
                 
                 txtNombre.setText(facultadControlDao.getFacultades().getNombreFacultad());
-                txtDecano.setText(facultadControlDao.getFacultades().getNombreDecano());
                 Date FechaNacimiento = Formato.parse(facultadControlDao.getFacultades().getFechaCreacion());
                 DateFechaC.setDate(FechaNacimiento);
+                cbxUniversidad.setSelectedIndex(facultadControlDao.getFacultades().getUniversidadFacultad().getIdUniversidad()-1);
 
             } 
             catch (Exception e) {
@@ -84,20 +83,22 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
         else if (DateFechaC.getDate() == null) {
             JOptionPane.showMessageDialog(null, "Falta llenar fecha", "Error", JOptionPane.INFORMATION_MESSAGE);
         }
-        else if (txtDecano.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar decano", "Error", JOptionPane.INFORMATION_MESSAGE);
+        else if(cbxUniversidad.getSelectedIndex() == -1){
+            JOptionPane.showMessageDialog(null, "Falta seleccionar universidad", "Error", JOptionPane.INFORMATION_MESSAGE);
         }
         else {
             Integer IdDocente =  listaFacultades.getLongitud()+1;
             String Nombre = txtNombre.getText();
-            String Decano = txtDecano.getText();
             Date FechaCreacion = DateFechaC.getDate();
             String Fs = Formato.format(FechaCreacion);
 
             facultadControlDao.getFacultades().setIdFacultad(IdDocente);
             facultadControlDao.getFacultades().setNombreFacultad(Nombre);
-            facultadControlDao.getFacultades().setNombreDecano(Decano);
             facultadControlDao.getFacultades().setFechaCreacion(Fs);
+            facultadControlDao.getFacultades().setUniversidadFacultad(UtilVista.obtenerUniversidadControl(cbxUniversidad));
+//            Universidad U = new Universidad(1, "Universidad Nacional de Loja", "Argelia", "(07) 254-7252", "comunicacion@unl.edu.ec", "31 de diciembre de 1859");
+//            
+//            facultadControlDao.getFacultades().setFacultadUniversidad(U);
             
             if (facultadControlDao.Persist()) {
                 JOptionPane.showMessageDialog(null, "FACULTAD GUARDADA EXISTOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
@@ -123,26 +124,24 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
-        txtDecano = new javax.swing.JTextField();
         DateFechaC = new com.toedter.calendar.JDateChooser();
         jLabel7 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cbxTipoBusqueda = new javax.swing.JComboBox<>();
         jButton3 = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        txtBuscar = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblDocentes = new javax.swing.JTable();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
-        cbxCarreras = new javax.swing.JComboBox<>();
+        jLabel6 = new javax.swing.JLabel();
+        cbxUniversidad = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SISTEMA DE GESTION DE FACULTADES");
@@ -168,7 +167,7 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(35, 35, 35)
                 .addComponent(jLabel2)
-                .addContainerGap(350, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -183,27 +182,13 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Informacion");
 
-        jLabel4.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel4.setText("Nombre");
-
         jLabel5.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Fecha creacion");
 
-        jLabel6.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel6.setText("Decano");
-
         txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtNombreKeyTyped(evt);
-            }
-        });
-
-        txtDecano.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtDecanoKeyTyped(evt);
             }
         });
 
@@ -232,8 +217,16 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
         jLabel8.setText("Buscar por");
         jLabel8.setToolTipText("");
 
+        cbxTipoBusqueda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "Fecha de creacion", "Carrera" }));
+        cbxTipoBusqueda.setSelectedIndex(-1);
+
         jButton3.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jButton3.setText("BUSCAR");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jLabel9.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(0, 0, 0));
@@ -272,7 +265,12 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
 
         jLabel10.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel10.setText("Carrera");
+        jLabel10.setText("Universidad");
+        jLabel10.setToolTipText("");
+
+        jLabel6.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel6.setText("Nombre");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -283,47 +281,51 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jButton1)
+                                    .addGap(204, 204, 204))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jLabel5)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(DateFechaC, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtNombre)
-                                    .addComponent(DateFechaC, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
-                                    .addComponent(txtDecano)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButton1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
-                                .addComponent(jButton2))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(cbxCarreras, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jButton2)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cbxTipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel9)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField3)
+                                .addComponent(txtBuscar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton3))
-                            .addComponent(jScrollPane1)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jButton5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton4)))))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jButton5)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jButton4))
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 873, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(cbxUniversidad, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -335,32 +337,31 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(jLabel7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3)
-                    .addComponent(jLabel9)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel8)
+                        .addComponent(cbxTipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton3)
+                        .addComponent(jLabel9)
+                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel10)
+                        .addComponent(cbxUniversidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel6)
-                                    .addComponent(txtDecano, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(DateFechaC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel10)
-                            .addComponent(cbxCarreras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel5)
+                            .addComponent(DateFechaC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2)
@@ -396,30 +397,33 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
             else if (DateFechaC.getDate() == null) {
                 JOptionPane.showMessageDialog(null, "Falta llenar fecha", "Error", JOptionPane.INFORMATION_MESSAGE);
             } 
-            else if (txtDecano.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar decano", "Error", JOptionPane.INFORMATION_MESSAGE);
-            } 
+            else if (cbxUniversidad.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Falta seleccionar universidad", "Error", JOptionPane.INFORMATION_MESSAGE);
+            }
             else {
-
+                
                 Integer IdFacultad = facultadControlDao.getFacultades().getIdFacultad();
                 String Nombre = txtNombre.getText();
-                String Decano = txtDecano.getText();
                 Date FechaCreacion = DateFechaC.getDate();
-                String Fs = Formato.format(FechaCreacion);
-                
+                String FechaFormateada = Formato.format(FechaCreacion);
+
 //                Universidad U = new Universidad(1, "Universidad Nacional de Loja", "AV. Pio Jaramillo", "(07) 254-7252", "masinfo@unl.edu.ec", "31 de diciembre de 1859");
-
-                Facultad personaModiPersona = new Facultad(IdFacultad, Nombre, Decano, Fs, null);
-
-                facultadControlDao.Merge(personaModiPersona, IdFacultad - 1);
-
+                Facultad facultadModificada = new Facultad();
+                
+                facultadModificada.setIdFacultad(IdFacultad);
+                facultadModificada.setNombreFacultad(Nombre);
+                facultadModificada.setFechaCreacion(FechaFormateada);
+                facultadModificada.setUniversidadFacultad(UtilVista.obtenerUniversidadControl(cbxUniversidad));
+                
+                facultadControlDao.Merge(facultadModificada, IdFacultad - 1);
+                
                 CargarTabla();
-
+                
                 try {
                     Limpiar();
                 } 
                 catch (Exception e) {
-
+                    
                 }
             }
         }
@@ -455,16 +459,16 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
             } 
             else if (DateFechaC.getDate() == null) {
                 JOptionPane.showMessageDialog(null, "Falta llenar fecha", "Error", JOptionPane.INFORMATION_MESSAGE);
-            } 
-            else if (txtDecano.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar decano", "Error", JOptionPane.INFORMATION_MESSAGE);
-            } 
+            }
+            else if (cbxUniversidad.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Falta seleccionar universidad", "Error", JOptionPane.INFORMATION_MESSAGE);
+            }
             else {
                 Guardar();
             }
         } 
         catch (Exception e) {
-            
+
         }
         
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -475,8 +479,42 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
         
     }//GEN-LAST:event_tblDocentesMouseClicked
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        try {
+            ListaDinamica<Facultad> lista = facultadControlDao.all();
+            
+            String Campo = txtBuscar.getText();
+            String TipoCampo = cbxTipoBusqueda.getSelectedItem().toString();
+
+            
+            switch (TipoCampo) {
+                case "Nombre":
+                    TipoCampo = "NombreFacultad";
+                    break;
+                case "Fecha de creacion":
+                    TipoCampo = "FechaCreacion";
+                    break;
+                case "Carrera":
+                    TipoCampo = "FacultadCarrera.NombreCarrera";
+                    break;
+                default:
+                    throw new AssertionError();
+            }
+            
+            ListaDinamica<Facultad> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
+                        
+            mtf.setFacultadTabla(ResultadoBusqueda);
+            mtf.fireTableDataChanged();
+            
+        } 
+        catch (Exception e) {
+            
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
-        
+
         char c = evt.getKeyChar();
 
         if (!Character.isLetter(c) && c != KeyEvent.VK_BACK_SPACE && c != ' ') {
@@ -486,22 +524,8 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
         if (c != KeyEvent.VK_BACK_SPACE) {
 
         }
-        
+
     }//GEN-LAST:event_txtNombreKeyTyped
-
-    private void txtDecanoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDecanoKeyTyped
-        
-        char c = evt.getKeyChar();
-
-        if (!Character.isLetter(c) && c != KeyEvent.VK_BACK_SPACE && c != ' ') {
-            evt.consume();
-            JOptionPane.showMessageDialog(null, "Solo ingreso de letras", "CARACTER NO VALIDO", JOptionPane.WARNING_MESSAGE);
-        }
-        if (c != KeyEvent.VK_BACK_SPACE) {
-
-        }
-        
-    }//GEN-LAST:event_txtDecanoKeyTyped
 
     /**
      * @param args the command line arguments
@@ -546,18 +570,17 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser DateFechaC;
-    private javax.swing.JComboBox<String> cbxCarreras;
+    private javax.swing.JComboBox<String> cbxTipoBusqueda;
+    private javax.swing.JComboBox<String> cbxUniversidad;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -566,9 +589,8 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JTable tblDocentes;
-    private javax.swing.JTextField txtDecano;
+    private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 }

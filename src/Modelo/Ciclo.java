@@ -3,35 +3,48 @@ package Modelo;
 
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 
+
 /**
  *
  * @author Victor
  */
 public class Ciclo {
-    private Integer idCiclo;
+    private Integer IdCiclo;
     private String NombreCiclo;
     private Integer NumeroCiclo;
-    private Materia CicloMateria;
-    private ListaDinamica<Materia> ListaMaterias;
+
+    private UnidadCurricular unidadCurricularCiclo;
     
-    private MallaCurricular mallaCiclo;
+    //datos poco usados
+    private MallaCurricular mallaCurricularCiclo;
+    private Materia materiaCiclo;
+    private ListaDinamica<Materia> listaMateriaCiclo;
 
     public Ciclo() {
         
     }
 
-    public Ciclo(Integer idCiclo, String NombreCiclo, MallaCurricular mallaCiclo) {
-        this.idCiclo = idCiclo;
-        this.NombreCiclo = NombreCiclo;
-        this.mallaCiclo = mallaCiclo;
+//    public Ciclo(Integer IdCiclo, String NombreCiclo, Integer NumeroCiclo, MallaCurricular mallaCurricularCiclo) {
+//        this.IdCiclo = IdCiclo;
+//        this.NombreCiclo = NombreCiclo;
+//        this.NumeroCiclo = NumeroCiclo;
+//        this.mallaCurricularCiclo = mallaCurricularCiclo;
+//    }
+
+    public MallaCurricular getMallaCurricularCiclo() {
+        return mallaCurricularCiclo;
     }
 
+    public void setMallaCurricularCiclo(MallaCurricular mallaCurricularCiclo) {
+        this.mallaCurricularCiclo = mallaCurricularCiclo;
+    }
+    
     public Integer getIdCiclo() {
-        return idCiclo;
+        return IdCiclo;
     }
 
-    public void setIdCiclo(Integer idCiclo) {
-        this.idCiclo = idCiclo;
+    public void setIdCiclo(Integer IdCiclo) {
+        this.IdCiclo = IdCiclo;
     }
 
     public String getNombreCiclo() {
@@ -42,14 +55,6 @@ public class Ciclo {
         this.NombreCiclo = NombreCiclo;
     }
 
-    public MallaCurricular getMallaCiclo() {
-        return mallaCiclo;
-    }
-
-    public void setMallaCiclo(MallaCurricular mallaCiclo) {
-        this.mallaCiclo = mallaCiclo;
-    }
-
     public Integer getNumeroCiclo() {
         return NumeroCiclo;
     }
@@ -58,20 +63,28 @@ public class Ciclo {
         this.NumeroCiclo = NumeroCiclo;
     }
 
-    public Materia getCicloMateria() {
-        return CicloMateria;
+    public Materia getMateriaCiclo() {
+        return materiaCiclo;
     }
 
-    public void setCicloMateria(Materia CicloMateria) {
-        this.CicloMateria = CicloMateria;
+    public void setMateriaCiclo(Materia materiaCiclo) {
+        this.materiaCiclo = materiaCiclo;
     }
 
-    public ListaDinamica<Materia> getListaMaterias() {
-        return ListaMaterias;
+    public ListaDinamica<Materia> getListaMateriaCiclo() {
+        return listaMateriaCiclo;
     }
 
-    public void setListaMaterias(ListaDinamica<Materia> ListaMaterias) {
-        this.ListaMaterias = ListaMaterias;
+    public void setListaMateriaCiclo(ListaDinamica<Materia> listaMateriaCiclo) {
+        this.listaMateriaCiclo = listaMateriaCiclo;
+    }
+
+    public UnidadCurricular getUnidadCurricularCiclo() {
+        return unidadCurricularCiclo;
+    }
+
+    public void setUnidadCurricularCiclo(UnidadCurricular unidadCurricularCiclo) {
+        this.unidadCurricularCiclo = unidadCurricularCiclo;
     }
     
     @Override

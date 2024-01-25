@@ -42,4 +42,5 @@ public class mallaCurricularDao extends DaoImplement<MallaCurricular> {
         mallaCurricular.setIdMallaCurricular(all().getLongitud() + 1);
         return Persist(mallaCurricular);
     }
+    
 }

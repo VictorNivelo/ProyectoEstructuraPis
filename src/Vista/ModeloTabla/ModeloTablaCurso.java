@@ -1,7 +1,7 @@
 
 package Vista.ModeloTabla;
 
-import Controlador.TDA.ListaDinamica.Exepciones.ListaVacia;
+import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Modelo.Cursa;
 import javax.swing.table.AbstractTableModel;
@@ -29,7 +29,7 @@ public class ModeloTablaCurso extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 7;
+        return 4;
     }
     
 //    private String EstadoCuenta(int i) throws ListaVacia {
@@ -54,17 +54,11 @@ public class ModeloTablaCurso extends AbstractTableModel {
                 case 0:
                     return (p != null) ? p.getIdCurso() : "";
                 case 1:
-                    return (p != null) ? p.getMateriaCurso().getCicloMateria().getNombreCiclo() : "";
+                    return (p != null) ? p.getCodigoCurso() : "";
                 case 2:
                     return (p != null) ? p.getParalelo() : "";
                 case 3:
-                    return (p != null) ? p.getCodigoCurso(): "";
-                case 4:
                     return (p != null) ? p.getMateriaCurso().getNombreMateria() : "";
-                case 5:
-                    return (p != null) ? p.getPeriodoAcademicoCurso().getFechaInicio() : "";
-                case 6:
-                    return (p != null) ? p.getPeriodoAcademicoCurso().getFechaFin() : "";
 
                 default:
                     return null;
@@ -82,20 +76,15 @@ public class ModeloTablaCurso extends AbstractTableModel {
             case 0:
                 return "#";
             case 1:
-                return "Ciclo";
+                return "Codigo";
             case 2:
                 return "Paralelo";
             case 3:
-                return "Codigo";
-            case 4:
                 return "Materia";
-            case 5:
-                return "Inicio";
-            case 6:
-                return "Fin";
 
             default:
                 return null;
         }
     }
+    
 }

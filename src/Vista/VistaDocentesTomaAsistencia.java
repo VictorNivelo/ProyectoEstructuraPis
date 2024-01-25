@@ -2,7 +2,7 @@
 package Vista;
 
 import Controlador.Dao.Modelo.alumnoDao;
-import Controlador.TDA.ListaDinamica.Exepciones.ListaVacia;
+import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Controlador.Utiles.UtilesControlador;
 import javax.swing.table.DefaultTableModel;
@@ -28,7 +28,7 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
 
     /**
      * Creates new form VistaTomaAsistencia
-     * @throws Controlador.TDA.ListaDinamica.Exepciones.ListaVacia
+     * @throws Controlador.TDA.ListaDinamica.Excepcion.ListaVacia
      */
     public VistaDocentesTomaAsistencia() throws ListaVacia {
         initComponents();
@@ -45,7 +45,7 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
     private void CargarTabla() {
         
         try {
-            Object[] datosLista = alumnoControlDao.getListaAlumnos().CovertirEnArreglo();
+            Object[] datosLista = alumnoControlDao.getListaAlumnos().toArray();
             for (Object dato : datosLista) {
                 if (dato instanceof Persona) { 
                     Persona persona = (Persona) dato;
@@ -55,7 +55,6 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
         } catch (Exception e) {
 
         }
-
 
 //        try {
 //            Object[] datosLista = alumnoControlDao.getListaPersonas().CovertirEnArreglo();
@@ -68,6 +67,7 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
 //        }
     }
     
+
     public ListaDinamica<Alumno> getAlumnosPorCicloParalelo(Ciclo cicloSeleccionado, String paralelo) throws ListaVacia {
         ListaDinamica<Alumno> listaFiltrada = new ListaDinamica<>();
 
@@ -76,7 +76,7 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
         for (int i = 0; i < listaCompleta.getLongitud(); i++) {
             Alumno alumno = listaCompleta.getInfo(i);
 
-            ListaDinamica<Cursa> cursosAsignados = alumno.getCursosAsignados();
+            ListaDinamica<Cursa> cursosAsignados = alumno.getMatriculaAlumno().getListaCursoMatricula();
 
             for (int j = 0; j < cursosAsignados.getLongitud(); j++) {
                 Cursa cursa = cursosAsignados.getInfo(j);
@@ -137,6 +137,7 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
         DateFechaActual = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("REGISTRO DE ASISTENCIA");
 
         jPanel1.setBackground(new java.awt.Color(190, 193, 197));
 
@@ -431,7 +432,7 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
         String paraleloSeleccionado = cbxParalelo.getSelectedItem().toString();
 
         try {
-            Object[] datosLista = alumnoControlDao.getListaAlumnos().CovertirEnArreglo();
+            Object[] datosLista = alumnoControlDao.getListaAlumnos().toArray();
             for (Object dato : datosLista) {
                 try {
                     if (dato instanceof Alumno) {
@@ -440,8 +441,9 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
                         if (alumno.getDatosAlumno().getRolPersona().getNombreRol().equalsIgnoreCase("estudiante")) {
                             Matricula matricula = alumno.getMatriculaAlumno();
 
-                            if (matricula != null && matricula.getMatriculaCursa() != null) {
-                                Cursa cursoAsignado = matricula.getMatriculaCursa();
+                            if (matricula != null && matricula.getCursoMatricula()!= null) {
+                                Cursa cursoAsignado = matricula.getCursoMatricula();
+                                
                                 if (cursoAsignado.getMateriaCurso().getCicloMateria().getNombreCiclo().equalsIgnoreCase(cicloSeleccionado)
                                         && cursoAsignado.getParalelo().equalsIgnoreCase(paraleloSeleccionado)) {
                                     dtm.addRow(new Object[]{alumno.getIdAlumno(), alumno.getDatosAlumno().getNombre(),

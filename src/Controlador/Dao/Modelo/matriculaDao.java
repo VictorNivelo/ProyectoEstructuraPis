@@ -42,4 +42,5 @@ public class matriculaDao extends DaoImplement<Matricula>{
         matricula.setIdMatricula(all().getLongitud()+1);
         return Persist(matricula);
     }
+    
 }

@@ -26,4 +26,5 @@ public class ControladorRol {
     public void setRoles(ListaDinamica<Rol> roles) {
         this.roles = roles;
     }
+    
 }

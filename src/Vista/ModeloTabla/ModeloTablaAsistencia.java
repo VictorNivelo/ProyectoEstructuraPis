@@ -2,7 +2,7 @@
 package Vista.ModeloTabla;
 
 
-import Controlador.TDA.ListaDinamica.Exepciones.ListaVacia;
+import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Modelo.Asistencia;
 import javax.swing.table.AbstractTableModel;
@@ -43,19 +43,13 @@ public class ModeloTablaAsistencia extends AbstractTableModel {
                 case 0:
                     return (p != null) ? p.getIdAsistencia() : "";
                 case 1:
-                    return (p != null) ? p.getDiaAsistencia() : "";
+                    return (p != null) ? p.getAsistenciaTematica().getNombreTematica() : "";
                 case 2:
-                    return (p != null) ? p.getHoraAsistencia() : "";
+                    return (p != null) ? p.getAsistenciaTematica().getFechaTematica() : "";
                 case 3:
-                    return (p != null) ? p.getEstadoAsistencia().getDescripcion() : "";
+                    return (p != null) ? p.getEstadoAsistencia(): "";
                 case 4:
                     return (p != null) ? p.getObservacion(): "";
-                case 5:
-                    return (p != null) ? p.getHorarioAsistencia().getDias(): "";
-                case 6:
-                    return (p != null) ? p.getHorarioAsistencia().getHoraIncio() : "";
-                case 7:
-                    return (p != null) ? p.getHorarioAsistencia().getHoraFin(): "";
                 default:
                     return null;
             }
@@ -72,19 +66,13 @@ public class ModeloTablaAsistencia extends AbstractTableModel {
             case 0:
                 return "#";
             case 1:
-                return "Dia";
+                return "Tematica";
             case 2:
-                return "Hora asistencia";
+                return "Fecha asistencia";
             case 3:
                 return "Estado asistencia";
             case 4:
                 return "Observacion";
-            case 5:
-                return "Dia horario";
-            case 6:
-                return "Hora inicio";
-            case 7:
-                return "Hora fin";
             default:
                 return null;
         }
@@ -104,7 +92,7 @@ public class ModeloTablaAsistencia extends AbstractTableModel {
             catch (Exception e) {
             }
         }
-
         return suma;
     }
+    
 }
