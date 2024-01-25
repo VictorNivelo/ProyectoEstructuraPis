@@ -504,7 +504,7 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
                 String Titulacion = txtTitulacion.getText();
                 String A = txtAniosExperiencia.getText();
                 
-                Docente personaModiPersona = new Docente(IdDocente, Especialidad, Titulacion, Especialidad, UtilVista.obtenerDocentesControl(cbxDocente), UtilVista.obtenerCursoControl(cbxCurso));
+                Docente personaModiPersona = new Docente(IdDocente, Especialidad, Titulacion, A, UtilVista.obtenerDocentesControl(cbxDocente), UtilVista.obtenerCursoControl(cbxCurso));
 
                 docenteControlDao.Merge(personaModiPersona, IdDocente-1);
 
