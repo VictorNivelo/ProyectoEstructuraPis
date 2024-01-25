@@ -438,7 +438,12 @@ public class VistaGestionHorario extends javax.swing.JFrame {
                 String Inicio = txtHoraInicio.getText();
                 String Fin = txtHoraFin.getText();
 
-                Horario horarioModiPersona = new Horario(IdHorario, Dia, Inicio, Fin, UtilVista.obtenerAsistenciaControl(cbxAsistencia));
+                Horario horarioModiPersona = new Horario();
+                horarioModiPersona.setIdHorario(IdHorario);
+                horarioModiPersona.setDiaSemana(Dia);
+                horarioModiPersona.setHoraIncio(Inicio);
+                horarioModiPersona.setHoraFin(Fin);
+                horarioModiPersona.setAsistenciaHorario(UtilVista.obtenerAsistenciaControl(cbxAsistencia));
 
                 horarioControlDao.Merge(horarioModiPersona, IdHorario - 1);
 

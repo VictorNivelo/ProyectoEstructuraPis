@@ -395,15 +395,18 @@ public class VistaGestionPeriodoAcademico extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Falta llenar fecha fin", "Error", JOptionPane.ERROR_MESSAGE);
             } 
             else {
-                Integer IdMateria = periodoControlDao.getPeriodo().getIdPeriodoAcademino();
+                Integer IdPeriodo = periodoControlDao.getPeriodo().getIdPeriodoAcademino();
                 Date InicioD = DateInicio.getDate();
                 Date FinD = DateFin.getDate();
                 String Inicio = Formato.format(InicioD);
                 String Fin = Formato.format(FinD);
 
-                PeriodoAcademico periodoModificado = new PeriodoAcademico(IdMateria, Inicio, Fin);
-
-                periodoControlDao.Merge(periodoModificado, IdMateria - 1);
+                PeriodoAcademico periodoModificado = new PeriodoAcademico();
+                periodoModificado.setIdPeriodoAcademino(IdPeriodo);
+                periodoModificado.setFechaInicio(Inicio);
+                periodoModificado.setFechaFin(Fin);
+                
+                periodoControlDao.Merge(periodoModificado, IdPeriodo - 1);
 
                 CargarTabla();
 

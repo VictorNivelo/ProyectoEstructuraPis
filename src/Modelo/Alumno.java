@@ -20,12 +20,12 @@ public class Alumno {
         
     }
 
-    public Alumno(Integer IdAlumno, Persona DatosAlumno, String Estado, Matricula matriculaAlumno) {
-        this.IdAlumno = IdAlumno;
-        this.DatosAlumno = DatosAlumno;
-        this.EstadoAlumno = Estado;
-        this.matriculaAlumno = matriculaAlumno;
-    }
+//    public Alumno(Integer IdAlumno, Persona DatosAlumno, String Estado, Matricula matriculaAlumno) {
+//        this.IdAlumno = IdAlumno;
+//        this.DatosAlumno = DatosAlumno;
+//        this.EstadoAlumno = Estado;
+//        this.matriculaAlumno = matriculaAlumno;
+//    }
 
     public Integer getIdAlumno() {
         return IdAlumno;

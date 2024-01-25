@@ -70,6 +70,7 @@ public class VistaPrincipalSGA extends javax.swing.JFrame {
         VistaPrincipalServicios newframe = new VistaPrincipalServicios();
         newframe.setVisible(true);
         this.dispose();
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

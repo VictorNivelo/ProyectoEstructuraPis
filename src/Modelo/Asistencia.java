@@ -16,12 +16,12 @@ public class Asistencia {
         
     }
 
-    public Asistencia(Integer IdAsistencia, EstadoAsistencia EstadoAsistencia, String Observacion, Tematica AsistenciaTematica) {
-        this.IdAsistencia = IdAsistencia;
-        this.EstadoAsistencia = EstadoAsistencia;
-        this.Observacion = Observacion;
-        this.AsistenciaTematica = AsistenciaTematica;
-    }
+//    public Asistencia(Integer IdAsistencia, EstadoAsistencia EstadoAsistencia, String Observacion, Tematica AsistenciaTematica) {
+//        this.IdAsistencia = IdAsistencia;
+//        this.EstadoAsistencia = EstadoAsistencia;
+//        this.Observacion = Observacion;
+//        this.AsistenciaTematica = AsistenciaTematica;
+//    }
     
     public Integer getIdAsistencia() {
         return IdAsistencia;

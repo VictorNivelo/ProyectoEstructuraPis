@@ -154,7 +154,12 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
             
 //            Rol rolPersona = new Rol(IdPersona, rolPe, rolPe);
             
-            Cuenta cuenta = new Cuenta(IdPersona, Usuario, Contrasena, EstadoCuenta);
+            Cuenta cuenta = new Cuenta();
+            
+            cuenta.setIdCuenta(IdPersona);
+            cuenta.setCorreo(Usuario);
+            cuenta.setContrasena(Contrasena);
+            cuenta.setEstadoCuenta(EstadoCuenta);
             
 //            Persona datosPersona = new Persona(IdPersona, NumeroCedula, Nombre, Apellido, Genero, FechaNacimiento, Direccion, Telefono, rolPersona, cuenta);
             
@@ -717,9 +722,24 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
 
                 String EstadoCuenta = cbxEstadoCuenta.getSelectedItem().toString();
 
-                Cuenta cuenta = new Cuenta(idCuenta, Usuario, Contrasena, EstadoCuenta);
+                Cuenta cuenta = new Cuenta();
+                cuenta.setIdCuenta(idCuenta);
+                cuenta.setCorreo(Usuario);
+                cuenta.setContrasena(Contrasena);
+                cuenta.setEstadoCuenta(EstadoCuenta);
                                 
-                Persona personaModiPersona = new Persona(IdPersona, TipoDni, NumeroCedula, Nombre, Apellido, Genero, FechaNacimiento, Direccion, Telefono, UtilVista.obtenerRolControl(cbxRol), cuenta);
+                Persona personaModiPersona = new Persona();
+                personaModiPersona.setIdPersona(IdPersona);
+                personaModiPersona.setTipoDni(TipoDni);
+                personaModiPersona.setNumeroCedula(NumeroCedula);
+                personaModiPersona.setNombre(Nombre);
+                personaModiPersona.setApellido(Apellido);
+                personaModiPersona.setGenero(Genero);
+                personaModiPersona.setFechaNacimineto(FechaNacimiento);
+                personaModiPersona.setDireccion(Direccion);
+                personaModiPersona.setTelefono(Telefono);
+                personaModiPersona.setRolPersona(UtilVista.obtenerRolControl(cbxRol));
+                personaModiPersona.setCuentaPersona(cuenta);
                 
                 personaControlDao.Merge(personaModiPersona, IdPersona-1);
 
@@ -788,6 +808,7 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
         else{
             try {
                 Guardar();
+                cbxEstadoCuenta.setEnabled(false);
             } 
             catch (ListaVacia ex) {
 

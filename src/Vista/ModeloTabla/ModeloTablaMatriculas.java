@@ -13,6 +13,14 @@ import javax.swing.table.AbstractTableModel;
 public class ModeloTablaMatriculas extends AbstractTableModel{
     private ListaDinamica<Matricula> matriculas;
 
+    public ListaDinamica<Matricula> getMatriculas() {
+        return matriculas;
+    }
+
+    public void setMatriculas(ListaDinamica<Matricula> matriculas) {
+        this.matriculas = matriculas;
+    }
+
     @Override
     public int getRowCount() {
         return matriculas.getLongitud();
@@ -63,14 +71,6 @@ public class ModeloTablaMatriculas extends AbstractTableModel{
             default:
                 return null;
         }
-    }
-
-    public ListaDinamica<Matricula> getMatriculas() {
-        return matriculas;
-    }
-
-    public void setMatriculas(ListaDinamica<Matricula> matriculas) {
-        this.matriculas = matriculas;
     }
     
 }

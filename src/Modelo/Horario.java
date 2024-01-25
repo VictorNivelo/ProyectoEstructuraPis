@@ -20,13 +20,13 @@ public class Horario {
         
     }
 
-    public Horario(Integer IdHorario, String DiaSemana, String HoraIncio, String HoraFin, Asistencia asistenciaHorario) {
-        this.IdHorario = IdHorario;
-        this.DiaSemana = DiaSemana;
-        this.HoraIncio = HoraIncio;
-        this.HoraFin = HoraFin;
-        this.asistenciaHorario = asistenciaHorario;
-    } 
+//    public Horario(Integer IdHorario, String DiaSemana, String HoraIncio, String HoraFin, Asistencia asistenciaHorario) {
+//        this.IdHorario = IdHorario;
+//        this.DiaSemana = DiaSemana;
+//        this.HoraIncio = HoraIncio;
+//        this.HoraFin = HoraFin;
+//        this.asistenciaHorario = asistenciaHorario;
+//    } 
 
     public Integer getIdHorario() {
         return IdHorario;

@@ -35,6 +35,7 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
         DateFecha.setDateFormatString("dd/MM/yyyy");
         UtilVista.cargarcomboPeriodo(cbxPeriodo);
         UtilVista.cargarcomboCurso(cbxCursa);
+        cbxEstadoMatricula.setEnabled(false);
         CargarTabla();
     }
     
@@ -44,7 +45,7 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
         tbMatriculas.updateUI();
         cbxCursa.setSelectedIndex(-1);
         cbxPeriodo.setSelectedIndex(-1);
-        cbxEstadoMatricula.setSelectedIndex(-1);
+        cbxEstadoMatricula.setSelectedIndex(0);
         DateFecha.setDate(null);
     }
     
@@ -69,7 +70,7 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
         }
         return true;
     }
-        
+    
     private void Seleccionar(){
         int fila = tbMatriculas.getSelectedRow();
         if(fila < 0){
@@ -79,21 +80,20 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
             try {
                 MatriculaControlDao.setMatricula(mtm.getMatriculas().getInfo(fila));
                 
-                cbxCursa.setSelectedIndex(MatriculaControlDao.getMatricula().getIdMatricula()-1);
                 txtCodigoMatricula.setText(MatriculaControlDao.getMatricula().getCodigoMatricula());
                 Date Fecha = Formato.parse(MatriculaControlDao.getMatricula().getFechaMatricula());
                 DateFecha.setDate(Fecha);
                 cbxEstadoMatricula.setSelectedItem(MatriculaControlDao.getMatricula().getEstadoMatricula());
                 cbxPeriodo.setSelectedIndex(MatriculaControlDao.getMatricula().getPeriodoAcademicoMatricula().getIdPeriodoAcademino() -1);
                 cbxCursa.setSelectedIndex(MatriculaControlDao.getMatricula().getCursoMatricula().getIdCurso() -1);
-
+                
             } 
             catch (Exception e) {
                 
             }
         }
     }
-    
+            
     private void Guardar() throws ListaVacia {
 
         if (txtCodigoMatricula.getText().isEmpty()) {
@@ -229,6 +229,11 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
 
         btnEliminar.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         btnEliminar.setText("ELIMINAR");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         jButton3.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jButton3.setText("REGRESAR");
@@ -447,6 +452,7 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
             }
             else {
                 Guardar();
+                cbxEstadoMatricula.setEnabled(false);
             }
         } 
         catch (Exception e) {
@@ -539,11 +545,18 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
                 String FechaMatricula = Formato.format(f);
                 String Estado = cbxEstadoMatricula.getSelectedItem().toString();
 
-                Matricula matriculaModicada = new Matricula(IdMatricula, Codigo, FechaMatricula, Estado, UtilVista.obtenerCursoControl(cbxCursa), UtilVista.obtenerPeriodoControl(cbxPeriodo));
+                Matricula matriculaModicada = new Matricula();
+                matriculaModicada.setIdMatricula(IdMatricula);
+                matriculaModicada.setCodigoMatricula(Codigo);
+                matriculaModicada.setFechaMatricula(FechaMatricula);
+                matriculaModicada.setEstadoMatricula(Estado);
+                matriculaModicada.setCursoMatricula(UtilVista.obtenerCursoControl(cbxCursa));
+                matriculaModicada.setPeriodoAcademicoMatricula(UtilVista.obtenerPeriodoControl(cbxPeriodo));
 
                 MatriculaControlDao.Merge(matriculaModicada, IdMatricula - 1);
 
                 CargarTabla();
+                cbxEstadoMatricula.setEnabled(false);
 
                 try {
                     Limpiar();
@@ -555,6 +568,19 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        
+        int fila = tbMatriculas.getSelectedRow();
+        if (fila < 0) {
+            JOptionPane.showMessageDialog(null, "Escoga un registro");
+        } 
+        else {
+            MatriculaControlDao.Eliminar(fila);
+            CargarTabla();
+        }
+        
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     /**
      * @param args the command line arguments

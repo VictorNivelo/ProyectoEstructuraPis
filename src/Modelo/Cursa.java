@@ -20,12 +20,12 @@ public class Cursa {
         
     }
 
-    public Cursa(Integer IdCurso, String CodigoCurso, String Paralelo, Materia MateriaCurso) {
-        this.IdCurso = IdCurso;
-        this.CodigoCurso = CodigoCurso;
-        this.Paralelo = Paralelo;
-        this.MateriaCurso = MateriaCurso;
-    }
+//    public Cursa(Integer IdCurso, String CodigoCurso, String Paralelo, Materia MateriaCurso) {
+//        this.IdCurso = IdCurso;
+//        this.CodigoCurso = CodigoCurso;
+//        this.Paralelo = Paralelo;
+//        this.MateriaCurso = MateriaCurso;
+//    }
 
     public Integer getIdCurso() {
         return IdCurso;

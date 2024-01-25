@@ -73,7 +73,9 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
                 
                 txtObservacion.setText(AsistenciaControl.getAsistencias().getObservacion());
                 cbxEstadoAsistencia.setSelectedItem(AsistenciaControl.getAsistencias().getEstadoAsistencia().toString());
-                txtObservacion.setText(AsistenciaControl.getAsistencias().getObservacion());
+                txtTematica.setText(AsistenciaControl.getAsistencias().getAsistenciaTematica().getNombreTematica());
+                Date Fecha = Formato.parse(AsistenciaControl.getAsistencias().getAsistenciaTematica().getFechaTematica());
+                DateFechaTematica.setDate(Fecha);
 
             } 
             catch (Exception e) {
@@ -106,7 +108,12 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
             Date ft = DateFechaTematica.getDate();
             String FechaT = Formato.format(ft);
             String TEM = txtTematica.getText();
-            Tematica t = new Tematica(IdAsistencia, TEM, FechaT);
+            
+            Tematica t = new Tematica();
+            t.setIdTematica(IdAsistencia);
+            t.setNombreTematica(TEM);
+            t.setFechaTematica(FechaT);
+//            IdAsistencia, TEM, FechaT);
                                     
             AsistenciaControl.getAsistencias().setIdAsistencia(IdAsistencia);
             AsistenciaControl.getAsistencias().setEstadoAsistencia(estadoSeleccionado);
@@ -509,12 +516,20 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
                 Date ft = DateFechaTematica.getDate();
                 String FechaT = Formato.format(ft);
                 String TEM = txtTematica.getText();
+                
+                Tematica t = new Tematica();
+                t.setIdTematica(IdAsistencia);
+            t.setNombreTematica(TEM);
+            t.setFechaTematica(FechaT);
 
-                Tematica t = new Tematica(IdAsistencia, TEM, FechaT);
+                Asistencia asistenciaModificada = new Asistencia();
+                asistenciaModificada.setIdAsistencia(IdAsistencia);
+                asistenciaModificada.setEstadoAsistencia(estadoSeleccionado);
+                asistenciaModificada.setObservacion(Observacion);
+                asistenciaModificada.setAsistenciaTematica(t);
+//                IdAsistencia, estadoSeleccionado, Observacion, t);
 
-                Asistencia personaModiPersona = new Asistencia(IdAsistencia, estadoSeleccionado, Observacion, t);
-
-                AsistenciaControl.Merge(personaModiPersona, IdAsistencia - 1);
+                AsistenciaControl.Merge(asistenciaModificada, IdAsistencia - 1);
 
                 CargarTabla();
 

@@ -22,14 +22,14 @@ public class Docente {
         
     }
 
-    public Docente(Integer IdDocente, String Especialidad, String Titulacion, String AniosExperiencia, Persona DatosDocente, Cursa cursoDocente) {
-        this.IdDocente = IdDocente;
-        this.Especialidad = Especialidad;
-        this.Titulacion = Titulacion;
-        this.AniosExperiencia = AniosExperiencia;
-        this.DatosDocente = DatosDocente;
-        this.cursoDocente = cursoDocente;
-    }
+//    public Docente(Integer IdDocente, String Especialidad, String Titulacion, String AniosExperiencia, Persona DatosDocente, Cursa cursoDocente) {
+//        this.IdDocente = IdDocente;
+//        this.Especialidad = Especialidad;
+//        this.Titulacion = Titulacion;
+//        this.AniosExperiencia = AniosExperiencia;
+//        this.DatosDocente = DatosDocente;
+//        this.cursoDocente = cursoDocente;
+//    }
 
     public Integer getIdDocente() {
         return IdDocente;

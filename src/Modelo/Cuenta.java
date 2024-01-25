@@ -15,12 +15,12 @@ public class Cuenta {
         
     }
 
-    public Cuenta(Integer idCuenta, String Correo, String Contrasena, String EstadoCuenta) {
-        this.IdCuenta = idCuenta;
-        this.Correo = Correo;
-        this.Contrasena = Contrasena;
-        this.EstadoCuenta = EstadoCuenta;
-    }
+//    public Cuenta(Integer idCuenta, String Correo, String Contrasena, String EstadoCuenta) {
+//        this.IdCuenta = idCuenta;
+//        this.Correo = Correo;
+//        this.Contrasena = Contrasena;
+//        this.EstadoCuenta = EstadoCuenta;
+//    }
 
     public Integer getIdCuenta() {
         return IdCuenta;

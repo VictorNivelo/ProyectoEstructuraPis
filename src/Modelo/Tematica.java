@@ -14,11 +14,11 @@ public class Tematica {
         
     }
 
-    public Tematica(Integer IdTematica, String NombreTematica, String FechaTematica) {
-        this.IdTematica = IdTematica;
-        this.NombreTematica = NombreTematica;
-        this.FechaTematica = FechaTematica;
-    }
+//    public Tematica(Integer IdTematica, String NombreTematica, String FechaTematica) {
+//        this.IdTematica = IdTematica;
+//        this.NombreTematica = NombreTematica;
+//        this.FechaTematica = FechaTematica;
+//    }
 
     public Integer getIdTematica() {
         return IdTematica;

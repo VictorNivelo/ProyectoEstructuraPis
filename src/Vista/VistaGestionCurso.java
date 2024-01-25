@@ -424,11 +424,15 @@ public class VistaGestionCurso extends javax.swing.JFrame {
             } 
             else {
                 Integer IdCurso = cursoControlDao.getCursos().getIdCurso();
-                String Nombre = txtCodigo.getText();
+                String Codigo = txtCodigo.getText();
                 String Paralelo = txtParalelo.getText();
 
-                Cursa cursoModificado = new Cursa(IdCurso, Nombre, Paralelo, UtilVista.obtenerComboMateria(cbxMateria));
-
+                Cursa cursoModificado = new Cursa();
+                cursoModificado.setIdCurso(IdCurso);
+                cursoModificado.setCodigoCurso(Codigo);
+                cursoModificado.setParalelo(Paralelo);
+                cursoModificado.setMateriaCurso(UtilVista.obtenerComboMateria(cbxMateria));
+                
                 cursoControlDao.Merge(cursoModificado, IdCurso - 1);
 
                 CargarTabla();

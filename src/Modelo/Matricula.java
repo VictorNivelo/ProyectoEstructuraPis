@@ -23,14 +23,14 @@ public class Matricula {
         
     }
 
-    public Matricula(Integer IdMatricula, String CodigoMatricula, String FechaMatricula, String EstadoMatricula, Cursa cursoMatricula, PeriodoAcademico periodoAcademicoMatricula) {
-        this.IdMatricula = IdMatricula;
-        this.CodigoMatricula = CodigoMatricula;
-        this.FechaMatricula = FechaMatricula;
-        this.EstadoMatricula = EstadoMatricula;
-        this.cursoMatricula = cursoMatricula;
-        this.periodoAcademicoMatricula = periodoAcademicoMatricula;
-    }
+//    public Matricula(Integer IdMatricula, String CodigoMatricula, String FechaMatricula, String EstadoMatricula, Cursa cursoMatricula, PeriodoAcademico periodoAcademicoMatricula) {
+//        this.IdMatricula = IdMatricula;
+//        this.CodigoMatricula = CodigoMatricula;
+//        this.FechaMatricula = FechaMatricula;
+//        this.EstadoMatricula = EstadoMatricula;
+//        this.cursoMatricula = cursoMatricula;
+//        this.periodoAcademicoMatricula = periodoAcademicoMatricula;
+//    }
 
     public Integer getIdMatricula() {
         return IdMatricula;

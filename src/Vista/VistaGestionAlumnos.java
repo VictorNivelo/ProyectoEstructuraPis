@@ -472,9 +472,14 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
                 Integer IdAlumno = alumnoControlDao.getAlumnos().getIdAlumno();
                 String Estado = cbxEstado.getSelectedItem().toString();
                 
-                Alumno personaModiPersona = new Alumno(IdAlumno, UtilVista.obtenerAlumnosControl(cbxAlumnos),Estado, UtilVista.obtenerMatriculaControl(cbxMatricula));
+                Alumno alumnoModificado = new Alumno();
+                alumnoModificado.setIdAlumno(IdAlumno);
+                alumnoModificado.setDatosAlumno(UtilVista.obtenerAlumnosControl(cbxAlumnos));
+                alumnoModificado.setEstadoAlumno(Estado);
+                alumnoModificado.setMatriculaAlumno(UtilVista.obtenerMatriculaControl(cbxMatricula));
+//                IdAlumno, UtilVista.obtenerAlumnosControl(cbxAlumnos),Estado, UtilVista.obtenerMatriculaControl(cbxMatricula));
 
-                alumnoControlDao.Merge(personaModiPersona, IdAlumno-1);
+                alumnoControlDao.Merge(alumnoModificado, IdAlumno-1);
 
                 CargarTabla();
 
