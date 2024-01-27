@@ -9,9 +9,12 @@ import Controlador.TDA.ListaDinamica.ListaDinamica;
  */
 public class Horario {
     private Integer IdHorario;
+    private String CodigoHorario;
     private String DiaSemana;
     private String HoraIncio;
     private String HoraFin;
+    
+    private Materia materiaHorario;
     
     private Asistencia asistenciaHorario;
     private ListaDinamica<Asistencia> listaAsistenciaHorario;
@@ -75,10 +78,26 @@ public class Horario {
     public void setListaAsistenciaHorario(ListaDinamica<Asistencia> listaAsistenciaHorario) {
         this.listaAsistenciaHorario = listaAsistenciaHorario;
     }
+
+    public Materia getMateriaHorario() {
+        return materiaHorario;
+    }
+
+    public void setMateriaHorario(Materia materiaHorario) {
+        this.materiaHorario = materiaHorario;
+    }
+
+    public String getCodigoHorario() {
+        return CodigoHorario;
+    }
+
+    public void setCodigoHorario(String CodigoHorario) {
+        this.CodigoHorario = CodigoHorario;
+    }
     
     @Override
     public String toString() {
-        return "DiaSemana:" + DiaSemana + ", Incio:" + HoraIncio + ", horaFin:" + HoraFin + "\n";
+        return "Dia:" + DiaSemana + ", Incio:" + HoraIncio + ", horaFin:" + HoraFin + "\n";
     }
     
 }

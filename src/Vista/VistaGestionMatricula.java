@@ -80,6 +80,8 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
             try {
                 MatriculaControlDao.setMatricula(mtm.getMatriculas().getInfo(fila));
                 
+                cbxEstadoMatricula.setEnabled(true);
+                
                 txtCodigoMatricula.setText(MatriculaControlDao.getMatricula().getCodigoMatricula());
                 Date Fecha = Formato.parse(MatriculaControlDao.getMatricula().getFechaMatricula());
                 DateFecha.setDate(Fecha);
@@ -204,6 +206,8 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
 
             }
         ));
+        tbMatriculas.setSelectionBackground(new java.awt.Color(200, 222, 180));
+        tbMatriculas.setSelectionForeground(new java.awt.Color(0, 0, 0));
         tbMatriculas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tbMatriculasMouseClicked(evt);

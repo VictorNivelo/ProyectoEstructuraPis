@@ -86,7 +86,7 @@
                       <Group type="102" attributes="0">
                           <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="cbxTipoBusqueda" min="-2" pref="196" max="-2" attributes="0"/>
+                          <Component id="cbxTipoBusqueda" min="-2" pref="169" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -398,7 +398,7 @@
                 <StringItem index="3" value="Genero"/>
                 <StringItem index="4" value="Especialidad"/>
                 <StringItem index="5" value="Titulacion"/>
-                <StringItem index="6" value="Curso"/>
+                <StringItem index="6" value="Materia"/>
                 <StringItem index="7" value="Paralelo"/>
               </StringArray>
             </Property>

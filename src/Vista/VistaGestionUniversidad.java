@@ -277,6 +277,8 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
 
             }
         ));
+        tblUniversidades.setSelectionBackground(new java.awt.Color(200, 222, 180));
+        tblUniversidades.setSelectionForeground(new java.awt.Color(0, 0, 0));
         tblUniversidades.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblUniversidadesMouseClicked(evt);

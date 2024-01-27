@@ -27,7 +27,7 @@ public class ModeloTablaAlumnos extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 5;
+        return 10;
     }
 
     @Override
@@ -36,19 +36,29 @@ public class ModeloTablaAlumnos extends AbstractTableModel {
             Alumno alumno = alumnosTabla.getInfo(rowIndex);
             switch (columnIndex) {
                 case 0:
-                    return (alumno != null)? alumno.getDatosAlumno().getNombre() + " " + alumno.getDatosAlumno().getApellido() : " ";
-                 case 1:
-                     return (alumno != null)? alumno.getDatosAlumno().getNumeroCedula() : "";
-                 case 2:
-                     return (alumno != null)? alumno.getDatosAlumno().getGenero(): "";
-                 case 3:
-                     return (alumno != null)? alumno.getDatosAlumno().getDireccion() : "";
-                 case 4:
-                     return (alumno != null)? alumno.getDatosAlumno().getTelefono() : "";
+                    return (alumno != null) ? alumno.getIdAlumno() : "";
+                case 1:
+                    return (alumno != null) ? alumno.getDatosAlumno().getNombre() : " ";
+                case 2:
+                    return (alumno != null) ? alumno.getDatosAlumno().getApellido() : "";
+                case 3:
+                    return (alumno != null) ? alumno.getDatosAlumno().getNumeroCedula() : "";
+                case 4:
+                    return (alumno != null) ? alumno.getDatosAlumno().getGenero() : "";
+                case 5:
+                    return (alumno != null) ? alumno.getDatosAlumno().getDireccion() : "";
+                case 6:
+                    return (alumno != null) ? alumno.getDatosAlumno().getTelefono() : "";
+                case 7:
+                    return (alumno != null) ? alumno.getDatosAlumno().getCuentaPersona().getCorreo(): "";
+                case 8:
+                    return (alumno != null) ? alumno.getEstadoAlumno(): "";
+                case 9:
+                    return (alumno != null) ? alumno.getMatriculaAlumno().getCodigoMatricula(): "";
                 default:
                     return null;
             }
-        } 
+        }
         catch (Exception e) {
             return null;
         }
@@ -58,15 +68,25 @@ public class ModeloTablaAlumnos extends AbstractTableModel {
     public String getColumnName(int column) {
         switch (column) {
             case 0:
-                return "ALUMNO";
+                return "#";
             case 1:
-                return "DNI";
+                return "Nombre";
             case 2:
-                return "GENERO";
+                return "Apellido";
             case 3:
-                return "DIRECCION";
+                return "Numero DNI";
             case 4:
-                return "TELEFONO";
+                return "Genero";
+            case 5:
+                return "Direccion";
+            case 6:
+                return "Telefono";
+            case 7:
+                return "Correo";
+            case 8:
+                return "Estado";
+            case 9:
+                return "Codigo Matricula";
             default:
                 return null;
         }

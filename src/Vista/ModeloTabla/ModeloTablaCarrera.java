@@ -29,7 +29,7 @@ public class ModeloTablaCarrera extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 3;
+        return 5;
     }
     
     @Override
@@ -45,6 +45,10 @@ public class ModeloTablaCarrera extends AbstractTableModel {
                     return (p != null) ? p.getNombreCarrera(): "";
                 case 2:
                     return (p != null) ? p.getDuracion() + " Años": "";
+                case 3:
+                    return (p != null) ? p.getNumeroCiclos()+ " Ciclos": "";
+                case 4:
+                    return (p != null) ? p.getFacutadCarrera().getNombreFacultad(): "";
                 default:
                     return null;
             }
@@ -65,6 +69,10 @@ public class ModeloTablaCarrera extends AbstractTableModel {
                 return "Nombre carrera";
             case 2:
                 return "Duracion";
+            case 3:
+                return "Numero de ciclos";
+            case 4:
+                return "Facultad";
             default:
                 return null;
         }

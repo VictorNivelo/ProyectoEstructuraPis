@@ -10,6 +10,8 @@ public class Asistencia {
     private EstadoAsistencia EstadoAsistencia;
     private String Observacion;
     
+    private Horario horarioAsistencia;
+    
     private Tematica AsistenciaTematica;
     
     public Asistencia() {
@@ -53,6 +55,14 @@ public class Asistencia {
 
     public void setAsistenciaTematica(Tematica AsistenciaTematica) {
         this.AsistenciaTematica = AsistenciaTematica;
+    }
+
+    public Horario getHorarioAsistencia() {
+        return horarioAsistencia;
+    }
+
+    public void setHorarioAsistencia(Horario horarioAsistencia) {
+        this.horarioAsistencia = horarioAsistencia;
     }
 
     @Override

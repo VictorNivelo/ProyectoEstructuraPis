@@ -30,15 +30,18 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
         setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
         UtilVista.cargarcomboAlumnos(cbxAlumnos);
         UtilVista.cargarcomboMatricula(cbxMatricula);
+        cbxEstado.setEnabled(false);
         CargarTabla();
     }
+    
+    
     
     private void CargarTabla() {
         mta.setAlumnosTabla(alumnoControlDao.getListaAlumnos());
         tblAlumnos.setModel(mta);
         tblAlumnos.updateUI();
         cbxAlumnos.setSelectedIndex(-1);
-        cbxEstado.setSelectedIndex(-1);
+        cbxEstado.setSelectedIndex(0);
         cbxMatricula.setSelectedIndex(-1);
         cbxTipoBusqueda.setSelectedIndex(-1);
     }
@@ -59,6 +62,7 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
         }
         else{
             try {
+                cbxEstado.setEnabled(true);
                 alumnoControlDao.setAlumnos(mta.getAlumnosTabla().getInfo(fila));
                 
                 cbxAlumnos.setSelectedIndex(alumnoControlDao.getAlumnos().getIdAlumno()-1);
@@ -91,7 +95,10 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
             alumnoControlDao.getAlumnos().setDatosAlumno(UtilVista.obtenerAlumnosControl(cbxAlumnos));
             alumnoControlDao.getAlumnos().setEstadoAlumno(Estado);
             alumnoControlDao.getAlumnos().setMatriculaAlumno(UtilVista.obtenerMatriculaControl(cbxMatricula));
-
+            //Agregar la matricula al alumno
+//            Matricula matricula = UtilVista.obtenerMatriculaControl(cbxMatricula);
+//            alumnoControlDao.getAlumnos().getListaMatriculaAlumno().Agregar(matricula);
+            
             if (alumnoControlDao.Persist()) {
                 JOptionPane.showMessageDialog(null, "ALUMNO GUARDADA EXISTOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
                 alumnoControlDao.setAlumnos(null);
@@ -100,6 +107,7 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "NO SE PUEDE REGISTRAR", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
             }
             Limpiar();
+            cbxEstado.setEnabled(false);
         }
     }
     
@@ -298,7 +306,7 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbxTipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbxTipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -400,7 +408,7 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
                     TipoCampo = "DatosAlumno.Telefono";
                     break;
                 case "Estado":
-                    TipoCampo = "Estado";
+                    TipoCampo = "EstadoAlumno";
                     break;
                 case "Correo":
                     TipoCampo = "DatosAlumno.cuentaPersona.Correo";
@@ -479,9 +487,15 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
                 alumnoModificado.setMatriculaAlumno(UtilVista.obtenerMatriculaControl(cbxMatricula));
 //                IdAlumno, UtilVista.obtenerAlumnosControl(cbxAlumnos),Estado, UtilVista.obtenerMatriculaControl(cbxMatricula));
 
+//                Matricula matricula = UtilVista.obtenerMatriculaControl(cbxMatricula);
+//                alumnoModificado.getListaMatriculaAlumno().Limpiar();
+//                alumnoModificado.getListaMatriculaAlumno().Agregar(matricula);
+                
                 alumnoControlDao.Merge(alumnoModificado, IdAlumno-1);
 
                 CargarTabla();
+                
+                cbxEstado.setEnabled(false);
 
                 try {
                     Limpiar();

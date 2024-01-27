@@ -100,6 +100,8 @@ public class VistaGestionMalla extends javax.swing.JFrame {
             mallaControlDao.getMallaCurricular().setEstadoMallaCurricular(EstadoMalla);
             
             mallaControlDao.getMallaCurricular().setCarreraMallaCurricula(UtilVista.obtenerCarreraControl(cbxCarrera));
+            
+            cbxEstadoMalla.setEnabled(false);
                         
             if (mallaControlDao.Persist()) {
                 JOptionPane.showMessageDialog(null, "MALLA GUARDADA EXISTOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
@@ -477,6 +479,8 @@ public class VistaGestionMalla extends javax.swing.JFrame {
                 mallaControlDao.Merge(mallaModificada, IdMalla - 1);
 
                 CargarTabla();
+                
+                cbxEstadoMalla.setEnabled(false);
 
                 try {
                     Limpiar();

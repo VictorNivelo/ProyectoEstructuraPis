@@ -253,6 +253,8 @@ public class VistaGestionUnidadCurricular extends javax.swing.JFrame {
 
             }
         ));
+        tblUnidadCurrricular.setSelectionBackground(new java.awt.Color(200, 222, 180));
+        tblUnidadCurrricular.setSelectionForeground(new java.awt.Color(0, 0, 0));
         tblUnidadCurrricular.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblUnidadCurrricularMouseClicked(evt);

@@ -66,7 +66,7 @@ public class ModeloTablaCiclos extends AbstractTableModel {
             case 1:
                 return "Nombre ciclo";
             case 2:
-                return "Ciclo numero";
+                return "Numero de ciclo";
             case 3:
                 return "Unidad";
             default:

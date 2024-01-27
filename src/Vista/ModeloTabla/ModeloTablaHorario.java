@@ -29,7 +29,7 @@ public class ModeloTablaHorario extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 5;
+        return 6;
     }
     
     @Override
@@ -42,13 +42,15 @@ public class ModeloTablaHorario extends AbstractTableModel {
                 case 0:
                     return (p != null) ? p.getIdHorario(): "";
                 case 1:
-                    return (p != null) ? p.getDiaSemana(): "";
+                    return (p != null) ? p.getCodigoHorario(): "";
                 case 2:
-                    return (p != null) ? p.getHoraIncio() : "";
+                    return (p != null) ? p.getDiaSemana(): "";
                 case 3:
-                    return (p != null) ? p.getHoraFin() : "";
+                    return (p != null) ? p.getHoraIncio() : "";
                 case 4:
-                    return (p != null) ? p.getAsistenciaHorario().getAsistenciaTematica().getNombreTematica(): "";
+                    return (p != null) ? p.getHoraFin() : "";
+                case 5:
+                    return (p != null) ? p.getMateriaHorario().getNombreMateria(): "";
                 default:
                     return null;
             }
@@ -66,13 +68,15 @@ public class ModeloTablaHorario extends AbstractTableModel {
             case 0:
                 return "#";
             case 1:
-                return "Dia";
+                return "Codigo";
             case 2:
-                return "Inicio";
+                return "Dia";
             case 3:
-                return "Fin";
+                return "Inicio";
             case 4:
-                return "Tematica";
+                return "Fin";
+            case 5:
+                return "Materia";
             default:
                 return null;
         }

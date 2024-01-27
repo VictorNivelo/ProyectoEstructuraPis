@@ -49,7 +49,7 @@ public class VistaGestionCarrera extends javax.swing.JFrame {
         txtNumeroCiclos.setText("");
 //        cbxMalla.setSelectedIndex(-1);
         cbxFacultad.setSelectedIndex(-1);
-        cbxTipoBusqueda.setSelectedIndex(-1);
+//        cbxTipoBusqueda.setSelectedIndex(-1);
         carreraControlDao.setCarreras(null);
         CargarTabla();
     }
@@ -272,7 +272,7 @@ public class VistaGestionCarrera extends javax.swing.JFrame {
         jLabel9.setForeground(new java.awt.Color(0, 0, 0));
         jLabel9.setText("Buscar");
 
-        cbxTipoBusqueda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "Duracion" }));
+        cbxTipoBusqueda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "Duracion", "Numero de ciclos", "Facultad" }));
         cbxTipoBusqueda.setSelectedIndex(-1);
 
         jButton6.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
@@ -329,7 +329,7 @@ public class VistaGestionCarrera extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbxTipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbxTipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -513,7 +513,13 @@ public class VistaGestionCarrera extends javax.swing.JFrame {
                     TipoCampo = "NombreCarrera";
                     break;
                 case "Duracion":
-                    TipoCampo = "duracion";
+                    TipoCampo = "Duracion";
+                    break;
+                case "Numero de ciclos":
+                    TipoCampo = "NumeroCiclos";
+                    break;
+                case "Facultad":
+                    TipoCampo = "facutadCarrera.NombreFacultad";
                     break;
                 default:
                     throw new AssertionError();

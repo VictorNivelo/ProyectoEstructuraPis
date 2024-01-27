@@ -30,7 +30,7 @@ public class ModeloTablaAsistencia extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 8;
+        return 5;
     }
         
     @Override

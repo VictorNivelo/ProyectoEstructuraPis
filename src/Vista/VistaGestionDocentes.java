@@ -264,7 +264,7 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
         jLabel11.setForeground(new java.awt.Color(0, 0, 0));
         jLabel11.setText("Buscar por");
 
-        cbxTipoBusqueda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Numero de cedula", "Nombre", "Apellido", "Genero", "Especialidad", "Titulacion", "Curso", "Paralelo" }));
+        cbxTipoBusqueda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Numero de cedula", "Nombre", "Apellido", "Genero", "Especialidad", "Titulacion", "Materia", "Paralelo" }));
         cbxTipoBusqueda.setSelectedIndex(-1);
 
         jLabel12.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
@@ -350,7 +350,7 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbxTipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbxTipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel12)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -550,28 +550,31 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
             
             switch (TipoCampo) {
                 case "Numero cedula":
-                    TipoCampo = "datosDocente.NumeroCedula";
+                    TipoCampo = "DatosDocente.NumeroCedula";
                     break;
                 case "Nombre":
-                    TipoCampo = "datosDocente.Nombre";
+                    TipoCampo = "DatosDocente.Nombre";
                     break;
                 case "Apellido":
-                    TipoCampo = "datosDocente.Apellido";
+                    TipoCampo = "DatosDocente.Apellido";
                     break;
                 case "Genero":
-                    TipoCampo = "datosDocente.Genero";
+                    TipoCampo = "DatosDocente.Genero";
                     break;
                 case "Especialidad":
-                    TipoCampo = "especialidad";
+                    TipoCampo = "Especialidad";
                     break;
                 case "Titulacion":
-                    TipoCampo = "titulacion";
+                    TipoCampo = "Titulacion";
                     break;
-                case "Curso":
-                    TipoCampo = "cursoAsignado.nombreCurso";
+                case "Años ecperiencia":
+                    TipoCampo = "AniosExperiencia";
+                    break;
+                case "Materia":
+                    TipoCampo = "cursoDocente.MateriaCurso.NombreMateria";
                     break;
                 case "Paralelo":
-                    TipoCampo = "cursoAsignado.Paralelo";
+                    TipoCampo = "cursoDocente.Paralelo";
                     break;
                 default:
                     throw new AssertionError();

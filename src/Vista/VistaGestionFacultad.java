@@ -240,6 +240,8 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
 
             }
         ));
+        tblDocentes.setSelectionBackground(new java.awt.Color(200, 222, 180));
+        tblDocentes.setSelectionForeground(new java.awt.Color(0, 0, 0));
         tblDocentes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblDocentesMouseClicked(evt);
