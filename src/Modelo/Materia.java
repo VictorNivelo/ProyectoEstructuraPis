@@ -14,6 +14,7 @@ public class Materia {
     private String NumeroHoras;
     
     private Ciclo cicloMateria;
+    private Cursa cursoMateria;
     
     //datos poco uasdos
     private ListaDinamica<Ciclo> listaCicloMateria;
@@ -96,6 +97,14 @@ public class Materia {
 
     public void setListaCicloMateria(ListaDinamica<Ciclo> listaCicloMateria) {
         this.listaCicloMateria = listaCicloMateria;
+    }
+
+    public Cursa getCursoMateria() {
+        return cursoMateria;
+    }
+
+    public void setCursoMateria(Cursa cursoMateria) {
+        this.cursoMateria = cursoMateria;
     }
 
     @Override

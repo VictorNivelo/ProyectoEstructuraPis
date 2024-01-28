@@ -69,7 +69,7 @@
                               <Component id="txtNombreDescripcion" alignment="1" max="32767" attributes="0"/>
                               <Component id="txtNumeroHoras" max="32767" attributes="0"/>
                               <Component id="txtNombreMateria" alignment="1" max="32767" attributes="0"/>
-                              <Component id="cbxHorario" max="32767" attributes="0"/>
+                              <Component id="cbxCurso" max="32767" attributes="0"/>
                               <Component id="cbxCiclo" alignment="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -154,7 +154,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="cbxHorario" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="cbxCurso" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
@@ -399,10 +399,10 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="0" green="0" red="0" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Curso"/>
+            <Property name="text" type="java.lang.String" value="Paralelo"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="cbxHorario">
+        <Component class="javax.swing.JComboBox" name="cbxCurso">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="0"/>

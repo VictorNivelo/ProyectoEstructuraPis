@@ -4,8 +4,11 @@ package Vista;
 import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 
 /**
@@ -14,6 +17,18 @@ import javax.swing.JPanel;
  */
 public class VistaPersonalAdministracion extends javax.swing.JFrame {
 
+    private final String[] imagenes = {
+        "/Vista/RecursosGraficos/Fondos/Fondo1.jpg",
+        "/Vista/RecursosGraficos/Fondos/Fondo2.jpg",
+        "/Vista/RecursosGraficos/Fondos/Fondo3.jpg",
+        "/Vista/RecursosGraficos/Fondos/Fondo4.jpg"
+    };
+
+    private int indiceImagenActual = 0;
+    private Timer timer;
+
+    private JPanel panelPrincipal;
+
     /**
      * Creates new form VistaAdministracion
      */
@@ -21,6 +36,19 @@ public class VistaPersonalAdministracion extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
+
+        timer = new Timer(5000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cambiarImagen();
+            }
+        });
+        timer.start();
+    }
+
+    private void cambiarImagen() {
+        indiceImagenActual = (indiceImagenActual + 1) % imagenes.length;
+        panelPrincipal.repaint();
     }
     
     //Crea fondos para jframe y jpanel, se tiene que customisar el panel y agregar FondoPanel().
@@ -45,7 +73,15 @@ public class VistaPersonalAdministracion extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        panelPrincipal = new FondoPanel();
+        panelPrincipal = new javax.swing.JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                ImageIcon icon = new ImageIcon(getClass().getResource(imagenes[indiceImagenActual]));
+                g.drawImage(icon.getImage(), 0, 0, getWidth(), getHeight(), this);
+            }
+        };
+        
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -71,6 +107,8 @@ public class VistaPersonalAdministracion extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         jMenuItem14 = new javax.swing.JMenuItem();
         jMenuItem15 = new javax.swing.JMenuItem();
+        MenuInterfaz = new javax.swing.JMenu();
+        jMenuItem16 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ADMINISTRACION GENERAL");
@@ -135,7 +173,7 @@ public class VistaPersonalAdministracion extends javax.swing.JFrame {
             .addGroup(panelPrincipalLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButton5)
-                .addGap(55, 55, 55)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton14)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton12)
@@ -157,7 +195,7 @@ public class VistaPersonalAdministracion extends javax.swing.JFrame {
         MenuHerramientas.setForeground(new java.awt.Color(0, 0, 0));
         MenuHerramientas.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
 
-        jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/gestion-de-proyectos.png"))); // NOI18N
+        jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/MenuBar/Personas.png"))); // NOI18N
         jMenu2.setText("Gestion administrativa");
         jMenu2.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
 
@@ -253,7 +291,7 @@ public class VistaPersonalAdministracion extends javax.swing.JFrame {
 
         MenuHerramientas.add(jMenu2);
 
-        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/gestion-de-equipos.png"))); // NOI18N
+        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/MenuBar/Gestion.png"))); // NOI18N
         jMenu1.setText("Gestion personas");
         jMenu1.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
 
@@ -286,7 +324,7 @@ public class VistaPersonalAdministracion extends javax.swing.JFrame {
 
         MenuHerramientas.add(jMenu1);
 
-        jMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/calendario.png"))); // NOI18N
+        jMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/MenuBar/Calendario.png"))); // NOI18N
         jMenu3.setText("Gestion asistencia");
         jMenu3.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
 
@@ -309,6 +347,19 @@ public class VistaPersonalAdministracion extends javax.swing.JFrame {
         jMenu3.add(jMenuItem15);
 
         MenuHerramientas.add(jMenu3);
+
+        MenuInterfaz.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/MenuBar/Interfaz.png"))); // NOI18N
+        MenuInterfaz.setText("Interfaz principal");
+
+        jMenuItem16.setText("Gestionar informacion");
+        jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem16ActionPerformed(evt);
+            }
+        });
+        MenuInterfaz.add(jMenuItem16);
+
+        MenuHerramientas.add(MenuInterfaz);
 
         setJMenuBar(MenuHerramientas);
 
@@ -545,6 +596,10 @@ public class VistaPersonalAdministracion extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem15ActionPerformed
 
+    private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem16ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -584,6 +639,7 @@ public class VistaPersonalAdministracion extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar MenuHerramientas;
+    private javax.swing.JMenu MenuInterfaz;
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton5;
@@ -599,6 +655,7 @@ public class VistaPersonalAdministracion extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem15;
+    private javax.swing.JMenuItem jMenuItem16;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
@@ -608,7 +665,7 @@ public class VistaPersonalAdministracion extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel panelPrincipal;
+    //private javax.swing.JPanel panelPrincipal;
     // End of variables declaration//GEN-END:variables
 }
 

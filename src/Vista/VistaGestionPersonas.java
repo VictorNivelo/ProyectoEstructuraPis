@@ -453,7 +453,7 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
 
         jLabel20.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel20.setText("Tipo iDNI");
+        jLabel20.setText("Tipo DNI");
 
         cbxTipoDni.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cedula", "Pasaporte" }));
         cbxTipoDni.setSelectedIndex(-1);

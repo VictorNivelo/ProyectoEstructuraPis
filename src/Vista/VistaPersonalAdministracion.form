@@ -18,7 +18,7 @@
         <Menu class="javax.swing.JMenu" name="jMenu2">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Vista/RecursosGraficos/Botones/gestion-de-proyectos.png"/>
+              <Image iconType="3" name="/Vista/RecursosGraficos/MenuBar/Personas.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Gestion administrativa"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -141,7 +141,7 @@
         <Menu class="javax.swing.JMenu" name="jMenu1">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Vista/RecursosGraficos/Botones/gestion-de-equipos.png"/>
+              <Image iconType="3" name="/Vista/RecursosGraficos/MenuBar/Gestion.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Gestion personas"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -187,7 +187,7 @@
         <Menu class="javax.swing.JMenu" name="jMenu3">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Vista/RecursosGraficos/Botones/calendario.png"/>
+              <Image iconType="3" name="/Vista/RecursosGraficos/MenuBar/Calendario.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Gestion asistencia"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -215,6 +215,24 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem15ActionPerformed"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="MenuInterfaz">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/Vista/RecursosGraficos/MenuBar/Interfaz.png"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Interfaz principal"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem16">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Gestionar informacion"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem16ActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
@@ -263,9 +281,6 @@
         </Property>
         <Property name="toolTipText" type="java.lang.String" value=""/>
       </Properties>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new FondoPanel()"/>
-      </AuxValues>
 
       <Layout>
         <DimensionLayout dim="0">
@@ -274,7 +289,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jButton5" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="jButton14" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jButton12" min="-2" max="-2" attributes="0"/>

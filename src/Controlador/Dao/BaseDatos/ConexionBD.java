@@ -53,7 +53,7 @@ public class ConexionBD {
         try {
             Class.forName(driver);
             conn = DriverManager.getConnection(url, username, password);
-            System.out.println("Conected!");
+            System.out.println("Conectado!");
         } 
         catch (ClassNotFoundException e) {
             throw new SQLException("Error al cargar el driver: " + e.getMessage());
