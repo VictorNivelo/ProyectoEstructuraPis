@@ -597,7 +597,11 @@ public class VistaPersonalAdministracion extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem15ActionPerformed
 
     private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
-        // TODO add your handling code here:
+        
+        VistaGestionInterfazPrincipal vip = new VistaGestionInterfazPrincipal();
+        vip.setVisible(true);
+        this.setVisible(false);
+        
     }//GEN-LAST:event_jMenuItem16ActionPerformed
 
     /**

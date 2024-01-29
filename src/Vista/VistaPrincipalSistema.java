@@ -1,13 +1,18 @@
 
 package Vista;
 
+import Controlador.Dao.Modelo.presentacionDao;
+import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
+import Controlador.TDA.ListaDinamica.ListaDinamica;
+import Modelo.Presentacion;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
-import javax.swing.JPanel;
 import javax.swing.Timer;
 
 /**
@@ -15,6 +20,23 @@ import javax.swing.Timer;
  * @author Victor
  */
 public class VistaPrincipalSistema extends javax.swing.JFrame {
+    presentacionDao presentacionControlDao = new presentacionDao();
+    private ListaDinamica<Presentacion> listaPresentacion = presentacionControlDao.all();
+        
+//    private static String obtenerInformacionLista(ListaDinamica<Presentacion> listaPresentaciones) {
+//        StringBuilder resultado = new StringBuilder();
+//        resultado.append("Longitud de la lista: ").append(listaPresentaciones.getLongitud()).append("\n");
+//
+//        for (int i = 0; i < listaPresentaciones.getLongitud(); i++) {
+//            try {
+//                resultado.append(listaPresentaciones.getInfo(i).getImagen()).append("\n");
+//            } catch (Exception e) {
+//                e.printStackTrace(); 
+//            }
+//        }
+//
+//        return resultado.toString();
+//    }
     
     private final String[] imagenes = {
         "/Vista/RecursosGraficos/Fondos/Fondo1.jpg",
@@ -22,25 +44,35 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
         "/Vista/RecursosGraficos/Fondos/Fondo3.jpg",
         "/Vista/RecursosGraficos/Fondos/Fondo4.jpg"
     };
-
+    
     private int indiceImagenActual = 0;
     private Timer timer;
 
-    private JPanel panelPrincipal;
-
+    
+    
     /**
      * Creates new form VistaPrincipalSistema
+     * @throws Controlador.TDA.ListaDinamica.Excepcion.ListaVacia
      */
-    public VistaPrincipalSistema() {
+    public VistaPrincipalSistema() throws ListaVacia {
         initComponents();
         this.setLocationRelativeTo(null);
-        setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
         
-        timer = new Timer(5000, new ActionListener() {
+        panelPrincipal.setOpaque(false);
+        txaContenido.setOpaque(false);
+        txaContenido.setBorder(null);
+        jScrollPane2.setOpaque(false); 
+        jScrollPane2.getViewport().setOpaque(false); 
+        jScrollPane2.setBorder(null);
+        jScrollPane2.setBackground(new Color(0, 0, 0, 90)); 
+
+        setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
+                        
+        timer = new Timer(2000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cambiarImagen();
-            }
+                }
         });
         timer.start();
     }
@@ -49,7 +81,7 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
         indiceImagenActual = (indiceImagenActual + 1) % imagenes.length;
         panelPrincipal.repaint();
     }
-    
+
     /* utiles para presentar por netbeans
     panelPrincipal = new javax.swing.JPanel() {
             @Override
@@ -93,6 +125,12 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
             }
         };
 
+        bordesRedondos1 = new Vista.Utiles.BordesRedondos();
+        txtTitulo = new javax.swing.JLabel();
+        jSeparator2 = new javax.swing.JSeparator();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txaContenido = new javax.swing.JTextArea();
+        jLabel1 = new javax.swing.JLabel();
         MenuPrincipal = new javax.swing.JMenuBar();
         MenuSga = new javax.swing.JMenu();
         MenuPersonal = new javax.swing.JMenu();
@@ -101,23 +139,104 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("UNIVERSIDAD NACIONAL DE LOJA");
 
+        bordesRedondos1.setBackground(new java.awt.Color(0, 0, 0, 90));
+        bordesRedondos1.setRoundBottomLeft(30);
+        bordesRedondos1.setRoundBottomRight(30);
+        bordesRedondos1.setRoundTopLeft(30);
+        bordesRedondos1.setRoundTopRight(30);
+
+        txtTitulo.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
+        txtTitulo.setForeground(new java.awt.Color(255, 255, 255));
+        txtTitulo.setText("La Transformación Continúa ");
+        txtTitulo.setFocusable(false);
+
+        jSeparator2.setBackground(new java.awt.Color(226, 6, 19));
+        jSeparator2.setForeground(new java.awt.Color(226, 6, 19));
+        jSeparator2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jSeparator2.setOpaque(true);
+        jSeparator2.setPreferredSize(new java.awt.Dimension(50, 5));
+
+        jScrollPane2.setBackground(new java.awt.Color(0, 0, 0,90));
+        jScrollPane2.setBorder(null);
+        jScrollPane2.setForeground(new java.awt.Color(0, 0, 0));
+        jScrollPane2.setEnabled(false);
+        jScrollPane2.setFocusable(false);
+        jScrollPane2.setRequestFocusEnabled(false);
+
+        txaContenido.setEditable(false);
+        txaContenido.setBackground(new java.awt.Color(0, 0, 0,0));
+        txaContenido.setColumns(20);
+        txaContenido.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
+        txaContenido.setForeground(new java.awt.Color(255, 255, 255));
+        txaContenido.setText("Desde hace 163 años, somos la Institución  de Educación \nSuperior líder en el desarrollo de la cultura,  \nciencia y conocimiento de la Región Sur del Ecuador  ");
+        txaContenido.setAutoscrolls(false);
+        txaContenido.setBorder(null);
+        txaContenido.setCaretColor(new java.awt.Color(0, 0, 0));
+        txaContenido.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        txaContenido.setFocusable(false);
+        txaContenido.setOpaque(false);
+        txaContenido.setRequestFocusEnabled(false);
+        txaContenido.setSelectedTextColor(new java.awt.Color(0, 0, 0));
+        txaContenido.setSelectionColor(new java.awt.Color(0, 0, 0));
+        jScrollPane2.setViewportView(txaContenido);
+
+        javax.swing.GroupLayout bordesRedondos1Layout = new javax.swing.GroupLayout(bordesRedondos1);
+        bordesRedondos1.setLayout(bordesRedondos1Layout);
+        bordesRedondos1Layout.setHorizontalGroup(
+            bordesRedondos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(bordesRedondos1Layout.createSequentialGroup()
+                .addGroup(bordesRedondos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(bordesRedondos1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jSeparator2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(bordesRedondos1Layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(txtTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, 525, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bordesRedondos1Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        bordesRedondos1Layout.setVerticalGroup(
+            bordesRedondos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(bordesRedondos1Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(txtTitulo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(56, Short.MAX_VALUE))
+        );
+
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/LojoUNL.png"))); // NOI18N
+
         javax.swing.GroupLayout panelPrincipalLayout = new javax.swing.GroupLayout(panelPrincipal);
         panelPrincipal.setLayout(panelPrincipalLayout);
         panelPrincipalLayout.setHorizontalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1200, Short.MAX_VALUE)
+            .addGroup(panelPrincipalLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(bordesRedondos1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addContainerGap(642, Short.MAX_VALUE))
         );
         panelPrincipalLayout.setVerticalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 674, Short.MAX_VALUE)
+            .addGroup(panelPrincipalLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(76, 76, 76)
+                .addComponent(bordesRedondos1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(214, Short.MAX_VALUE))
         );
 
         MenuPrincipal.setLayout(new FlowLayout(FlowLayout.CENTER));
 
         MenuSga.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/MenuBar/Alumno.png"))); // NOI18N
         MenuSga.setText("SGA");
-        MenuSga.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        MenuSga.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         MenuSga.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         MenuSga.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -128,8 +247,6 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
 
         MenuPersonal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/MenuBar/Personal.png"))); // NOI18N
         MenuPersonal.setText("PERSONAL ADMINISTRATIVO");
-        MenuPersonal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        MenuPersonal.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         MenuPersonal.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         MenuPersonal.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -140,8 +257,6 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
 
         MenuAcerca.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/MenuBar/Acerca.png"))); // NOI18N
         MenuAcerca.setText("ACERCA DE LA UNVERSIDAD");
-        MenuAcerca.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        MenuAcerca.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         MenuAcerca.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         MenuAcerca.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -220,8 +335,12 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VistaPrincipalSistema().setVisible(true);
-            }
+                try {
+                    new VistaPrincipalSistema().setVisible(true);
+                } catch (ListaVacia ex) {
+                    Logger.getLogger(VistaPrincipalSistema.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                } 
         });
     }
 
@@ -230,6 +349,12 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
     private javax.swing.JMenu MenuPersonal;
     private javax.swing.JMenuBar MenuPrincipal;
     private javax.swing.JMenu MenuSga;
-    //private javax.swing.JPanel panelPrincipal;
+    private Vista.Utiles.BordesRedondos bordesRedondos1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JPanel panelPrincipal;
+    private javax.swing.JTextArea txaContenido;
+    private javax.swing.JLabel txtTitulo;
     // End of variables declaration//GEN-END:variables
 }
