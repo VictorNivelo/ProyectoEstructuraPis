@@ -68,7 +68,7 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
 
         setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
                         
-        timer = new Timer(2000, new ActionListener() {
+        timer = new Timer(3000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cambiarImagen();

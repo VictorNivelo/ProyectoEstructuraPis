@@ -9,12 +9,21 @@ public class Presentacion {
     private Integer IdPresentacion;
     private String Codigo;
     private String Imagen;
+    private String Titulo;
     private String Contenido;
     private String Tiempo;
     private String EstadoPresentacion;
 
     public Presentacion() {
         
+    }
+
+    public String getTitulo() {
+        return Titulo;
+    }
+
+    public void setTitulo(String Titulo) {
+        this.Titulo = Titulo;
     }
 
     public String getTiempo() {

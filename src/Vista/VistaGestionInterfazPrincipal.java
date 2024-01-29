@@ -49,6 +49,7 @@ public class VistaGestionInterfazPrincipal extends javax.swing.JFrame {
     private void Limpiar() throws ListaVacia {
         txtCodigo.setText("");
         txtImagen.setText("");
+        txtTitulo.setText("");
         txtContenido.setText("");
         txtTiempo.setText("");
         cbxEstadoPresentacion.setSelectedIndex(-1);
@@ -69,6 +70,7 @@ public class VistaGestionInterfazPrincipal extends javax.swing.JFrame {
                 
                 txtCodigo.setText(presentacionControlDao.getPresentaciones().getCodigo());
                 txtImagen.setText(presentacionControlDao.getPresentaciones().getImagen());
+                txtTitulo.setText(presentacionControlDao.getPresentaciones().getTitulo());
                 txtContenido.setText(presentacionControlDao.getPresentaciones().getContenido());
                 txtTiempo.setText(presentacionControlDao.getPresentaciones().getTiempo());
                 cbxEstadoPresentacion.setSelectedItem(presentacionControlDao.getPresentaciones().getEstadoPresentacion());
@@ -90,6 +92,9 @@ public class VistaGestionInterfazPrincipal extends javax.swing.JFrame {
         }
         else if (txtTiempo.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Falta llenar el tiempo", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        else if (txtTitulo.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Falta llenar el titulo", "Error", JOptionPane.ERROR_MESSAGE);
         } 
         else if (txtContenido.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Falta llenar el contenido", "Error", JOptionPane.ERROR_MESSAGE);
@@ -101,12 +106,14 @@ public class VistaGestionInterfazPrincipal extends javax.swing.JFrame {
             Integer IdPresentacion = listaPresentacion.getLongitud() + 1;
             String Codigo = txtCodigo.getText();
             String Tiempo = txtTiempo.getText();
+            String Titulo = txtTitulo.getText();
             String Contenido = txtContenido.getText();
             String Estado = cbxEstadoPresentacion.getSelectedItem().toString();
                         
             presentacionControlDao.getPresentaciones().setIdPresentacion(IdPresentacion);
-            presentacionControlDao.getPresentaciones().setCodigo(Codigo);
             
+            presentacionControlDao.getPresentaciones().setCodigo(Codigo);
+            presentacionControlDao.getPresentaciones().setTitulo(Titulo);
             presentacionControlDao.getPresentaciones().setTiempo(Tiempo);
             presentacionControlDao.getPresentaciones().setContenido(Contenido);
             presentacionControlDao.getPresentaciones().setEstadoPresentacion(Estado);
@@ -236,6 +243,8 @@ public class VistaGestionInterfazPrincipal extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
         btnCargarImagen = new javax.swing.JButton();
+        jLabel12 = new javax.swing.JLabel();
+        txtTitulo = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("PERSONALIZACION DE PANTALLA PRINCIPAL");
@@ -259,7 +268,7 @@ public class VistaGestionInterfazPrincipal extends javax.swing.JFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
-                .addContainerGap(111, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -384,6 +393,10 @@ public class VistaGestionInterfazPrincipal extends javax.swing.JFrame {
             }
         });
 
+        jLabel12.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel12.setText("Titulo");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -396,17 +409,6 @@ public class VistaGestionInterfazPrincipal extends javax.swing.JFrame {
                         .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnGuardar))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtTiempo)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(txtImagen)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnCargarImagen))))
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1)
@@ -414,10 +416,24 @@ public class VistaGestionInterfazPrincipal extends javax.swing.JFrame {
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cbxEstadoPresentacion, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtCodigo)))
+                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(txtImagen)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnCargarImagen))
+                            .addComponent(txtTitulo)
+                            .addComponent(txtTiempo, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane2)
@@ -472,6 +488,10 @@ public class VistaGestionInterfazPrincipal extends javax.swing.JFrame {
                             .addComponent(jLabel7)
                             .addComponent(txtTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel12)
+                            .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -513,6 +533,9 @@ public class VistaGestionInterfazPrincipal extends javax.swing.JFrame {
         } 
         else if (txtTiempo.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Falta llenar el tiempo", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        else if (txtTitulo.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Falta llenar el titulo", "Error", JOptionPane.ERROR_MESSAGE);
         } 
         else if (txtContenido.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Falta llenar el contenido", "Error", JOptionPane.ERROR_MESSAGE);
@@ -554,7 +577,10 @@ public class VistaGestionInterfazPrincipal extends javax.swing.JFrame {
             } 
             else if (txtTiempo.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Falta llenar el tiempo", "Error", JOptionPane.ERROR_MESSAGE);
-            } 
+            }
+            else if (txtTitulo.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Falta llenar el titulo", "Error", JOptionPane.ERROR_MESSAGE);
+            }
             else if (txtContenido.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Falta llenar el contenido", "Error", JOptionPane.ERROR_MESSAGE);
             } 
@@ -566,6 +592,7 @@ public class VistaGestionInterfazPrincipal extends javax.swing.JFrame {
                 Integer IdPresentacion = presentacionControlDao.getPresentaciones().getIdPresentacion();
                 String Codigo = txtCodigo.getText();
                 String Tiempo = txtTiempo.getText();
+                String Titulo = txtTitulo.getText();
                 String Contenido = txtContenido.getText();
                 String Estado = cbxEstadoPresentacion.getSelectedItem().toString();
 
@@ -573,6 +600,7 @@ public class VistaGestionInterfazPrincipal extends javax.swing.JFrame {
                 personaModiPersona.setIdPresentacion(IdPresentacion);
                 personaModiPersona.setCodigo(Codigo);
                 personaModiPersona.setTiempo(Tiempo);
+                personaModiPersona.setTitulo(Titulo);
                 personaModiPersona.setContenido(Contenido);
                 personaModiPersona.setEstadoPresentacion(Estado);
                 personaModiPersona.setImagen(presentacionControlDao.getPresentaciones().getImagen());
@@ -641,6 +669,9 @@ public class VistaGestionInterfazPrincipal extends javax.swing.JFrame {
                     break;
                 case "Imagen":
                     TipoCampo = "Imagen";
+                    break;
+                case "Titulo":
+                    TipoCampo = "Titulo";
                     break;
                 case "Contenido":
                     TipoCampo = "Contenido";
@@ -743,6 +774,7 @@ public class VistaGestionInterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -761,5 +793,6 @@ public class VistaGestionInterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JTextArea txtContenido;
     private javax.swing.JTextField txtImagen;
     private javax.swing.JTextField txtTiempo;
+    private javax.swing.JTextField txtTitulo;
     // End of variables declaration//GEN-END:variables
 }

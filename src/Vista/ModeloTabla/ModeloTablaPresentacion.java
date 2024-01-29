@@ -29,7 +29,7 @@ public class ModeloTablaPresentacion extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 6;
+        return 7;
     }
     
     @Override
@@ -48,8 +48,10 @@ public class ModeloTablaPresentacion extends AbstractTableModel {
                 case 3:
                     return (p != null) ? p.getTiempo() : "";
                 case 4:
-                    return (p != null) ? p.getContenido() : "";
+                    return (p != null) ? p.getTitulo(): "";
                 case 5:
+                    return (p != null) ? p.getContenido() : "";
+                case 6:
                     return (p != null) ? p.getEstadoPresentacion() : "";
                 default:
                     return null;
@@ -72,8 +74,10 @@ public class ModeloTablaPresentacion extends AbstractTableModel {
             case 3:
                 return "Tiempo";
             case 4:
-                return "Contenido";
+                return "Titulo";
             case 5:
+                return "Contenido";
+            case 6:
                 return "Estado";
             default:
                 return null;

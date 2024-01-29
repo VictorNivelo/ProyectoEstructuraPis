@@ -31,6 +31,7 @@ public class VistaInicioSesionPersonal extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
         configurarPlaceholders();
+        btnRegresar.requestFocus();
     }
     
     private void configurarPlaceholders() {
@@ -60,12 +61,12 @@ public class VistaInicioSesionPersonal extends javax.swing.JFrame {
         });
 
         txtContrasenia.setForeground(new Color(119, 119, 119));
-        txtContrasenia.setText("Ingrese su contraseña");
+        txtContrasenia.setText("Contraseña");
         txtContrasenia.setFont(placeholderFont);
         txtContrasenia.addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
-                if (String.valueOf(txtContrasenia.getPassword()).equals("Ingrese su contraseña")) {
+                if (String.valueOf(txtContrasenia.getPassword()).equals("Contraseña")) {
                     txtContrasenia.setText("");
                     txtContrasenia.setForeground(Color.BLACK);
                     txtContrasenia.setFont(new Font("Segoe UI", Font.PLAIN, 14));
@@ -76,7 +77,7 @@ public class VistaInicioSesionPersonal extends javax.swing.JFrame {
             public void focusLost(FocusEvent e) {
                 if (String.valueOf(txtContrasenia.getPassword()).isEmpty()) {
                     txtContrasenia.setForeground(new Color(119, 119, 119));
-                    txtContrasenia.setText("Ingrese su contraseña");
+                    txtContrasenia.setText("Contraseña");
                     txtContrasenia.setFont(placeholderFont);
                 }
             }
@@ -265,7 +266,7 @@ public class VistaInicioSesionPersonal extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(btnRegresar))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(411, 411, 411)
+                        .addGap(420, 420, 420)
                         .addComponent(bordesRedondos1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -273,9 +274,9 @@ public class VistaInicioSesionPersonal extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(113, 113, 113)
+                .addGap(112, 112, 112)
                 .addComponent(bordesRedondos1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 124, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 125, Short.MAX_VALUE)
                 .addComponent(btnRegresar)
                 .addContainerGap())
         );

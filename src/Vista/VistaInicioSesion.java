@@ -6,6 +6,10 @@ import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Modelo.Cuenta;
 import Modelo.Persona;
 import Modelo.Rol;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -23,6 +27,58 @@ public class VistaInicioSesion extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
+        btnRegresar.requestFocus();
+        configurarPlaceholders();
+    }
+    
+    private void configurarPlaceholders() {
+        Font placeholderFont = new Font("Segoe UI", Font.ITALIC, 14);
+
+        txtCorreo.setForeground(new Color(119, 119, 119));
+        txtCorreo.setText("Ingrese su correo");
+        txtCorreo.setFont(placeholderFont);
+        txtCorreo.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (txtCorreo.getText().equals("Ingrese su correo")) {
+                    txtCorreo.setText("");
+                    txtCorreo.setForeground(Color.BLACK);
+                    txtCorreo.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (txtCorreo.getText().isEmpty()) {
+                    txtCorreo.setForeground(new Color(119, 119, 119));
+                    txtCorreo.setText("Ingrese su correo");
+                    txtCorreo.setFont(placeholderFont);
+                }
+            }
+        });
+
+        txtContrasenia.setForeground(new Color(119, 119, 119));
+        txtContrasenia.setText("Contraseña");
+        txtContrasenia.setFont(placeholderFont);
+        txtContrasenia.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (String.valueOf(txtContrasenia.getPassword()).equals("Contraseña")) {
+                    txtContrasenia.setText("");
+                    txtContrasenia.setForeground(Color.BLACK);
+                    txtContrasenia.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (String.valueOf(txtContrasenia.getPassword()).isEmpty()) {
+                    txtContrasenia.setForeground(new Color(119, 119, 119));
+                    txtContrasenia.setText("Contraseña");
+                    txtContrasenia.setFont(placeholderFont);
+                }
+            }
+        });
     }
     
     public static void DetectarRol(Persona persona) {
