@@ -20,14 +20,7 @@ import javax.swing.Timer;
 public class VistaPrincipalSistema extends javax.swing.JFrame {
     presentacionDao presentacionControlDao = new presentacionDao();
     private ListaDinamica<Presentacion> listaPresentacion = presentacionControlDao.all();
-    private ListaDinamica<Presentacion> imagenesPersonalizadas = new ListaDinamica<>();
-          
-    private final String[] imagenes = {
-        "/Vista/RecursosGraficos/Fondos/Fondo1.jpg",
-        "/Vista/RecursosGraficos/Fondos/Fondo2.jpg",
-        "/Vista/RecursosGraficos/Fondos/Fondo3.jpg",
-        "/Vista/RecursosGraficos/Fondos/Fondo4.jpg"
-    };
+    private ListaDinamica<String> imagenes = new ListaDinamica<>();
     
     private int indiceImagenActual = 0;
     private Timer timer;
@@ -52,19 +45,18 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
 
         setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
         
-//        for (String imagenPath : imagenes) {
-//            Presentacion presentacion = new Presentacion();
-//            presentacion.setImagen(imagenPath);
-//            imagenesPersonalizadas.AgregarFinal(presentacion);
-//            
-//        }
-//
-//        listaPresentacion.concatenar(imagenesPersonalizadas);
-//        
-//        System.out.println(imagenesPersonalizadas);
-                        
+        for (int i = 0; i < listaPresentacion.getLongitud(); i++) {
+            try {
+                String imagen = listaPresentacion.getInfo(i).getImagen();
+                System.out.println(imagen);
+                imagenes.Agregar(imagen);
+            } 
+            catch (ListaVacia ex) {
+                
+            }
+        }
+                
         timer = new Timer(3000, new ActionListener() {
-            
             @Override
             public void actionPerformed(ActionEvent e) {
                 cambiarImagen();
@@ -79,127 +71,71 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
         timer.start();
     }
     
-    private void concatenarImagenesListaPresentacion() {
-        ListaDinamica<Presentacion> imagenesPresentacion = new ListaDinamica<>();
-        for (int i = 0; i < listaPresentacion.getLongitud(); i++) {
-            try {
-                Presentacion presentacion = listaPresentacion.getInfo(i);
-                imagenesPresentacion.AgregarFinal(presentacion);
-            } 
-            catch (ListaVacia e) {
-                e.printStackTrace();
-            }
-        }
-
-        imagenesPersonalizadas.concatenar(imagenesPresentacion);
-    }
-    
     private void CargarDatos() throws ListaVacia {
+        String auxContenido = "";
         String auxTitulo = "";
-        String aux = "";
         String auxEstado = "";
+        
         try {
             auxEstado = listaPresentacion.getInfo(indiceImagenActual).getEstadoPresentacion();
             if ("Activa".equalsIgnoreCase(auxEstado)) {
                 auxTitulo = listaPresentacion.getInfo(indiceImagenActual).getTitulo();
-                aux = listaPresentacion.getInfo(indiceImagenActual).getContenido();
+                auxContenido = listaPresentacion.getInfo(indiceImagenActual).getContenido();
                 txtTitulo.setText(auxTitulo);
-                txaContenido.setText(aux);
-                System.out.println();
+                txaContenido.setText(auxContenido);
             }
         } 
         catch (IndexOutOfBoundsException ex) {
             indiceImagenActual = 0;
             auxTitulo = listaPresentacion.getInfo(indiceImagenActual).getTitulo();
-            aux = listaPresentacion.getInfo(indiceImagenActual).getContenido();
+            auxContenido = listaPresentacion.getInfo(indiceImagenActual).getContenido();
             txtTitulo.setText(auxTitulo);
-            txaContenido.setText(aux);
-            System.out.println();
+            txaContenido.setText(auxContenido);
         }
     }
-    
-    //nuevo falta probvar
-//    private void cambiarImagen() {
-//    if (listaPresentacion.getLongitud() > 0) {
-//        try {
-//            Presentacion presentacion = listaPresentacion.getInfo(indiceImagenActual);
-//            String rutaImagen = presentacion.getImagen();
-//
-//            if (rutaImagen != null) {
-//                System.out.println("Intentando cargar la imagen desde la ruta: " + rutaImagen);
-//
-//                URL imageUrl = getClass().getResource(rutaImagen);
-//                if (imageUrl != null) {
-//                    ImageIcon icon = new ImageIcon(imageUrl);
-//                    if (icon.getImageLoadStatus() == MediaTracker.COMPLETE) {
-//                        panelPrincipal.getGraphics().drawImage(icon.getImage(), 0, 0, panelPrincipal.getWidth(), panelPrincipal.getHeight(), panelPrincipal);
-//                        CargarDatos();
-//                    } else {
-//                        System.err.println("Error al cargar la imagen: la carga no se ha completado.");
-//                    }
-//                } else {
-//                    System.err.println("Error al cargar la imagen: la URL es nula.");
-//                }
-//            } else {
-//                System.err.println("La ruta de la imagen es nula.");
-//            }
-//        } catch (Exception ex) {
-//            ex.printStackTrace();  // Imprimir la traza completa de la excepción
+
+    private String CargarImagen() throws ListaVacia {
+        try {
+            String rutaImagen = imagenes.getInfo(indiceImagenActual);
+            if (rutaImagen.startsWith("src/")) {
+                rutaImagen = rutaImagen.substring(3);
+            }
+            return rutaImagen;
+        } 
+        catch (NullPointerException e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+    //si sirve
+//    private String CargarImagen() throws ListaVacia {
+//        String rutaImagen = imagenes.getInfo(indiceImagenActual);
+//        if (rutaImagen.startsWith("src/")) {
+//            rutaImagen = rutaImagen.substring(3);
 //        }
+//        return rutaImagen;
 //    }
-//}
-    
-//    private void cambiarImagen() {
-//        if (listaPresentacion.getLongitud() > 0) {
-//            try {
-//                Presentacion presentacion = listaPresentacion.getInfo(indiceImagenActual);
-//                ImageIcon icon = new ImageIcon(getClass().getResource(presentacion.getImagen()));
-//                panelPrincipal.getGraphics().drawImage(icon.getImage(), 0, 0, panelPrincipal.getWidth(), panelPrincipal.getHeight(), panelPrincipal);
-//                CargarDatos();
-//            }
-//            catch (ListaVacia ex) {
-//                ex.printStackTrace();
-//            } 
-//            catch (IndexOutOfBoundsException ex) {
-//                indiceImagenActual = 0;
-//                cambiarImagen();  // Llamada recursiva para manejar el índice fuera de límites
-//            }
-//        }
+//original
+//    private String CargarImagen() throws ListaVacia {
+//        return imagenes.getInfo(indiceImagenActual);
 //    }
 
     private void cambiarImagen() {
-        indiceImagenActual = (indiceImagenActual + 1) % imagenes.length;
+        indiceImagenActual = (indiceImagenActual + 1) % imagenes.getLongitud();
         panelPrincipal.repaint();
+        try {
+            CargarDatos();
+        } 
+        catch (ListaVacia ex) {
+            
+        }
     }
 
-    /*private void CargarDatos() throws ListaVacia {
-        String auxTitulo = "";
-        String aux = "";
-        String auxEstado = "";
-        try {
-            auxEstado = listaPresentacion.getInfo(indiceImagenActual).getEstadoPresentacion();
-            if ("Activa".equalsIgnoreCase(auxEstado)) {
-                auxTitulo = listaPresentacion.getInfo(indiceImagenActual).getTitulo();
-                aux = listaPresentacion.getInfo(indiceImagenActual).getContenido();
-                txtTitulo.setText(auxTitulo);
-                txaContenido.setText(aux);
-                System.out.println();
-            }
-        } 
-        catch (IndexOutOfBoundsException ex) {
-            indiceImagenActual = 0;
-            auxTitulo = listaPresentacion.getInfo(indiceImagenActual).getTitulo();
-            aux = listaPresentacion.getInfo(indiceImagenActual).getContenido();
-            txtTitulo.setText(auxTitulo);
-            txaContenido.setText(aux);
-            System.out.println();
-        }
-    }*/
-//
 //    private void cambiarImagen() {
-//        indiceImagenActual = (indiceImagenActual + 1) % imagenes.length;
+//        indiceImagenActual = (indiceImagenActual + 1) % imagenes.getLongitud();
 //        panelPrincipal.repaint();
 //    }
+    
 
     /* utiles para presentar por netbeans
     panelPrincipal = new javax.swing.JPanel() {
@@ -211,35 +147,8 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
             }
         };
     
-    MenuPrincipal.setLayout(new FlowLayout(FlowLayout.CENTER));
+    MenuPrincipal.setLayout(new FlowLayout(FlowLayout.CENTER));*/
 
-        MenuSga.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/MenuBar/Alumno.png"))); // NOI18N
-        MenuSga.setText("SGA");
-        MenuSga.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        MenuSga.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        MenuSga.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        MenuSga.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                MenuSgaMouseClicked(evt);
-            }
-        });
-        MenuPrincipal.add(MenuSga);
-    */
-
-    //Presentar actual
-    /*panelPrincipal = new javax.swing.JPanel() {
-        @Override
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            try {
-                String rutaImagen = listaPresentacion.getInfo(indiceImagenActual).getRutaImagen();
-                ImageIcon icon = new ImageIcon(getClass().getResource(rutaImagen));
-                g.drawImage(icon.getImage(), 0, 0, getWidth(), getHeight(), this);
-            } catch (IndexOutOfBoundsException ex) {
-                // Manejar la excepción si es necesario
-            }
-        }
-    };*/
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -250,34 +159,18 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        /*panelPrincipal = new javax.swing.JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                try {
-                    Presentacion presentacion = listaPresentacion.getInfo(indiceImagenActual);
-                    String rutaImagen = presentacion.getImagen();
-                    
-                    if (rutaImagen != null) {
-                        ImageIcon icon = new ImageIcon(getClass().getResource(rutaImagen));
-                        g.drawImage(icon.getImage(), 0, 0, getWidth(), getHeight(), this);
-                    } else {
-                        System.err.println("La ruta de la imagen es nula.");
-                    }
-                } catch (IndexOutOfBoundsException ex) {
-                    // Manejar la excepción si es necesario
-                } catch (ListaVacia e) {
-                    e.printStackTrace();
-                }
-            }
-        };*/
-
         panelPrincipal = new javax.swing.JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                ImageIcon icon = new ImageIcon(getClass().getResource(imagenes[indiceImagenActual]));
-                g.drawImage(icon.getImage(), 0, 0, getWidth(), getHeight(), this);
+                ImageIcon icon;
+                try {
+                    icon = new ImageIcon(getClass().getResource(CargarImagen()));
+                    g.drawImage(icon.getImage(), 0, 0, getWidth(), getHeight(), this);
+                } 
+                catch (ListaVacia e) {
+                    e.printStackTrace();
+                }
             }
         };
 
@@ -387,7 +280,7 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(76, 76, 76)
                 .addComponent(bordesRedondos1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(216, Short.MAX_VALUE))
+                .addContainerGap(263, Short.MAX_VALUE))
         );
 
         MenuPrincipal.setLayout(new FlowLayout(FlowLayout.CENTER));

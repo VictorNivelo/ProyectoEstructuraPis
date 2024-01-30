@@ -120,7 +120,7 @@ public class VistaGestionInterfazPrincipal extends javax.swing.JFrame {
             
             String nombreUnico = UUID.randomUUID().toString();
             rutaImagenGuardada = "src/Vista/RecursosGraficos/Fondos/" + nombreUnico + ".jpg";
-            
+                        
             System.out.println("Ruta de destino: " + rutaImagenGuardada);
 
             try {

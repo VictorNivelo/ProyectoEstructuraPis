@@ -27,6 +27,7 @@ public class VistaGestionHorario extends javax.swing.JFrame {
     public VistaGestionHorario() throws ListaVacia {
         initComponents();
         this.setLocationRelativeTo(null);
+//        System.out.println("\"Hola mundo\"");
         UtilVista.CargarComboMateria(cbxMateria);
         setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
         CargarTabla();
