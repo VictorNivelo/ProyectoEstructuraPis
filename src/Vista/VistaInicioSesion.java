@@ -359,9 +359,14 @@ public class VistaInicioSesion extends javax.swing.JFrame {
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         
-        VistaPrincipalServicios newframe = new VistaPrincipalServicios();
-        newframe.setVisible(true);
-        this.dispose();
+        try {
+            VistaPrincipalSistema newframe = new VistaPrincipalSistema();
+            newframe.setVisible(true);
+            this.dispose();
+        }
+        catch (Exception e) {
+            
+        }
         
     }//GEN-LAST:event_btnRegresarActionPerformed
 

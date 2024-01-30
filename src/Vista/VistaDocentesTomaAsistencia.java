@@ -41,7 +41,7 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
         CargarTabla();
         tblt.setModel(dtm);
         AgregarCheckbox(3, tblt);
-        
+        cbxHorario.setSelectedIndex(-1);
     }
         
     private void CargarTabla() {
@@ -452,7 +452,7 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         
-        VistaPrincipalServicios abrirLogin = new VistaPrincipalServicios();
+        VistaInicioSesion abrirLogin = new VistaInicioSesion();
         abrirLogin.setVisible(true);
         this.setVisible(false);
         

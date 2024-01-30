@@ -259,7 +259,43 @@ public class ListaDinamica<E> {
             AgregarFinal(elemento);
         }
         return this;
-    }  
+    }
+    
+    public void concatenar(ListaDinamica<E> otraLista) {
+        if (otraLista.EstaVacio()) {
+            return;
+        }
+
+        if (EstaVacio()) {
+            this.cabezera = otraLista.getCabezera();
+            this.ultimo = otraLista.getUltimo();
+            this.Longitud = otraLista.getLongitud();
+        } 
+        else {
+            this.ultimo.setSiguiente(otraLista.getCabezera());
+            this.ultimo = otraLista.getUltimo();
+            this.Longitud += otraLista.getLongitud();
+        }
+    }
+ 
+    public void concatenarList(ListaDinamica<E> otraLista) {
+        if (otraLista == null || otraLista.EstaVacio()) {
+            return;
+        }
+
+        if (this.EstaVacio()) {
+            this.cabezera = otraLista.getCabezera();
+            this.ultimo = otraLista.getUltimo();
+            this.Longitud = otraLista.getLongitud();
+        } 
+        else {
+            this.ultimo.setSiguiente(otraLista.getCabezera());
+            this.ultimo = otraLista.getUltimo();
+            this.Longitud += otraLista.getLongitud();
+        }
+
+        otraLista.Limpiar();
+    }
 
     public Nodo<E> getCabezera() {
         return cabezera;
