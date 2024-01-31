@@ -332,6 +332,8 @@ public class VistaGestionInterfazPrincipal extends javax.swing.JFrame {
 
             }
         ));
+        tblPresentacion.setSelectionBackground(new java.awt.Color(200, 222, 180));
+        tblPresentacion.setSelectionForeground(new java.awt.Color(0, 0, 0));
         tblPresentacion.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblPresentacionMouseClicked(evt);

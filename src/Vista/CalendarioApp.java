@@ -1,3 +1,4 @@
+
 import javax.swing.*;
 import java.awt.*;
 import java.text.SimpleDateFormat;
@@ -52,7 +53,8 @@ public class CalendarioApp extends JFrame {
             if (currentMonth == 0) {
                 currentMonth = 11;
                 currentYear--;
-            } else {
+            } 
+            else {
                 currentMonth--;
             }
             updateCalendar();
@@ -62,7 +64,8 @@ public class CalendarioApp extends JFrame {
             if (currentMonth == 11) {
                 currentMonth = 0;
                 currentYear++;
-            } else {
+            } 
+            else {
                 currentMonth++;
             }
             updateCalendar();
@@ -134,8 +137,8 @@ public class CalendarioApp extends JFrame {
             }
 
             dayButton.addActionListener(e -> {
-                String reminder = JOptionPane.showInputDialog("Agregar recordatorio para el día " + finalI + " de " +
-                        new SimpleDateFormat("MMMM yyyy").format(new GregorianCalendar(currentYear, currentMonth, finalI).getTime()));
+                String reminder = JOptionPane.showInputDialog("Agregar recordatorio para el día " + finalI + " de "
+                        + new SimpleDateFormat("MMMM yyyy").format(new GregorianCalendar(currentYear, currentMonth, finalI).getTime()));
 
                 if (reminder != null && !reminder.isEmpty()) {
                     reminders.add(reminder);
