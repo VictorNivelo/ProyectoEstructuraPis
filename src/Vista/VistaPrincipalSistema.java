@@ -59,8 +59,8 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
         timer = new Timer(3000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                cambiarImagen();
                 try {
+                    cambiarImagen();
                     CargarDatos();
                 } 
                 catch (ListaVacia ex) {
@@ -107,27 +107,21 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
             return "";
         }
     }
-    //si sirve
-//    private String CargarImagen() throws ListaVacia {
-//        String rutaImagen = imagenes.getInfo(indiceImagenActual);
-//        if (rutaImagen.startsWith("src/")) {
-//            rutaImagen = rutaImagen.substring(3);
-//        }
-//        return rutaImagen;
-//    }
-//original
-//    private String CargarImagen() throws ListaVacia {
-//        return imagenes.getInfo(indiceImagenActual);
-//    }
 
-    private void cambiarImagen() {
-        indiceImagenActual = (indiceImagenActual + 1) % imagenes.getLongitud();
+    private void cambiarImagen() throws ListaVacia {
+        int intentos = 0;
+        do {
+            indiceImagenActual = (indiceImagenActual + 1) % imagenes.getLongitud();
+            intentos++;
+        } 
+        while (!"Activa".equalsIgnoreCase(listaPresentacion.getInfo(indiceImagenActual).getEstadoPresentacion()) && intentos < imagenes.getLongitud());
+
         panelPrincipal.repaint();
         try {
             CargarDatos();
-        } 
+        }
         catch (ListaVacia ex) {
-            
+            ex.printStackTrace(); 
         }
     }
 
@@ -190,9 +184,9 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
 
         bordesRedondos1.setBackground(new java.awt.Color(0, 0, 0, 90));
         bordesRedondos1.setRoundBottomLeft(30);
-        bordesRedondos1.setRoundBottomRight(30);
+        bordesRedondos1.setRoundBottomRight(90);
         bordesRedondos1.setRoundTopLeft(30);
-        bordesRedondos1.setRoundTopRight(30);
+        bordesRedondos1.setRoundTopRight(90);
 
         txtTitulo.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
         txtTitulo.setForeground(new java.awt.Color(255, 255, 255));
