@@ -142,7 +142,7 @@ public class VistaInicioSesion extends javax.swing.JFrame {
     private static void procesarDocente() {
 
         try {
-            VistaDocentesTomaAsistencia abrirAsistencia = new VistaDocentesTomaAsistencia();
+            VistaDocentes abrirAsistencia = new VistaDocentes();
             abrirAsistencia.setVisible(true);
         } 
         catch (Exception e) {
