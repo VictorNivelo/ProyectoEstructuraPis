@@ -157,6 +157,16 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
+                try {
+                    ImageIcon icon = new ImageIcon(getClass().getResource(CargarImagen()));
+                    g.drawImage(icon.getImage(), 0, 0, getWidth(), getHeight(), this);
+                } 
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            /*protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
                 ImageIcon icon;
                 try {
                     icon = new ImageIcon(getClass().getResource(CargarImagen()));
@@ -165,9 +175,8 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
                 catch (ListaVacia e) {
                     e.printStackTrace();
                 }
-            }
+            }*/
         };
-
         bordesRedondos1 = new Vista.Utiles.BordesRedondos();
         txtTitulo = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
@@ -184,9 +193,9 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
 
         bordesRedondos1.setBackground(new java.awt.Color(0, 0, 0, 90));
         bordesRedondos1.setRoundBottomLeft(30);
-        bordesRedondos1.setRoundBottomRight(90);
+        bordesRedondos1.setRoundBottomRight(30);
         bordesRedondos1.setRoundTopLeft(30);
-        bordesRedondos1.setRoundTopRight(90);
+        bordesRedondos1.setRoundTopRight(30);
 
         txtTitulo.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
         txtTitulo.setForeground(new java.awt.Color(255, 255, 255));
@@ -249,8 +258,8 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(56, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -263,8 +272,8 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
             .addGroup(panelPrincipalLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(bordesRedondos1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                    .addComponent(jLabel1)
+                    .addComponent(bordesRedondos1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(642, Short.MAX_VALUE))
         );
         panelPrincipalLayout.setVerticalGroup(
@@ -272,9 +281,9 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
             .addGroup(panelPrincipalLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(76, 76, 76)
+                .addGap(109, 109, 109)
                 .addComponent(bordesRedondos1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(263, Short.MAX_VALUE))
+                .addContainerGap(219, Short.MAX_VALUE))
         );
 
         MenuPrincipal.setLayout(new FlowLayout(FlowLayout.CENTER));
