@@ -126,7 +126,6 @@ public class VistaGestionInterfazPrincipal extends javax.swing.JFrame {
             try {
                 if (ImagenPresentacion != null) {
                     File destino = new File(rutaImagenGuardada);
-
                     File carpetaDestino = destino.getParentFile();
                     if (!carpetaDestino.exists()) {
                         carpetaDestino.mkdirs();
@@ -388,7 +387,7 @@ public class VistaGestionInterfazPrincipal extends javax.swing.JFrame {
         jLabel11.setText("Codigo");
 
         btnCargarImagen.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        btnCargarImagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/subir.png"))); // NOI18N
+        btnCargarImagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Subir.png"))); // NOI18N
         btnCargarImagen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCargarImagenActionPerformed(evt);

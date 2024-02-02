@@ -30,6 +30,13 @@ public class CalendarioApp extends JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
     }
+    
+    public void AgregarEvento(String fecha, String descripcion) {
+        ArrayList<String> recordatorios = MapaRecordatorios.getOrDefault(fecha, new ArrayList<>());
+        recordatorios.add(descripcion);
+        MapaRecordatorios.put(fecha, recordatorios);
+        ActualizarCalendario();
+    }
 
     private void createGUI() {
         Container Contenedor = getContentPane();
@@ -69,7 +76,8 @@ public class CalendarioApp extends JFrame {
         BotonAnterior.addActionListener(e -> {
             if (MesActual == 0) {
                 MesActual = 11;
-                AnioActual--;
+//                AnioActual--;
+                actualizarAnioComboBox(AnioActual - 1);
             } 
             else {
                 MesActual--;
@@ -80,7 +88,8 @@ public class CalendarioApp extends JFrame {
         BotonSiguiente.addActionListener(e -> {
             if (MesActual == 11) {
                 MesActual = 0;
-                AnioActual++;
+//                AnioActual++;
+                actualizarAnioComboBox(AnioActual + 1);
             } 
             else {
                 MesActual++;
@@ -114,9 +123,16 @@ public class CalendarioApp extends JFrame {
         PanelPrincipal.add(PanelCentral, BorderLayout.CENTER);
         Contenedor.add(PanelPrincipal, BorderLayout.NORTH);
 
-        PanelCalendario = new JPanel(new GridLayout(6, 7));
+        PanelCalendario = new JPanel(new GridLayout(0, 7));
         Contenedor.add(PanelCalendario, BorderLayout.CENTER);
     }
+    
+            
+    private void actualizarAnioComboBox(int nuevoAnio) {
+        ComboAnio.setSelectedItem(nuevoAnio);
+        AnioActual = nuevoAnio;
+    }
+
 
     private void ActualizarCalendario() {
         EtiquetaMes.setText(new SimpleDateFormat("          MMMM          ").format(new GregorianCalendar(AnioActual, MesActual, 1).getTime()));
