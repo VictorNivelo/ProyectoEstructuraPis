@@ -8,31 +8,35 @@ import Controlador.TDA.ListaDinamica.ListaDinamica;
  * @author Victor
  */
 public class MallaCurricular {
-    private Integer idMallaCurricular;
+    private Integer IdMallaCurricular;
     private String NombreMallaCurricular;
-    private Integer duracionMallaCurricular;
-    private Ciclo MallaCiclo;
-    private ListaDinamica<Ciclo> ListaCiclos;
+    private Integer DuracionMallaCurricular;
+    private String EstadoMallaCurricular;
     
-    private Carrera carreraMalla;
+    private Carrera carreraMallaCurricula;
+    
+    //Datos poco usados
+    private Ciclo cicloMalla;
+    private ListaDinamica<Ciclo> listaCicloMalla;
     
     public MallaCurricular() {
         
     }
 
-    public MallaCurricular(Integer idMallaCurricular, String NombreMallaCurricular, Integer duracionMallaCurricular, Carrera carreraMalla) {
-        this.idMallaCurricular = idMallaCurricular;
-        this.NombreMallaCurricular = NombreMallaCurricular;
-        this.duracionMallaCurricular = duracionMallaCurricular;
-        this.carreraMalla = carreraMalla;
-    }
+//    public MallaCurricular(Integer IdMallaCurricular, String NombreMallaCurricular, Integer DuracionMallaCurricular, String EstadoMallaCurricular, Carrera carreraMallaCurricula) {
+//        this.IdMallaCurricular = IdMallaCurricular;
+//        this.NombreMallaCurricular = NombreMallaCurricular;
+//        this.DuracionMallaCurricular = DuracionMallaCurricular;
+//        this.EstadoMallaCurricular = EstadoMallaCurricular;
+//        this.carreraMallaCurricula = carreraMallaCurricula;
+//    }
 
     public Integer getIdMallaCurricular() {
-        return idMallaCurricular;
+        return IdMallaCurricular;
     }
 
-    public void setIdMallaCurricular(Integer idMallaCurricular) {
-        this.idMallaCurricular = idMallaCurricular;
+    public void setIdMallaCurricular(Integer IdMallaCurricular) {
+        this.IdMallaCurricular = IdMallaCurricular;
     }
 
     public String getNombreMallaCurricular() {
@@ -44,35 +48,43 @@ public class MallaCurricular {
     }
 
     public Integer getDuracionMallaCurricular() {
-        return duracionMallaCurricular;
+        return DuracionMallaCurricular;
     }
 
-    public void setDuracionMallaCurricular(Integer duracionMallaCurricular) {
-        this.duracionMallaCurricular = duracionMallaCurricular;
+    public void setDuracionMallaCurricular(Integer DuracionMallaCurricular) {
+        this.DuracionMallaCurricular = DuracionMallaCurricular;
     }
 
-    public Carrera getCarreraMalla() {
-        return carreraMalla;
+    public String getEstadoMallaCurricular() {
+        return EstadoMallaCurricular;
     }
 
-    public void setCarreraMalla(Carrera carreraMalla) {
-        this.carreraMalla = carreraMalla;
+    public void setEstadoMallaCurricular(String EstadoMallaCurricular) {
+        this.EstadoMallaCurricular = EstadoMallaCurricular;
     }
 
-    public Ciclo getMallaCiclo() {
-        return MallaCiclo;
+    public Ciclo getCicloMalla() {
+        return cicloMalla;
     }
 
-    public void setMallaCiclo(Ciclo MallaCiclo) {
-        this.MallaCiclo = MallaCiclo;
+    public void setCicloMalla(Ciclo cicloMalla) {
+        this.cicloMalla = cicloMalla;
     }
 
-    public ListaDinamica<Ciclo> getListaCiclos() {
-        return ListaCiclos;
+    public ListaDinamica<Ciclo> getListaCicloMalla() {
+        return listaCicloMalla;
     }
 
-    public void setListaCiclos(ListaDinamica<Ciclo> ListaCiclos) {
-        this.ListaCiclos = ListaCiclos;
+    public void setListaCicloMalla(ListaDinamica<Ciclo> listaCicloMalla) {
+        this.listaCicloMalla = listaCicloMalla;
+    }
+
+    public Carrera getCarreraMallaCurricula() {
+        return carreraMallaCurricula;
+    }
+
+    public void setCarreraMallaCurricula(Carrera carreraMallaCurricula) {
+        this.carreraMallaCurricula = carreraMallaCurricula;
     }
     
     @Override

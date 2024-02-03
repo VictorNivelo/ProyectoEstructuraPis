@@ -41,4 +41,5 @@ public class facultadDao extends DaoImplement<Facultad>{
         facultades.setIdFacultad(all().getLongitud()+1);
         return Persist(facultades);
     }
+    
 }

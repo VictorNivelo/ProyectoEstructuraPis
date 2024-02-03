@@ -73,5 +73,4 @@ public class ControladorAsistencia {
         this.asistencia = asistencia;
     }
     
-    
 }

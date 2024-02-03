@@ -1,33 +1,42 @@
 
 package Modelo;
 
+import Controlador.TDA.ListaDinamica.ListaDinamica;
+
 /**
  *
  * @author Victor
  */
 public class Carrera {
-    private Integer idCarrera;
+    private Integer IdCarrera;
     private String NombreCarrera;
     private Integer NumeroCiclos;
-    private Integer duracion;
+    private Integer Duracion;
+    
+    private Facultad facutadCarrera;
+    
+    //datos poco usados
     private MallaCurricular CarreraMalla;
+    private ListaDinamica<MallaCurricular> listaMallaCarrera;
 
     public Carrera() {
         
     }
 
-    public Carrera(Integer idCarrera, String NombreCarrera, Integer duracion) {
-        this.idCarrera = idCarrera;
-        this.NombreCarrera = NombreCarrera;
-        this.duracion = duracion;
-    }
+//    public Carrera(Integer IdCarrera, String NombreCarrera, Integer NumeroCiclos, Integer Duracion, Facultad facutadCarrera) {
+//        this.IdCarrera = IdCarrera;
+//        this.NombreCarrera = NombreCarrera;
+//        this.NumeroCiclos = NumeroCiclos;
+//        this.Duracion = Duracion;
+//        this.facutadCarrera = facutadCarrera;
+//    }
 
     public Integer getIdCarrera() {
-        return idCarrera;
+        return IdCarrera;
     }
 
-    public void setIdCarrera(Integer idCarrera) {
-        this.idCarrera = idCarrera;
+    public void setIdCarrera(Integer IdCarrera) {
+        this.IdCarrera = IdCarrera;
     }
 
     public String getNombreCarrera() {
@@ -38,14 +47,6 @@ public class Carrera {
         this.NombreCarrera = NombreCarrera;
     }
 
-    public Integer getDuracion() {
-        return duracion;
-    }
-
-    public void setDuracion(Integer duracion) {
-        this.duracion = duracion;
-    }
-
     public Integer getNumeroCiclos() {
         return NumeroCiclos;
     }
@@ -54,12 +55,36 @@ public class Carrera {
         this.NumeroCiclos = NumeroCiclos;
     }
 
+    public Integer getDuracion() {
+        return Duracion;
+    }
+
+    public void setDuracion(Integer Duracion) {
+        this.Duracion = Duracion;
+    }
+
     public MallaCurricular getCarreraMalla() {
         return CarreraMalla;
     }
 
     public void setCarreraMalla(MallaCurricular CarreraMalla) {
         this.CarreraMalla = CarreraMalla;
+    }
+
+    public ListaDinamica<MallaCurricular> getListaMallaCarrera() {
+        return listaMallaCarrera;
+    }
+
+    public void setListaMallaCarrera(ListaDinamica<MallaCurricular> listaMallaCarrera) {
+        this.listaMallaCarrera = listaMallaCarrera;
+    }
+
+    public Facultad getFacutadCarrera() {
+        return facutadCarrera;
+    }
+
+    public void setFacutadCarrera(Facultad facutadCarrera) {
+        this.facutadCarrera = facutadCarrera;
     }
 
     @Override

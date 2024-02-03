@@ -8,32 +8,39 @@ import Controlador.TDA.ListaDinamica.ListaDinamica;
  * @author Victor
  */
 public class Materia {
-    private Integer idMateria;
+    private Integer IdMateria;
     private String NombreMateria;
     private String DescipcionMateria;
-    private Horario HorarioMateria;
-    private ListaDinamica<Horario> ListaHorarios;
+    private String NumeroHoras;
     
     private Ciclo cicloMateria;
-
+    private Cursa cursoMateria;
+    
+    //datos poco uasdos
+    private ListaDinamica<Ciclo> listaCicloMateria;
+    
+    private Horario horarioMateria;
+    private ListaDinamica<Horario> listaHorarioMateria;
+    
     public Materia() {
         
     }
 
-    public Materia(Integer idMateria, String NombreMateria, String DescipcionMateria, Ciclo cicloMateria, Horario HorarioMateria) {
-        this.idMateria = idMateria;
-        this.NombreMateria = NombreMateria;
-        this.DescipcionMateria = DescipcionMateria;
-        this.cicloMateria = cicloMateria;
-        this.HorarioMateria = HorarioMateria;
-    }
+//    public Materia(Integer IdMateria, String NombreMateria, String DescipcionMateria, String NumeroHoras, Horario horarioMateria, Ciclo cicloMateria) {
+//        this.IdMateria = IdMateria;
+//        this.NombreMateria = NombreMateria;
+//        this.DescipcionMateria = DescipcionMateria;
+//        this.NumeroHoras = NumeroHoras;
+//        this.horarioMateria = horarioMateria;
+//        this.cicloMateria = cicloMateria;
+//    }
 
     public Integer getIdMateria() {
-        return idMateria;
+        return IdMateria;
     }
 
-    public void setIdMateria(Integer idMateria) {
-        this.idMateria = idMateria;
+    public void setIdMateria(Integer IdMateria) {
+        this.IdMateria = IdMateria;
     }
 
     public String getNombreMateria() {
@@ -52,6 +59,30 @@ public class Materia {
         this.DescipcionMateria = DescipcionMateria;
     }
 
+    public String getNumeroHoras() {
+        return NumeroHoras;
+    }
+
+    public void setNumeroHoras(String NumeroHoras) {
+        this.NumeroHoras = NumeroHoras;
+    }
+
+    public Horario getHorarioMateria() {
+        return horarioMateria;
+    }
+
+    public void setHorarioMateria(Horario horarioMateria) {
+        this.horarioMateria = horarioMateria;
+    }
+
+    public ListaDinamica<Horario> getListaHorarioMateria() {
+        return listaHorarioMateria;
+    }
+
+    public void setListaHorarioMateria(ListaDinamica<Horario> listaHorarioMateria) {
+        this.listaHorarioMateria = listaHorarioMateria;
+    }
+
     public Ciclo getCicloMateria() {
         return cicloMateria;
     }
@@ -60,42 +91,22 @@ public class Materia {
         this.cicloMateria = cicloMateria;
     }
 
-    public Horario getHorarioMateria() {
-        return HorarioMateria;
+    public ListaDinamica<Ciclo> getListaCicloMateria() {
+        return listaCicloMateria;
     }
 
-    public void setHorarioMateria(Horario HorarioMateria) {
-        this.HorarioMateria = HorarioMateria;
+    public void setListaCicloMateria(ListaDinamica<Ciclo> listaCicloMateria) {
+        this.listaCicloMateria = listaCicloMateria;
     }
 
-    public ListaDinamica<Horario> getListaHorarios() {
-        return ListaHorarios;
+    public Cursa getCursoMateria() {
+        return cursoMateria;
     }
 
-    public void setListaHorarios(ListaDinamica<Horario> ListaHorarios) {
-        this.ListaHorarios = ListaHorarios;
+    public void setCursoMateria(Cursa cursoMateria) {
+        this.cursoMateria = cursoMateria;
     }
-//        
-//    public Boolean comparar(Materia m, String campo, Integer tipo) {
-//        switch (tipo) {
-//            case 0:
-//                return compararCampo(m, campo) < 0;
-//            case 1:
-//                return compararCampo(m, campo) > 0;
-//            default:
-//                throw new IllegalArgumentException("Tipo de comparación no válido");
-//        }
-//    }
-//
-//    private int compararCampo(Materia m, String campo) {
-//        switch (campo.toLowerCase()) {
-//            case "nombre":
-//                return NombreMateria.compareTo(m.getNombreMateria());
-//            default:
-//                throw new IllegalArgumentException("Campo no válido para la comparación");
-//        }
-//    }
-    
+
     @Override
     public String toString() {
         return NombreMateria+"\n";

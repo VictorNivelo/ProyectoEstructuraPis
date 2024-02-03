@@ -6,6 +6,10 @@ import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Modelo.Cuenta;
 import Modelo.Persona;
 import Modelo.Rol;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -23,6 +27,58 @@ public class VistaInicioSesion extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
+        btnRegresar.requestFocus();
+        configurarPlaceholders();
+    }
+    
+    private void configurarPlaceholders() {
+        Font placeholderFont = new Font("Segoe UI", Font.ITALIC, 14);
+
+        txtCorreo.setForeground(new Color(119, 119, 119));
+        txtCorreo.setText("Ingrese su correo");
+        txtCorreo.setFont(placeholderFont);
+        txtCorreo.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (txtCorreo.getText().equals("Ingrese su correo")) {
+                    txtCorreo.setText("");
+                    txtCorreo.setForeground(Color.BLACK);
+                    txtCorreo.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (txtCorreo.getText().isEmpty()) {
+                    txtCorreo.setForeground(new Color(119, 119, 119));
+                    txtCorreo.setText("Ingrese su correo");
+                    txtCorreo.setFont(placeholderFont);
+                }
+            }
+        });
+
+        txtContrasenia.setForeground(new Color(119, 119, 119));
+        txtContrasenia.setText("Contraseña");
+        txtContrasenia.setFont(placeholderFont);
+        txtContrasenia.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (String.valueOf(txtContrasenia.getPassword()).equals("Contraseña")) {
+                    txtContrasenia.setText("");
+                    txtContrasenia.setForeground(Color.BLACK);
+                    txtContrasenia.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (String.valueOf(txtContrasenia.getPassword()).isEmpty()) {
+                    txtContrasenia.setForeground(new Color(119, 119, 119));
+                    txtContrasenia.setText("Contraseña");
+                    txtContrasenia.setFont(placeholderFont);
+                }
+            }
+        });
     }
     
     public static void DetectarRol(Persona persona) {
@@ -86,7 +142,7 @@ public class VistaInicioSesion extends javax.swing.JFrame {
     private static void procesarDocente() {
 
         try {
-            VistaDocentesTomaAsistencia abrirAsistencia = new VistaDocentesTomaAsistencia();
+            VistaDocentes abrirAsistencia = new VistaDocentes();
             abrirAsistencia.setVisible(true);
         } 
         catch (Exception e) {
@@ -189,17 +245,17 @@ public class VistaInicioSesion extends javax.swing.JFrame {
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("INICIAR SESION");
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(119, 119, 119));
         jLabel4.setText("Nombre de ususario");
 
-        txtCorreo.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        txtCorreo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(119, 119, 119));
         jLabel5.setText("Contraseña");
 
-        txtContrasenia.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        txtContrasenia.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         btnIniciarSeccion.setBackground(new java.awt.Color(33, 15, 122));
         btnIniciarSeccion.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
@@ -265,7 +321,7 @@ public class VistaInicioSesion extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(113, 113, 113)
                 .addComponent(bordesRedondos1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 112, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 114, Short.MAX_VALUE)
                 .addComponent(btnRegresar)
                 .addContainerGap())
         );
@@ -303,9 +359,14 @@ public class VistaInicioSesion extends javax.swing.JFrame {
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         
-        VistaPrincipalServicios newframe = new VistaPrincipalServicios();
-        newframe.setVisible(true);
-        this.dispose();
+        try {
+            VistaPrincipalSistema newframe = new VistaPrincipalSistema();
+            newframe.setVisible(true);
+            this.dispose();
+        }
+        catch (Exception e) {
+            
+        }
         
     }//GEN-LAST:event_btnRegresarActionPerformed
 

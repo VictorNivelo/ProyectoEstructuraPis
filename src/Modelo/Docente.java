@@ -1,73 +1,95 @@
 
 package Modelo;
 
+import Controlador.TDA.ListaDinamica.ListaDinamica;
+
 /**
  *
  * @author Victor
  */
 public class Docente {
-    private Integer idDocente;
-    private Persona datosDocente;
-    private String especialidad;
-    private String titulacion;
+    private Integer IdDocente;
+    private String Especialidad;
+    private String Titulacion;
+    private String AniosExperiencia;
     
-    private Cursa cursoAsignado;
-
+    private Persona DatosDocente;
+    
+    private Cursa cursoDocente;
+    private ListaDinamica<Cursa> listaCursoDocente;
+    
     public Docente() {
         
     }
 
-    public Docente(Integer idDocente, Persona datosDocente, String especialidad, String titulacion, Cursa cursoAsignado) {
-        this.idDocente = idDocente;
-        this.datosDocente = datosDocente;
-        this.especialidad = especialidad;
-        this.titulacion = titulacion;
-        this.cursoAsignado = cursoAsignado;
-    }
-    
+//    public Docente(Integer IdDocente, String Especialidad, String Titulacion, String AniosExperiencia, Persona DatosDocente, Cursa cursoDocente) {
+//        this.IdDocente = IdDocente;
+//        this.Especialidad = Especialidad;
+//        this.Titulacion = Titulacion;
+//        this.AniosExperiencia = AniosExperiencia;
+//        this.DatosDocente = DatosDocente;
+//        this.cursoDocente = cursoDocente;
+//    }
+
     public Integer getIdDocente() {
-        return idDocente;
+        return IdDocente;
     }
 
-    public void setIdDocente(Integer idDocente) {
-        this.idDocente = idDocente;
-    }
-
-    public Persona getDatosDocente() {
-        return datosDocente;
-    }
-
-    public void setDatosDocente(Persona datosDocente) {
-        this.datosDocente = datosDocente;
+    public void setIdDocente(Integer IdDocente) {
+        this.IdDocente = IdDocente;
     }
 
     public String getEspecialidad() {
-        return especialidad;
+        return Especialidad;
     }
 
-    public void setEspecialidad(String especialidad) {
-        this.especialidad = especialidad;
-    }
-
-    public Cursa getCursoAsignado() {
-        return cursoAsignado;
-    }
-
-    public void setCursoAsignado(Cursa cursoAsignado) {
-        this.cursoAsignado = cursoAsignado;
+    public void setEspecialidad(String Especialidad) {
+        this.Especialidad = Especialidad;
     }
 
     public String getTitulacion() {
-        return titulacion;
+        return Titulacion;
     }
 
-    public void setTitulacion(String titulacion) {
-        this.titulacion = titulacion;
+    public void setTitulacion(String Titulacion) {
+        this.Titulacion = Titulacion;
     }
 
-    @Override
-    public String toString() {
-        return "idDocente=" + idDocente + ", datosDocente=" + datosDocente + ", especialidad=" + especialidad + ", cursoAsignado=" + cursoAsignado + ", titulacion=" + titulacion + "\n";
+    public String getAniosExperiencia() {
+        return AniosExperiencia;
+    }
+
+    public void setAniosExperiencia(String AniosExperiencia) {
+        this.AniosExperiencia = AniosExperiencia;
+    }
+
+    public Persona getDatosDocente() {
+        return DatosDocente;
+    }
+
+    public void setDatosDocente(Persona DatosDocente) {
+        this.DatosDocente = DatosDocente;
+    }
+
+    public Cursa getCursoDocente() {
+        return cursoDocente;
+    }
+
+    public void setCursoDocente(Cursa cursoDocente) {
+        this.cursoDocente = cursoDocente;
+    }
+
+    public ListaDinamica<Cursa> getListaCursoDocente() {
+        return listaCursoDocente;
+    }
+
+    public void setListaCursoDocente(ListaDinamica<Cursa> listaCursoDocente) {
+        this.listaCursoDocente = listaCursoDocente;
     }
     
+    @Override
+    public String toString() {
+        return "Dni:" + DatosDocente.getNumeroCedula()+ " Nombres:"+ DatosDocente.getNombre() +" "+ DatosDocente.getApellido() + "\n";
+    }
+
 }

@@ -73,4 +73,5 @@ public class ControladorCurso {
     public void setCursosControl(Cursa cursosControl) {
         this.cursosControl = cursosControl;
     }
+    
 }

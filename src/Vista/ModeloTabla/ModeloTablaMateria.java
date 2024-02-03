@@ -1,7 +1,7 @@
 
 package Vista.ModeloTabla;
 
-import Controlador.TDA.ListaDinamica.Exepciones.ListaVacia;
+import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Modelo.Materia;
 import javax.swing.table.AbstractTableModel;
@@ -29,7 +29,7 @@ public class ModeloTablaMateria extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 4;
+        return 3;
     }
     
     @Override
@@ -45,8 +45,7 @@ public class ModeloTablaMateria extends AbstractTableModel {
                     return (c != null) ? c.getNombreMateria() : "";
                 case 2:
                     return (c != null) ? c.getDescipcionMateria() : "";
-                case 3:
-                    return (c != null) ? c.getCicloMateria().getNombreCiclo() : "";
+
                 default:
                     return null;
             }
@@ -67,10 +66,10 @@ public class ModeloTablaMateria extends AbstractTableModel {
                 return "Nombre materia";
             case 2:
                 return "Descripcion materia";
-            case 3:
-                return "Ciclo";
+
             default:
                 return null;
         }
     }
+    
 }

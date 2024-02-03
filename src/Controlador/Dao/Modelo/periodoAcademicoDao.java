@@ -42,4 +42,5 @@ public class periodoAcademicoDao extends DaoImplement<PeriodoAcademico> {
         periodo.setIdPeriodoAcademino(all().getLongitud() + 1);
         return Persist(periodo);
     }
+    
 }

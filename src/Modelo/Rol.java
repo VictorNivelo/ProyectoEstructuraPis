@@ -6,34 +6,34 @@ package Modelo;
  * @author Victor
  */
 public class Rol {
-    private Integer idRol;
-    private String nombreRol;
+    private Integer IdRol;
+    private String NombreRol;
     private String DescripcionRol;
 
     public Rol() {
         
     }
 
-    public Rol(Integer idRol, String nombreRol, String DescripcionRol) {
-        this.idRol = idRol;
-        this.nombreRol = nombreRol;
-        this.DescripcionRol = DescripcionRol;
-    }
+//    public Rol(Integer IdRol, String NombreRol, String DescripcionRol) {
+//        this.IdRol = IdRol;
+//        this.NombreRol = NombreRol;
+//        this.DescripcionRol = DescripcionRol;
+//    }
 
     public Integer getIdRol() {
-        return idRol;
+        return IdRol;
     }
 
-    public void setIdRol(Integer idRol) {
-        this.idRol = idRol;
+    public void setIdRol(Integer IdRol) {
+        this.IdRol = IdRol;
     }
 
     public String getNombreRol() {
-        return nombreRol;
+        return NombreRol;
     }
 
-    public void setNombreRol(String nombreRol) {
-        this.nombreRol = nombreRol;
+    public void setNombreRol(String NombreRol) {
+        this.NombreRol = NombreRol;
     }
 
     public String getDescripcionRol() {
@@ -43,33 +43,10 @@ public class Rol {
     public void setDescripcionRol(String DescripcionRol) {
         this.DescripcionRol = DescripcionRol;
     }
-    
-//    public Boolean comparar(Rol r, String campo, Integer tipo) {
-//        switch (tipo) {
-//            case 0:
-//                return compararCampo(r, campo) < 0;
-//            case 1:
-//                return compararCampo(r, campo) > 0;
-//            default:
-//                throw new IllegalArgumentException("Tipo de comparación no válido");
-//        }
-//    }
-//
-//    private int compararCampo(Rol r, String campo) {
-//        switch (campo.toLowerCase()) {
-//            case "nombre":
-//                return nombreRol.compareTo(r.getNombreRol());
-//            case "descripcion":
-//                return DescripcionRol.compareTo(r.getDescripcionRol());
-//
-//            default:
-//                throw new IllegalArgumentException("Campo no válido para la comparación");
-//        }
-//    }
 
     @Override
     public String toString() {
-        return nombreRol;
+        return NombreRol;
     }
     
 }

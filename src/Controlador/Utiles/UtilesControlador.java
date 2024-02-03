@@ -1,8 +1,8 @@
 
 package Controlador.Utiles;
 
-import Controlador.TDA.ListaDinamica.Exepciones.ListaVacia;
-import Controlador.TDA.ListaDinamica.Exepciones.PosicionNoEncontrada;
+import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
+import Controlador.TDA.ListaDinamica.Excepcion.PosicionNoEncontrada;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import java.lang.reflect.Field;
 import java.text.ParseException;
@@ -276,10 +276,77 @@ public class UtilesControlador {
         return textoSinEspacios.toLowerCase().startsWith(busquedaSinEspacios.toLowerCase());
     }
     
+    private static Boolean stringLength(String string, int length) {
+        if (string.length() == length)
+            return true;
+        return false;
+    }
+
+    private static byte sumDigits(byte[] digits) {
+        byte verifier;
+        byte sum = 0;
+        for (byte i = 0; i < digits.length; i = (byte) (i + 2)) {
+            verifier = (byte) (digits[i] * 2);
+            if (verifier > 9)
+                verifier = (byte) (verifier - 9);
+            sum = (byte) (sum + verifier);
+        }
+        for (byte i = 1; i < digits.length; i = (byte) (i + 2)) {
+            verifier = (byte) (digits[i] * 1);
+            sum = (byte) (sum + verifier);
+        }
+        return (byte) ((sum - (sum % 10) + 10) - sum);
+    }
+
+    public static Boolean idCardEcuador(String idCard) {
+        try {
+            if (stringLength(idCard, 10)) {
+                String[] data = idCard.split("");
+                byte verifier = Byte.parseByte(data[0] + data[1]);
+                byte[] digits = new byte[9];
+                for (byte i = 0; i < 9; i++)
+                    digits[i] = Byte.parseByte(data[i]);        
+                if (verifier >= 1 && verifier <= 24) {
+                    verifier = digits[2];
+                    if (verifier <= 6) {
+                        if (sumDigits(digits) == Byte.parseByte(data[9]))
+                            return true;
+                    }
+                }
+            }
+        } 
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    
+    public static String getDirPoject() {
+        return System.getProperty("user.dir");
+    }
+    
+    public static String getOS() {
+        return System.getProperty("os.name");
+    }
+    
+    public static void abrirNavegadorPredeterminadorWindows(String url) throws Exception{
+        Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + url);
+    }
+    
+    public static void abrirNavegadorPredeterminadorLinux(String url) throws Exception{
+        Runtime.getRuntime().exec("xdg-open " + url);
+    }
+    
+    public static void abrirNavegadorPredeterminadorMacOsx(String url) throws Exception{
+        Runtime.getRuntime().exec("open " + url);
+    }
+    
+}
+    
 //    private static boolean ClaseCampoEspecifico(Object valorCampo) {
 //        return valorCampo.getClass().getDeclaredFields().length > 0;
 //    }
-}
+//}
     
 //    private static boolean buscarTipoEspecifico(String texto, String busqueda) {
 //        String textoSinEspacios = texto.replaceAll("\\s", "").replaceAll("[^a-zA-Z0-9]", "");

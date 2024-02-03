@@ -1,44 +1,40 @@
 
 package Modelo;
 
-import java.util.Date;
-
 /**
  *
  * @author Victor
  */
 public class PeriodoAcademico {
-    private Integer idPeriodoAcademino;
-    private Date FechaInicioP;
-    private Date FechaFinP;
-    
-    private String fechaInicio;
+    private Integer IdPeriodoAcademino;
+    private String FechaInicio;
     private String FechaFin;
+    private String EstadoPeriodoAcedemico;
 
     public PeriodoAcademico() {
         
     }
 
-    public PeriodoAcademico(Integer idPeriodoAcademino, String fechaInicio, String FechaFin) {
-        this.idPeriodoAcademino = idPeriodoAcademino;
-        this.fechaInicio = fechaInicio;
-        this.FechaFin = FechaFin;
-    }
+//    public PeriodoAcademico(Integer IdPeriodoAcademino, String FechaInicio, String FechaFin) {
+//        this.IdPeriodoAcademino = IdPeriodoAcademino;
+//        this.FechaInicio = FechaInicio;
+//        this.FechaFin = FechaFin;
+//    }
 
     public Integer getIdPeriodoAcademino() {
-        return idPeriodoAcademino;
+        return IdPeriodoAcademino;
     }
 
-    public void setIdPeriodoAcademino(Integer idPeriodoAcademino) {
-        this.idPeriodoAcademino = idPeriodoAcademino;
+    public void setIdPeriodoAcademino(Integer IdPeriodoAcademino) {
+        this.IdPeriodoAcademino = IdPeriodoAcademino;
     }
 
     public String getFechaInicio() {
-        return fechaInicio;
+        return FechaInicio;
     }
 
-    public void setFechaInicio(String fechaInicio) {
-        this.fechaInicio = fechaInicio;
+    public void setFechaInicio(String FechaInicio) {
+        this.FechaInicio = FechaInicio;
     }
 
     public String getFechaFin() {
@@ -49,25 +45,17 @@ public class PeriodoAcademico {
         this.FechaFin = FechaFin;
     }
 
-    public Date getFechaInicioP() {
-        return FechaInicioP;
+    public String getEstadoPeriodoAcedemico() {
+        return EstadoPeriodoAcedemico;
     }
 
-    public void setFechaInicioP(Date FechaInicioP) {
-        this.FechaInicioP = FechaInicioP;
+    public void setEstadoPeriodoAcedemico(String EstadoPeriodoAcedemico) {
+        this.EstadoPeriodoAcedemico = EstadoPeriodoAcedemico;
     }
-
-    public Date getFechaFinP() {
-        return FechaFinP;
-    }
-
-    public void setFechaFinP(Date FechaFinP) {
-        this.FechaFinP = FechaFinP;
-    }
-
+    
     @Override
     public String toString() {
-        return  fechaInicio + " - " + FechaFin + "\n";
+        return  FechaInicio + " - " + FechaFin + "\n";
     }
     
 }

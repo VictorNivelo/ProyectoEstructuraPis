@@ -1,7 +1,7 @@
 
 package Vista.ModeloTabla;
 
-import Controlador.TDA.ListaDinamica.Exepciones.ListaVacia;
+import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Modelo.Docente;
 import javax.swing.table.AbstractTableModel;
@@ -29,7 +29,7 @@ public class ModeloTablaDocente extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 10;
+        return 9;
     }
     
     @Override
@@ -54,11 +54,10 @@ public class ModeloTablaDocente extends AbstractTableModel {
                 case 6:
                     return (d != null) ? d.getTitulacion() : "";
                 case 7:
-                    return (d != null) ? d.getCursoAsignado().getMateriaCurso().getCicloMateria().getNombreCiclo(): "";
+                    return (d != null) ? d.getCursoDocente().getMateriaCurso().getNombreMateria(): "";
                 case 8:
-                    return (d != null) ? d.getCursoAsignado().getParalelo(): "";
-                case 9:
-                    return (d != null) ? d.getCursoAsignado().getMateriaCurso().getNombreMateria(): "";
+                    return (d != null) ? d.getCursoDocente().getParalelo(): "";
+
 
                 default:
                     return null;
@@ -89,13 +88,13 @@ public class ModeloTablaDocente extends AbstractTableModel {
             case 6:
                 return "Titilacion";
             case 7:
-                return "Curso";
+                return "Materia";
             case 8:
                 return "Paralelo";
-            case 9:
-                return "Materia";
+
             default:
                 return null;
         }
     }
+    
 }

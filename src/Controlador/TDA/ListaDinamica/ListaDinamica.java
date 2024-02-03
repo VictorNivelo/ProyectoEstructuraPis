@@ -1,8 +1,8 @@
 
 package Controlador.TDA.ListaDinamica;
 
-import Controlador.TDA.ListaDinamica.Exepciones.ListaVacia;
-import Controlador.TDA.ListaDinamica.Exepciones.PosicionNoEncontrada;
+import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
+import Controlador.TDA.ListaDinamica.Excepcion.PosicionNoEncontrada;
 
 /**
  *
@@ -57,20 +57,6 @@ public class ListaDinamica<E> {
     public void Agregar(E info){
         AgregarFinal(info);
     }
-    
-//    private E getPrimero() throws ListaVacia {
-//        if (EstaVacio()) {
-//            throw new ListaVacia("La lista esta vacia");
-//        }
-//        return cabezera.getInfo();
-//    }
-//    
-//    private E getFinal() throws ListaVacia{
-//        if(EstaVacio()){
-//            throw new ListaVacia("La lista esta vacia");
-//        }
-//        return ultimo.getInfo();
-//    }
     
     public E getInfo(Integer indice)throws ListaVacia, IndexOutOfBoundsException{
         return getNodo(indice).getInfo();
@@ -147,18 +133,6 @@ public class ListaDinamica<E> {
         }
 
         return lista;
-    }
-    
-    public Object[] CovertirEnArreglo() {
-        Object[] Arreglos = new Object[Longitud];
-        Nodo<E> actual = cabezera;
-
-        for (int i = 0; i < Longitud; i++) {
-            Arreglos[i] = actual.getInfo();
-            actual = actual.getSiguiente();
-        }
-
-        return Arreglos;
     }
     
     public E extractFirst() throws ListaVacia{
@@ -285,7 +259,43 @@ public class ListaDinamica<E> {
             AgregarFinal(elemento);
         }
         return this;
-    }  
+    }
+    
+    public void concatenar(ListaDinamica<E> otraLista) {
+        if (otraLista.EstaVacio()) {
+            return;
+        }
+
+        if (EstaVacio()) {
+            this.cabezera = otraLista.getCabezera();
+            this.ultimo = otraLista.getUltimo();
+            this.Longitud = otraLista.getLongitud();
+        } 
+        else {
+            this.ultimo.setSiguiente(otraLista.getCabezera());
+            this.ultimo = otraLista.getUltimo();
+            this.Longitud += otraLista.getLongitud();
+        }
+    }
+ 
+    public void concatenarList(ListaDinamica<E> otraLista) {
+        if (otraLista == null || otraLista.EstaVacio()) {
+            return;
+        }
+
+        if (this.EstaVacio()) {
+            this.cabezera = otraLista.getCabezera();
+            this.ultimo = otraLista.getUltimo();
+            this.Longitud = otraLista.getLongitud();
+        } 
+        else {
+            this.ultimo.setSiguiente(otraLista.getCabezera());
+            this.ultimo = otraLista.getUltimo();
+            this.Longitud += otraLista.getLongitud();
+        }
+
+        otraLista.Limpiar();
+    }
 
     public Nodo<E> getCabezera() {
         return cabezera;
@@ -328,6 +338,37 @@ public class ListaDinamica<E> {
         return StringB.toString();
     }
 }
+//    
+//    public Object[] CovertirEnArreglo() {
+//        Object[] Arreglos = new Object[Longitud];
+//        Nodo<E> actual = cabezera;
+//
+//        for (int i = 0; i < Longitud; i++) {
+//            Arreglos[i] = actual.getInfo();
+//            actual = actual.getSiguiente();
+//        }
+//
+//        return Arreglos;
+//    }
+//    
+//}
+//
+
+    
+    //    private E getPrimero() throws ListaVacia {
+//        if (EstaVacio()) {
+//            throw new ListaVacia("La lista esta vacia");
+//        }
+//        return cabezera.getInfo();
+//    }
+//    
+//    private E getFinal() throws ListaVacia{
+//        if(EstaVacio()){
+//            throw new ListaVacia("La lista esta vacia");
+//        }
+//        return ultimo.getInfo();
+//    }
+//}
     //    public E ObtenerPrimero(Integer pos) throws EstaVacia{
 //        
 //        if (!EstaVacio()) {

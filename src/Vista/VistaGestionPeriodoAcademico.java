@@ -2,7 +2,7 @@
 package Vista;
 
 import Controlador.Dao.Modelo.periodoAcademicoDao;
-import Controlador.TDA.ListaDinamica.Exepciones.ListaVacia;
+import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Controlador.Utiles.UtilesControlador;
 import Modelo.PeriodoAcademico;
@@ -38,12 +38,14 @@ public class VistaGestionPeriodoAcademico extends javax.swing.JFrame {
         mtp.setPeriodosTabla(periodoControlDao.all());
         tblPeriodos.setModel(mtp);
         tblPeriodos.updateUI();
-        cbxTipoBusqueda.setSelectedIndex(-1);
+//        cbxTipoBusqueda.setSelectedIndex(-1);
+        cbxEstadoPeriodo.setSelectedIndex(-1);
     }
     
     public void Limpiar() {
         DateInicio.setDate(null);
         DateFin.setDate(null);
+        cbxEstadoPeriodo.setSelectedIndex(-1);
         periodoControlDao.setPeriodo(null);
         CargarTabla();
     }
@@ -60,6 +62,7 @@ public class VistaGestionPeriodoAcademico extends javax.swing.JFrame {
                 Date Fin = Formato.parse(periodoControlDao.getPeriodo().getFechaFin());
                 DateInicio.setDate(Inicio);
                 DateFin.setDate(Fin);
+                cbxEstadoPeriodo.setSelectedItem(periodoControlDao.getPeriodo().getEstadoPeriodoAcedemico());
             } 
             catch (Exception e) {
                 
@@ -75,6 +78,9 @@ public class VistaGestionPeriodoAcademico extends javax.swing.JFrame {
         else if (DateFin.getDate() == null) {
             JOptionPane.showMessageDialog(null, "Falta llenar fecha fin", "Error", JOptionPane.ERROR_MESSAGE);
         }
+        else if(cbxEstadoPeriodo.getSelectedIndex() == -1){
+            JOptionPane.showMessageDialog(null, "Falta seleccionar el periodo", "Error", JOptionPane.ERROR_MESSAGE);
+        }
         else {
             Integer IdPeriodo = listaPeriodos.getLongitud() + 1;
             
@@ -82,10 +88,12 @@ public class VistaGestionPeriodoAcademico extends javax.swing.JFrame {
             Date FinD = DateFin.getDate();
             String Inicio = Formato.format(InicioD);
             String Fin = Formato.format(FinD);
+            String Estado = cbxEstadoPeriodo.getSelectedItem().toString();
             
             periodoControlDao.getPeriodo().setIdPeriodoAcademino(IdPeriodo);
             periodoControlDao.getPeriodo().setFechaInicio(Inicio);
             periodoControlDao.getPeriodo().setFechaFin(Fin);
+            periodoControlDao.getPeriodo().setEstadoPeriodoAcedemico(Estado);
             
             if (periodoControlDao.persist()) {
                 JOptionPane.showMessageDialog(null, "PERIODO GUARDADO EXISTOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
@@ -127,6 +135,8 @@ public class VistaGestionPeriodoAcademico extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
         DateInicio = new com.toedter.calendar.JDateChooser();
         DateFin = new com.toedter.calendar.JDateChooser();
+        jLabel9 = new javax.swing.JLabel();
+        cbxEstadoPeriodo = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("GESTION DE PERIODOS ACADEMICOS");
@@ -198,7 +208,7 @@ public class VistaGestionPeriodoAcademico extends javax.swing.JFrame {
         jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("Buscar por");
 
-        cbxTipoBusqueda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Fecha de inicio", "Fecha fin" }));
+        cbxTipoBusqueda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Fecha de inicio", "Fecha fin", "Estado" }));
         cbxTipoBusqueda.setSelectedIndex(-1);
 
         jLabel8.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
@@ -207,7 +217,7 @@ public class VistaGestionPeriodoAcademico extends javax.swing.JFrame {
         jLabel8.setToolTipText("");
 
         jButton1.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        jButton1.setText("BUSCAR");
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Buscar.png"))); // NOI18N
         jButton1.setToolTipText("");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -247,6 +257,13 @@ public class VistaGestionPeriodoAcademico extends javax.swing.JFrame {
             }
         });
 
+        jLabel9.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel9.setText("Estado");
+
+        cbxEstadoPeriodo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Activo", "Inactivo" }));
+        cbxEstadoPeriodo.setSelectedIndex(-1);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -261,16 +278,17 @@ public class VistaGestionPeriodoAcademico extends javax.swing.JFrame {
                         .addComponent(jButton5))
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(DateFin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(DateInicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(DateFin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(DateInicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbxEstadoPeriodo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
@@ -278,8 +296,8 @@ public class VistaGestionPeriodoAcademico extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cbxTipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbxTipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -311,15 +329,19 @@ public class VistaGestionPeriodoAcademico extends javax.swing.JFrame {
                             .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(DateInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel4)
+                            .addComponent(DateInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel5)
                             .addComponent(DateFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel9)
+                            .addComponent(cbxEstadoPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -360,10 +382,13 @@ public class VistaGestionPeriodoAcademico extends javax.swing.JFrame {
 
             switch (TipoCampo) {
                 case "Fecha de inicio":
-                    TipoCampo = "fechaInicio";
+                    TipoCampo = "FechaInicio";
                     break;
                 case "Fecha fin":
                     TipoCampo = "FechaFin";
+                    break;
+                case "Estado":
+                    TipoCampo = "EstadoPeriodoAcademico";
                     break;
                 default:
                     throw new AssertionError();
@@ -386,21 +411,37 @@ public class VistaGestionPeriodoAcademico extends javax.swing.JFrame {
         int fila = tblPeriodos.getSelectedRow();
         if (fila < 0) {
             JOptionPane.showMessageDialog(null, "Escoga un registro");
-        }
-        else {
-            Integer IdMateria = periodoControlDao.getPeriodo().getIdPeriodoAcademino();
-            Date InicioD = DateInicio.getDate();
-            Date FinD = DateFin.getDate();
-            String Inicio = Formato.format(InicioD);
-            String Fin = Formato.format(FinD);
+        } else {
 
-            PeriodoAcademico periodoModificado = new PeriodoAcademico(IdMateria, Inicio, Fin);
+            if (DateInicio.getDate() == null) {
+                JOptionPane.showMessageDialog(null, "Falta llenar decha de inicio", "Error", JOptionPane.ERROR_MESSAGE);
+            } 
+            else if (DateFin.getDate() == null) {
+                JOptionPane.showMessageDialog(null, "Falta llenar fecha fin", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            else if (cbxEstadoPeriodo.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Falta seleccionar el periodo", "Error", JOptionPane.ERROR_MESSAGE);
+            } 
+            else {
+                Integer IdPeriodo = periodoControlDao.getPeriodo().getIdPeriodoAcademino();
+                Date InicioD = DateInicio.getDate();
+                Date FinD = DateFin.getDate();
+                String Inicio = Formato.format(InicioD);
+                String Fin = Formato.format(FinD);
+                String Estado = cbxEstadoPeriodo.getSelectedItem().toString();
 
-            periodoControlDao.Merge(periodoModificado, IdMateria-1);
+                PeriodoAcademico periodoModificado = new PeriodoAcademico();
+                periodoModificado.setIdPeriodoAcademino(IdPeriodo);
+                periodoModificado.setFechaInicio(Inicio);
+                periodoModificado.setFechaFin(Fin);
+                periodoModificado.setEstadoPeriodoAcedemico(Estado);
+                
+                periodoControlDao.Merge(periodoModificado, IdPeriodo - 1);
 
-            CargarTabla();
+                CargarTabla();
 
-            Limpiar();
+                Limpiar();
+            }
 
         }
         
@@ -436,6 +477,9 @@ public class VistaGestionPeriodoAcademico extends javax.swing.JFrame {
             else if (DateFin.getDate() == null) {
                 JOptionPane.showMessageDialog(null, "Falta llenar fecha fin", "Error", JOptionPane.ERROR_MESSAGE);
             }
+            else if (cbxEstadoPeriodo.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Falta seleccionar el periodo", "Error", JOptionPane.ERROR_MESSAGE);
+            } 
             else {
                 Guardar();
             }
@@ -485,6 +529,7 @@ public class VistaGestionPeriodoAcademico extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser DateFin;
     private com.toedter.calendar.JDateChooser DateInicio;
+    private javax.swing.JComboBox<String> cbxEstadoPeriodo;
     private javax.swing.JComboBox<String> cbxTipoBusqueda;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -499,6 +544,7 @@ public class VistaGestionPeriodoAcademico extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;

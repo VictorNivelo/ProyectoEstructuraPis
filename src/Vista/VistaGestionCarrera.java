@@ -2,7 +2,7 @@
 package Vista;
 
 import Controlador.Dao.Modelo.carreraDao;
-import Controlador.TDA.ListaDinamica.Exepciones.ListaVacia;
+import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Controlador.Utiles.UtilesControlador;
 import Vista.ModeloTabla.ModeloTablaCarrera;
@@ -23,13 +23,14 @@ public class VistaGestionCarrera extends javax.swing.JFrame {
 
     /**
      * Creates new form VistaGestionCarrera
-     * @throws Controlador.TDA.ListaDinamica.Exepciones.ListaVacia
+     * @throws Controlador.TDA.ListaDinamica.Excepcion.ListaVacia
      */
     public VistaGestionCarrera() throws ListaVacia {
         initComponents();
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
-        UtilVista.cargarcomboMalla(cbxMalla);
+//        UtilVista.cargarcomboMalla(cbxMalla);
+        UtilVista.CargarComboFacultad(cbxFacultad);
         CargarTabla();
     }
     
@@ -37,15 +38,18 @@ public class VistaGestionCarrera extends javax.swing.JFrame {
         mtc.setCarreraTabla(carreraControlDao.getListaCarreras());
         tblCarreras.setModel(mtc);
         tblCarreras.updateUI();
+//        cbxMalla.setSelectedIndex(-1);
+        cbxFacultad.setSelectedIndex(-1);
         cbxTipoBusqueda.setSelectedIndex(-1);
-        cbxMalla.setSelectedIndex(-1);
     }
     
     private void Limpiar() throws ListaVacia {
         txtNombreCarrera.setText("");
         txtDuracionCarrera.setText("");
-        cbxMalla.setSelectedIndex(-1);
-        cbxTipoBusqueda.setSelectedIndex(-1);
+        txtNumeroCiclos.setText("");
+//        cbxMalla.setSelectedIndex(-1);
+        cbxFacultad.setSelectedIndex(-1);
+//        cbxTipoBusqueda.setSelectedIndex(-1);
         carreraControlDao.setCarreras(null);
         CargarTabla();
     }
@@ -61,6 +65,9 @@ public class VistaGestionCarrera extends javax.swing.JFrame {
                 
                 txtNombreCarrera.setText(carreraControlDao.getCarreras().getNombreCarrera());
                 txtDuracionCarrera.setText(carreraControlDao.getCarreras().getDuracion().toString());
+                txtNumeroCiclos.setText(carreraControlDao.getCarreras().getNumeroCiclos().toString());
+                cbxFacultad.setSelectedIndex(carreraControlDao.getCarreras().getFacutadCarrera().getIdFacultad() -1);
+//                cbxMalla.setSelectedIndex(carreraControlDao.getCarreras().getCarreraMalla().getIdMallaCurricular() -1);
 
             } 
             catch (Exception e) {
@@ -71,21 +78,34 @@ public class VistaGestionCarrera extends javax.swing.JFrame {
     
     private void Guardar() throws ListaVacia {
 
-        if (txtNombreCarrera.getText().isEmpty()) {
+        if (cbxFacultad.getSelectedIndex() == -1) {
+            JOptionPane.showMessageDialog(null, "Falta seleccionar la facultad", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        else if (txtNombreCarrera.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Falta llenar nombre de la carrera", "Error", JOptionPane.ERROR_MESSAGE);
         } 
         else if (txtDuracionCarrera.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Falta llenar duracion", "Error", JOptionPane.ERROR_MESSAGE);
-        } 
+        }
+        else if (txtNumeroCiclos.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Falta llenar el numero de ciclos", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+//        else if (cbxMalla.getSelectedIndex() == -1) {
+//            JOptionPane.showMessageDialog(null, "Falta seleccionar la malla", "Error", JOptionPane.ERROR_MESSAGE);
+//        }
         else {
-            //Datos de persona a registrar
+            //Datos de carrera
             Integer IdCarrera = listaCarreras.getLongitud() + 1;
             String Nombre = txtNombreCarrera.getText();
-            Integer Duracion = Integer.parseInt(txtDuracionCarrera.getText());
+            Integer Duracion = Integer.valueOf(txtDuracionCarrera.getText());
+            Integer Nc = Integer.valueOf(txtNumeroCiclos.getText());
             
             carreraControlDao.getCarreras().setIdCarrera(IdCarrera);
             carreraControlDao.getCarreras().setNombreCarrera(Nombre);
             carreraControlDao.getCarreras().setDuracion(Duracion);
+            carreraControlDao.getCarreras().setNumeroCiclos(Nc);
+            carreraControlDao.getCarreras().setFacutadCarrera(UtilVista.obtenerFacultadControl(cbxFacultad));
+//            carreraControlDao.getCarreras().setCarreraMalla(UtilVista.obtenerMallaControl(cbxMalla));
             
             if (carreraControlDao.Persist()) {
                 JOptionPane.showMessageDialog(null, "CARRERA GUARDADA EXISTOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
@@ -127,8 +147,10 @@ public class VistaGestionCarrera extends javax.swing.JFrame {
         cbxTipoBusqueda = new javax.swing.JComboBox<>();
         txtBuscar = new javax.swing.JTextField();
         jButton6 = new javax.swing.JButton();
-        jLabel8 = new javax.swing.JLabel();
-        cbxMalla = new javax.swing.JComboBox<>();
+        jLabel10 = new javax.swing.JLabel();
+        txtNumeroCiclos = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        cbxFacultad = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("GESTION DE CARRERAS");
@@ -250,20 +272,24 @@ public class VistaGestionCarrera extends javax.swing.JFrame {
         jLabel9.setForeground(new java.awt.Color(0, 0, 0));
         jLabel9.setText("Buscar");
 
-        cbxTipoBusqueda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "Duracion" }));
+        cbxTipoBusqueda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "Duracion", "Numero de ciclos", "Facultad" }));
         cbxTipoBusqueda.setSelectedIndex(-1);
 
         jButton6.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        jButton6.setText("BUSCAR");
+        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Buscar.png"))); // NOI18N
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
             }
         });
 
-        jLabel8.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel8.setText("Malla");
+        jLabel10.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel10.setText("Nro de ciclos");
+
+        jLabel11.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel11.setText("Facultad");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -278,15 +304,21 @@ public class VistaGestionCarrera extends javax.swing.JFrame {
                         .addComponent(jButton4))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtNombreCarrera)
-                            .addComponent(txtDuracionCarrera)
-                            .addComponent(cbxMalla, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(txtDuracionCarrera)))
+                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtNumeroCiclos))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbxFacultad, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -297,7 +329,7 @@ public class VistaGestionCarrera extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbxTipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbxTipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -320,33 +352,38 @@ public class VistaGestionCarrera extends javax.swing.JFrame {
                     .addComponent(jLabel6)
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(txtNombreCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7)
-                    .addComponent(cbxTipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9)
-                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton6))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel7)
+                        .addComponent(cbxTipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel9)
+                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton6))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel11)
+                        .addComponent(cbxFacultad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 427, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(txtNombreCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
                             .addComponent(txtDuracionCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel8)
-                            .addComponent(cbxMalla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton2)
-                            .addComponent(jButton3)
-                            .addComponent(jButton5)
-                            .addComponent(jButton4))))
+                            .addComponent(jLabel10)
+                            .addComponent(txtNumeroCiclos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton2)
+                    .addComponent(jButton3)
+                    .addComponent(jButton5)
+                    .addComponent(jButton4))
                 .addContainerGap())
         );
 
@@ -375,12 +412,21 @@ public class VistaGestionCarrera extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         
         try {
-            if (txtNombreCarrera.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar nombre de la carrera", "Error", JOptionPane.ERROR_MESSAGE);
+            if (cbxFacultad.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Falta seleccionar la facultad", "Error", JOptionPane.ERROR_MESSAGE);
             } 
+            else if (txtNombreCarrera.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Falta llenar nombre de la carrera", "Error", JOptionPane.ERROR_MESSAGE);
+            }
             else if (txtDuracionCarrera.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Falta llenar duracion", "Error", JOptionPane.ERROR_MESSAGE);
             } 
+            else if (txtNumeroCiclos.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Falta llenar el numero de ciclos", "Error", JOptionPane.ERROR_MESSAGE);
+            } 
+//            else if (cbxMalla.getSelectedIndex() == -1) {
+//                JOptionPane.showMessageDialog(null, "Falta seleccionar la malla", "Error", JOptionPane.ERROR_MESSAGE);
+//            } 
             else {
                 Guardar();
             }
@@ -398,21 +444,44 @@ public class VistaGestionCarrera extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Escoga un registro");
         } 
         else {
-            Integer IdCarrera = carreraControlDao.getCarreras().getIdCarrera();
-            String Nombre = txtNombreCarrera.getText();
-            Integer Duracion = Integer.parseInt(txtDuracionCarrera.getText());
-            
-            Carrera carreraModificada = new Carrera(IdCarrera,Nombre,Duracion);
-            
-            carreraControlDao.Merge(carreraModificada, IdCarrera-1);
-            
-            CargarTabla();
-            
-            try {
-                Limpiar();
+            if (cbxFacultad.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Falta seleccionar la facultad", "Error", JOptionPane.ERROR_MESSAGE);
             } 
-            catch (ListaVacia ex) {
+            else if (txtNombreCarrera.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Falta llenar nombre de la carrera", "Error", JOptionPane.ERROR_MESSAGE);
+            } 
+            else if (txtDuracionCarrera.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Falta llenar duracion", "Error", JOptionPane.ERROR_MESSAGE);
+            } 
+            else if (txtNumeroCiclos.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Falta llenar el numero de ciclos", "Error", JOptionPane.ERROR_MESSAGE);
+            } 
+//            else if (cbxMalla.getSelectedIndex() == -1) {
+//                JOptionPane.showMessageDialog(null, "Falta seleccionar la malla", "Error", JOptionPane.ERROR_MESSAGE);
+//            } 
+            else {
+                Integer IdCarrera = carreraControlDao.getCarreras().getIdCarrera();
+                String Nombre = txtNombreCarrera.getText();
+                Integer Duracion = Integer.valueOf(txtDuracionCarrera.getText());
+                Integer Nc = Integer.valueOf(txtNumeroCiclos.getText());
 
+                Carrera carreraModificada = new Carrera();
+                carreraModificada.setIdCarrera(IdCarrera);
+                carreraModificada.setNombreCarrera(Nombre);
+                carreraModificada.setDuracion(Duracion);
+                carreraModificada.setNumeroCiclos(Nc);
+                carreraModificada.setFacutadCarrera(UtilVista.obtenerFacultadControl(cbxFacultad));
+
+                carreraControlDao.Merge(carreraModificada, IdCarrera - 1);
+
+                CargarTabla();
+
+                try {
+                    Limpiar();
+                } 
+                catch (ListaVacia ex) {
+
+                }
             }
         }
         
@@ -444,7 +513,13 @@ public class VistaGestionCarrera extends javax.swing.JFrame {
                     TipoCampo = "NombreCarrera";
                     break;
                 case "Duracion":
-                    TipoCampo = "duracion";
+                    TipoCampo = "Duracion";
+                    break;
+                case "Numero de ciclos":
+                    TipoCampo = "NumeroCiclos";
+                    break;
+                case "Facultad":
+                    TipoCampo = "facutadCarrera.NombreFacultad";
                     break;
                 default:
                     throw new AssertionError();
@@ -536,7 +611,7 @@ public class VistaGestionCarrera extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> cbxMalla;
+    private javax.swing.JComboBox<String> cbxFacultad;
     private javax.swing.JComboBox<String> cbxTipoBusqueda;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -544,13 +619,14 @@ public class VistaGestionCarrera extends javax.swing.JFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -559,5 +635,6 @@ public class VistaGestionCarrera extends javax.swing.JFrame {
     private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtDuracionCarrera;
     private javax.swing.JTextField txtNombreCarrera;
+    private javax.swing.JTextField txtNumeroCiclos;
     // End of variables declaration//GEN-END:variables
 }

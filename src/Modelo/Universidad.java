@@ -2,48 +2,52 @@
 package Modelo;
 
 import Controlador.TDA.ListaDinamica.ListaDinamica;
-import java.util.Date;
 
 /**
  *
  * @author Victor
  */
 public class Universidad {
-    private Integer idUniversidad;
-    private String NimbreUniversidad;
+    private Integer IdUniversidad;
+    private String NombreUniversidad;
     private String DireccionUniversidad;
     private String NumeroTelefono;
     private String CorreoUniversidad;
-    private Date FechaFundacion;
-    private ListaDinamica<Facultad> ListaFacultades;
+    private String FechaFundacion;
+    
+    //datos poco usados
+    private Facultad facultaUniversidad;
+    private ListaDinamica<Facultad> listaFacultadUniversidad;
+    private Persona personaUniversidad;
+    private ListaDinamica<Persona> listaPersonaUniversidad;
 
     public Universidad() {
         
     }
 
-    public Universidad(Integer idUniversidad, String NimbreUniversidad, String DireccionUniversidad, String NumeroTelefono, String CorreoUniversidad, Date FechaFundacion) {
-        this.idUniversidad = idUniversidad;
-        this.NimbreUniversidad = NimbreUniversidad;
-        this.DireccionUniversidad = DireccionUniversidad;
-        this.NumeroTelefono = NumeroTelefono;
-        this.CorreoUniversidad = CorreoUniversidad;
-        this.FechaFundacion = FechaFundacion;
-    }
+//    public Universidad(Integer IdUniversidad, String NombreUniversidad, String DireccionUniversidad, String NumeroTelefono, String CorreoUniversidad, String FechaFundacion) {
+//        this.IdUniversidad = IdUniversidad;
+//        this.NombreUniversidad = NombreUniversidad;
+//        this.DireccionUniversidad = DireccionUniversidad;
+//        this.NumeroTelefono = NumeroTelefono;
+//        this.CorreoUniversidad = CorreoUniversidad;
+//        this.FechaFundacion = FechaFundacion;
+//    }    
 
     public Integer getIdUniversidad() {
-        return idUniversidad;
+        return IdUniversidad;
     }
 
-    public void setIdUniversidad(Integer idUniversidad) {
-        this.idUniversidad = idUniversidad;
+    public void setIdUniversidad(Integer IdUniversidad) {
+        this.IdUniversidad = IdUniversidad;
     }
 
-    public String getNimbreUniversidad() {
-        return NimbreUniversidad;
+    public String getNombreUniversidad() {
+        return NombreUniversidad;
     }
 
-    public void setNimbreUniversidad(String NimbreUniversidad) {
-        this.NimbreUniversidad = NimbreUniversidad;
+    public void setNombreUniversidad(String NombreUniversidad) {
+        this.NombreUniversidad = NombreUniversidad;
     }
 
     public String getDireccionUniversidad() {
@@ -70,25 +74,49 @@ public class Universidad {
         this.CorreoUniversidad = CorreoUniversidad;
     }
 
-    public Date getFechaFundacion() {
+    public String getFechaFundacion() {
         return FechaFundacion;
     }
 
-    public void setFechaFundacion(Date FechaFundacion) {
+    public void setFechaFundacion(String FechaFundacion) {
         this.FechaFundacion = FechaFundacion;
     }
 
-    public ListaDinamica<Facultad> getListaFacultades() {
-        return ListaFacultades;
+    public Facultad getFacultaUniversidad() {
+        return facultaUniversidad;
     }
 
-    public void setListaFacultades(ListaDinamica<Facultad> ListaFacultades) {
-        this.ListaFacultades = ListaFacultades;
+    public void setFacultaUniversidad(Facultad facultaUniversidad) {
+        this.facultaUniversidad = facultaUniversidad;
+    }
+
+    public ListaDinamica<Facultad> getListaFacultadUniversidad() {
+        return listaFacultadUniversidad;
+    }
+
+    public void setListaFacultadUniversidad(ListaDinamica<Facultad> listaFacultadUniversidad) {
+        this.listaFacultadUniversidad = listaFacultadUniversidad;
+    }
+
+    public Persona getPersonaUniversidad() {
+        return personaUniversidad;
+    }
+
+    public void setPersonaUniversidad(Persona personaUniversidad) {
+        this.personaUniversidad = personaUniversidad;
+    }
+
+    public ListaDinamica<Persona> getListaPersonaUniversidad() {
+        return listaPersonaUniversidad;
+    }
+
+    public void setListaPersonaUniversidad(ListaDinamica<Persona> listaPersonaUniversidad) {
+        this.listaPersonaUniversidad = listaPersonaUniversidad;
     }
 
     @Override
     public String toString() {
-        return "Universidad{" + "idUniversidad=" + idUniversidad + ", NimbreUniversidad=" + NimbreUniversidad + ", DireccionUniversidad=" + DireccionUniversidad + ", NumeroTelefono=" + NumeroTelefono + ", CorreoUniversidad=" + CorreoUniversidad + ", FechaFundacion=" + FechaFundacion + '}';
+        return NombreUniversidad + "\n";
     }
         
 }

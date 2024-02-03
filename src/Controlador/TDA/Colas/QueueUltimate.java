@@ -1,7 +1,7 @@
 
 package Controlador.TDA.Colas;
 
-import Controlador.TDA.ListaDinamica.Exepciones.ListaVacia;
+import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.Pilas.Excepcion.FullStackException;
 
 
@@ -32,9 +32,10 @@ public class QueueUltimate<E> {
         return tail.isFull();
     }
     
-    public void print(){
+    public void Imprimir(){
         System.out.println("Queue");
         System.out.println(tail.toString());
         System.out.println("");
     }
+    
 }

@@ -1,7 +1,7 @@
 
 package Vista.ModeloTabla;
 
-import Controlador.TDA.ListaDinamica.Exepciones.ListaVacia;
+import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Modelo.Persona;
 import javax.swing.table.AbstractTableModel;
@@ -44,22 +44,24 @@ public class ModeloTablaPersona extends AbstractTableModel {
                 case 1:
                     return (p != null) ? p.getRolPersona().getNombreRol() : "";
                 case 2:
-                    return (p != null) ? p.getNumeroCedula() : "";
+                    return (p != null) ? p.getTipoDni(): "";
                 case 3:
-                    return (p != null) ? p.getNombre() : "";
+                    return (p != null) ? p.getNumeroCedula() : "";
                 case 4:
-                    return (p != null) ? p.getApellido() : "";
+                    return (p != null) ? p.getNombre() : "";
                 case 5:
-                    return (p != null) ? p.getGenero(): "";
+                    return (p != null) ? p.getApellido() : "";
                 case 6:
-                    return (p != null) ? p.getFechaNacimineto(): "";
+                    return (p != null) ? p.getGenero(): "";
                 case 7:
-                    return (p != null) ? p.getDireccion(): "";
+                    return (p != null) ? p.getFechaNacimineto(): "";
                 case 8:
-                    return (p != null) ? p.getTelefono(): "";
+                    return (p != null) ? p.getDireccion(): "";
                 case 9:
-                    return (p != null) ? p.getCuentaPersona().getCorreo(): "";
+                    return (p != null) ? p.getTelefono(): "";
                 case 10:
+                    return (p != null) ? p.getCuentaPersona().getCorreo(): "";
+                case 11:
                     return (p != null) ? p.getCuentaPersona().getEstadoCuenta(): "";
                 default:
                     return null;
@@ -70,7 +72,6 @@ public class ModeloTablaPersona extends AbstractTableModel {
         return personasTabla;
     }
 
-
     @Override
     public String getColumnName(int column) {
         switch (column) {
@@ -79,24 +80,25 @@ public class ModeloTablaPersona extends AbstractTableModel {
             case 1:
                 return "Rol";
             case 2:
-                return "Numero cedula";
+                return "Tipo DNI";
             case 3:
-                return "Nombre";
+                return "Numero DNI";
             case 4:
-                return "Apellido";
+                return "Nombre";
             case 5:
-                return "Genero";
+                return "Apellido";
             case 6:
-                return "Fecha nacimiento";
+                return "Genero";
             case 7:
-                return "Direccion";
+                return "Fecha nacimiento";
             case 8:
-                return "Telefono";
+                return "Direccion";
             case 9:
-                return "Correo";
+                return "Telefono";
             case 10:
+                return "Correo";
+            case 11:
                 return "Estado cuenta";
-
             
             default:
                 return null;
@@ -120,4 +122,5 @@ public class ModeloTablaPersona extends AbstractTableModel {
 
         return suma;
     }
+    
 }

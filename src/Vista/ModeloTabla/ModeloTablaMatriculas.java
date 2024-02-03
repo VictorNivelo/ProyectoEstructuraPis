@@ -1,7 +1,7 @@
 
 package Vista.ModeloTabla;
 
-import Controlador.TDA.ListaDinamica.Exepciones.ListaVacia;
+import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Modelo.Matricula;
 import javax.swing.table.AbstractTableModel;
@@ -12,6 +12,14 @@ import javax.swing.table.AbstractTableModel;
  */
 public class ModeloTablaMatriculas extends AbstractTableModel{
     private ListaDinamica<Matricula> matriculas;
+
+    public ListaDinamica<Matricula> getMatriculas() {
+        return matriculas;
+    }
+
+    public void setMatriculas(ListaDinamica<Matricula> matriculas) {
+        this.matriculas = matriculas;
+    }
 
     @Override
     public int getRowCount() {
@@ -33,11 +41,11 @@ public class ModeloTablaMatriculas extends AbstractTableModel{
                 case 1:
                      return (matricula != null)? matricula.getEstadoMatricula(): "";
                 case 2:
-                     return (matricula != null)? matricula.getMatriculaPeriodoAcademico().getFechaInicio(): "";
+                     return (matricula != null)? matricula.getPeriodoAcademicoMatricula().getFechaInicio(): "";
                 case 3:
-                     return (matricula != null)? matricula.getMatriculaPeriodoAcademico().getFechaFin(): "";
+                     return (matricula != null)? matricula.getPeriodoAcademicoMatricula().getFechaFin(): "";
                 case 4:
-                    return (matricula != null)? matricula.getMatriculaCursa().getCodigoCurso(): "";
+                    return (matricula != null)? matricula.getCursoMatricula().getCodigoCurso(): "";
                 default:
                     return null;
             }
@@ -64,14 +72,5 @@ public class ModeloTablaMatriculas extends AbstractTableModel{
                 return null;
         }
     }
-
-    public ListaDinamica<Matricula> getMatriculas() {
-        return matriculas;
-    }
-
-    public void setMatriculas(ListaDinamica<Matricula> matriculas) {
-        this.matriculas = matriculas;
-    }
-    
     
 }

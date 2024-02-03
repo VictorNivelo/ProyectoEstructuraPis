@@ -42,4 +42,5 @@ public class carreraDao extends DaoImplement<Carrera> {
         carreras.setIdCarrera(all().getLongitud() + 1);
         return Persist(carreras);
     }
+    
 }

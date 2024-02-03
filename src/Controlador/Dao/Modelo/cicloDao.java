@@ -42,6 +42,8 @@ public class cicloDao extends DaoImplement<Ciclo>{
         return Persist(ciclos);
     }
     
+}
+    
 //    public static void main(String[] args) {
 //        cicloDao rc = new cicloDao();
 //        rc.getCiclos().setNombreCiclo("Primer ciclo");
@@ -96,4 +98,4 @@ public class cicloDao extends DaoImplement<Ciclo>{
 //
 //    }
     
-}
+//}

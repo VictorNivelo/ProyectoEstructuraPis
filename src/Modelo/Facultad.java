@@ -8,31 +8,35 @@ import Controlador.TDA.ListaDinamica.ListaDinamica;
  * @author Victor
  */
 public class Facultad {
-    private Integer idFacultad;
+    private Integer IdFacultad;
     private String NombreFacultad;
-    private String NombreDecano;
     private String FechaCreacion;
-    private Carrera FacultadCarrera;
-    private ListaDinamica<Carrera> ListaCarreras;
+    
+    private Universidad universidadFacultad;
+    
+    //Datos poco usados
+    private Carrera carreraFacultad;
+    private ListaDinamica<Carrera> listaCarreraFacultad;
+    private Persona personaFacultad;
+    private ListaDinamica<Persona> listaPersonaFacultad;
 
     public Facultad() {
 
     }
 
-    public Facultad(Integer idFacultad, String NombreFacultad, String NombreDecano, String FechaCreacion, Carrera FacultadCarrera) {
-        this.idFacultad = idFacultad;
-        this.NombreFacultad = NombreFacultad;
-        this.NombreDecano = NombreDecano;
-        this.FechaCreacion = FechaCreacion;
-        this.FacultadCarrera = FacultadCarrera;
-    }
+//    public Facultad(Integer IdFacultad, String NombreFacultad, String FechaCreacion, Universidad universidadFacultad) {
+//        this.IdFacultad = IdFacultad;
+//        this.NombreFacultad = NombreFacultad;
+//        this.FechaCreacion = FechaCreacion;
+//        this.universidadFacultad = universidadFacultad;
+//    }
 
     public Integer getIdFacultad() {
-        return idFacultad;
+        return IdFacultad;
     }
 
-    public void setIdFacultad(Integer idFacultad) {
-        this.idFacultad = idFacultad;
+    public void setIdFacultad(Integer IdFacultad) {
+        this.IdFacultad = IdFacultad;
     }
 
     public String getNombreFacultad() {
@@ -43,14 +47,6 @@ public class Facultad {
         this.NombreFacultad = NombreFacultad;
     }
 
-    public String getNombreDecano() {
-        return NombreDecano;
-    }
-
-    public void setNombreDecano(String NombreDecano) {
-        this.NombreDecano = NombreDecano;
-    }
-
     public String getFechaCreacion() {
         return FechaCreacion;
     }
@@ -59,25 +55,49 @@ public class Facultad {
         this.FechaCreacion = FechaCreacion;
     }
 
-    public Carrera getFacultadCarrera() {
-        return FacultadCarrera;
+    public Carrera getCarreraFacultad() {
+        return carreraFacultad;
     }
 
-    public void setFacultadCarrera(Carrera FacultadCarrera) {
-        this.FacultadCarrera = FacultadCarrera;
+    public void setCarreraFacultad(Carrera carreraFacultad) {
+        this.carreraFacultad = carreraFacultad;
     }
 
-    public ListaDinamica<Carrera> getListaCarreras() {
-        return ListaCarreras;
+    public ListaDinamica<Carrera> getListaCarreraFacultad() {
+        return listaCarreraFacultad;
     }
 
-    public void setListaCarreras(ListaDinamica<Carrera> ListaCarreras) {
-        this.ListaCarreras = ListaCarreras;
+    public void setListaCarreraFacultad(ListaDinamica<Carrera> listaCarreraFacultad) {
+        this.listaCarreraFacultad = listaCarreraFacultad;
     }
 
+    public Persona getPersonaFacultad() {
+        return personaFacultad;
+    }
+
+    public void setPersonaFacultad(Persona personaFacultad) {
+        this.personaFacultad = personaFacultad;
+    }
+
+    public ListaDinamica<Persona> getListaPersonaFacultad() {
+        return listaPersonaFacultad;
+    }
+
+    public void setListaPersonaFacultad(ListaDinamica<Persona> listaPersonaFacultad) {
+        this.listaPersonaFacultad = listaPersonaFacultad;
+    }
+
+    public Universidad getUniversidadFacultad() {
+        return universidadFacultad;
+    }
+
+    public void setUniversidadFacultad(Universidad universidadFacultad) {
+        this.universidadFacultad = universidadFacultad;
+    }
+        
     @Override
     public String toString() {
-        return "Facultad{" + "idFacultad=" + idFacultad + ", NombreFacultad=" + NombreFacultad + ", NombreDecano=" + NombreDecano + ", FechaCreacion=" + FechaCreacion + ", FacultadCarrera=" + FacultadCarrera + '}';
+        return NombreFacultad +  "\n";
     }
     
 }

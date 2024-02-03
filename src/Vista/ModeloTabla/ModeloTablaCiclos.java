@@ -1,7 +1,7 @@
 
 package Vista.ModeloTabla;
 
-import Controlador.TDA.ListaDinamica.Exepciones.ListaVacia;
+import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Modelo.Ciclo;
 import javax.swing.table.AbstractTableModel;
@@ -29,7 +29,7 @@ public class ModeloTablaCiclos extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 3;
+        return 4;
     }
     
     @Override
@@ -44,7 +44,9 @@ public class ModeloTablaCiclos extends AbstractTableModel {
                 case 1:
                     return (p != null) ? p.getNombreCiclo(): "";
                 case 2:
-                    return (p != null) ? p.getMallaCiclo().getNombreMallaCurricular(): "";
+                    return (p != null) ? p.getNumeroCiclo(): "";
+                case 3:
+                    return (p != null) ? p.getUnidadCurricularCiclo().getNombreUnidadCurricular(): "";
                 default:
                     return null;
             }
@@ -64,9 +66,12 @@ public class ModeloTablaCiclos extends AbstractTableModel {
             case 1:
                 return "Nombre ciclo";
             case 2:
-                return "Malla";
+                return "Numero de ciclo";
+            case 3:
+                return "Unidad";
             default:
                 return null;
         }
     }
+    
 }

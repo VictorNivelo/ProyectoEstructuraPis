@@ -41,4 +41,5 @@ public class materiaDao extends DaoImplement<Materia>{
         materia.setIdMateria(all().getLongitud()+1);
         return Persist(materia);
     }
+    
 }

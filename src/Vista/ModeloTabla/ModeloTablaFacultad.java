@@ -1,7 +1,7 @@
 
 package Vista.ModeloTabla;
 
-import Controlador.TDA.ListaDinamica.Exepciones.ListaVacia;
+import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Modelo.Facultad;
 import javax.swing.table.AbstractTableModel;
@@ -29,7 +29,7 @@ public class ModeloTablaFacultad extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 4;
+        return 3;
     }
     
     @Override
@@ -44,8 +44,6 @@ public class ModeloTablaFacultad extends AbstractTableModel {
                 case 1:
                     return (f != null) ? f.getNombreFacultad(): "";
                 case 2:
-                    return (f != null) ? f.getNombreDecano(): "";
-                case 3:
                     return (f != null) ? f.getFechaCreacion(): "";
                 default:
                     return null;
@@ -66,11 +64,10 @@ public class ModeloTablaFacultad extends AbstractTableModel {
             case 1:
                 return "Nombre";
             case 2:
-                return "Decano";
-            case 3:
                 return "Fecha creacion";
             default:
                 return null;
         }
     }
+    
 }

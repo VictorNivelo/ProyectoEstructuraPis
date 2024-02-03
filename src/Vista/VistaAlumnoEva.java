@@ -1,7 +1,7 @@
 
 package Vista;
 
-import Controlador.TDA.ListaDinamica.Exepciones.ListaVacia;
+import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Modelo.Materia;
 import Vista.Utiles.UtilVista;
 import java.awt.event.ActionEvent;
@@ -18,6 +18,8 @@ public class VistaAlumnoEva extends javax.swing.JDialog {
 
     /**
      * Creates new form FrmEva
+     * @param parent
+     * @param modal
      */
     public VistaAlumnoEva(java.awt.Frame parent, boolean modal) {
         super(parent, modal);

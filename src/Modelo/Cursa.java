@@ -1,98 +1,75 @@
 
 package Modelo;
 
-import Controlador.TDA.ListaDinamica.Exepciones.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
+
 
 /**
  *
  * @author Victor
  */
 public class Cursa {
-    private Integer idCurso;
-    private String codigoCurso;
-    private String paralelo;
-    private Materia materiaCurso;
+    private Integer IdCurso;
+    private String CodigoCurso;
+    private String Paralelo;
     
-    private ListaDinamica<Materia> listaMateriasCurso;
-    private PeriodoAcademico periodoAcademicoCurso;
-
+    private Materia MateriaCurso;
+    private ListaDinamica<Materia> listaMateriaCurso;
+    
     public Cursa() {
         
     }
 
-    public Cursa(Integer idCurso, String codigoCurso, String paralelo, Materia materiaCurso, PeriodoAcademico periodoAcademicoCurso) {
-        this.idCurso = idCurso;
-        this.codigoCurso = codigoCurso;
-        this.paralelo = paralelo;
-        this.materiaCurso = materiaCurso;
-        this.periodoAcademicoCurso = periodoAcademicoCurso;
-    }
+//    public Cursa(Integer IdCurso, String CodigoCurso, String Paralelo, Materia MateriaCurso) {
+//        this.IdCurso = IdCurso;
+//        this.CodigoCurso = CodigoCurso;
+//        this.Paralelo = Paralelo;
+//        this.MateriaCurso = MateriaCurso;
+//    }
 
     public Integer getIdCurso() {
-        return idCurso;
+        return IdCurso;
     }
 
-    public void setIdCurso(Integer idCurso) {
-        this.idCurso = idCurso;
+    public void setIdCurso(Integer IdCurso) {
+        this.IdCurso = IdCurso;
     }
 
     public String getCodigoCurso() {
-        return codigoCurso;
+        return CodigoCurso;
     }
 
-    public void setCodigoCurso(String codigoCurso) {
-        this.codigoCurso = codigoCurso;
+    public void setCodigoCurso(String CodigoCurso) {
+        this.CodigoCurso = CodigoCurso;
     }
 
     public String getParalelo() {
-        return paralelo;
+        return Paralelo;
     }
 
-    public void setParalelo(String paralelo) {
-        this.paralelo = paralelo;
+    public void setParalelo(String Paralelo) {
+        this.Paralelo = Paralelo;
     }
 
     public Materia getMateriaCurso() {
-        return materiaCurso;
+        return MateriaCurso;
     }
 
-    public void setMateriaCurso(Materia materiaCurso) {
-        this.materiaCurso = materiaCurso;
+    public void setMateriaCurso(Materia MateriaCurso) {
+        this.MateriaCurso = MateriaCurso;
     }
 
-    public PeriodoAcademico getPeriodoAcademicoCurso() {
-        return periodoAcademicoCurso;
+    public ListaDinamica<Materia> getListaMateriaCurso() {
+        return listaMateriaCurso;
     }
 
-    public void setPeriodoAcademicoCurso(PeriodoAcademico periodoAcademicoCurso) {
-        this.periodoAcademicoCurso = periodoAcademicoCurso;
+    public void setListaMateriaCurso(ListaDinamica<Materia> listaMateriaCurso) {
+        this.listaMateriaCurso = listaMateriaCurso;
     }
 
-    public ListaDinamica<Materia> getListaMateriasCurso() {
-        return listaMateriasCurso;
-    }
-
-    public void setListaMateriasCurso(ListaDinamica<Materia> listaMateriasCurso) {
-        this.listaMateriasCurso = listaMateriasCurso;
-    }
-    
-    //Codigo para usar en la lista de materjas
-    public void agregarMateria(Materia materia) {
-        listaMateriasCurso.Agregar(materia);
-    }
-
-    public Materia obtenerMateria(Integer indice) throws ListaVacia, IndexOutOfBoundsException {
-        return listaMateriasCurso.getInfo(indice);
-    }
-
-    public void eliminarMateria(Integer indice) throws ListaVacia, IndexOutOfBoundsException {
-        listaMateriasCurso.eliminar(indice);
-    }
-    
     @Override
     public String toString() {
-        return materiaCurso.getCicloMateria().getNombreCiclo() +" "+paralelo+ " " + materiaCurso.getNombreMateria()+"\n";
+        return "Codigo:" + CodigoCurso + ", Paralelo:" + Paralelo + "\n";
     }
     
 }
