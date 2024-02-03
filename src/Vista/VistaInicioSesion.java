@@ -32,7 +32,7 @@ public class VistaInicioSesion extends javax.swing.JFrame {
     }
     
     private void configurarPlaceholders() {
-        Font placeholderFont = new Font("Segoe UI", Font.ITALIC, 13);
+        Font placeholderFont = new Font("Segoe UI", Font.ITALIC, 14);
 
         txtCorreo.setForeground(new Color(119, 119, 119));
         txtCorreo.setText("Ingrese su correo");
@@ -43,7 +43,7 @@ public class VistaInicioSesion extends javax.swing.JFrame {
                 if (txtCorreo.getText().equals("Ingrese su correo")) {
                     txtCorreo.setText("");
                     txtCorreo.setForeground(Color.BLACK);
-                    txtCorreo.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+                    txtCorreo.setFont(new Font("Segoe UI", Font.PLAIN, 14));
                 }
             }
 
@@ -66,7 +66,7 @@ public class VistaInicioSesion extends javax.swing.JFrame {
                 if (String.valueOf(txtContrasenia.getPassword()).equals("Contraseña")) {
                     txtContrasenia.setText("");
                     txtContrasenia.setForeground(Color.BLACK);
-                    txtContrasenia.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+                    txtContrasenia.setFont(new Font("Segoe UI", Font.PLAIN, 14));
                 }
             }
 
@@ -249,13 +249,13 @@ public class VistaInicioSesion extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(119, 119, 119));
         jLabel4.setText("Nombre de ususario");
 
-        txtCorreo.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        txtCorreo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(119, 119, 119));
         jLabel5.setText("Contraseña");
 
-        txtContrasenia.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        txtContrasenia.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         btnIniciarSeccion.setBackground(new java.awt.Color(33, 15, 122));
         btnIniciarSeccion.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
@@ -321,7 +321,7 @@ public class VistaInicioSesion extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(113, 113, 113)
                 .addComponent(bordesRedondos1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 110, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 114, Short.MAX_VALUE)
                 .addComponent(btnRegresar)
                 .addContainerGap())
         );

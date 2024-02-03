@@ -27,7 +27,7 @@ public class ModeloTablaPeriodo extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 3;
+        return 4;
     }
 
     @Override
@@ -41,6 +41,8 @@ public class ModeloTablaPeriodo extends AbstractTableModel {
                     return (periodo != null) ? periodo.getFechaInicio() : "";
                 case 2:
                     return (periodo != null) ? periodo.getFechaFin() : "";
+                case 3:
+                    return (periodo != null) ? periodo.getEstadoPeriodoAcedemico(): "";
                 default:
                     return null;
             }
@@ -60,6 +62,8 @@ public class ModeloTablaPeriodo extends AbstractTableModel {
                 return "Fecha inicio";
             case 2:
                 return "Fecha fin";
+            case 3:
+                return "Estado";
             default:
                 return null;
         }

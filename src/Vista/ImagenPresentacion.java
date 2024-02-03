@@ -56,7 +56,7 @@ public class ImagenPresentacion extends javax.swing.JFrame {
         setTitle("PRESENTACION DE IMAGEN");
         setUndecorated(true);
 
-        Panel.setBackground(new java.awt.Color(204, 255, 204));
+        Panel.setBackground(new java.awt.Color(61, 90, 134));
         Panel.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 PanelMouseDragged(evt);
@@ -77,7 +77,7 @@ public class ImagenPresentacion extends javax.swing.JFrame {
         });
         Panel.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 610, -1, -1));
 
-        PresentarImagen.setForeground(new java.awt.Color(204, 255, 204));
+        PresentarImagen.setBackground(new java.awt.Color(61, 90, 134));
         PresentarImagen.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Panel.add(PresentarImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1010, 650));
 

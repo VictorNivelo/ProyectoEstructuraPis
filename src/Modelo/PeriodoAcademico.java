@@ -9,6 +9,7 @@ public class PeriodoAcademico {
     private Integer IdPeriodoAcademino;
     private String FechaInicio;
     private String FechaFin;
+    private String EstadoPeriodoAcedemico;
 
     public PeriodoAcademico() {
         
@@ -44,6 +45,14 @@ public class PeriodoAcademico {
         this.FechaFin = FechaFin;
     }
 
+    public String getEstadoPeriodoAcedemico() {
+        return EstadoPeriodoAcedemico;
+    }
+
+    public void setEstadoPeriodoAcedemico(String EstadoPeriodoAcedemico) {
+        this.EstadoPeriodoAcedemico = EstadoPeriodoAcedemico;
+    }
+    
     @Override
     public String toString() {
         return  FechaInicio + " - " + FechaFin + "\n";

@@ -9,7 +9,6 @@ import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
-
 import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 
 /**
@@ -36,8 +35,9 @@ public class VistaPersonalAdministracion extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
+        MenuHerramientas.setBackground(ColorFondo);
         
-        timer = new Timer(4000, new ActionListener() {
+        timer = new Timer(3000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cambiarImagen();
@@ -112,8 +112,6 @@ public class VistaPersonalAdministracion extends javax.swing.JFrame {
         };
         
         jButton5 = new javax.swing.JButton();
-        jButton12 = new javax.swing.JButton();
-        jButton14 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -150,20 +148,6 @@ public class VistaPersonalAdministracion extends javax.swing.JFrame {
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
-            }
-        });
-
-        jButton12.setText("TOMA ASISTENCIAS");
-        jButton12.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton12ActionPerformed(evt);
-            }
-        });
-
-        jButton14.setText("PERFIL");
-        jButton14.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton14ActionPerformed(evt);
             }
         });
 
@@ -204,10 +188,6 @@ public class VistaPersonalAdministracion extends javax.swing.JFrame {
             .addGroup(panelPrincipalLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButton5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton12)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton14)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -216,10 +196,7 @@ public class VistaPersonalAdministracion extends javax.swing.JFrame {
             .addGroup(panelPrincipalLayout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 498, Short.MAX_VALUE)
-                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton5)
-                    .addComponent(jButton12)
-                    .addComponent(jButton14))
+                .addComponent(jButton5)
                 .addContainerGap())
         );
 
@@ -417,27 +394,6 @@ public class VistaPersonalAdministracion extends javax.swing.JFrame {
         this.setVisible(false);
 
     }//GEN-LAST:event_jButton5ActionPerformed
-
-    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
-
-        try {
-            VistaDocentesTomaAsistencia abrirAsistencia = new VistaDocentesTomaAsistencia();
-            abrirAsistencia.setVisible(true);
-            this.setVisible(false);
-        }
-        catch (Exception e) {
-
-        }
-
-    }//GEN-LAST:event_jButton12ActionPerformed
-
-    private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
-
-        VistaAlumnoPerfil abrirAsistencia = new VistaAlumnoPerfil();
-        abrirAsistencia.setVisible(true);
-        this.setVisible(false);
-
-    }//GEN-LAST:event_jButton14ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
 
@@ -679,8 +635,6 @@ public class VistaPersonalAdministracion extends javax.swing.JFrame {
     private javax.swing.JMenuBar MenuHerramientas;
     private javax.swing.JMenu MenuInterfaz;
     private javax.swing.JMenu MenuPersona;
-    private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
