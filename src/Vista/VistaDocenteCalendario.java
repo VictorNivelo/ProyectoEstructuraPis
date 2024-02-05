@@ -127,6 +127,7 @@ public class VistaDocenteCalendario extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
         CalendarioApp c = new CalendarioApp();
+        c.AgregarEvento("29/febrero/2024", "Hola mundo");
         c.setVisible(true);
         this.dispose();
         

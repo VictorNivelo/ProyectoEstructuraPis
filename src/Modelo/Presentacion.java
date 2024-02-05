@@ -76,7 +76,7 @@ public class Presentacion {
 
     @Override
     public String toString() {
-        return "Codigo:" + Codigo + "\n";
+        return Codigo + "\n";
     }
     
 }

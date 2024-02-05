@@ -22,7 +22,7 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
     ListaDinamica<Matricula> listaMatricula = new ListaDinamica<>();
     matriculaDao MatriculaControlDao = new matriculaDao();
     ModeloTablaMatriculas mtm = new ModeloTablaMatriculas(); 
-    SimpleDateFormat Formato = new SimpleDateFormat("dd/MM/yyyy");
+    SimpleDateFormat Formato = new SimpleDateFormat("dd/MMMM/yyyy");
     
     /**
      * Creates new form Matricula
@@ -32,7 +32,7 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
-        DateFecha.setDateFormatString("dd/MM/yyyy");
+        DateFecha.setDateFormatString("dd/MMMM/yyyy");
         UtilVista.cargarcomboPeriodo(cbxPeriodo);
         UtilVista.cargarcomboCurso(cbxCursa);
         cbxEstadoMatricula.setEnabled(false);

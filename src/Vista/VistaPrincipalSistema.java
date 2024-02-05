@@ -56,7 +56,7 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
             }
         }
                 
-        timer = new Timer(3000, new ActionListener() {
+        timer = new Timer(2500, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -131,7 +131,33 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
 //    }
     
 
-    /* utiles para presentar por netbeans
+    /*utiles para presentar por netbeans
+    panelPrincipal = new javax.swing.JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                try {
+                    ImageIcon icon = new ImageIcon(getClass().getResource(CargarImagen()));
+                    g.drawImage(icon.getImage(), 0, 0, getWidth(), getHeight(), this);
+                } 
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            /*protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                ImageIcon icon;
+                try {
+                    icon = new ImageIcon(getClass().getResource(CargarImagen()));
+                    g.drawImage(icon.getImage(), 0, 0, getWidth(), getHeight(), this);
+                } 
+                catch (ListaVacia e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+    
     panelPrincipal = new javax.swing.JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -177,6 +203,7 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
                 }
             }*/
         };
+
         bordesRedondos1 = new Vista.Utiles.BordesRedondos();
         txtTitulo = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
@@ -199,7 +226,6 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
 
         txtTitulo.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
         txtTitulo.setForeground(new java.awt.Color(255, 255, 255));
-        txtTitulo.setText("La Transformación Continúa ");
         txtTitulo.setFocusable(false);
 
         jSeparator2.setBackground(new java.awt.Color(226, 6, 19));
@@ -220,7 +246,6 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
         txaContenido.setColumns(20);
         txaContenido.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
         txaContenido.setForeground(new java.awt.Color(255, 255, 255));
-        txaContenido.setText("Desde hace 163 años, somos la Institución  de Educación \nSuperior líder en el desarrollo de la cultura,  \nciencia y conocimiento de la Región Sur del Ecuador  ");
         txaContenido.setAutoscrolls(false);
         txaContenido.setBorder(null);
         txaContenido.setCaretColor(new java.awt.Color(0, 0, 0));
@@ -254,11 +279,11 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
             bordesRedondos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(bordesRedondos1Layout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addComponent(txtTitulo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(24, Short.MAX_VALUE))
         );
 

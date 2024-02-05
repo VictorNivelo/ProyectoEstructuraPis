@@ -1,6 +1,7 @@
 
 package Vista;
 
+import Controlador.Dao.Bridge;
 import Controlador.Dao.Modelo.presentacionDao;
 import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
@@ -8,6 +9,9 @@ import Controlador.Utiles.UtilesControlador;
 import Modelo.Presentacion;
 import Vista.ModeloTabla.ModeloTablaPresentacion;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.UUID;
@@ -82,12 +86,30 @@ public class VistaGestionInterfazPrincipal extends javax.swing.JFrame {
         }
     }
     
+    private String generarCodigo() throws ListaVacia {
+        int ultimoId = 0;
+
+        String presentacionURL = "Files" + File.separatorChar + "Presentacion.json";
+
+        try {
+            ListaDinamica<Presentacion> listaPresentacion = (ListaDinamica<Presentacion>) Bridge.getConection().fromXML(new FileReader(presentacionURL));
+
+            if (!listaPresentacion.EstaVacio()) {
+                Presentacion ultimaPresentacion = listaPresentacion.getInfo(listaPresentacion.getLongitud() - 1);
+                ultimoId = ultimaPresentacion.getIdPresentacion();
+            }
+        } 
+        catch (FileNotFoundException e) {
+        }
+
+        ultimoId++;
+
+        return "P-" + String.format("%04d", ultimoId);
+    }
+
     private void Guardar() throws ListaVacia {
 
-        if (txtCodigo.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar el codigo", "Error", JOptionPane.ERROR_MESSAGE);
-        } 
-        else if (txtImagen.getText().isEmpty()) {
+        if (txtImagen.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Falta llenar seleccionar la imagen", "Error", JOptionPane.ERROR_MESSAGE);
         }
         else if (txtTiempo.getText().isEmpty()) {
@@ -104,7 +126,7 @@ public class VistaGestionInterfazPrincipal extends javax.swing.JFrame {
         }
         else {
             Integer IdPresentacion = listaPresentacion.getLongitud() + 1;
-            String Codigo = txtCodigo.getText();
+            String Codigo = generarCodigo();
             String Tiempo = txtTiempo.getText();
             String Titulo = txtTitulo.getText();
             String Contenido = txtContenido.getText();
@@ -130,7 +152,6 @@ public class VistaGestionInterfazPrincipal extends javax.swing.JFrame {
                     if (!carpetaDestino.exists()) {
                         carpetaDestino.mkdirs();
                     }
-
                     Files.copy(ImagenPresentacion.toPath(), destino.toPath(), StandardCopyOption.REPLACE_EXISTING);
                 }
             } 
@@ -530,10 +551,8 @@ public class VistaGestionInterfazPrincipal extends javax.swing.JFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         
-        if (txtCodigo.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar el codigo", "Error", JOptionPane.ERROR_MESSAGE);
-        } 
-        else if (txtImagen.getText().isEmpty()) {
+
+        if (txtImagen.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Falta llenar seleccionar la imagen", "Error", JOptionPane.ERROR_MESSAGE);
         } 
         else if (txtTiempo.getText().isEmpty()) {
@@ -574,10 +593,7 @@ public class VistaGestionInterfazPrincipal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Escoga un registro");
         } 
         else {
-            if (txtCodigo.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar el codigo", "Error", JOptionPane.ERROR_MESSAGE);
-            } 
-            else if (txtImagen.getText().isEmpty()) {
+            if (txtImagen.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Falta llenar seleccionar la imagen", "Error", JOptionPane.ERROR_MESSAGE);
             } 
             else if (txtTiempo.getText().isEmpty()) {
