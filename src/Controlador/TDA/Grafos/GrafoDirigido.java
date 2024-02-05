@@ -13,6 +13,7 @@ public class GrafoDirigido extends Grafo{
     private Integer numeroAristas;
     private ListaDinamica<Adyacencia> ListaAdyacencia[];
     
+    @SuppressWarnings("unchecked")
     public GrafoDirigido(Integer num_vertices) {
         this.numeroVertices = num_vertices;
         this.numeroAristas = 0;

@@ -482,7 +482,7 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
     }//GEN-LAST:event_tblDocentesMouseClicked
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        
         try {
             ListaDinamica<Facultad> lista = facultadControlDao.all();
             
