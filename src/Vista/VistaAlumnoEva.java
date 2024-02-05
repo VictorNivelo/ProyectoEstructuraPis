@@ -311,11 +311,11 @@ public class VistaAlumnoEva extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void cbxMateriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxMateriasActionPerformed
-        
+        // TODO add your handling code here:
     }//GEN-LAST:event_cbxMateriasActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        
+        // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void btnCalendarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalendarioActionPerformed
