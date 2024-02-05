@@ -238,6 +238,7 @@ public class ListaDinamica<E> {
         Longitud = 0;
     }
     
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public E[] toArray() {
         Class clazz;
         E[] matriz = null;

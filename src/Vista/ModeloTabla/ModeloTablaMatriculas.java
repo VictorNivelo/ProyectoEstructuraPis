@@ -45,7 +45,7 @@ public class ModeloTablaMatriculas extends AbstractTableModel{
                 case 3:
                      return (matricula != null)? matricula.getPeriodoAcademicoMatricula().getFechaFin(): "";
                 case 4:
-                    return (matricula != null)? matricula.getCursoMatricula().getCodigoCurso(): "";
+                    return (matricula != null)? matricula.getCursoMatricula().getParalelo(): "";
                 default:
                     return null;
             }

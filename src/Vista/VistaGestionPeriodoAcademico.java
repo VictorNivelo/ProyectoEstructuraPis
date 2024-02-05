@@ -20,7 +20,7 @@ public class VistaGestionPeriodoAcademico extends javax.swing.JFrame {
     periodoAcademicoDao periodoControlDao = new periodoAcademicoDao();
     ModeloTablaPeriodo mtp = new ModeloTablaPeriodo();
     ListaDinamica<PeriodoAcademico> listaPeriodos = new ListaDinamica<>();
-    SimpleDateFormat Formato = new SimpleDateFormat("dd/MM/yyyy");
+    SimpleDateFormat Formato = new SimpleDateFormat("dd/MMMM/yyyy");
 
     /**
      * Creates new form VistaGestionPeriodoAcademico
@@ -29,8 +29,8 @@ public class VistaGestionPeriodoAcademico extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
-        DateInicio.setDateFormatString("dd/MM/yyyy");
-        DateFin.setDateFormatString("dd/MM/yyyy");
+        DateInicio.setDateFormatString("dd/MMMM/yyyy");
+        DateFin.setDateFormatString("dd/MMMM/yyyy");
         CargarTabla();
     }
     
@@ -38,8 +38,8 @@ public class VistaGestionPeriodoAcademico extends javax.swing.JFrame {
         mtp.setPeriodosTabla(periodoControlDao.all());
         tblPeriodos.setModel(mtp);
         tblPeriodos.updateUI();
-//        cbxTipoBusqueda.setSelectedIndex(-1);
-        cbxEstadoPeriodo.setSelectedIndex(-1);
+        cbxEstadoPeriodo.setSelectedIndex(0);
+        cbxEstadoPeriodo.setEnabled(false);
     }
     
     public void Limpiar() {
@@ -57,6 +57,7 @@ public class VistaGestionPeriodoAcademico extends javax.swing.JFrame {
         }
         else{
             try {
+                cbxEstadoPeriodo.setEnabled(true);
                 periodoControlDao.setPeriodo(mtp.getPeriodosTabla().getInfo(fila));
                 Date Inicio = Formato.parse(periodoControlDao.getPeriodo().getFechaInicio());
                 Date Fin = Formato.parse(periodoControlDao.getPeriodo().getFechaFin());
@@ -102,6 +103,7 @@ public class VistaGestionPeriodoAcademico extends javax.swing.JFrame {
             else {
                 JOptionPane.showMessageDialog(null, "NO SE PUEDE GUARDAR", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
             }
+            cbxEstadoPeriodo.setEnabled(false);
             Limpiar();
         }
     }
@@ -439,6 +441,8 @@ public class VistaGestionPeriodoAcademico extends javax.swing.JFrame {
                 periodoControlDao.Merge(periodoModificado, IdPeriodo - 1);
 
                 CargarTabla();
+                
+                cbxEstadoPeriodo.setEnabled(false);
 
                 Limpiar();
             }
@@ -456,6 +460,7 @@ public class VistaGestionPeriodoAcademico extends javax.swing.JFrame {
         else {
             periodoControlDao.Eliminar(fila);
             CargarTabla();
+            cbxEstadoPeriodo.setEnabled(false);
         }
 
     }//GEN-LAST:event_jButton3ActionPerformed

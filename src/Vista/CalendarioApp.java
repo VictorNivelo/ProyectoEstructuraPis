@@ -13,6 +13,7 @@ public class CalendarioApp extends JFrame {
     private JComboBox<Integer> ComboAnio;
     private int MesActual, AnioActual;
     private Map<String, ArrayList<String>> MapaRecordatorios;
+    SimpleDateFormat Formato = new SimpleDateFormat("dd/MMMM/yyyy");
 
     public CalendarioApp() {
         setTitle("CALENDARIO DOCENTE");
@@ -30,14 +31,30 @@ public class CalendarioApp extends JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
     }
-    
+
     public void AgregarEvento(String fecha, String descripcion) {
+
         ArrayList<String> recordatorios = MapaRecordatorios.getOrDefault(fecha, new ArrayList<>());
         recordatorios.add(descripcion);
         MapaRecordatorios.put(fecha, recordatorios);
+
         ActualizarCalendario();
     }
 
+    private void imprimirFechaActual(String fecha) {
+        System.out.println("Fecha: " + fecha);
+    }
+
+    private void actualizarAnioComboBox(int nuevoAnio) {
+        ComboAnio.setSelectedItem(nuevoAnio);
+        AnioActual = nuevoAnio;
+    }
+
+//    private void imprimirFechaActual() {
+//        SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
+//        String fechaActual = sdf.format(new Date());
+//        System.out.println("Fecha actual: " + fechaActual);
+//    }
     private void createGUI() {
         Container Contenedor = getContentPane();
         Contenedor.setLayout(new BorderLayout());
@@ -72,6 +89,10 @@ public class CalendarioApp extends JFrame {
         });
 
         PanelPrincipal.add(botonRegresar, BorderLayout.WEST);
+//BotonImprimir fecha
+//        JButton botonImprimirFecha = new JButton("Imprimir Fecha");
+//        botonImprimirFecha.addActionListener(e -> imprimirFechaActual());
+//        PanelPrincipal.add(botonImprimirFecha, BorderLayout.EAST);
 
         BotonAnterior.addActionListener(e -> {
             if (MesActual == 0) {
@@ -126,25 +147,18 @@ public class CalendarioApp extends JFrame {
         PanelCalendario = new JPanel(new GridLayout(0, 7));
         Contenedor.add(PanelCalendario, BorderLayout.CENTER);
     }
-    
-            
-    private void actualizarAnioComboBox(int nuevoAnio) {
-        ComboAnio.setSelectedItem(nuevoAnio);
-        AnioActual = nuevoAnio;
-    }
-
 
     private void ActualizarCalendario() {
         EtiquetaMes.setText(new SimpleDateFormat("          MMMM          ").format(new GregorianCalendar(AnioActual, MesActual, 1).getTime()));
         PanelCalendario.removeAll();
         String[] DiaMes = {"Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"};
-        
+
         for (String Dia : DiaMes) {
             JLabel EtiquetaDias = new JLabel(Dia, JLabel.CENTER);
             EtiquetaDias.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
             EtiquetaDias.setPreferredSize(new Dimension(50, 50));
-            EtiquetaDias.setForeground(Color.BLACK);
-            EtiquetaDias.setBackground(new Color(150, 150, 150));
+            EtiquetaDias.setForeground(Color.WHITE);
+            EtiquetaDias.setBackground(new Color(84, 82, 100));
             EtiquetaDias.setFont(new Font("SansSerif", Font.PLAIN, 18));
             EtiquetaDias.setOpaque(true);
             PanelCalendario.add(EtiquetaDias);
@@ -161,38 +175,46 @@ public class CalendarioApp extends JFrame {
         for (int i = 1; i <= DiasMes; i++) {
             JButton BotonDias = new JButton(String.valueOf(i));
             int finalI = i;
-            
+
             BotonDias.setPreferredSize(new Dimension(50, 50));
             BotonDias.setFont(new Font("Arial", Font.PLAIN, 20));
             BotonDias.setBackground(new Color(200, 200, 200));
             BotonDias.setForeground(Color.BLACK);
 
-            String Aux = AnioActual + "-" + MesActual + "-" + i;
-            ArrayList<String> Recordatorios = MapaRecordatorios.getOrDefault(Aux, new ArrayList<>());
+//            String FechaAux = String.format("%02d/%02d/%d", i, MesActual + 1, AnioActual);
+//                    AnioActual + "-" + MesActual + "-" + i;
+//ArrayList<String> Recordatorios = MapaRecordatorios.getOrDefault(FechaAux, new ArrayList<>());
+            String FechaAux = Formato.format(new GregorianCalendar(AnioActual, MesActual, i).getTime());
+            ArrayList<String> Recordatorios = MapaRecordatorios.getOrDefault(FechaAux, new ArrayList<>());
 
             if (!Recordatorios.isEmpty()) {
                 BotonDias.setForeground(Color.RED);
                 StringBuilder TextoAgregado = new StringBuilder("<html><center><font color='red'>" + i + "<br>");
-                
+
                 for (String reminder : Recordatorios) {
                     TextoAgregado.append("<font size='-1' color='black'>").append(reminder).append("<br></font>");
                 }
-                
+
                 TextoAgregado.append("</font></center></html>");
                 BotonDias.setText(TextoAgregado.toString());
             }
 
             BotonDias.addActionListener(e -> {
-                String Evento = JOptionPane.showInputDialog(null, "AGREGAR HORARIO EN " + finalI + " DE " + new SimpleDateFormat("MMMM yyyy").format(new GregorianCalendar(AnioActual, MesActual, finalI).getTime()), "INGRESAR EVENTO", JOptionPane.PLAIN_MESSAGE);
+                imprimirFechaActual(FechaAux);
+//                System.out.println("Fecha: " + FechaAux);
+                String Evento = JOptionPane.showInputDialog(null, "Agregar horario en " + finalI + " de " + new SimpleDateFormat("MMMM yyyy").format(new GregorianCalendar(AnioActual, MesActual, finalI).getTime()), "INGRESAR EVENTO", JOptionPane.PLAIN_MESSAGE);
 
                 if (Evento != null && !Evento.isEmpty()) {
                     BotonDias.setForeground(Color.RED);
                     Recordatorios.add(Evento);
-                    MapaRecordatorios.put(Aux, Recordatorios);
+                    MapaRecordatorios.put(FechaAux, Recordatorios);
                     ActualizarCalendario();
                 }
             });
             PanelCalendario.add(BotonDias);
+            //172, 174, 185
+            //225, 233, 225
+            PanelCalendario.setBackground(new Color(172, 174, 185));
         }
 
         revalidate();
@@ -203,16 +225,15 @@ public class CalendarioApp extends JFrame {
         int AnioInicio = 1950;
         int AnioFinal = 2100;
         Integer[] Anios = new Integer[AnioFinal - AnioInicio + 1];
-        
+
         for (int i = 0; i < Anios.length; i++) {
             Anios[i] = AnioInicio + i;
         }
-        
         return Anios;
     }
 
     public static void main(String[] args) {
-        
+
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -223,7 +244,7 @@ public class CalendarioApp extends JFrame {
         } 
         catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(VistaDocenteCalendario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
+        } 
         catch (InstantiationException ex) {
             java.util.logging.Logger.getLogger(VistaDocenteCalendario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } 
@@ -233,7 +254,7 @@ public class CalendarioApp extends JFrame {
         catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(VistaDocenteCalendario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        
+
         SwingUtilities.invokeLater(() -> new CalendarioApp());
     }
 }

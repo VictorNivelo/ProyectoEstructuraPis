@@ -23,7 +23,7 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
     personaDao personaControlDao = new personaDao();
     ListaDinamica<Persona> listaPersonas = new ListaDinamica<>();
     ModeloTablaPersona mtp = new ModeloTablaPersona();
-    SimpleDateFormat Formato = new SimpleDateFormat("dd/MM/yyyy");
+    SimpleDateFormat Formato = new SimpleDateFormat("dd/MMMM/yyyy");
 
     /**
      * Creates new form VistaRegistroAlumnos
@@ -34,7 +34,7 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
         UtilVista.cargarcomboRoles(cbxRol);
-        DateFechaNacimiento.setDateFormatString("dd/MM/yyyy");
+        DateFechaNacimiento.setDateFormatString("dd/MMMM/yyyy");
         CargarTabla();
     }
     
@@ -449,7 +449,7 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
         jLabel13.setForeground(new java.awt.Color(0, 0, 0));
         jLabel13.setText("Lista de personas");
 
-        DateFechaNacimiento.setDateFormatString("dd mm yyyy");
+        DateFechaNacimiento.setDateFormatString("dd MMMM yyyy");
 
         jLabel20.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(0, 0, 0));

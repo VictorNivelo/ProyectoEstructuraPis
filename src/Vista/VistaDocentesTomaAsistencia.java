@@ -36,7 +36,7 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         UtilVista.cargarcomboHorario(cbxHorario);
         setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
-        DateFechaActual.setDateFormatString("dd/MM/yyyy");
+        DateFechaActual.setDateFormatString("dd/MMMM/yyyy");
         dtm.setColumnIdentifiers(new String[]{"#", "Nombre", "Apellido", "Asistencia"});
         CargarTabla();
         tblt.setModel(dtm);

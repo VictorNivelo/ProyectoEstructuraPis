@@ -38,6 +38,7 @@ import javax.swing.JComboBox;
  */
 public class UtilVista {
     
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public static void cargarcomboRoles(JComboBox cbx) throws ListaVacia{
         rolDao rc = new rolDao();
         cbx.removeAllItems();
@@ -52,10 +53,12 @@ public class UtilVista {
         }
     }
     
+    @SuppressWarnings("rawtypes")
     public static Rol obtenerRolControl(JComboBox cbx){
         return (Rol) cbx.getSelectedItem();
     }
     
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public static void CargarComboMateria(JComboBox cbx) throws ListaVacia{
         materiaDao mc = new materiaDao();
         cbx.removeAllItems();
@@ -70,10 +73,12 @@ public class UtilVista {
         }
     }
     
+    @SuppressWarnings({"rawtypes" })
     public static Materia obtenerComboMateria(JComboBox cbx){
         return (Materia) cbx.getSelectedItem();
     }
     
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public static void cargarComboCiclo(JComboBox cbxC) throws ListaVacia{
         cicloDao rc = new cicloDao();
         cbxC.removeAllItems();
@@ -90,10 +95,12 @@ public class UtilVista {
         }
     }
     
+    @SuppressWarnings("rawtypes")
     public static Ciclo obtenerCicloControl(JComboBox cbx){
         return (Ciclo) cbx.getSelectedItem();
     }
     
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public static void cargarcomboCarrera(JComboBox cbx) throws ListaVacia{
         carreraDao rc = new carreraDao();
         cbx.removeAllItems();
@@ -108,10 +115,12 @@ public class UtilVista {
         }
     }
     
+    @SuppressWarnings("rawtypes")
     public static Carrera obtenerCarreraControl(JComboBox cbx){
         return (Carrera) cbx.getSelectedItem();
     }
     
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public static void cargarcomboMalla(JComboBox cbx) throws ListaVacia{
         mallaCurricularDao rc = new mallaCurricularDao();
         cbx.removeAllItems();
@@ -126,10 +135,12 @@ public class UtilVista {
         }
     }
     
+    @SuppressWarnings("rawtypes")
     public static MallaCurricular obtenerMallaControl(JComboBox cbx){
         return (MallaCurricular) cbx.getSelectedItem();
     }
     
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public static void cargarcomboHorario(JComboBox cbx) throws ListaVacia{
         horarioDao rc = new horarioDao();
         cbx.removeAllItems();
@@ -144,10 +155,12 @@ public class UtilVista {
         }
     }
     
+    @SuppressWarnings("rawtypes")
     public static Horario obtenerHorarioControl(JComboBox cbx){
         return (Horario) cbx.getSelectedItem();
     }
     
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public static void cargarcomboPeriodo(JComboBox cbx) throws ListaVacia{
         periodoAcademicoDao rc = new periodoAcademicoDao();
         cbx.removeAllItems();
@@ -162,10 +175,12 @@ public class UtilVista {
         }
     }
     
+    @SuppressWarnings("rawtypes")
     public static PeriodoAcademico obtenerPeriodoControl(JComboBox cbx){
         return (PeriodoAcademico) cbx.getSelectedItem();
     }
         
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public static void cargarcomboCurso(JComboBox cbx) throws ListaVacia{
         cursoDao rc = new cursoDao();
         cbx.removeAllItems();
@@ -180,10 +195,12 @@ public class UtilVista {
         }
     }
     
+    @SuppressWarnings("rawtypes")
     public static Cursa obtenerCursoControl(JComboBox cbx){
         return (Cursa) cbx.getSelectedItem();
     }
     
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public static void cargarcomboPersona(JComboBox cbx) throws ListaVacia {
         personaDao rc = new personaDao();
         cbx.removeAllItems();
@@ -198,10 +215,12 @@ public class UtilVista {
         }
     }
     
+    @SuppressWarnings("rawtypes")
     public static Persona obtenerPersonaControl(JComboBox cbx){
         return (Persona) cbx.getSelectedItem();
     }
     
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public static void cargarcomboAsistencia(JComboBox cbx) throws ListaVacia{
         asistenciaDao rc = new asistenciaDao();
         cbx.removeAllItems();
@@ -216,10 +235,12 @@ public class UtilVista {
         }
     }
     
+    @SuppressWarnings("rawtypes")
     public static Asistencia obtenerAsistenciaControl(JComboBox cbx){
         return (Asistencia) cbx.getSelectedItem();
     }
     
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public static void cargarcomboMatricula(JComboBox cbx) throws ListaVacia{
         matriculaDao rc = new matriculaDao();
         cbx.removeAllItems();
@@ -234,11 +255,12 @@ public class UtilVista {
         }
     }
     
+    @SuppressWarnings("rawtypes")
     public static Matricula obtenerMatriculaControl(JComboBox cbx){
         return (Matricula) cbx.getSelectedItem();
     }
     
-    
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public static void CargarComboUniversidad(JComboBox cbx) throws ListaVacia{
         universidadDao mc = new universidadDao();
         cbx.removeAllItems();
@@ -253,10 +275,12 @@ public class UtilVista {
         }
     }
     
+    @SuppressWarnings("rawtypes")
     public static Universidad obtenerUniversidadControl(JComboBox cbx){
         return (Universidad) cbx.getSelectedItem();
     }
     
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public static void CargarComboFacultad(JComboBox cbx) throws ListaVacia{
         facultadDao mc = new facultadDao();
         cbx.removeAllItems();
@@ -271,10 +295,12 @@ public class UtilVista {
         }
     }
     
+    @SuppressWarnings("rawtypes")
     public static Facultad obtenerFacultadControl(JComboBox cbx){
         return (Facultad) cbx.getSelectedItem();
     }
     
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public static void cargarcomboUnidad(JComboBox cbx) throws ListaVacia{
         unidadCurricularDao rc = new unidadCurricularDao();
         cbx.removeAllItems();
@@ -289,11 +315,13 @@ public class UtilVista {
         }
     }
     
+    @SuppressWarnings("rawtypes")
     public static UnidadCurricular obtenerUnidadControl(JComboBox cbx){
         return (UnidadCurricular) cbx.getSelectedItem();
     }
     
     //cargar combos especificos por rol
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public static void cargarcomboAlumnos(JComboBox cbx) throws ListaVacia {
         personaDao rc = new personaDao();
         cbx.removeAllItems();
@@ -312,10 +340,12 @@ public class UtilVista {
         }
     }
 
+    @SuppressWarnings("rawtypes")
     public static Persona obtenerAlumnosControl(JComboBox cbx) {
         return (Persona) cbx.getSelectedItem();
     }
     
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public static void cargarcomboDocentes(JComboBox cbx) throws ListaVacia {
         personaDao rc = new personaDao();
         cbx.removeAllItems();
@@ -334,6 +364,7 @@ public class UtilVista {
         }
     }
 
+    @SuppressWarnings("rawtypes")
     public static Persona obtenerDocentesControl(JComboBox cbx) {
         return (Persona) cbx.getSelectedItem();
     }

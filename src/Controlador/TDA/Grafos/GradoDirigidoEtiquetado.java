@@ -16,8 +16,10 @@ public class GradoDirigidoEtiquetado<E> extends GrafoDirigido{
     
     protected E etiquetas[];
     protected HashMap<E, Integer> dicVertices;
+    @SuppressWarnings("unused")
     private Class<E> clazz;
     
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     public GradoDirigidoEtiquetado(Integer numVert, Class clazz) {
         super(numVert);
         this.clazz = clazz;

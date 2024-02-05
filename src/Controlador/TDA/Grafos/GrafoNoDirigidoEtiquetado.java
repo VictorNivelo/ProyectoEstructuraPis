@@ -10,6 +10,7 @@ import Controlador.TDA.Grafos.Excepcion.VerticeException;
  */
 public class GrafoNoDirigidoEtiquetado<E> extends GradoDirigidoEtiquetado<E>{
     
+    @SuppressWarnings("rawtypes")
     public GrafoNoDirigidoEtiquetado(Integer numVer, Class clazz) {
         super(numVer, clazz);
     }

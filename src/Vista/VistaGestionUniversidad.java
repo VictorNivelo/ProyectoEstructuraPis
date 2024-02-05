@@ -20,7 +20,7 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
     universidadDao universidadControlDao = new universidadDao();
     ModeloTablaUniversidad mtp = new ModeloTablaUniversidad();
     ListaDinamica<Universidad> listaUniversidades = new ListaDinamica<>();
-    SimpleDateFormat Formato = new SimpleDateFormat("dd/MM/yyyy");
+    SimpleDateFormat Formato = new SimpleDateFormat("dd/MMMM/yyyy");
 
     /**
      * Creates new form VistaGestionUniversidad
@@ -28,7 +28,7 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
     public VistaGestionUniversidad() {
         initComponents();
         this.setLocationRelativeTo(null);
-        DateFundacion.setDateFormatString("dd/MM/yyyy");
+        DateFundacion.setDateFormatString("dd/MMMM/yyyy");
         setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
         CargarTabla();
     }

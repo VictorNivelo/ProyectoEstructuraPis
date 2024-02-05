@@ -24,7 +24,7 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
     ModeloTablaAsistencia mta = new ModeloTablaAsistencia();
     asistenciaDao AsistenciaControl = new asistenciaDao();
     ListaDinamica<Asistencia> listaAsistencia = new ListaDinamica<>();
-    SimpleDateFormat Formato = new SimpleDateFormat("dd/MM/yyyy");
+    SimpleDateFormat Formato = new SimpleDateFormat("dd/MMMM/yyyy");
 
     /**
      * Creates new form VistaPrincipal
@@ -35,7 +35,7 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
         LlenarComboConEnum();
-        DateFechaTematica.setDateFormatString("dd/MM/yyyy");
+        DateFechaTematica.setDateFormatString("dd/MMMM/yyyy");
         UtilVista.cargarcomboHorario(cbxHorario);
         CargarTabla();
     }

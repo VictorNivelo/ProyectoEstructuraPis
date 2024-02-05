@@ -10,7 +10,6 @@ import Controlador.TDA.ListaDinamica.ListaDinamica;
  */
 public class Cursa {
     private Integer IdCurso;
-    private String CodigoCurso;
     private String Paralelo;
     
     private Materia MateriaCurso;
@@ -33,14 +32,6 @@ public class Cursa {
 
     public void setIdCurso(Integer IdCurso) {
         this.IdCurso = IdCurso;
-    }
-
-    public String getCodigoCurso() {
-        return CodigoCurso;
-    }
-
-    public void setCodigoCurso(String CodigoCurso) {
-        this.CodigoCurso = CodigoCurso;
     }
 
     public String getParalelo() {
@@ -69,7 +60,7 @@ public class Cursa {
 
     @Override
     public String toString() {
-        return "Codigo:" + CodigoCurso + ", Paralelo:" + Paralelo + "\n";
+        return "Paralelo:" + Paralelo + "\n";
     }
     
 }
