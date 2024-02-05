@@ -70,7 +70,6 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
     }
     
 
-    @SuppressWarnings("unlikely-arg-type")
     public ListaDinamica<Alumno> getAlumnosPorCicloParalelo(Ciclo cicloSeleccionado, String paralelo) throws ListaVacia {
         ListaDinamica<Alumno> listaFiltrada = new ListaDinamica<>();
 
