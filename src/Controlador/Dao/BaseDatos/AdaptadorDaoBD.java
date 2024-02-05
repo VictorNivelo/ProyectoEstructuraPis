@@ -26,6 +26,7 @@ public class AdaptadorDaoBD<T> implements InterfazDaoBD<T> {
     /**
      * Class del modelo a usar
      */
+    @SuppressWarnings("rawtypes")
     private Class clazz;
 
     /**
@@ -33,6 +34,7 @@ public class AdaptadorDaoBD<T> implements InterfazDaoBD<T> {
      *
      * @param clazz El objeto de la clase del modelo Ejemplo: Persona.class
      */
+    @SuppressWarnings("rawtypes")
     public AdaptadorDaoBD(Class clazz) {
         this.conexion = new ConexionBD();
         this.clazz = clazz;
@@ -128,6 +130,7 @@ public class AdaptadorDaoBD<T> implements InterfazDaoBD<T> {
     }
 
     //--------------ESTO ES DEL CRUD NO MODIFICAR AL MENOS QUE LO AMERITE------
+    @SuppressWarnings("unchecked")
     private T llenarObjeto(ResultSet rs) {
         T data = null;
         try {
@@ -148,6 +151,7 @@ public class AdaptadorDaoBD<T> implements InterfazDaoBD<T> {
         return data;
     }
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     private void fijarDatos(Field f, ResultSet rs, T data, String atributo) {
         try {
             Method m = null;
@@ -188,6 +192,7 @@ public class AdaptadorDaoBD<T> implements InterfazDaoBD<T> {
         }
     }
 
+    @SuppressWarnings("unchecked")
     private HashMap<String, Object> obtenerObjeto(T obj) {
         HashMap<String, Object> mapa = new HashMap<>();
         try {

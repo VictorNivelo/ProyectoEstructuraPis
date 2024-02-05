@@ -12,6 +12,7 @@ import java.io.FileWriter;
  * @param <T>
  */
 public class DaoImplement<T> implements DaoInterface<T>{
+    @SuppressWarnings("unused")
     private Class<T> clazz;
     private XStream conection;
     private String URL;
@@ -60,6 +61,7 @@ public class DaoImplement<T> implements DaoInterface<T>{
         }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public ListaDinamica<T> all() {
         ListaDinamica<T> dl = new ListaDinamica<>();

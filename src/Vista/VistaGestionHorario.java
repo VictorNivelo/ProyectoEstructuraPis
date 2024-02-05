@@ -7,7 +7,6 @@ import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Controlador.Utiles.UtilesControlador;
 import Modelo.Horario;
-import Modelo.Presentacion;
 import Vista.ModeloTabla.ModeloTablaHorario;
 import Vista.Utiles.UtilVista;
 import java.io.File;
@@ -87,6 +86,7 @@ public class VistaGestionHorario extends javax.swing.JFrame {
         }
     }
     
+    @SuppressWarnings("unchecked")
     private String generarCodigo() throws ListaVacia {
         int ultimoId = 0;
 

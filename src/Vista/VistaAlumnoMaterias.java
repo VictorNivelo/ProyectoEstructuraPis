@@ -14,6 +14,7 @@ import javax.swing.JLabel;
  */
 public class VistaAlumnoMaterias extends javax.swing.JFrame {
 
+    @SuppressWarnings("unused")
     private String nombreMateria;
     private JLabel nuevoLabel;
 

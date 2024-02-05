@@ -1,7 +1,6 @@
 
 package Vista;
 
-import Controlador.Dao.Bridge;
 import Controlador.Dao.Modelo.cursoDao;
 import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
@@ -10,9 +9,6 @@ import Modelo.Cursa;
 import Vista.Utiles.UtilVista;
 import Vista.ModeloTabla.ModeloTablaCurso;
 import java.awt.event.KeyEvent;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -72,6 +68,7 @@ public class VistaGestionCurso extends javax.swing.JFrame {
         }
     }
     
+/*     @SuppressWarnings("unchecked")
     private String generarCodigo() throws ListaVacia {
         int ultimoId = 0;
 
@@ -91,7 +88,7 @@ public class VistaGestionCurso extends javax.swing.JFrame {
         ultimoId++;
 
         return "C-" + String.format("%04d", ultimoId);
-    }
+    }*/
     
     private void Guardar() throws ListaVacia {
 

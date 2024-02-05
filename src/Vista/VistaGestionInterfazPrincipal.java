@@ -11,7 +11,6 @@ import Vista.ModeloTabla.ModeloTablaPresentacion;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.UUID;
@@ -86,6 +85,7 @@ public class VistaGestionInterfazPrincipal extends javax.swing.JFrame {
         }
     }
     
+    @SuppressWarnings("unchecked")
     private String generarCodigo() throws ListaVacia {
         int ultimoId = 0;
 

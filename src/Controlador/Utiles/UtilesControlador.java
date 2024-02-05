@@ -53,6 +53,7 @@ public class UtilesControlador {
         return null;
     }
     
+    @SuppressWarnings("unchecked")
     private static <T> boolean comparar(T elemento1, T elemento2, String campo, Integer orden) {
         try {
             Field field = getField(elemento1.getClass(), campo);
@@ -154,6 +155,7 @@ public class UtilesControlador {
         lista.modificarPosicion(ayuda, j);
     }
 
+    @SuppressWarnings("unused")
     public static <T> ListaDinamica<T> BusquedaBinaria(ListaDinamica<T> lista, String Busqueda, String Campo) throws ListaVacia, PosicionNoEncontrada {
         ListaDinamica<T> listaOrdenada = QuickSort(lista, 1, Campo);
         ListaDinamica<T> ListaElementos = new ListaDinamica<>();
