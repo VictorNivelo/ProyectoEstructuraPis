@@ -1,6 +1,7 @@
 
 package Vista;
 
+import Controlador.Dao.Bridge;
 import Controlador.Dao.Modelo.matriculaDao;
 import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
@@ -8,6 +9,9 @@ import Controlador.Utiles.UtilesControlador;
 import Modelo.Matricula;
 import Vista.ModeloTabla.ModeloTablaMatriculas;
 import Vista.Utiles.UtilVista;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.ImageIcon;
@@ -34,7 +38,7 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
         setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
         DateFecha.setDateFormatString("dd/MMMM/yyyy");
         UtilVista.cargarcomboPeriodo(cbxPeriodo);
-        UtilVista.cargarcomboCurso(cbxCursa);
+        UtilVista.cargarcomboAlumnos(cbxAlumno);
         cbxEstadoMatricula.setEnabled(false);
         CargarTabla();
     }
@@ -43,7 +47,7 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
         mtm.setMatriculas(MatriculaControlDao.all());
         tbMatriculas.setModel(mtm);
         tbMatriculas.updateUI();
-        cbxCursa.setSelectedIndex(-1);
+        cbxAlumno.setSelectedIndex(-1);
         cbxPeriodo.setSelectedIndex(-1);
         cbxEstadoMatricula.setSelectedIndex(0);
         DateFecha.setDate(null);
@@ -51,7 +55,7 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
     
     private void Limpiar() throws ListaVacia {
         txtCodigoMatricula.setText("");
-        cbxCursa.setSelectedIndex(-1);
+        cbxAlumno.setSelectedIndex(-1);
         cbxPeriodo.setSelectedIndex(-1);
         cbxEstadoMatricula.setSelectedIndex(-1);
         DateFecha.setDate(null);
@@ -60,7 +64,7 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
     }
     
     public Boolean verificar() {
-        if (cbxCursa.getSelectedItem() == null) {
+        if (cbxAlumno.getSelectedItem() == null) {
             JOptionPane.showMessageDialog(this, "Debe seleccionar un Cursa.");
             return false;
         }
@@ -87,7 +91,7 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
                 DateFecha.setDate(Fecha);
                 cbxEstadoMatricula.setSelectedItem(MatriculaControlDao.getMatricula().getEstadoMatricula());
                 cbxPeriodo.setSelectedIndex(MatriculaControlDao.getMatricula().getPeriodoAcademicoMatricula().getIdPeriodoAcademino() -1);
-                cbxCursa.setSelectedIndex(MatriculaControlDao.getMatricula().getCursoMatricula().getIdCurso() -1);
+                cbxAlumno.setSelectedIndex(MatriculaControlDao.getMatricula().getAlumnoMatricula().getIdAlumno() -1);
                 
             } 
             catch (Exception e) {
@@ -95,14 +99,33 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
             }
         }
     }
+    
+    @SuppressWarnings("unchecked")
+    private String generarCodigo() throws ListaVacia {
+        int ultimoId = 0;
+
+        String presentacionURL = "Files" + File.separatorChar + "Matricula.json";
+
+        try {
+            ListaDinamica<Matricula> listaPresentacion = (ListaDinamica<Matricula>) Bridge.getConection().fromXML(new FileReader(presentacionURL));
+
+            if (!listaPresentacion.EstaVacio()) {
+                Matricula ultimaPresentacion = listaPresentacion.getInfo(listaPresentacion.getLongitud() - 1);
+                ultimoId = ultimaPresentacion.getIdMatricula();
+            }
+        } 
+        catch (FileNotFoundException e) {
+        }
+
+        ultimoId++;
+
+        return "M-" + String.format("%04d", ultimoId);
+    }
             
     private void Guardar() throws ListaVacia {
 
-        if (txtCodigoMatricula.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar numero dni", "Error", JOptionPane.ERROR_MESSAGE);
-        } 
-        else if (DateFecha.getDate() == null) {
-            JOptionPane.showMessageDialog(null, "Falta llenar nombre", "Error", JOptionPane.ERROR_MESSAGE);
+        if (DateFecha.getDate() == null) {
+            JOptionPane.showMessageDialog(null, "Falta llenar la fecha", "Error", JOptionPane.ERROR_MESSAGE);
         }
         else if (cbxEstadoMatricula.getSelectedIndex() == -1) {
             JOptionPane.showMessageDialog(null, "Falta seleccionar el estado", "Error", JOptionPane.ERROR_MESSAGE);
@@ -110,13 +133,13 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
         else if (cbxPeriodo.getSelectedIndex() == -1) {
             JOptionPane.showMessageDialog(null, "Falta seleccionar el periodo", "Error", JOptionPane.ERROR_MESSAGE);
         }
-        else if (cbxCursa.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(null, "Falta seleccionar el curso", "Error", JOptionPane.ERROR_MESSAGE);
+        else if (cbxAlumno.getSelectedIndex() == -1) {
+            JOptionPane.showMessageDialog(null, "Falta seleccionar el alumno", "Error", JOptionPane.ERROR_MESSAGE);
         }
         else {
             //Datos de matricula
             Integer IdMatricula = listaMatricula.getLongitud() + 1;
-            String Codigo = txtCodigoMatricula.getText();
+            String Codigo = generarCodigo();
             Date f = DateFecha.getDate();
             String FechaMatricula = Formato.format(f);
             String Estado = cbxEstadoMatricula.getSelectedItem().toString();
@@ -126,7 +149,7 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
             MatriculaControlDao.getMatricula().setFechaMatricula(FechaMatricula);
             MatriculaControlDao.getMatricula().setEstadoMatricula(Estado);
             MatriculaControlDao.getMatricula().setPeriodoAcademicoMatricula(UtilVista.obtenerPeriodoControl(cbxPeriodo));
-            MatriculaControlDao.getMatricula().setCursoMatricula(UtilVista.obtenerCursoControl(cbxCursa));
+            MatriculaControlDao.getMatricula().setAlumnoMatricula(UtilVista.obtenerAlumnosControl(cbxAlumno));
             
             if (MatriculaControlDao.persist()) {
                 JOptionPane.showMessageDialog(null, "MATRICULA GUARDADA EXISTOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
@@ -153,7 +176,7 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         cbxPeriodo = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
-        cbxCursa = new javax.swing.JComboBox<>();
+        cbxAlumno = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbMatriculas = new javax.swing.JTable();
@@ -192,7 +215,7 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
 
         jLabel6.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel6.setText("Curso:");
+        jLabel6.setText("Alumno");
 
         jLabel4.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
@@ -334,10 +357,10 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(btnGuardar))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                            .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cbxCursa, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(cbxAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(jPanel4Layout.createSequentialGroup()
@@ -347,7 +370,7 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                                     .addGroup(jPanel4Layout.createSequentialGroup()
                                         .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGap(11, 11, 11)))
+                                        .addGap(14, 14, 14)))
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(cbxPeriodo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(cbxEstadoMatricula, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -412,7 +435,7 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
-                            .addComponent(cbxCursa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(cbxAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 428, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -442,11 +465,8 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         
         try {
-            if (txtCodigoMatricula.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar numero dni", "Error", JOptionPane.ERROR_MESSAGE);
-            } 
-            else if (DateFecha.getDate() == null) {
-                JOptionPane.showMessageDialog(null, "Falta llenar nombre", "Error", JOptionPane.ERROR_MESSAGE);
+            if (DateFecha.getDate() == null) {
+                JOptionPane.showMessageDialog(null, "Falta llenar fecha", "Error", JOptionPane.ERROR_MESSAGE);
             } 
             else if (cbxEstadoMatricula.getSelectedIndex() == -1) {
                 JOptionPane.showMessageDialog(null, "Falta seleccionar el estado", "Error", JOptionPane.ERROR_MESSAGE);
@@ -454,8 +474,8 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
             else if (cbxPeriodo.getSelectedIndex() == -1) {
                 JOptionPane.showMessageDialog(null, "Falta seleccionar el periodo", "Error", JOptionPane.ERROR_MESSAGE);
             } 
-            else if (cbxCursa.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar el curso", "Error", JOptionPane.ERROR_MESSAGE);
+            else if (cbxAlumno.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Falta seleccionar el alumno", "Error", JOptionPane.ERROR_MESSAGE);
             }
             else {
                 Guardar();
@@ -497,8 +517,8 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
                 case "Periodo":
                     TipoCampo = "matriculaPeriodoAcademico.FechaInicioP";
                     break;
-                case "Curso":
-                    TipoCampo = "matriculaCursa.Paralelo";
+                case "Alumno":
+                    TipoCampo = "alumnoMatricula.DatosAlumno.NumeroCedula";
                     break;
                 default:
                     throw new AssertionError();
@@ -529,11 +549,8 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Escoga un registro");
         } 
         else {
-            if (txtCodigoMatricula.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar numero dni", "Error", JOptionPane.ERROR_MESSAGE);
-            } 
-            else if (DateFecha.getDate() == null) {
-                JOptionPane.showMessageDialog(null, "Falta llenar nombre", "Error", JOptionPane.ERROR_MESSAGE);
+            if (DateFecha.getDate() == null) {
+                JOptionPane.showMessageDialog(null, "Falta llenar fecha", "Error", JOptionPane.ERROR_MESSAGE);
             } 
             else if (cbxEstadoMatricula.getSelectedIndex() == -1) {
                 JOptionPane.showMessageDialog(null, "Falta seleccionar el estado", "Error", JOptionPane.ERROR_MESSAGE);
@@ -541,8 +558,8 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
             else if (cbxPeriodo.getSelectedIndex() == -1) {
                 JOptionPane.showMessageDialog(null, "Falta seleccionar el periodo", "Error", JOptionPane.ERROR_MESSAGE);
             } 
-            else if (cbxCursa.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar el curso", "Error", JOptionPane.ERROR_MESSAGE);
+            else if (cbxAlumno.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Falta seleccionar el alumno", "Error", JOptionPane.ERROR_MESSAGE);
             } 
             else {
 
@@ -557,7 +574,7 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
                 matriculaModicada.setCodigoMatricula(Codigo);
                 matriculaModicada.setFechaMatricula(FechaMatricula);
                 matriculaModicada.setEstadoMatricula(Estado);
-                matriculaModicada.setCursoMatricula(UtilVista.obtenerCursoControl(cbxCursa));
+                matriculaModicada.setAlumnoMatricula(UtilVista.obtenerAlumnosControl(cbxAlumno));
                 matriculaModicada.setPeriodoAcademicoMatricula(UtilVista.obtenerPeriodoControl(cbxPeriodo));
 
                 MatriculaControlDao.Merge(matriculaModicada, IdMatricula - 1);
@@ -637,7 +654,7 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnModificar;
-    private javax.swing.JComboBox<String> cbxCursa;
+    private javax.swing.JComboBox<String> cbxAlumno;
     private javax.swing.JComboBox<String> cbxEstadoMatricula;
     private javax.swing.JComboBox<String> cbxPeriodo;
     private javax.swing.JComboBox<String> cbxTipoBusqueda;

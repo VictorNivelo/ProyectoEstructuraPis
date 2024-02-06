@@ -1,6 +1,9 @@
 
 package Vista;
 
+import Controlador.Dao.Modelo.horarioDao;
+import Controlador.TDA.ListaDinamica.ListaDinamica;
+import Modelo.Horario;
 import javax.swing.ImageIcon;
 
 /**
@@ -126,11 +129,25 @@ public class VistaDocenteCalendario extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
-        CalendarioApp c = new CalendarioApp();
-        c.AgregarEvento("29/febrero/2024", "Hola mundo");
-        c.setVisible(true);
-        this.dispose();
-        
+        try {
+            CalendarioApp c = new CalendarioApp();
+            horarioDao HD = new horarioDao();
+            ListaDinamica<Horario> listaH = HD.all();
+            for (int i = 0; i < listaH.getLongitud(); i++) {
+                String Fecha = listaH.getInfo(i).getDiaSemana();
+                String Mensaje = listaH.getInfo(i).getMateriaHorario().getNombreMateria() + " "+
+                        listaH.getInfo(i).getMateriaHorario().getCicloMateria().getNombreCiclo();
+                System.out.println(listaH.getInfo(i).getDiaSemana());
+                c.AgregarEvento(Fecha, Mensaje);
+            }
+            
+            c.setVisible(true);
+            this.dispose();
+        } 
+        catch (Exception e) {
+            
+        }
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

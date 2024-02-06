@@ -74,7 +74,7 @@ public class VistaGestionMateria extends javax.swing.JFrame {
             }
         }
     }
-    
+        
     private void Guardar() throws ListaVacia {
 
         if (txtNombreMateria.getText().isEmpty()) {

@@ -54,9 +54,9 @@ public class ModeloTablaCurso extends AbstractTableModel {
                 case 0:
                     return (p != null) ? p.getIdCurso() : "";
                 case 1:
-                    return (p != null) ? p.getMateriaCurso().getNombreMateria() : "";
+                    return (p != null) ? p.getDocenteCursa().getDatosDocente().getNumeroCedula(): "";
                 case 2:
-                    return (p != null) ? p.getMateriaCurso().getCicloMateria().getNombreCiclo() : "";
+                    return (p != null) ? p.getDocenteCursa().getDatosDocente().getNombre(): "";
                 case 3:
                     return (p != null) ? p.getParalelo() : "";
                 default:
@@ -75,9 +75,9 @@ public class ModeloTablaCurso extends AbstractTableModel {
             case 0:
                 return "#";
             case 1:
-                return "Materia";
+                return "DNI";
             case 2:
-                return "Ciclo";
+                return "Nombre";
             case 3:
                 return "Paralelo";
 

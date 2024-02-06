@@ -28,13 +28,10 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
-        UtilVista.cargarcomboAlumnos(cbxAlumnos);
-        UtilVista.cargarcomboMatricula(cbxMatricula);
+        UtilVista.cargarcomboPersonaAlumnos(cbxAlumnos);
         cbxEstado.setEnabled(false);
         CargarTabla();
     }
-    
-    
     
     private void CargarTabla() {
         mta.setAlumnosTabla(alumnoControlDao.getListaAlumnos());
@@ -42,14 +39,12 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
         tblAlumnos.updateUI();
         cbxAlumnos.setSelectedIndex(-1);
         cbxEstado.setSelectedIndex(0);
-        cbxMatricula.setSelectedIndex(-1);
         cbxTipoBusqueda.setSelectedIndex(-1);
     }
     
     private void Limpiar() throws ListaVacia {
         cbxAlumnos.setSelectedIndex(-1);
         cbxEstado.setSelectedIndex(-1);
-        cbxMatricula.setSelectedIndex(-1);
         cbxTipoBusqueda.setSelectedIndex(-1);
         alumnoControlDao.setAlumnos(null);
         CargarTabla();
@@ -67,7 +62,6 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
                 
                 cbxAlumnos.setSelectedIndex(alumnoControlDao.getAlumnos().getIdAlumno()-1);
                 cbxEstado.setSelectedItem(alumnoControlDao.getAlumnos().getEstadoAlumno());
-                cbxMatricula.setSelectedIndex(alumnoControlDao.getAlumnos().getMatriculaAlumno().getIdMatricula()-1);
                 
             } 
             catch (Exception e) {
@@ -84,17 +78,13 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
         else if (cbxEstado.getSelectedIndex() == -1) {
             JOptionPane.showMessageDialog(null, "Falta llenar nombre de la carrera", "Error", JOptionPane.INFORMATION_MESSAGE);
         } 
-        else if (cbxMatricula.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(null, "Falta seleccionar la asistencia", "Error", JOptionPane.INFORMATION_MESSAGE);
-        } 
         else {
             Integer IdAlumno = listaAlumnos.getLongitud() + 1;
             String Estado = cbxEstado.getSelectedItem().toString();
                                    
             alumnoControlDao.getAlumnos().setIdAlumno(IdAlumno);
-            alumnoControlDao.getAlumnos().setDatosAlumno(UtilVista.obtenerAlumnosControl(cbxAlumnos));
+            alumnoControlDao.getAlumnos().setDatosAlumno(UtilVista.obtenerPersonaAlumnosControl(cbxAlumnos));
             alumnoControlDao.getAlumnos().setEstadoAlumno(Estado);
-            alumnoControlDao.getAlumnos().setMatriculaAlumno(UtilVista.obtenerMatriculaControl(cbxMatricula));
             //Agregar la matricula al alumno
 //            Matricula matricula = UtilVista.obtenerMatriculaControl(cbxMatricula);
 //            alumnoControlDao.getAlumnos().getListaMatriculaAlumno().Agregar(matricula);
@@ -126,9 +116,7 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
         cbxAlumnos = new javax.swing.JComboBox<>();
         jButton2 = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
@@ -142,7 +130,6 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         cbxEstado = new javax.swing.JComboBox<>();
-        cbxMatricula = new javax.swing.JComboBox<>();
         jLabel11 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jButton6 = new javax.swing.JButton();
@@ -197,18 +184,9 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Alumno");
 
-        jLabel5.setFont(new java.awt.Font("Candara Light", 1, 32)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("Matricula");
-
         jLabel6.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Estado");
-
-        jLabel7.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel7.setText("Matricula");
 
         jButton2.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jButton2.setText("GUARDAR");
@@ -296,11 +274,6 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
                         .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton2))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbxMatricula, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel11)
@@ -366,12 +339,6 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
                             .addComponent(cbxEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7)
-                            .addComponent(cbxMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -468,9 +435,6 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
             else if (cbxEstado.getSelectedIndex() == -1) {
                 JOptionPane.showMessageDialog(null, "Falta llenar nombre de la carrera", "Error", JOptionPane.INFORMATION_MESSAGE);
             } 
-            else if (cbxMatricula.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar la asistencia", "Error", JOptionPane.INFORMATION_MESSAGE);
-            } 
             else {
                 Guardar();
             }
@@ -494,18 +458,14 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
             else if (cbxEstado.getSelectedIndex() == -1) {
                 JOptionPane.showMessageDialog(null, "Falta seleccionar estado", "Error", JOptionPane.INFORMATION_MESSAGE);
             } 
-            else if (cbxMatricula.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar matricula", "Error", JOptionPane.INFORMATION_MESSAGE);
-            }
             else {
                 Integer IdAlumno = alumnoControlDao.getAlumnos().getIdAlumno();
                 String Estado = cbxEstado.getSelectedItem().toString();
                 
                 Alumno alumnoModificado = new Alumno();
                 alumnoModificado.setIdAlumno(IdAlumno);
-                alumnoModificado.setDatosAlumno(UtilVista.obtenerAlumnosControl(cbxAlumnos));
+                alumnoModificado.setDatosAlumno(UtilVista.obtenerPersonaAlumnosControl(cbxAlumnos));
                 alumnoModificado.setEstadoAlumno(Estado);
-                alumnoModificado.setMatriculaAlumno(UtilVista.obtenerMatriculaControl(cbxMatricula));
 //                IdAlumno, UtilVista.obtenerAlumnosControl(cbxAlumnos),Estado, UtilVista.obtenerMatriculaControl(cbxMatricula));
 
 //                Matricula matricula = UtilVista.obtenerMatriculaControl(cbxMatricula);
@@ -605,7 +565,6 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cbxAlumnos;
     private javax.swing.JComboBox<String> cbxEstado;
-    private javax.swing.JComboBox<String> cbxMatricula;
     private javax.swing.JComboBox<String> cbxTipoBusqueda;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -619,9 +578,7 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;

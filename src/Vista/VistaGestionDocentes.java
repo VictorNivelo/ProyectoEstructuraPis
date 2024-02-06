@@ -29,8 +29,7 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
-        UtilVista.cargarcomboDocentes(cbxDocente);
-        UtilVista.cargarcomboCurso(cbxCurso);
+        UtilVista.cargarcomboPersonaDocentes(cbxDocente);
         CargarTabla();
     }
     
@@ -39,13 +38,11 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
         tblDocentes.setModel(mtd);
         tblDocentes.updateUI();
         cbxDocente.setSelectedIndex(-1);
-        cbxCurso.setSelectedIndex(-1);
         cbxTipoBusqueda.setSelectedIndex(-1);
     }
     
     private void Limpiar() throws ListaVacia {
         cbxDocente.setSelectedIndex(-1);
-        cbxCurso.setSelectedIndex(-1);
         cbxTipoBusqueda.setSelectedIndex(-1);
         txtEspecialidad.setText("");
         txtAniosExperiencia.setText("");
@@ -67,7 +64,6 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
                 txtTitulacion.setText(docenteControlDao.getDocentes().getTitulacion());
                 txtAniosExperiencia.setText(docenteControlDao.getDocentes().getAniosExperiencia());
                 cbxDocente.setSelectedIndex(docenteControlDao.getDocentes().getIdDocente()-1);
-                cbxCurso.setSelectedIndex(docenteControlDao.getDocentes().getCursoDocente().getIdCurso()-1);
 
             } 
             catch (Exception e) {
@@ -90,9 +86,6 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
         else if (txtAniosExperiencia.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Falta llenar años de experiencia", "Error", JOptionPane.INFORMATION_MESSAGE);
         }
-        else if (cbxCurso.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(null, "Falta seleccionar curso", "Error", JOptionPane.INFORMATION_MESSAGE);
-        }
         else {
             Integer IdDocente =  listaDocentes.getLongitud()+1;
             String Especialidad = txtEspecialidad.getText();
@@ -103,8 +96,7 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
             docenteControlDao.getDocentes().setEspecialidad(Especialidad);
             docenteControlDao.getDocentes().setTitulacion(Titulacion);
             docenteControlDao.getDocentes().setAniosExperiencia(A);
-            docenteControlDao.getDocentes().setDatosDocente(UtilVista.obtenerDocentesControl(cbxDocente));
-            docenteControlDao.getDocentes().setCursoDocente(UtilVista.obtenerCursoControl(cbxCurso));
+            docenteControlDao.getDocentes().setDatosDocente(UtilVista.obtenerPersonaDocentesControl(cbxDocente));
             
             if (docenteControlDao.Persist()) {
                 JOptionPane.showMessageDialog(null, "DOCENTE GUARDADA EXISTOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
@@ -136,9 +128,6 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         txtEspecialidad = new javax.swing.JTextField();
         txtTitulacion = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        cbxCurso = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
@@ -213,15 +202,6 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
                 txtTitulacionKeyTyped(evt);
             }
         });
-
-        jLabel8.setFont(new java.awt.Font("Candara Light", 1, 32)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setText("Curso");
-
-        jLabel9.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel9.setText("Curso");
 
         jButton1.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jButton1.setText("REGRESAR");
@@ -319,11 +299,6 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbxCurso, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtTitulacion))
@@ -400,12 +375,6 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
                             .addComponent(txtAniosExperiencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel9)
-                            .addComponent(cbxCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton1)
@@ -448,9 +417,6 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
             else if (txtAniosExperiencia.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Falta llenar años de experiencia", "Error", JOptionPane.INFORMATION_MESSAGE);
             }
-            else if (cbxCurso.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar curso", "Error", JOptionPane.INFORMATION_MESSAGE);
-            } 
             else {
                 Guardar();
             }
@@ -494,9 +460,6 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
             else if (txtAniosExperiencia.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Falta llenar años de experiencia", "Error", JOptionPane.INFORMATION_MESSAGE);
             }
-            else if (cbxCurso.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar curso", "Error", JOptionPane.INFORMATION_MESSAGE);
-            } 
             else {
 
                 Integer IdDocente = docenteControlDao.getDocentes().getIdDocente();
@@ -509,8 +472,7 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
                 docenteModificado.setEspecialidad(Especialidad);
                 docenteModificado.setTitulacion(Titulacion);
                 docenteModificado.setAniosExperiencia(A);
-                docenteModificado.setDatosDocente(UtilVista.obtenerDocentesControl(cbxDocente));
-                docenteModificado.setCursoDocente(UtilVista.obtenerCursoControl(cbxCurso));
+                docenteModificado.setDatosDocente(UtilVista.obtenerPersonaDocentesControl(cbxDocente));
 
                 docenteControlDao.Merge(docenteModificado, IdDocente-1);
 
@@ -672,7 +634,6 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> cbxCurso;
     private javax.swing.JComboBox<String> cbxDocente;
     private javax.swing.JComboBox<String> cbxTipoBusqueda;
     private javax.swing.JButton jButton1;
@@ -691,8 +652,6 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;

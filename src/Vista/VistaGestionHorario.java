@@ -113,9 +113,6 @@ public class VistaGestionHorario extends javax.swing.JFrame {
         if (DateHorario.getDate() == null) {
             JOptionPane.showMessageDialog(null, "Falta seleccionar el dia", "Error", JOptionPane.ERROR_MESSAGE);
         }
-        else if (txtCodigoHorario.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar el codigo", "Error", JOptionPane.ERROR_MESSAGE);
-        }
         else if (txtHoraInicio.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Falta llenar hora inicio", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -455,9 +452,6 @@ public class VistaGestionHorario extends javax.swing.JFrame {
             if (DateHorario.getDate() == null) {
                 JOptionPane.showMessageDialog(null, "Falta seleccionar el dia", "Error", JOptionPane.ERROR_MESSAGE);
             } 
-            else if (txtCodigoHorario.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar el codigo", "Error", JOptionPane.ERROR_MESSAGE);
-            } 
             else if (txtHoraInicio.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Falta llenar hora inicio", "Error", JOptionPane.ERROR_MESSAGE);
             } 
@@ -494,9 +488,6 @@ public class VistaGestionHorario extends javax.swing.JFrame {
         else {
             if (DateHorario.getDate() == null) {
                 JOptionPane.showMessageDialog(null, "Falta seleccionar el dia", "Error", JOptionPane.ERROR_MESSAGE);
-            } 
-            else if (txtCodigoHorario.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar el codigo", "Error", JOptionPane.ERROR_MESSAGE);
             } 
             else if (txtHoraInicio.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Falta llenar hora inicio", "Error", JOptionPane.ERROR_MESSAGE);
