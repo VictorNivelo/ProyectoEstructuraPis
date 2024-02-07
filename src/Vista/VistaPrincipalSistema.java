@@ -353,30 +353,34 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
 
     private void MenuSgaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuSgaMouseClicked
         
-        VistaInicioSesion vi = new VistaInicioSesion();
-        vi.setVisible(true);
+        VistaInicioSesionEstudiante IE = new VistaInicioSesionEstudiante();
+        IE.setVisible(true);
         this.setVisible(false);
         
     }//GEN-LAST:event_MenuSgaMouseClicked
 
     private void MenuPersonalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuPersonalMouseClicked
         
-        VistaInicioSesionPersonal vi = new VistaInicioSesionPersonal();
-        vi.setVisible(true);
+        VistaInicioSesionPersonal IP  = new VistaInicioSesionPersonal();
+        IP.setVisible(true);
         this.setVisible(false);
         
     }//GEN-LAST:event_MenuPersonalMouseClicked
 
     private void MenuAcercaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuAcercaMouseClicked
         
-        VistaInicioSesion vi = new VistaInicioSesion();
-        vi.setVisible(true);
+        VistaInicioSesionEstudiante AU = new VistaInicioSesionEstudiante();
+        AU.setVisible(true);
         this.setVisible(false);
         
     }//GEN-LAST:event_MenuAcercaMouseClicked
 
     private void MenuSgaDocenteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuSgaDocenteMouseClicked
-        // TODO add your handling code here:
+        
+        VistaInicioSesionDocente ID = new VistaInicioSesionDocente();
+        ID.setVisible(true);
+        this.setVisible(false);
+        
     }//GEN-LAST:event_MenuSgaDocenteMouseClicked
 
     /**

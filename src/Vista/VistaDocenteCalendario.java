@@ -40,6 +40,8 @@ public class VistaDocenteCalendario extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("CALENDARIO DOCENTE");
 
+        jPanel1.setBackground(new java.awt.Color(172, 174, 185));
+
         jPanel2.setBackground(new java.awt.Color(61, 90, 134));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/LojoUNL.png"))); // NOI18N
@@ -75,6 +77,7 @@ public class VistaDocenteCalendario extends javax.swing.JFrame {
         });
 
         jButton2.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Regresar.png"))); // NOI18N
         jButton2.setText("REGRESAR");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

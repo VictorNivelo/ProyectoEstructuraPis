@@ -240,6 +240,7 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
         jLabel7.setText("Lista de asistencia");
 
         btnRegresar.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Regresar.png"))); // NOI18N
         btnRegresar.setText("REGRESAR");
         btnRegresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -265,6 +266,7 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
         jScrollPane2.setViewportView(tblAsistencia);
 
         btnRegistrarAsistencias.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        btnRegistrarAsistencias.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Guardar.png"))); // NOI18N
         btnRegistrarAsistencias.setText("GUARDAR");
         btnRegistrarAsistencias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -273,6 +275,7 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
         });
 
         btnModificar.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Modificar.png"))); // NOI18N
         btnModificar.setText("MODIFICAR");
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -281,6 +284,7 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
         });
 
         btnEliminar.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Eliminar.png"))); // NOI18N
         btnEliminar.setText("ELIMINAR");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -307,6 +311,7 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
         jLabel12.setText("Buscar por");
 
         cbxTipoBusqueda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tematica", "Fecha", "Estado de asistencia", "Observacion" }));
+        cbxTipoBusqueda.setSelectedIndex(-1);
 
         jLabel13.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(0, 0, 0));
@@ -351,7 +356,7 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
                         .addComponent(btnRegresar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnRegistrarAsistencias))
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)

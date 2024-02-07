@@ -69,6 +69,7 @@ public class ImagenPresentacion extends javax.swing.JFrame {
         });
         Panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Regresar.png"))); // NOI18N
         jButton1.setText("REGRESAR");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -77,7 +78,7 @@ public class ImagenPresentacion extends javax.swing.JFrame {
         });
         Panel.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 610, -1, -1));
 
-        PresentarImagen.setBackground(new java.awt.Color(61, 90, 134));
+        PresentarImagen.setBackground(new java.awt.Color(172, 174, 185));
         PresentarImagen.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Panel.add(PresentarImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1010, 650));
 

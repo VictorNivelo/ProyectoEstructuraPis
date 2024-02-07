@@ -144,6 +144,7 @@ public class VistaPersonalAdministracion extends javax.swing.JFrame {
         panelPrincipal.setToolTipText("");
 
         jButton5.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Regresar.png"))); // NOI18N
         jButton5.setText("REGRESAR");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -389,7 +390,7 @@ public class VistaPersonalAdministracion extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
 
-        VistaInicioSesion abrirLogin = new VistaInicioSesion();
+        VistaInicioSesionEstudiante abrirLogin = new VistaInicioSesionEstudiante();
         abrirLogin.setVisible(true);
         this.setVisible(false);
 

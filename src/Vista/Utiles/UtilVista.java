@@ -369,6 +369,7 @@ public class UtilVista {
     }
     
     //cargar combos especificos por rol
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public static void cargarcomboPersonaAlumnos(JComboBox cbx) throws ListaVacia {
         personaDao rc = new personaDao();
         cbx.removeAllItems();
