@@ -270,7 +270,7 @@ public class VistaGestionMateria extends javax.swing.JFrame {
         jLabel8.setForeground(new java.awt.Color(0, 0, 0));
         jLabel8.setText("Buscar por");
 
-        cbxTipoBusqueda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "Descripcion", "Numero de horas", "Horario" }));
+        cbxTipoBusqueda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "Descripcion", "Numero de horas", "Ciclo", "Paralelo" }));
         cbxTipoBusqueda.setSelectedIndex(-1);
 
         jLabel9.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
@@ -521,14 +521,16 @@ public class VistaGestionMateria extends javax.swing.JFrame {
                 case "Numero de horas":
                     TipoCampo = "NumeroHoras";
                     break;
-                case "Horario":
-                    TipoCampo = "HorarioMateria.DiaSemana";
+                case "Ciclo":
+                    TipoCampo = "cicloMateria.NombreCiclo";
                     break;
-
+                case "Paralelo":
+                    TipoCampo = "cursoMateria.Paralelo";
+                    break;
                 default:
                     throw new AssertionError();
             }
-            
+
             ListaDinamica<Materia> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
                         
             mtp.setMateriaTabla(ResultadoBusqueda);

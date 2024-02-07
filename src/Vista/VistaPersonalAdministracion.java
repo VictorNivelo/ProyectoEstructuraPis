@@ -273,7 +273,7 @@ public class VistaPersonalAdministracion extends javax.swing.JFrame {
         MenuGestion.add(jMenuItem10);
 
         jMenuItem11.setFont(new java.awt.Font("SansSerif", 0, 13)); // NOI18N
-        jMenuItem11.setText("Gestion matricular");
+        jMenuItem11.setText("Gestion matricula");
         jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem11ActionPerformed(evt);

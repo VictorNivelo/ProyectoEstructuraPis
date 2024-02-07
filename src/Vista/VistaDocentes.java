@@ -138,7 +138,7 @@ public class VistaDocentes extends javax.swing.JFrame {
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         
-        VistaPersonalAdministracion abrirLogin = new VistaPersonalAdministracion();
+        VistaInicioSesionDocente abrirLogin = new VistaInicioSesionDocente();
         abrirLogin.setVisible(true);
         this.setVisible(false);
         
