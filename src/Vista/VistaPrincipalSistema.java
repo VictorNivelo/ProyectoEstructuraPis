@@ -48,7 +48,7 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
         for (int i = 0; i < listaPresentacion.getLongitud(); i++) {
             try {
                 String imagen = listaPresentacion.getInfo(i).getImagen();
-                System.out.println(imagen);
+//                System.out.println(imagen);
                 imagenes.Agregar(imagen);
             } 
             catch (ListaVacia ex) {
