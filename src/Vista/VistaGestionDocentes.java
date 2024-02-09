@@ -147,7 +147,7 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
         txtAniosExperiencia = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         txtDocenteBusqueda = new javax.swing.JTextField();
-        jButton6 = new javax.swing.JButton();
+        btnBuscarDocente = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("GESTION DE DOCENTES");
@@ -304,10 +304,16 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
         jLabel8.setForeground(new java.awt.Color(0, 0, 0));
         jLabel8.setText("Docente");
 
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Buscar.png"))); // NOI18N
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        txtDocenteBusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDocenteBusquedaKeyTyped(evt);
+            }
+        });
+
+        btnBuscarDocente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Buscar.png"))); // NOI18N
+        btnBuscarDocente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                btnBuscarDocenteActionPerformed(evt);
             }
         });
 
@@ -323,7 +329,7 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtDocenteBusqueda)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton6))
+                        .addComponent(btnBuscarDocente))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -378,13 +384,13 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
                     .addComponent(jLabel13))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnBuscarDocente)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel11)
                         .addComponent(cbxTipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel12)
                         .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton3)
-                        .addComponent(jButton6))
+                        .addComponent(jButton3))
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel8)
                         .addComponent(txtDocenteBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -527,8 +533,14 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Escoga un registro");
         } 
         else {
-            docenteControlDao.Eliminar(fila);
-            CargarTabla();
+            try {
+                docenteControlDao.Eliminar(fila);
+                CargarTabla();
+                Limpiar();
+            } 
+            catch (Exception e) {
+                
+            }
         }
         
     }//GEN-LAST:event_jButton5ActionPerformed
@@ -624,7 +636,7 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
         
     }//GEN-LAST:event_txtAniosExperienciaKeyTyped
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void btnBuscarDocenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarDocenteActionPerformed
 
         try {
             personaDao PD = new personaDao();
@@ -636,9 +648,10 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
 
             cbxDocente.removeAllItems();
 
-            for (Persona docente : ResultadoBusqueda.toArray()) {
-                cbxDocente.addItem(docente.toString());
-                System.out.println(docente);
+            for (Persona pb : ResultadoBusqueda.toArray()) {
+                if (pb.getRolPersona().getNombreRol().equals("Docente")) {
+                    cbxDocente.addItem(pb);
+                }
             }
 
         } 
@@ -646,7 +659,21 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
 
         }
 
-    }//GEN-LAST:event_jButton6ActionPerformed
+    }//GEN-LAST:event_btnBuscarDocenteActionPerformed
+
+    private void txtDocenteBusquedaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDocenteBusquedaKeyTyped
+        
+        Character c = evt.getKeyChar();
+
+        if (!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE) {
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Solo ingreso de numeros", "CARACTER NO VALIDO", JOptionPane.WARNING_MESSAGE);
+        }
+        if (txtDocenteBusqueda.getText().length() >= 10 && c != KeyEvent.VK_BACK_SPACE) {
+            evt.consume();
+        }
+        
+    }//GEN-LAST:event_txtDocenteBusquedaKeyTyped
 
     /**
      * @param args the command line arguments
@@ -689,14 +716,14 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> cbxDocente;
+    private javax.swing.JButton btnBuscarDocente;
+    private javax.swing.JComboBox<Persona> cbxDocente;
     private javax.swing.JComboBox<String> cbxTipoBusqueda;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

@@ -2,12 +2,15 @@
 package Vista;
 
 import Controlador.Dao.Modelo.alumnoDao;
+import Controlador.Dao.Modelo.personaDao;
 import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Controlador.Utiles.UtilesControlador;
 import Modelo.Alumno;
+import Modelo.Persona;
 import Vista.ModeloTabla.ModeloTablaAlumnos;
 import Vista.Utiles.UtilVista;
+import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -131,7 +134,7 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
         cbxEstado = new javax.swing.JComboBox<>();
         jLabel11 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtAlumnoBusqueda = new javax.swing.JTextField();
         jButton6 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -263,8 +266,19 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
         jLabel11.setForeground(new java.awt.Color(0, 0, 0));
         jLabel11.setText("Alumno");
 
+        txtAlumnoBusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtAlumnoBusquedaKeyTyped(evt);
+            }
+        });
+
         jButton6.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Buscar.png"))); // NOI18N
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -282,7 +296,7 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1)
+                        .addComponent(txtAlumnoBusqueda)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton6))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -330,7 +344,7 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
                     .addComponent(jLabel10)
                     .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtAlumnoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -526,6 +540,45 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        
+        try {
+            personaDao PD = new personaDao();
+            ListaDinamica<Persona> lista = PD.all();
+
+            String Campo = txtAlumnoBusqueda.getText();
+
+            ListaDinamica<Persona> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, "NumeroCedula");
+
+            cbxAlumnos.removeAllItems();
+
+            for (Persona pb : ResultadoBusqueda.toArray()) {
+                if (pb.getRolPersona().getNombreRol().equals("Estudiante")) {
+                    cbxAlumnos.addItem(pb);
+                }
+            }
+
+        } 
+        catch (Exception e) {
+
+        }
+        
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void txtAlumnoBusquedaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAlumnoBusquedaKeyTyped
+        
+        Character c = evt.getKeyChar();
+
+        if (!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE) {
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Solo ingreso de numeros", "CARACTER NO VALIDO", JOptionPane.WARNING_MESSAGE);
+        }
+        if (txtAlumnoBusqueda.getText().length() >= 10 && c != KeyEvent.VK_BACK_SPACE) {
+            evt.consume();
+        }
+        
+    }//GEN-LAST:event_txtAlumnoBusquedaKeyTyped
+
     /**
      * @param args the command line arguments
      */
@@ -567,7 +620,7 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> cbxAlumnos;
+    private javax.swing.JComboBox<Object> cbxAlumnos;
     private javax.swing.JComboBox<String> cbxEstado;
     private javax.swing.JComboBox<String> cbxTipoBusqueda;
     private javax.swing.JButton jButton1;
@@ -588,8 +641,8 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTable tblAlumnos;
+    private javax.swing.JTextField txtAlumnoBusqueda;
     private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
 }
