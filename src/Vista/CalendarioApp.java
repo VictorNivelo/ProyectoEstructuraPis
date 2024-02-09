@@ -62,9 +62,13 @@ public class CalendarioApp extends JFrame {
         JPanel PanelPrincipal = new JPanel(new BorderLayout());
         PanelPrincipal.setBackground(new Color(61, 90, 134));
 
-        JButton BotonAnterior = new JButton("<< ANTERIOR");
-        JButton BotonSiguiente = new JButton("SIGUIENTE >>");
-
+        JButton BotonAnterior = new JButton("ANTERIOR");
+        BotonAnterior.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Anterior.png")));
+        
+        JButton BotonSiguiente = new JButton("SIGUIENTE");
+        BotonSiguiente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Siguiente.png")));
+        BotonSiguiente.setHorizontalTextPosition(SwingConstants.LEFT);
+    
         BotonAnterior.setBackground(new Color(83, 109, 136));
         BotonAnterior.setFont(new Font("SansSerif", Font.PLAIN, 16));
         BotonAnterior.setForeground(Color.WHITE);
@@ -81,6 +85,7 @@ public class CalendarioApp extends JFrame {
         PanelPrincipal.setBackground(new Color(61, 90, 134));
 
         JButton botonRegresar = new JButton("REGRESAR");
+        botonRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Regresar.png")));
         botonRegresar.addActionListener(e -> {
             VistaDocenteCalendario otraInterfaz = new VistaDocenteCalendario();
             otraInterfaz.setLocationRelativeTo(this);

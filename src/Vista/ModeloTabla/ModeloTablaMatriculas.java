@@ -28,7 +28,7 @@ public class ModeloTablaMatriculas extends AbstractTableModel{
 
     @Override
     public int getColumnCount() {
-        return 5;
+        return 6;
     }
 
     @Override
@@ -39,13 +39,15 @@ public class ModeloTablaMatriculas extends AbstractTableModel{
                 case 0:
                     return (matricula != null)? matricula.getFechaMatricula() : "";
                 case 1:
-                     return (matricula != null)? matricula.getEstadoMatricula(): "";
+                     return (matricula != null)? matricula.getCodigoMatricula(): "";
                 case 2:
-                     return (matricula != null)? matricula.getPeriodoAcademicoMatricula().getFechaInicio(): "";
+                     return (matricula != null)? matricula.getEstadoMatricula(): "";
                 case 3:
-                     return (matricula != null)? matricula.getPeriodoAcademicoMatricula().getFechaFin(): "";
+                     return (matricula != null)? matricula.getPeriodoAcademicoMatricula().getFechaInicio(): "";
                 case 4:
-                    return (matricula != null)? matricula.getCursoMatricula().getParalelo(): "";
+                     return (matricula != null)? matricula.getPeriodoAcademicoMatricula().getFechaFin(): "";
+                case 5:
+                    return (matricula != null)? matricula.getAlumnoMatricula().getDatosAlumno().getNumeroCedula(): "";
                 default:
                     return null;
             }
@@ -61,13 +63,15 @@ public class ModeloTablaMatriculas extends AbstractTableModel{
             case 0:
                 return "Fecha Matricula";
             case 1:
-                return "Estado";
+                return "Codigo";
             case 2:
-                return "Periodo inicio";
+                return "Estado";
             case 3:
-                return "Periodo fin";
+                return "Periodo inicio";
             case 4:
-                return "Cursa";
+                return "Periodo fin";
+            case 5:
+                return "Alumno";
             default:
                 return null;
         }

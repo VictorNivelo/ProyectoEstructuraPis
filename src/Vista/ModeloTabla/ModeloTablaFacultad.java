@@ -29,7 +29,7 @@ public class ModeloTablaFacultad extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 3;
+        return 4;
     }
     
     @Override
@@ -45,6 +45,8 @@ public class ModeloTablaFacultad extends AbstractTableModel {
                     return (f != null) ? f.getNombreFacultad(): "";
                 case 2:
                     return (f != null) ? f.getFechaCreacion(): "";
+                case 3:
+                    return (f != null) ? f.getUniversidadFacultad().getNombreUniversidad(): "";
                 default:
                     return null;
             }
@@ -65,6 +67,8 @@ public class ModeloTablaFacultad extends AbstractTableModel {
                 return "Nombre";
             case 2:
                 return "Fecha creacion";
+            case 3:
+                return "Universidad";
             default:
                 return null;
         }

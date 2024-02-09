@@ -1,11 +1,13 @@
 
 package Vista.Utiles;
 
+import Controlador.Dao.Modelo.alumnoDao;
 import Controlador.Dao.Modelo.asistenciaDao;
 import Controlador.Dao.Modelo.carreraDao;
 import Modelo.Ciclo;
 import Controlador.Dao.Modelo.cicloDao;
 import Controlador.Dao.Modelo.cursoDao;
+import Controlador.Dao.Modelo.docenteDao;
 import Controlador.Dao.Modelo.facultadDao;
 import Controlador.Dao.Modelo.horarioDao;
 import Controlador.Dao.Modelo.mallaCurricularDao;
@@ -17,9 +19,11 @@ import Controlador.Dao.Modelo.rolDao;
 import Controlador.Dao.Modelo.unidadCurricularDao;
 import Controlador.Dao.Modelo.universidadDao;
 import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
+import Modelo.Alumno;
 import Modelo.Asistencia;
 import Modelo.Carrera;
 import Modelo.Cursa;
+import Modelo.Docente;
 import Modelo.Facultad;
 import Modelo.Horario;
 import Modelo.MallaCurricular;
@@ -40,15 +44,15 @@ public class UtilVista {
     
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public static void cargarcomboRoles(JComboBox cbx) throws ListaVacia{
-        rolDao rc = new rolDao();
+        rolDao Rc = new rolDao();
         cbx.removeAllItems();
         
-        if(rc.getListaRol().EstaVacio()){
+        if(Rc.getListaRol().EstaVacio()){
             throw new ListaVacia("No hay roles que mostrar");
         }
         else{
-           for (int i = 0; i < rc.getListaRol().getLongitud(); i++) {
-            cbx.addItem(rc.getListaRol().getInfo(i));
+           for (int i = 0; i < Rc.getListaRol().getLongitud(); i++) {
+            cbx.addItem(Rc.getListaRol().getInfo(i));
            }
         }
     }
@@ -60,15 +64,15 @@ public class UtilVista {
     
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public static void CargarComboMateria(JComboBox cbx) throws ListaVacia{
-        materiaDao mc = new materiaDao();
+        materiaDao Mc = new materiaDao();
         cbx.removeAllItems();
         
-        if(mc.getListaMateria().EstaVacio()){
+        if(Mc.getListaMateria().EstaVacio()){
             throw new ListaVacia("No hay materias que mostrar");
         }
         else{
-           for (int i = 0; i < mc.getListaMateria().getLongitud(); i++) {
-            cbx.addItem(mc.getListaMateria().getInfo(i));
+           for (int i = 0; i < Mc.getListaMateria().getLongitud(); i++) {
+            cbx.addItem(Mc.getListaMateria().getInfo(i));
            }
         }
     }
@@ -80,16 +84,16 @@ public class UtilVista {
     
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public static void cargarComboCiclo(JComboBox cbxC) throws ListaVacia{
-        cicloDao rc = new cicloDao();
+        cicloDao Cc = new cicloDao();
         cbxC.removeAllItems();
 
         
-        if(rc.getListaCiclos().EstaVacio()){
+        if(Cc.getListaCiclos().EstaVacio()){
             throw new ListaVacia("No hay ciclos que mostrar");
         }
         else{
-           for (int i = 0; i < rc.getListaCiclos().getLongitud(); i++) {
-            cbxC.addItem(rc.getListaCiclos().getInfo(i));
+           for (int i = 0; i < Cc.getListaCiclos().getLongitud(); i++) {
+            cbxC.addItem(Cc.getListaCiclos().getInfo(i));
             
            }
         }
@@ -102,15 +106,15 @@ public class UtilVista {
     
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public static void cargarcomboCarrera(JComboBox cbx) throws ListaVacia{
-        carreraDao rc = new carreraDao();
+        carreraDao CaC = new carreraDao();
         cbx.removeAllItems();
         
-        if(rc.getListaCarreras().EstaVacio()){
+        if(CaC.getListaCarreras().EstaVacio()){
             throw new ListaVacia("No hay carreras que mostrar");
         }
         else{
-           for (int i = 0; i < rc.getListaCarreras().getLongitud(); i++) {
-            cbx.addItem(rc.getListaCarreras().getInfo(i));
+           for (int i = 0; i < CaC.getListaCarreras().getLongitud(); i++) {
+            cbx.addItem(CaC.getListaCarreras().getInfo(i));
            }
         }
     }
@@ -122,15 +126,15 @@ public class UtilVista {
     
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public static void cargarcomboMalla(JComboBox cbx) throws ListaVacia{
-        mallaCurricularDao rc = new mallaCurricularDao();
+        mallaCurricularDao MCc = new mallaCurricularDao();
         cbx.removeAllItems();
         
-        if(rc.getListaMalla().EstaVacio()){
+        if(MCc.getListaMalla().EstaVacio()){
             throw new ListaVacia("No hay malla que mostrar");
         }
         else{
-           for (int i = 0; i < rc.getListaMalla().getLongitud(); i++) {
-            cbx.addItem(rc.getListaMalla().getInfo(i));
+           for (int i = 0; i < MCc.getListaMalla().getLongitud(); i++) {
+            cbx.addItem(MCc.getListaMalla().getInfo(i));
            }
         }
     }
@@ -142,15 +146,15 @@ public class UtilVista {
     
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public static void cargarcomboHorario(JComboBox cbx) throws ListaVacia{
-        horarioDao rc = new horarioDao();
+        horarioDao Hc = new horarioDao();
         cbx.removeAllItems();
         
-        if(rc.getListaHorario().EstaVacio()){
+        if(Hc.getListaHorario().EstaVacio()){
             throw new ListaVacia("No hay horarios que mostrar");
         }
         else{
-           for (int i = 0; i < rc.getListaHorario().getLongitud(); i++) {
-            cbx.addItem(rc.getListaHorario().getInfo(i));
+           for (int i = 0; i < Hc.getListaHorario().getLongitud(); i++) {
+            cbx.addItem(Hc.getListaHorario().getInfo(i));
            }
         }
     }
@@ -159,22 +163,25 @@ public class UtilVista {
     public static Horario obtenerHorarioControl(JComboBox cbx){
         return (Horario) cbx.getSelectedItem();
     }
-    
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    public static void cargarcomboPeriodo(JComboBox cbx) throws ListaVacia{
-        periodoAcademicoDao rc = new periodoAcademicoDao();
+
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static void cargarcomboPeriodo(JComboBox cbx) throws ListaVacia {
+        periodoAcademicoDao PAc = new periodoAcademicoDao();
         cbx.removeAllItems();
-        
-        if(rc.getListaPeriodos().EstaVacio()){
+
+        if (PAc.getListaPeriodos().EstaVacio()) {
             throw new ListaVacia("No hay periodos que mostrar");
-        }
-        else{
-           for (int i = 0; i < rc.getListaPeriodos().getLongitud(); i++) {
-            cbx.addItem(rc.getListaPeriodos().getInfo(i));
-           }
+        } 
+        else {
+            for (int i = 0; i < PAc.getListaPeriodos().getLongitud(); i++) {
+                PeriodoAcademico PeriodoA = PAc.getListaPeriodos().getInfo(i);
+                if (PeriodoA.getEstadoPeriodoAcedemico() != null && PeriodoA.getEstadoPeriodoAcedemico().equalsIgnoreCase("Activo")) {
+                    cbx.addItem(PeriodoA);
+                }
+            }
         }
     }
-    
+
     @SuppressWarnings("rawtypes")
     public static PeriodoAcademico obtenerPeriodoControl(JComboBox cbx){
         return (PeriodoAcademico) cbx.getSelectedItem();
@@ -182,15 +189,15 @@ public class UtilVista {
         
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public static void cargarcomboCurso(JComboBox cbx) throws ListaVacia{
-        cursoDao rc = new cursoDao();
+        cursoDao Cc = new cursoDao();
         cbx.removeAllItems();
         
-        if(rc.getListaCursa().EstaVacio()){
+        if(Cc.getListaCursa().EstaVacio()){
             throw new ListaVacia("No hay cursos que mostrar");
         }
         else{
-           for (int i = 0; i < rc.getListaCursa().getLongitud(); i++) {
-            cbx.addItem(rc.getListaCursa().getInfo(i));
+           for (int i = 0; i < Cc.getListaCursa().getLongitud(); i++) {
+            cbx.addItem(Cc.getListaCursa().getInfo(i));
            }
         }
     }
@@ -202,15 +209,15 @@ public class UtilVista {
     
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public static void cargarcomboPersona(JComboBox cbx) throws ListaVacia {
-        personaDao rc = new personaDao();
+        personaDao Pc = new personaDao();
         cbx.removeAllItems();
 
-        if (rc.getListaPersonas().EstaVacio()) {
+        if (Pc.getListaPersonas().EstaVacio()) {
             throw new ListaVacia("No hay personas que mostrar");
         } 
         else {
-            for (int i = 0; i < rc.getListaPersonas().getLongitud(); i++) {
-                cbx.addItem(rc.getListaPersonas().getInfo(i));
+            for (int i = 0; i < Pc.getListaPersonas().getLongitud(); i++) {
+                cbx.addItem(Pc.getListaPersonas().getInfo(i));
             }
         }
     }
@@ -222,15 +229,15 @@ public class UtilVista {
     
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public static void cargarcomboAsistencia(JComboBox cbx) throws ListaVacia{
-        asistenciaDao rc = new asistenciaDao();
+        asistenciaDao Ac = new asistenciaDao();
         cbx.removeAllItems();
         
-        if(rc.getListaAsistencia().EstaVacio()){
+        if(Ac.getListaAsistencia().EstaVacio()){
             throw new ListaVacia("No hay asistencias que mostrar");
         }
         else{
-           for (int i = 0; i < rc.getListaAsistencia().getLongitud(); i++) {
-            cbx.addItem(rc.getListaAsistencia().getInfo(i));
+           for (int i = 0; i < Ac.getListaAsistencia().getLongitud(); i++) {
+            cbx.addItem(Ac.getListaAsistencia().getInfo(i));
            }
         }
     }
@@ -242,15 +249,15 @@ public class UtilVista {
     
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public static void cargarcomboMatricula(JComboBox cbx) throws ListaVacia{
-        matriculaDao rc = new matriculaDao();
+        matriculaDao Mc = new matriculaDao();
         cbx.removeAllItems();
         
-        if(rc.getListaMatriculas().EstaVacio()){
+        if(Mc.getListaMatriculas().EstaVacio()){
             throw new ListaVacia("No hay asistencias que mostrar");
         }
         else{
-           for (int i = 0; i < rc.getListaMatriculas().getLongitud(); i++) {
-            cbx.addItem(rc.getListaMatriculas().getInfo(i));
+           for (int i = 0; i < Mc.getListaMatriculas().getLongitud(); i++) {
+            cbx.addItem(Mc.getListaMatriculas().getInfo(i));
            }
         }
     }
@@ -262,15 +269,15 @@ public class UtilVista {
     
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public static void CargarComboUniversidad(JComboBox cbx) throws ListaVacia{
-        universidadDao mc = new universidadDao();
+        universidadDao Uc = new universidadDao();
         cbx.removeAllItems();
         
-        if(mc.getListaUniversidades().EstaVacio()){
+        if(Uc.getListaUniversidades().EstaVacio()){
             throw new ListaVacia("No hay universidades que mostrar");
         }
         else{
-           for (int i = 0; i < mc.getListaUniversidades().getLongitud(); i++) {
-            cbx.addItem(mc.getListaUniversidades().getInfo(i));
+           for (int i = 0; i < Uc.getListaUniversidades().getLongitud(); i++) {
+            cbx.addItem(Uc.getListaUniversidades().getInfo(i));
            }
         }
     }
@@ -282,15 +289,15 @@ public class UtilVista {
     
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public static void CargarComboFacultad(JComboBox cbx) throws ListaVacia{
-        facultadDao mc = new facultadDao();
+        facultadDao Fc = new facultadDao();
         cbx.removeAllItems();
         
-        if(mc.getListaFacultad().EstaVacio()){
+        if(Fc.getListaFacultad().EstaVacio()){
             throw new ListaVacia("No hay facultades que mostrar");
         }
         else{
-           for (int i = 0; i < mc.getListaFacultad().getLongitud(); i++) {
-            cbx.addItem(mc.getListaFacultad().getInfo(i));
+           for (int i = 0; i < Fc.getListaFacultad().getLongitud(); i++) {
+            cbx.addItem(Fc.getListaFacultad().getInfo(i));
            }
         }
     }
@@ -302,15 +309,15 @@ public class UtilVista {
     
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public static void cargarcomboUnidad(JComboBox cbx) throws ListaVacia{
-        unidadCurricularDao rc = new unidadCurricularDao();
+        unidadCurricularDao UCc = new unidadCurricularDao();
         cbx.removeAllItems();
         
-        if(rc.getListaUnidadCurricular().EstaVacio()){
+        if(UCc.getListaUnidadCurricular().EstaVacio()){
             throw new ListaVacia("No hay unidades que mostrar");
         }
         else{
-           for (int i = 0; i < rc.getListaUnidadCurricular().getLongitud(); i++) {
-            cbx.addItem(rc.getListaUnidadCurricular().getInfo(i));
+           for (int i = 0; i < UCc.getListaUnidadCurricular().getLongitud(); i++) {
+            cbx.addItem(UCc.getListaUnidadCurricular().getInfo(i));
            }
         }
     }
@@ -320,9 +327,50 @@ public class UtilVista {
         return (UnidadCurricular) cbx.getSelectedItem();
     }
     
-    //cargar combos especificos por rol
+    
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public static void cargarcomboAlumnos(JComboBox cbx) throws ListaVacia {
+        alumnoDao Ac = new alumnoDao();
+        cbx.removeAllItems();
+
+        if (Ac.getListaAlumnos().EstaVacio()) {
+            throw new ListaVacia("No hay alumnos que mostrar");
+        } 
+        else {
+            for (int i = 0; i < Ac.getListaAlumnos().getLongitud(); i++) {
+                cbx.addItem(Ac.getListaAlumnos().getInfo(i));
+            }
+        }
+    }
+
+    @SuppressWarnings("rawtypes")
+    public static Alumno obtenerAlumnosControl(JComboBox cbx) {
+        return (Alumno) cbx.getSelectedItem();
+    }
+    
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public static void cargarcomboDocente(JComboBox cbx) throws ListaVacia {
+        docenteDao Ac = new docenteDao();
+        cbx.removeAllItems();
+
+        if (Ac.getListaDocentes().EstaVacio()) {
+            throw new ListaVacia("No hay docentes que mostrar");
+        } 
+        else {
+            for (int i = 0; i < Ac.getListaDocentes().getLongitud(); i++) {
+                cbx.addItem(Ac.getListaDocentes().getInfo(i));
+            }
+        }
+    }
+
+    @SuppressWarnings("rawtypes")
+    public static Docente obtenerDocenteControl(JComboBox cbx) {
+        return (Docente) cbx.getSelectedItem();
+    }
+    
+    //cargar combos especificos por rol
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public static void cargarcomboPersonaAlumnos(JComboBox cbx) throws ListaVacia {
         personaDao rc = new personaDao();
         cbx.removeAllItems();
 
@@ -341,21 +389,21 @@ public class UtilVista {
     }
 
     @SuppressWarnings("rawtypes")
-    public static Persona obtenerAlumnosControl(JComboBox cbx) {
+    public static Persona obtenerPersonaAlumnosControl(JComboBox cbx) {
         return (Persona) cbx.getSelectedItem();
     }
     
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    public static void cargarcomboDocentes(JComboBox cbx) throws ListaVacia {
-        personaDao rc = new personaDao();
+    public static void cargarcomboPersonaDocentes(JComboBox cbx) throws ListaVacia {
+        personaDao Dc = new personaDao();
         cbx.removeAllItems();
 
-        if (rc.getListaPersonas().EstaVacio()) {
+        if (Dc.getListaPersonas().EstaVacio()) {
             throw new ListaVacia("No hay docentes que mostrar");
         } 
         else {
-            for (int i = 0; i < rc.getListaPersonas().getLongitud(); i++) {
-                Persona persona = rc.getListaPersonas().getInfo(i);
+            for (int i = 0; i < Dc.getListaPersonas().getLongitud(); i++) {
+                Persona persona = Dc.getListaPersonas().getInfo(i);
 
                 if (persona.getRolPersona() != null && persona.getRolPersona().getNombreRol().equalsIgnoreCase("Docente")) {
                     cbx.addItem(persona);
@@ -365,7 +413,7 @@ public class UtilVista {
     }
 
     @SuppressWarnings("rawtypes")
-    public static Persona obtenerDocentesControl(JComboBox cbx) {
+    public static Persona obtenerPersonaDocentesControl(JComboBox cbx) {
         return (Persona) cbx.getSelectedItem();
     }
     

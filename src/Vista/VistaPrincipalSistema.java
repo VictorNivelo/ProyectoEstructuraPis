@@ -22,7 +22,7 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
     private ListaDinamica<Presentacion> listaPresentacion = presentacionControlDao.all();
     private ListaDinamica<String> imagenes = new ListaDinamica<>();
     
-    private int indiceImagenActual = 0;
+    private int indiceImagenActual = -1;
     private Timer timer;
 
     /**
@@ -48,14 +48,17 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
         for (int i = 0; i < listaPresentacion.getLongitud(); i++) {
             try {
                 String imagen = listaPresentacion.getInfo(i).getImagen();
-                System.out.println(imagen);
+//                System.out.println(imagen);
                 imagenes.Agregar(imagen);
             } 
             catch (ListaVacia ex) {
                 
             }
         }
-                
+
+        cambiarImagen();
+        CargarDatos();
+  
         timer = new Timer(2500, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -70,12 +73,12 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
         });
         timer.start();
     }
-    
+
     private void CargarDatos() throws ListaVacia {
         String auxContenido = "";
         String auxTitulo = "";
         String auxEstado = "";
-        
+
         try {
             auxEstado = listaPresentacion.getInfo(indiceImagenActual).getEstadoPresentacion();
             if ("Activa".equalsIgnoreCase(auxEstado)) {
@@ -101,7 +104,7 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
                 rutaImagen = rutaImagen.substring(3);
             }
             return rutaImagen;
-        } 
+        }
         catch (NullPointerException e) {
             e.printStackTrace();
             return "";
@@ -117,11 +120,12 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
         while (!"Activa".equalsIgnoreCase(listaPresentacion.getInfo(indiceImagenActual).getEstadoPresentacion()) && intentos < imagenes.getLongitud());
 
         panelPrincipal.repaint();
+        
         try {
             CargarDatos();
-        }
+        } 
         catch (ListaVacia ex) {
-            ex.printStackTrace(); 
+            ex.printStackTrace();
         }
     }
 
@@ -144,20 +148,8 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
                     e.printStackTrace();
                 }
             }
-            /*protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                ImageIcon icon;
-                try {
-                    icon = new ImageIcon(getClass().getResource(CargarImagen()));
-                    g.drawImage(icon.getImage(), 0, 0, getWidth(), getHeight(), this);
-                } 
-                catch (ListaVacia e) {
-                    e.printStackTrace();
-                }
-            }
         };
 
-    
     panelPrincipal = new javax.swing.JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -191,17 +183,6 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
                     e.printStackTrace();
                 }
             }
-            /*protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                ImageIcon icon;
-                try {
-                    icon = new ImageIcon(getClass().getResource(CargarImagen()));
-                    g.drawImage(icon.getImage(), 0, 0, getWidth(), getHeight(), this);
-                } 
-                catch (ListaVacia e) {
-                    e.printStackTrace();
-                }
-            }*/
         };
 
         bordesRedondos1 = new Vista.Utiles.BordesRedondos();
@@ -212,6 +193,7 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         MenuPrincipal = new javax.swing.JMenuBar();
         MenuSga = new javax.swing.JMenu();
+        MenuSgaDocente = new javax.swing.JMenu();
         MenuPersonal = new javax.swing.JMenu();
         MenuAcerca = new javax.swing.JMenu();
 
@@ -314,7 +296,7 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
         MenuPrincipal.setLayout(new FlowLayout(FlowLayout.CENTER));
 
         MenuSga.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/MenuBar/Alumno.png"))); // NOI18N
-        MenuSga.setText("SGA");
+        MenuSga.setText("SGA ESTUDIANTES");
         MenuSga.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         MenuSga.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -322,6 +304,16 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
             }
         });
         MenuPrincipal.add(MenuSga);
+
+        MenuSgaDocente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/MenuBar/Docente.png"))); // NOI18N
+        MenuSgaDocente.setText("SGA DOCENTES");
+        MenuSgaDocente.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        MenuSgaDocente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MenuSgaDocenteMouseClicked(evt);
+            }
+        });
+        MenuPrincipal.add(MenuSgaDocente);
 
         MenuPersonal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/MenuBar/Personal.png"))); // NOI18N
         MenuPersonal.setText("PERSONAL ADMINISTRATIVO");
@@ -361,27 +353,35 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
 
     private void MenuSgaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuSgaMouseClicked
         
-        VistaInicioSesion vi = new VistaInicioSesion();
-        vi.setVisible(true);
+        VistaInicioSesionEstudiante IE = new VistaInicioSesionEstudiante();
+        IE.setVisible(true);
         this.setVisible(false);
         
     }//GEN-LAST:event_MenuSgaMouseClicked
 
     private void MenuPersonalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuPersonalMouseClicked
         
-        VistaInicioSesionPersonal vi = new VistaInicioSesionPersonal();
-        vi.setVisible(true);
+        VistaInicioSesionPersonal IP  = new VistaInicioSesionPersonal();
+        IP.setVisible(true);
         this.setVisible(false);
         
     }//GEN-LAST:event_MenuPersonalMouseClicked
 
     private void MenuAcercaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuAcercaMouseClicked
         
-        VistaInicioSesion vi = new VistaInicioSesion();
-        vi.setVisible(true);
+        VistaInicioSesionEstudiante AU = new VistaInicioSesionEstudiante();
+        AU.setVisible(true);
         this.setVisible(false);
         
     }//GEN-LAST:event_MenuAcercaMouseClicked
+
+    private void MenuSgaDocenteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuSgaDocenteMouseClicked
+        
+        VistaInicioSesionDocente ID = new VistaInicioSesionDocente();
+        ID.setVisible(true);
+        this.setVisible(false);
+        
+    }//GEN-LAST:event_MenuSgaDocenteMouseClicked
 
     /**
      * @param args the command line arguments
@@ -427,6 +427,7 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
     private javax.swing.JMenu MenuPersonal;
     private javax.swing.JMenuBar MenuPrincipal;
     private javax.swing.JMenu MenuSga;
+    private javax.swing.JMenu MenuSgaDocente;
     private Vista.Utiles.BordesRedondos bordesRedondos1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;

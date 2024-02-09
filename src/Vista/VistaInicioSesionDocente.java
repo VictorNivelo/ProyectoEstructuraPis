@@ -17,13 +17,13 @@ import javax.swing.JOptionPane;
  *
  * @author Victor
  */
-public class VistaInicioSesion extends javax.swing.JFrame {
+public class VistaInicioSesionDocente extends javax.swing.JFrame {
     personaDao personaControlDao = new personaDao();
 
     /**
      * Creates new form VistaInicioSeccion
      */
-    public VistaInicioSesion() {
+    public VistaInicioSesionDocente() {
         initComponents();
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
@@ -90,53 +90,53 @@ public class VistaInicioSesion extends javax.swing.JFrame {
                 case "Administrador":
                     procesarAdministrador();
                     break;
-                case "Personal administrativo":
-                    procesarPersonalAdministrativo();
-                    break;
                 case "Docente":
                     procesarDocente();
-                    break;
-                case "Estudiante":
-                    procesarEstudiante();
                     break;
                 default:
                     break;
             }
         }
     }
-    
+  
     private void VerificarUsuario() {
         ListaDinamica<Persona> listaPersonas = personaControlDao.all();
-        
+
         String usuarioIngresado = txtCorreo.getText();
         char[] c = txtContrasenia.getPassword();
         String contrasenaIngresada = new String(c);
 
         boolean credencialesCorrectas = false;
+        boolean esDocente = false;
 
         for (Persona persona : listaPersonas.toArray()) {
             Cuenta cuenta = persona.getCuentaPersona();
             if (cuenta != null && cuenta.getCorreo().equals(usuarioIngresado) && cuenta.getContrasena().equals(contrasenaIngresada)) {
                 credencialesCorrectas = true;
-                DetectarRol(persona);
-                dispose();
-                break;
+                if (persona.getRolPersona() != null && persona.getRolPersona().getNombreRol().equals("Docente")) {
+                    esDocente = true;
+                    break;
+                } 
+                else {
+                    JOptionPane.showMessageDialog(null, "Solo los docentes pueden acceder ", "ACCESO DENEGADO", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
             }
         }
-        if (!credencialesCorrectas) {
-            JOptionPane.showMessageDialog(null, "Inicio de sesión fallido. Verifique sus credenciales.","CREDENCIALES INCORRECTAS",JOptionPane.WARNING_MESSAGE);
+
+        if (credencialesCorrectas && esDocente) {
+            procesarDocente();
+            dispose();
+        } 
+        else {
+            JOptionPane.showMessageDialog(null, "Inicio de sesión fallido. Verifique sus credenciales.", "CREDENCIALES INCORRECTAS", JOptionPane.WARNING_MESSAGE);
             txtCorreo.setText("");
             txtContrasenia.setText("");
         }
     }
-    
+
     private static void procesarAdministrador() {
         System.out.println("Es un administrador");
-    }
-
-    private static void procesarPersonalAdministrativo() {
-        VistaPersonalAdministracion abrirAsistencia = new VistaPersonalAdministracion();
-        abrirAsistencia.setVisible(true);
     }
     
     private static void procesarDocente() {
@@ -149,27 +149,6 @@ public class VistaInicioSesion extends javax.swing.JFrame {
 
         }
     }
-
-    private static void procesarEstudiante() {
-        try {
-            VistaAlumnoEva abrirAsistencia = new VistaAlumnoEva(null, true);
-            abrirAsistencia.setVisible(true);
-        } 
-        catch (Exception e) {
-            
-        }
-    }
-    
-//    private static void AutentificarUsuario(ListaDinamica<Persona> listaPersonas, String usuarioIngresado, String contrasenaIngresada) {
-//        for (Persona persona : listaPersonas.toArray()) {
-//            Cuenta cuenta = persona.getCuentaPersona();
-//            if (cuenta != null && cuenta.getCorreo().equals(usuarioIngresado) && cuenta.getContrasena().equals(contrasenaIngresada)) {
-//                DetectarRol(persona);
-//                return;
-//            }
-//        }
-//        JOptionPane.showMessageDialog(null, "Autenticación fallida. Verifique sus credenciales.","CREDENCIALES NO VALIDAS",JOptionPane.WARNING_MESSAGE);
-//    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -192,8 +171,7 @@ public class VistaInicioSesion extends javax.swing.JFrame {
         txtContrasenia = new javax.swing.JPasswordField();
         btnIniciarSeccion = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("AUTENTIFICACION");
+        setTitle("AUTENTIFICACION DOCENTES");
 
         jPanel1.setBackground(new java.awt.Color(190, 193, 197));
 
@@ -227,6 +205,7 @@ public class VistaInicioSesion extends javax.swing.JFrame {
         );
 
         btnRegresar.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Regresar.png"))); // NOI18N
         btnRegresar.setText("REGRESAR");
         btnRegresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -387,21 +366,23 @@ public class VistaInicioSesion extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VistaInicioSesion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaInicioSesionDocente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VistaInicioSesion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaInicioSesionDocente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VistaInicioSesion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaInicioSesionDocente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VistaInicioSesion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaInicioSesionDocente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VistaInicioSesion().setVisible(true);
+                new VistaInicioSesionDocente().setVisible(true);
             }
         });
     }

@@ -13,10 +13,13 @@ public class Matricula {
     private String FechaMatricula;
     private String EstadoMatricula;
     
-    private Cursa cursoMatricula;
-    private PeriodoAcademico periodoAcademicoMatricula;
+    private Alumno alumnoMatricula;
+    private ListaDinamica<Alumno> listaAlumnos;
     
+    private Cursa cursoMatricula;
     private ListaDinamica<Cursa> listaCursoMatricula;
+    
+    private PeriodoAcademico periodoAcademicoMatricula;
     private ListaDinamica<PeriodoAcademico> listaPeriodoMatricula;
     
     public Matricula() {
@@ -95,7 +98,22 @@ public class Matricula {
     public void setListaPeriodoMatricula(ListaDinamica<PeriodoAcademico> listaPeriodoMatricula) {
         this.listaPeriodoMatricula = listaPeriodoMatricula;
     }
-  
+
+    public Alumno getAlumnoMatricula() {
+        return alumnoMatricula;
+    }
+
+    public void setAlumnoMatricula(Alumno alumnoMatricula) {
+        this.alumnoMatricula = alumnoMatricula;
+    }
+
+    public ListaDinamica<Alumno> getListaAlumnos() {
+        return listaAlumnos;
+    }
+
+    public void setListaAlumnos(ListaDinamica<Alumno> listaAlumnos) {
+        this.listaAlumnos = listaAlumnos;
+    }
 
     @Override
     public String toString() {

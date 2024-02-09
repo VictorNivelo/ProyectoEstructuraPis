@@ -72,7 +72,7 @@ public class ModeloTablaMallaCurricular extends AbstractTableModel {
             case 3:
                 return "Estado";
             case 4:
-                return "Ciclo";
+                return "Carrera";
             default:
                 return null;
         }

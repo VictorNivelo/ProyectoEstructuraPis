@@ -1,6 +1,9 @@
 
 package Vista;
 
+import Controlador.Dao.Modelo.horarioDao;
+import Controlador.TDA.ListaDinamica.ListaDinamica;
+import Modelo.Horario;
 import javax.swing.ImageIcon;
 
 /**
@@ -37,6 +40,8 @@ public class VistaDocenteCalendario extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("CALENDARIO DOCENTE");
 
+        jPanel1.setBackground(new java.awt.Color(172, 174, 185));
+
         jPanel2.setBackground(new java.awt.Color(61, 90, 134));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/LojoUNL.png"))); // NOI18N
@@ -72,6 +77,7 @@ public class VistaDocenteCalendario extends javax.swing.JFrame {
         });
 
         jButton2.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Regresar.png"))); // NOI18N
         jButton2.setText("REGRESAR");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -126,11 +132,26 @@ public class VistaDocenteCalendario extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
-        CalendarioApp c = new CalendarioApp();
-        c.AgregarEvento("29/febrero/2024", "Hola mundo");
-        c.setVisible(true);
-        this.dispose();
-        
+        try {
+            CalendarioApp c = new CalendarioApp();
+            horarioDao HD = new horarioDao();
+            ListaDinamica<Horario> listaH = HD.all();
+            for (int i = 0; i < listaH.getLongitud(); i++) {
+                String Fecha = listaH.getInfo(i).getDiaSemana();
+                String Mensaje = listaH.getInfo(i).getMateriaHorario().getNombreMateria() + " "+
+                        listaH.getInfo(i).getMateriaHorario().getCicloMateria().getNombreCiclo()+ " " +
+                        listaH.getInfo(i).getMateriaHorario().getCursoMateria().getParalelo();
+                System.out.println(listaH.getInfo(i).getDiaSemana());
+                c.AgregarEvento(Fecha, Mensaje);
+            }
+            
+            c.setVisible(true);
+            this.dispose();
+        } 
+        catch (Exception e) {
+            
+        }
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
