@@ -34,8 +34,8 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         
         panelPrincipal.setOpaque(false);
-        txaContenido.setOpaque(false);
-        txaContenido.setBorder(null);
+//        txaContenido.setOpaque(false);
+//        txaContenido.setBorder(null);
         jScrollPane2.setOpaque(false); 
         jScrollPane2.getViewport().setOpaque(false); 
         jScrollPane2.setBorder(null);
@@ -369,7 +369,7 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
 
     private void MenuAcercaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuAcercaMouseClicked
         
-        VistaInicioSesionEstudiante AU = new VistaInicioSesionEstudiante();
+        VistaAcercaNosotros AU = new VistaAcercaNosotros();
         AU.setVisible(true);
         this.setVisible(false);
         

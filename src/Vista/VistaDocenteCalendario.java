@@ -133,7 +133,7 @@ public class VistaDocenteCalendario extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
         try {
-            CalendarioApp c = new CalendarioApp();
+            VistaCalendarioDocente c = new VistaCalendarioDocente();
             horarioDao HD = new horarioDao();
             ListaDinamica<Horario> listaH = HD.all();
             for (int i = 0; i < listaH.getLongitud(); i++) {
