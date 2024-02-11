@@ -15,22 +15,9 @@ public class Cursa {
     private Matricula matriculaCursa;
     private ListaDinamica<Matricula> listaMatriculaCursa;
     
-    private Docente docenteCursa;
-    private ListaDinamica<Docente> listaDocentesCursa;
-    
-    private Materia MateriaCurso;
-    private ListaDinamica<Materia> listaMateriaCurso;
-    
     public Cursa() {
         
     }
-
-//    public Cursa(Integer IdCurso, String CodigoCurso, String Paralelo, Materia MateriaCurso) {
-//        this.IdCurso = IdCurso;
-//        this.CodigoCurso = CodigoCurso;
-//        this.Paralelo = Paralelo;
-//        this.MateriaCurso = MateriaCurso;
-//    }
 
     public Integer getIdCurso() {
         return IdCurso;
@@ -48,22 +35,6 @@ public class Cursa {
         this.Paralelo = Paralelo;
     }
 
-    public Materia getMateriaCurso() {
-        return MateriaCurso;
-    }
-
-    public void setMateriaCurso(Materia MateriaCurso) {
-        this.MateriaCurso = MateriaCurso;
-    }
-
-    public ListaDinamica<Materia> getListaMateriaCurso() {
-        return listaMateriaCurso;
-    }
-
-    public void setListaMateriaCurso(ListaDinamica<Materia> listaMateriaCurso) {
-        this.listaMateriaCurso = listaMateriaCurso;
-    }
-
     public Matricula getMatriculaCursa() {
         return matriculaCursa;
     }
@@ -79,26 +50,10 @@ public class Cursa {
     public void setListaMatriculaCursa(ListaDinamica<Matricula> listaMatriculaCursa) {
         this.listaMatriculaCursa = listaMatriculaCursa;
     }
-
-    public Docente getDocenteCursa() {
-        return docenteCursa;
-    }
-
-    public void setDocenteCursa(Docente docenteCursa) {
-        this.docenteCursa = docenteCursa;
-    }
-
-    public ListaDinamica<Docente> getListaDocentesCursa() {
-        return listaDocentesCursa;
-    }
-
-    public void setListaDocentesCursa(ListaDinamica<Docente> listaDocentesCursa) {
-        this.listaDocentesCursa = listaDocentesCursa;
-    }
     
     @Override
     public String toString() {
-        return "Paralelo:" + Paralelo + "\n";
+        return Paralelo + "\n";
     }
     
 }

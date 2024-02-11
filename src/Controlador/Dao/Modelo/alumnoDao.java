@@ -37,18 +37,6 @@ public class alumnoDao extends DaoImplement<Alumno>{
         this.alumnos = alumnos;
     }
     
-    //obtener los valores dentro de la lista de alumnos para estableces la tabla
-//    public ListaDinamica<Alumno> obtenerAlumnosConMatricula() {
-//        ListaDinamica<Alumno> alumnosConMatricula = new ListaDinamica<>();
-//
-//        for (Alumno alumno : listaAlumnos.toArray()) {
-//            if (alumno.getListaMatriculaAlumno() != null && !alumno.getListaMatriculaAlumno().EstaVacio()) {
-//                alumnosConMatricula.Agregar(alumno);
-//            }
-//        }
-//        return alumnosConMatricula;
-//    }
-    
     public Boolean Persist(){
         alumnos.setIdAlumno(all().getLongitud()+1);
         return Persist(alumnos);

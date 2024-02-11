@@ -54,11 +54,11 @@ public class ModeloTablaCurso extends AbstractTableModel {
                 case 0:
                     return (p != null) ? p.getIdCurso() : "";
                 case 1:
-                    return (p != null) ? p.getDocenteCursa().getDatosDocente().getNumeroCedula(): "";
+                    return (p != null) ? p.getParalelo(): "";
                 case 2:
-                    return (p != null) ? p.getDocenteCursa().getDatosDocente().getNombre(): "";
+                    return (p != null) ? p.getMatriculaCursa().getAlumnoMatricula().getDatosAlumno().getNumeroCedula(): "";
                 case 3:
-                    return (p != null) ? p.getParalelo() : "";
+                    return (p != null) ? p.getMatriculaCursa().getAlumnoMatricula().getEstadoAlumno(): "";
                 case 4:
                     return (p != null) ? p.getMatriculaCursa().getCodigoMatricula(): "";
                 default:
@@ -77,11 +77,11 @@ public class ModeloTablaCurso extends AbstractTableModel {
             case 0:
                 return "#";
             case 1:
-                return "DNI docente";
-            case 2:
-                return "Nombre docente";
-            case 3:
                 return "Paralelo";
+            case 2:
+                return "DNI alumno";
+            case 3:
+                return "Estado matricula";
             case 4:
                 return "Codigo matricula";
 

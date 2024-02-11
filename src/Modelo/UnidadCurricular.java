@@ -1,6 +1,8 @@
 
 package Modelo;
 
+import Controlador.TDA.ListaDinamica.ListaDinamica;
+
 /**
  *
  * @author Victor
@@ -12,14 +14,8 @@ public class UnidadCurricular {
     private String DescripcionUnidadCurricular;
     
     private MallaCurricular mallaCurricularUnidadCurricular;
+    private ListaDinamica<MallaCurricular> listaMallaCurricularUnidadCurricula;
 
-//    public UnidadCurricular(Integer IdUnidadCurricular, String CodigoUnidadCurricular, String NombreUnidadCurricular, String DescripcionUnidadCurricular, MallaCurricular mallaCurricularUnidadCurricular) {
-//        this.IdUnidadCurricular = IdUnidadCurricular;
-//        this.CodigoUnidadCurricular = CodigoUnidadCurricular;
-//        this.NombreUnidadCurricular = NombreUnidadCurricular;
-//        this.DescripcionUnidadCurricular = DescripcionUnidadCurricular;
-//        this.mallaCurricularUnidadCurricular = mallaCurricularUnidadCurricular;
-//    }
 
     public Integer getIdUnidadCurricular() {
         return IdUnidadCurricular;
@@ -61,9 +57,17 @@ public class UnidadCurricular {
         this.mallaCurricularUnidadCurricular = mallaCurricularUnidadCurricular;
     }
 
+    public ListaDinamica<MallaCurricular> getListaMallaCurricularUnidadCurricula() {
+        return listaMallaCurricularUnidadCurricula;
+    }
+
+    public void setListaMallaCurricularUnidadCurricula(ListaDinamica<MallaCurricular> listaMallaCurricularUnidadCurricula) {
+        this.listaMallaCurricularUnidadCurricula = listaMallaCurricularUnidadCurricula;
+    }
+
     @Override
     public String toString() {
-        return "Codigo:" + CodigoUnidadCurricular + ", Nombre:" + NombreUnidadCurricular + "\n";
+        return CodigoUnidadCurricular + " " +NombreUnidadCurricular + "\n";
     }
     
 }

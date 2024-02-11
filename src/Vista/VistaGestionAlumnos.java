@@ -31,8 +31,9 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
-        UtilVista.cargarcomboPersonaAlumnos(cbxAlumnos);
+        UtilVista.cargarcomboPersonaAlumnos(cbxAlumno);
         cbxEstado.setEnabled(false);
+        cbxAlumno.setMaximumRowCount(cbxAlumno.getItemCount());
         CargarTabla();
     }
     
@@ -40,13 +41,13 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
         mta.setAlumnosTabla(alumnoControlDao.getListaAlumnos());
         tblAlumnos.setModel(mta);
         tblAlumnos.updateUI();
-        cbxAlumnos.setSelectedIndex(-1);
+        cbxAlumno.setSelectedIndex(-1);
         cbxEstado.setSelectedIndex(0);
         cbxTipoBusqueda.setSelectedIndex(-1);
     }
     
     private void Limpiar() throws ListaVacia {
-        cbxAlumnos.setSelectedIndex(-1);
+        cbxAlumno.setSelectedIndex(-1);
         cbxEstado.setSelectedIndex(-1);
         cbxTipoBusqueda.setSelectedIndex(-1);
         alumnoControlDao.setAlumnos(null);
@@ -63,7 +64,7 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
                 cbxEstado.setEnabled(true);
                 alumnoControlDao.setAlumnos(mta.getAlumnosTabla().getInfo(fila));
                 
-                cbxAlumnos.setSelectedIndex(alumnoControlDao.getAlumnos().getIdAlumno()-1);
+                cbxAlumno.setSelectedIndex(alumnoControlDao.getAlumnos().getIdAlumno()-1);
                 cbxEstado.setSelectedItem(alumnoControlDao.getAlumnos().getEstadoAlumno());
                 
             } 
@@ -75,7 +76,7 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
     
     private void Guardar() throws ListaVacia {
 
-        if (cbxAlumnos.getSelectedIndex() == -1) {
+        if (cbxAlumno.getSelectedIndex() == -1) {
             JOptionPane.showMessageDialog(null, "Falta llenar nombre de la carrera", "Error", JOptionPane.INFORMATION_MESSAGE);
         } 
         else if (cbxEstado.getSelectedIndex() == -1) {
@@ -86,7 +87,7 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
             String Estado = cbxEstado.getSelectedItem().toString();
                                    
             alumnoControlDao.getAlumnos().setIdAlumno(IdAlumno);
-            alumnoControlDao.getAlumnos().setDatosAlumno(UtilVista.obtenerPersonaAlumnosControl(cbxAlumnos));
+            alumnoControlDao.getAlumnos().setDatosAlumno(UtilVista.obtenerPersonaAlumnosControl(cbxAlumno));
             alumnoControlDao.getAlumnos().setEstadoAlumno(Estado);
             //Agregar la matricula al alumno
 //            Matricula matricula = UtilVista.obtenerMatriculaControl(cbxMatricula);
@@ -120,7 +121,7 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        cbxAlumnos = new javax.swing.JComboBox<>();
+        cbxAlumno = new javax.swing.JComboBox<>();
         jButton2 = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -292,25 +293,30 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
                         .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton2))
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtAlumnoBusqueda)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton6))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cbxAlumnos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cbxEstado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbxAlumno, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbxEstado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtAlumnoBusqueda)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton6))
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton4))
+                    .addComponent(jScrollPane1)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cbxTipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -320,12 +326,7 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
                         .addComponent(txtBuscar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton3))
-                    .addComponent(jScrollPane1)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4)))
+                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -337,22 +338,23 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(jLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(cbxTipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3)
-                    .addComponent(jLabel10)
-                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel11)
-                    .addComponent(txtAlumnoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton6))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton6, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel9)
+                        .addComponent(cbxTipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton3)
+                        .addComponent(jLabel10)
+                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel11)
+                        .addComponent(txtAlumnoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
-                            .addComponent(cbxAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cbxAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
@@ -447,7 +449,7 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         
         try {
-            if (cbxAlumnos.getSelectedIndex() == -1) {
+            if (cbxAlumno.getSelectedIndex() == -1) {
                 JOptionPane.showMessageDialog(null, "Falta llenar nombre de la carrera", "Error", JOptionPane.INFORMATION_MESSAGE);
             } 
             else if (cbxEstado.getSelectedIndex() == -1) {
@@ -470,7 +472,7 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Escoga un registro","REGISTRO NO SELECCIONADO",JOptionPane.WARNING_MESSAGE);
         } 
         else {
-            if (cbxAlumnos.getSelectedIndex() == -1) {
+            if (cbxAlumno.getSelectedIndex() == -1) {
                 JOptionPane.showMessageDialog(null, "Falta seleccionar alumno", "Error", JOptionPane.INFORMATION_MESSAGE);
             } 
             else if (cbxEstado.getSelectedIndex() == -1) {
@@ -482,7 +484,7 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
                 
                 Alumno alumnoModificado = new Alumno();
                 alumnoModificado.setIdAlumno(IdAlumno);
-                alumnoModificado.setDatosAlumno(UtilVista.obtenerPersonaAlumnosControl(cbxAlumnos));
+                alumnoModificado.setDatosAlumno(UtilVista.obtenerPersonaAlumnosControl(cbxAlumno));
                 alumnoModificado.setEstadoAlumno(Estado);
 //                IdAlumno, UtilVista.obtenerAlumnosControl(cbxAlumnos),Estado, UtilVista.obtenerMatriculaControl(cbxMatricula));
 
@@ -550,11 +552,11 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
 
             ListaDinamica<Persona> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, "NumeroCedula");
 
-            cbxAlumnos.removeAllItems();
+            cbxAlumno.removeAllItems();
 
             for (Persona pb : ResultadoBusqueda.toArray()) {
                 if (pb.getRolPersona().getNombreRol().equals("Estudiante")) {
-                    cbxAlumnos.addItem(pb);
+                    cbxAlumno.addItem(pb);
                 }
             }
 
@@ -620,7 +622,7 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<Object> cbxAlumnos;
+    private javax.swing.JComboBox<Object> cbxAlumno;
     private javax.swing.JComboBox<String> cbxEstado;
     private javax.swing.JComboBox<String> cbxTipoBusqueda;
     private javax.swing.JButton jButton1;

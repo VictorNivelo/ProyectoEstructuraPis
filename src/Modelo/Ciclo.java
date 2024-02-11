@@ -14,29 +14,10 @@ public class Ciclo {
     private Integer NumeroCiclo;
 
     private UnidadCurricular unidadCurricularCiclo;
-    
-    //datos poco usados
-    private MallaCurricular mallaCurricularCiclo;
-    private Materia materiaCiclo;
-    private ListaDinamica<Materia> listaMateriaCiclo;
+    private ListaDinamica<UnidadCurricular> listaUnidadCurriculaCiclo;
 
     public Ciclo() {
         
-    }
-
-//    public Ciclo(Integer IdCiclo, String NombreCiclo, Integer NumeroCiclo, MallaCurricular mallaCurricularCiclo) {
-//        this.IdCiclo = IdCiclo;
-//        this.NombreCiclo = NombreCiclo;
-//        this.NumeroCiclo = NumeroCiclo;
-//        this.mallaCurricularCiclo = mallaCurricularCiclo;
-//    }
-
-    public MallaCurricular getMallaCurricularCiclo() {
-        return mallaCurricularCiclo;
-    }
-
-    public void setMallaCurricularCiclo(MallaCurricular mallaCurricularCiclo) {
-        this.mallaCurricularCiclo = mallaCurricularCiclo;
     }
     
     public Integer getIdCiclo() {
@@ -63,28 +44,20 @@ public class Ciclo {
         this.NumeroCiclo = NumeroCiclo;
     }
 
-    public Materia getMateriaCiclo() {
-        return materiaCiclo;
-    }
-
-    public void setMateriaCiclo(Materia materiaCiclo) {
-        this.materiaCiclo = materiaCiclo;
-    }
-
-    public ListaDinamica<Materia> getListaMateriaCiclo() {
-        return listaMateriaCiclo;
-    }
-
-    public void setListaMateriaCiclo(ListaDinamica<Materia> listaMateriaCiclo) {
-        this.listaMateriaCiclo = listaMateriaCiclo;
-    }
-
     public UnidadCurricular getUnidadCurricularCiclo() {
         return unidadCurricularCiclo;
     }
 
     public void setUnidadCurricularCiclo(UnidadCurricular unidadCurricularCiclo) {
         this.unidadCurricularCiclo = unidadCurricularCiclo;
+    }
+
+    public ListaDinamica<UnidadCurricular> getListaUnidadCurriculaCiclo() {
+        return listaUnidadCurriculaCiclo;
+    }
+
+    public void setListaUnidadCurriculaCiclo(ListaDinamica<UnidadCurricular> listaUnidadCurriculaCiclo) {
+        this.listaUnidadCurriculaCiclo = listaUnidadCurriculaCiclo;
     }
     
     @Override

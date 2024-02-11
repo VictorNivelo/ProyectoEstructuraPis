@@ -134,7 +134,10 @@ public class UtilVista {
         }
         else{
            for (int i = 0; i < MCc.getListaMalla().getLongitud(); i++) {
-            cbx.addItem(MCc.getListaMalla().getInfo(i));
+               MallaCurricular mallaCurriculaP = MCc.getListaMalla().getInfo(i);
+               if (mallaCurriculaP.getEstadoMallaCurricular()!= null && mallaCurriculaP.getEstadoMallaCurricular().equalsIgnoreCase("Activa")) {
+                    cbx.addItem(mallaCurriculaP);
+                }
            }
         }
     }

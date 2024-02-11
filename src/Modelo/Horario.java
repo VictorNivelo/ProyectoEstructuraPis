@@ -15,21 +15,11 @@ public class Horario {
     private String HoraFin;
     
     private Materia materiaHorario;
-    
-    private Asistencia asistenciaHorario;
-    private ListaDinamica<Asistencia> listaAsistenciaHorario;
-        
+    private ListaDinamica<Materia> listaMateriaHorario;
+
     public Horario() {
         
     }
-
-//    public Horario(Integer IdHorario, String DiaSemana, String HoraIncio, String HoraFin, Asistencia asistenciaHorario) {
-//        this.IdHorario = IdHorario;
-//        this.DiaSemana = DiaSemana;
-//        this.HoraIncio = HoraIncio;
-//        this.HoraFin = HoraFin;
-//        this.asistenciaHorario = asistenciaHorario;
-//    } 
 
     public Integer getIdHorario() {
         return IdHorario;
@@ -63,22 +53,6 @@ public class Horario {
         this.HoraFin = HoraFin;
     }
 
-    public Asistencia getAsistenciaHorario() {
-        return asistenciaHorario;
-    }
-
-    public void setAsistenciaHorario(Asistencia asistenciaHorario) {
-        this.asistenciaHorario = asistenciaHorario;
-    }
-
-    public ListaDinamica<Asistencia> getListaAsistenciaHorario() {
-        return listaAsistenciaHorario;
-    }
-
-    public void setListaAsistenciaHorario(ListaDinamica<Asistencia> listaAsistenciaHorario) {
-        this.listaAsistenciaHorario = listaAsistenciaHorario;
-    }
-
     public Materia getMateriaHorario() {
         return materiaHorario;
     }
@@ -94,10 +68,18 @@ public class Horario {
     public void setCodigoHorario(String CodigoHorario) {
         this.CodigoHorario = CodigoHorario;
     }
+
+    public ListaDinamica<Materia> getListaMateriaHorario() {
+        return listaMateriaHorario;
+    }
+
+    public void setListaMateriaHorario(ListaDinamica<Materia> listaMateriaHorario) {
+        this.listaMateriaHorario = listaMateriaHorario;
+    }
     
     @Override
     public String toString() {
-        return "Dia:" + DiaSemana + ", Incio:" + HoraIncio + ", horaFin:" + HoraFin + "\n";
+        return DiaSemana  + "  H "+ HoraIncio + " - " + HoraFin + "\n";
     }
     
 }

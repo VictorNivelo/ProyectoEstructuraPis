@@ -1,12 +1,16 @@
 
 package Vista;
 
+import Controlador.Dao.Bridge;
 import Controlador.Dao.Modelo.unidadCurricularDao;
 import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Modelo.UnidadCurricular;
 import Vista.ModeloTabla.ModeloTablaUnidadCurricular;
 import Vista.Utiles.UtilVista;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -69,12 +73,31 @@ public class VistaGestionUnidadCurricular extends javax.swing.JFrame {
         }
     }
     
+    @SuppressWarnings("unchecked")
+    private String generarCodigo() throws ListaVacia {
+        int ultimoId = 0;
+
+        String presentacionURL = "Files" + File.separatorChar + "UnidadCurricular.json";
+
+        try {
+            ListaDinamica<UnidadCurricular> listaPresentacion = (ListaDinamica<UnidadCurricular>) Bridge.getConection().fromXML(new FileReader(presentacionURL));
+
+            if (!listaPresentacion.EstaVacio()) {
+                UnidadCurricular ultimaPresentacion = listaPresentacion.getInfo(listaPresentacion.getLongitud() - 1);
+                ultimoId = ultimaPresentacion.getIdUnidadCurricular();
+            }
+        } 
+        catch (FileNotFoundException e) {
+        }
+
+        ultimoId++;
+
+        return "UC-" + String.format("%04d", ultimoId);
+    }
+    
     private void Guardar() throws ListaVacia {
 
-        if (txtCodigoUnidad.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar codigo", "Error", JOptionPane.ERROR_MESSAGE);
-        } 
-        else if (txtNombreUnidad.getText().isEmpty()) {
+        if (txtNombreUnidad.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Falta llenar nombre", "Error", JOptionPane.ERROR_MESSAGE);
         } 
         else if (txtDescripcionUnidad.getText().isEmpty()) {
@@ -85,7 +108,7 @@ public class VistaGestionUnidadCurricular extends javax.swing.JFrame {
         }
         else {
             Integer IdUnidad = listaMalla.getLongitud() + 1;
-            String Codigo = txtCodigoUnidad.getText();
+            String Codigo = generarCodigo();
             String Nombre = txtNombreUnidad.getText();
             String Descripcion = txtDescripcionUnidad.getText();
                         
@@ -372,10 +395,7 @@ public class VistaGestionUnidadCurricular extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         
-        if (txtCodigoUnidad.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar codigo", "Error", JOptionPane.ERROR_MESSAGE);
-        } 
-        else if (txtNombreUnidad.getText().isEmpty()) {
+        if (txtNombreUnidad.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Falta llenar nombre", "Error", JOptionPane.ERROR_MESSAGE);
         } 
         else if (txtDescripcionUnidad.getText().isEmpty()) {
@@ -410,10 +430,7 @@ public class VistaGestionUnidadCurricular extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Escoga un registro");
         } 
         else {
-            if (txtCodigoUnidad.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar codigo", "Error", JOptionPane.ERROR_MESSAGE);
-            } 
-            else if (txtNombreUnidad.getText().isEmpty()) {
+            if (txtNombreUnidad.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Falta llenar nombre", "Error", JOptionPane.ERROR_MESSAGE);
             } 
             else if (txtDescripcionUnidad.getText().isEmpty()) {

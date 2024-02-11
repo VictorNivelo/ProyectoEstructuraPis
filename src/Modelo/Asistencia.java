@@ -1,6 +1,8 @@
 
 package Modelo;
 
+import Controlador.TDA.ListaDinamica.ListaDinamica;
+
 /**
  *
  * @author Victor
@@ -11,20 +13,15 @@ public class Asistencia {
     private String Observacion;
     
     private Horario horarioAsistencia;
+    private ListaDinamica<Horario> listaHorarioAsistencia;
     
     private Tematica AsistenciaTematica;
+    private ListaDinamica<Tematica> listaTematicaAsistencia;
     
     public Asistencia() {
         
     }
 
-//    public Asistencia(Integer IdAsistencia, EstadoAsistencia EstadoAsistencia, String Observacion, Tematica AsistenciaTematica) {
-//        this.IdAsistencia = IdAsistencia;
-//        this.EstadoAsistencia = EstadoAsistencia;
-//        this.Observacion = Observacion;
-//        this.AsistenciaTematica = AsistenciaTematica;
-//    }
-    
     public Integer getIdAsistencia() {
         return IdAsistencia;
     }
@@ -63,6 +60,22 @@ public class Asistencia {
 
     public void setHorarioAsistencia(Horario horarioAsistencia) {
         this.horarioAsistencia = horarioAsistencia;
+    }
+
+    public ListaDinamica<Horario> getListaHorarioAsistencia() {
+        return listaHorarioAsistencia;
+    }
+
+    public void setListaHorarioAsistencia(ListaDinamica<Horario> listaHorarioAsistencia) {
+        this.listaHorarioAsistencia = listaHorarioAsistencia;
+    }
+
+    public ListaDinamica<Tematica> getListaTematicaAsistencia() {
+        return listaTematicaAsistencia;
+    }
+
+    public void setListaTematicaAsistencia(ListaDinamica<Tematica> listaTematicaAsistencia) {
+        this.listaTematicaAsistencia = listaTematicaAsistencia;
     }
 
     @Override

@@ -29,7 +29,9 @@ public class VistaGestionCiclo extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
         UtilVista.cargarcomboUnidad(cbxUnidad);
+        cbxNombreCiclo.setMaximumRowCount(cbxNombreCiclo.getItemCount());
         CargarTabla();
+        
     }
     
     private void CargarTabla() {
@@ -184,6 +186,7 @@ public class VistaGestionCiclo extends javax.swing.JFrame {
 
         cbxNombreCiclo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Primer ciclo", "Segundo ciclo", "Tercer ciclo", "Cuarto ciclo", "Quinto ciclo", "Sexto ciclo", "Septimo ciclo", "Octavo ciclo", "Noveno ciclo", "Decimo ciclo" }));
         cbxNombreCiclo.setSelectedIndex(-1);
+        cbxNombreCiclo.setToolTipText("");
 
         jLabel6.setFont(new java.awt.Font("Candara Light", 1, 32)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
@@ -310,11 +313,11 @@ public class VistaGestionCiclo extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbxNombreCiclo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(cbxNombreCiclo, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbxUnidad, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(cbxUnidad, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()

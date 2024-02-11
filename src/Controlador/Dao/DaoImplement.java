@@ -95,7 +95,6 @@ public class DaoImplement<T> implements DaoInterface<T>{
         }
         return null;
         
-//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
     public Boolean Eliminar(Integer index) {

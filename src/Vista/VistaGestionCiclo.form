@@ -71,12 +71,12 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="cbxNombreCiclo" max="32767" attributes="0"/>
+                              <Component id="cbxNombreCiclo" min="-2" pref="210" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
                               <Component id="jLabel9" min="-2" pref="53" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="cbxUnidad" max="32767" attributes="0"/>
+                              <Component id="cbxUnidad" min="-2" pref="214" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -194,6 +194,7 @@
                   </StringArray>
                 </Property>
                 <Property name="selectedIndex" type="int" value="-1"/>
+                <Property name="toolTipText" type="java.lang.String" value=""/>
               </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>

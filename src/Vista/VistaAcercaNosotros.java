@@ -89,7 +89,7 @@ public class VistaAcercaNosotros extends javax.swing.JFrame {
         txaSobreNosotros.setAutoscrolls(false);
         txaSobreNosotros.setBorder(null);
         txaSobreNosotros.setCaretColor(new java.awt.Color(0, 0, 0));
-        txaSobreNosotros.setDisabledTextColor(new java.awt.Color(153, 153, 153));
+        txaSobreNosotros.setDisabledTextColor(new java.awt.Color(204, 204, 204));
         txaSobreNosotros.setEnabled(false);
         txaSobreNosotros.setFocusable(false);
         txaSobreNosotros.setOpaque(false);
@@ -112,7 +112,7 @@ public class VistaAcercaNosotros extends javax.swing.JFrame {
         txaMision.setRows(5);
         txaMision.setText("Es misión de la Universidad Nacional de Loja: la formación académica y \nprofesional, con sólidas bases científicas y técnicas, pertinencia social y \nvalores; la generación y aplicación de conocimientos cientificos, tecnológicos \ny técnicos, que aporten al desarrollo integral del entorno y al avance de la \nciencia; el fortalecimiento del pensamiento, la promoción, desarrollo y \ndifusión de los saberes y culturas; y, la prestación de servicios especializados.");
         txaMision.setBorder(null);
-        txaMision.setDisabledTextColor(new java.awt.Color(153, 153, 153));
+        txaMision.setDisabledTextColor(new java.awt.Color(204, 204, 204));
         txaMision.setEnabled(false);
         txaMision.setFocusable(false);
         txaMision.setSelectionColor(new java.awt.Color(0, 0, 0,0));
@@ -132,7 +132,7 @@ public class VistaAcercaNosotros extends javax.swing.JFrame {
         txaVision.setRows(5);
         txaVision.setText("La Universidad Nacional de Loja al 2030 lidera y desarrolla, con pertinencia, \nresponsabilidad social y de manera articulada: la formación del talento humano \ncon alto nivel académico-científico, sensibilidad y compromiso humanista; la \ninvestigación colaborativa por dominios científicos, tecnológicos e innovación; \ny, la vinculación con la sociedad, a través de proyectos de transferencia de \nconocimientos en correspondencia con los requerimientos del desarrollo local, \nregional, nacional y binacional; en el marco de un modelo de gestión \ninstitucional innovado y de mejora continua.");
         txaVision.setBorder(null);
-        txaVision.setDisabledTextColor(new java.awt.Color(153, 153, 153));
+        txaVision.setDisabledTextColor(new java.awt.Color(204, 204, 204));
         txaVision.setEnabled(false);
         txaVision.setFocusable(false);
         txaVision.setOpaque(false);

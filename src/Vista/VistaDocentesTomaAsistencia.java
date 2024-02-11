@@ -13,6 +13,7 @@ import Modelo.Matricula;
 import Modelo.Alumno;
 import Modelo.Ciclo;
 import Modelo.Cursa;
+import Modelo.Materia;
 import Modelo.Persona;
 import Vista.Utiles.UtilVista;
 import java.awt.event.KeyEvent;
@@ -35,6 +36,8 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         UtilVista.cargarcomboHorario(cbxHorario);
+        UtilVista.cargarcomboCurso(cbxParalelo);
+        UtilVista.CargarComboMateria(cbxMateria);
         setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
         DateFechaActual.setDateFormatString("dd/MMMM/yyyy");
         dtm.setColumnIdentifiers(new String[]{"#", "Nombre", "Apellido", "Asistencia"});
@@ -70,30 +73,30 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
     }
     
 
-    @SuppressWarnings("unlikely-arg-type")
-    public ListaDinamica<Alumno> getAlumnosPorCicloParalelo(Ciclo cicloSeleccionado, String paralelo) throws ListaVacia {
-        ListaDinamica<Alumno> listaFiltrada = new ListaDinamica<>();
-
-        ListaDinamica<Alumno> listaCompleta = alumnoControlDao.getListaAlumnos();
-
-        for (int i = 0; i < listaCompleta.getLongitud(); i++) {
-            Alumno alumno = listaCompleta.getInfo(i);
-
-            ListaDinamica<Cursa> cursosAsignados = alumno.getMatriculaAlumno().getListaCursoMatricula();
-
-            for (int j = 0; j < cursosAsignados.getLongitud(); j++) {
-                Cursa cursa = cursosAsignados.getInfo(j);
-
-                if (cursa.getMateriaCurso().getCicloMateria().getNombreCiclo().equals(cicloSeleccionado) &&
-                    cursa.getParalelo().equals(paralelo)) {
-                    listaFiltrada.Agregar(alumno);
-                    break;
-                }
-            }
-        }
-
-        return listaFiltrada;
-    }
+//    @SuppressWarnings("unlikely-arg-type")
+//    public ListaDinamica<Alumno> getAlumnosPorCicloParalelo(Ciclo cicloSeleccionado, String paralelo) throws ListaVacia {
+//        ListaDinamica<Alumno> listaFiltrada = new ListaDinamica<>();
+//
+//        ListaDinamica<Alumno> listaCompleta = alumnoControlDao.getListaAlumnos();
+//
+//        for (int i = 0; i < listaCompleta.getLongitud(); i++) {
+//            Alumno alumno = listaCompleta.getInfo(i);
+//
+//            ListaDinamica<Cursa> cursosAsignados = alumno.getMatriculaAlumno().getListaCursoMatricula();
+//
+//            for (int j = 0; j < cursosAsignados.getLongitud(); j++) {
+//                Cursa cursa = cursosAsignados.getInfo(j);
+//
+//                if (cursa.getMateriaCurso().getCicloMateria().getNombreCiclo().equals(cicloSeleccionado) &&
+//                    cursa.getParalelo().equals(paralelo)) {
+//                    listaFiltrada.Agregar(alumno);
+//                    break;
+//                }
+//            }
+//        }
+//
+//        return listaFiltrada;
+//    }
     
     public void AgregarCheckbox(int columna, JTable tabla) {
         TableColumn columnaTabla = tabla.getColumnModel().getColumn(columna);
@@ -130,8 +133,6 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
-        jLabel8 = new javax.swing.JLabel();
-        cbxCiclo = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
         cbxParalelo = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
@@ -142,6 +143,9 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
         cbxHorario = new javax.swing.JComboBox<>();
         jLabel12 = new javax.swing.JLabel();
         txtObservacion = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
+        cbxMateria = new javax.swing.JComboBox<>();
+        jButton6 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("REGISTRO DE ASISTENCIA");
@@ -245,18 +249,10 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
             }
         });
 
-        jLabel8.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel8.setText("Ciclo");
-
-        cbxCiclo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Primer ciclo", "Segundo ciclo", "Tercer ciclo", "Cuarto ciclo" }));
-        cbxCiclo.setSelectedIndex(-1);
-
         jLabel9.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(0, 0, 0));
         jLabel9.setText("Paralelo");
 
-        cbxParalelo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A", "B", "C", "D", "E", "F" }));
         cbxParalelo.setSelectedIndex(-1);
 
         jLabel3.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
@@ -281,6 +277,15 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
         jLabel12.setForeground(new java.awt.Color(0, 0, 0));
         jLabel12.setText("Observacion");
 
+        jLabel13.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel13.setText("Materia");
+
+        jButton6.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Guardar.png"))); // NOI18N
+        jButton6.setText("GUARDAR ASISTENCIA");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -294,29 +299,28 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton5))
                     .addComponent(jTextField1)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cbxCiclo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cbxParalelo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(txtObservacion)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(DateFechaActual, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cbxHorario, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel12))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                            .addComponent(cbxMateria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbxParalelo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(DateFechaActual, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -335,7 +339,9 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)))
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton6)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -354,14 +360,17 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
                             .addComponent(cbxTipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6)
                             .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1))
+                            .addComponent(jButton1)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(DateFechaActual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(cbxCiclo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8))
-                        .addGap(7, 7, 7)
+                            .addComponent(jLabel13)
+                            .addComponent(cbxMateria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(2, 2, 2)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel9)
                             .addComponent(cbxParalelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -369,10 +378,6 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel11)
                             .addComponent(cbxHorario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(DateFechaActual, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -387,7 +392,8 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
                     .addComponent(jButton2)
                     .addComponent(jButton3)
                     .addComponent(jButton4)
-                    .addComponent(jButton5))
+                    .addComponent(jButton5)
+                    .addComponent(jButton6))
                 .addContainerGap())
         );
 
@@ -464,44 +470,45 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+
         
-        dtm.setRowCount(0);
-
-        String cicloSeleccionado = cbxCiclo.getSelectedItem().toString();
-        String paraleloSeleccionado = cbxParalelo.getSelectedItem().toString();
-
-        try {
-            Object[] datosLista = alumnoControlDao.getListaAlumnos().toArray();
-            for (Object dato : datosLista) {
-                try {
-                    if (dato instanceof Alumno) {
-                        Alumno alumno = (Alumno) dato;
-
-                        if (alumno.getDatosAlumno().getRolPersona().getNombreRol().equalsIgnoreCase("estudiante")) {
-                            Matricula matricula = alumno.getMatriculaAlumno();
-
-                            if (matricula != null && matricula.getCursoMatricula()!= null) {
-                                Cursa cursoAsignado = matricula.getCursoMatricula();
-                                
-                                if (cursoAsignado.getMateriaCurso().getCicloMateria().getNombreCiclo().equalsIgnoreCase(cicloSeleccionado)
-                                        && cursoAsignado.getParalelo().equalsIgnoreCase(paraleloSeleccionado)) {
-                                    dtm.addRow(new Object[]{alumno.getIdAlumno(), alumno.getDatosAlumno().getNombre(),
-                                            alumno.getDatosAlumno().getApellido(), false});
-                                }
-                            }
-                        }
-                    }
-                } 
-                catch (NullPointerException ex) {
-                    ex.printStackTrace();
-                }
-            }
-        } 
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        tblt.setModel(dtm);
+//        dtm.setRowCount(0);
+//
+//        String MateriaSeleccionada = cbxMateria.getSelectedItem().toString();
+//        String paraleloSeleccionado = cbxParalelo.getSelectedItem().toString();
+//
+//        try {
+//            Object[] datosLista = alumnoControlDao.getListaAlumnos().toArray();
+//            for (Object dato : datosLista) {
+//                try {
+//                    if (dato instanceof Alumno) {
+//                        Alumno alumno = (Alumno) dato;
+//
+//                        if (alumno.getDatosAlumno().getRolPersona().getNombreRol().equalsIgnoreCase("estudiante")) {
+//                            Matricula matricula = alumno.getMatriculaAlumno();
+//
+//                            if (matricula != null && matricula.getCursoMatricula()!= null) {
+//                                Cursa cursoAsignado = matricula.getCursoMatricula();
+//                                
+//                                if (cursoAsignado.getMateriaCurso().getCicloMateria().getNombreCiclo().equalsIgnoreCase(MateriaSeleccionada)
+//                                        && cursoAsignado.getParalelo().equalsIgnoreCase(paraleloSeleccionado)) {
+//                                    dtm.addRow(new Object[]{alumno.getIdAlumno(), alumno.getDatosAlumno().getNombre(),
+//                                            alumno.getDatosAlumno().getApellido(), false});
+//                                }
+//                            }
+//                        }
+//                    }
+//                } 
+//                catch (NullPointerException ex) {
+//                    ex.printStackTrace();
+//                }
+//            }
+//        } 
+//        catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        tblt.setModel(dtm);
     
     }//GEN-LAST:event_jButton5ActionPerformed
 
@@ -567,8 +574,8 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser DateFechaActual;
-    private javax.swing.JComboBox<String> cbxCiclo;
     private javax.swing.JComboBox<String> cbxHorario;
+    private javax.swing.JComboBox<String> cbxMateria;
     private javax.swing.JComboBox<String> cbxParalelo;
     private javax.swing.JComboBox<String> cbxTipoBusqueda;
     private javax.swing.JButton jButton1;
@@ -576,17 +583,18 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
