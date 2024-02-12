@@ -13,6 +13,7 @@ import Controlador.Dao.Modelo.horarioDao;
 import Controlador.Dao.Modelo.mallaCurricularDao;
 import Controlador.Dao.Modelo.materiaDao;
 import Controlador.Dao.Modelo.matriculaDao;
+import Controlador.Dao.Modelo.paraleloDao;
 import Controlador.Dao.Modelo.periodoAcademicoDao;
 import Controlador.Dao.Modelo.personaDao;
 import Controlador.Dao.Modelo.rolDao;
@@ -29,6 +30,7 @@ import Modelo.Horario;
 import Modelo.MallaCurricular;
 import Modelo.Materia;
 import Modelo.Matricula;
+import Modelo.Paralelo;
 import Modelo.PeriodoAcademico;
 import Modelo.Persona;
 import Modelo.Rol;
@@ -60,6 +62,26 @@ public class UtilVista {
     @SuppressWarnings("rawtypes")
     public static Rol obtenerRolControl(JComboBox cbx){
         return (Rol) cbx.getSelectedItem();
+    }
+    
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public static void cargarcomboParalelo(JComboBox cbx) throws ListaVacia{
+        paraleloDao Rc = new paraleloDao();
+        cbx.removeAllItems();
+        
+        if(Rc.getListaParalelo().EstaVacio()){
+            throw new ListaVacia("No hay paralelos que mostrar");
+        }
+        else{
+           for (int i = 0; i < Rc.getListaParalelo().getLongitud(); i++) {
+            cbx.addItem(Rc.getListaParalelo().getInfo(i));
+           }
+        }
+    }
+    
+    @SuppressWarnings("rawtypes")
+    public static Paralelo obtenerControlParalelo(JComboBox cbx){
+        return (Paralelo) cbx.getSelectedItem();
     }
     
     @SuppressWarnings({ "unchecked", "rawtypes" })

@@ -46,31 +46,46 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
         AgregarCheckbox(3, tblt);
         cbxHorario.setSelectedIndex(-1);
     }
-        
+    
     private void CargarTabla() {
-        
-        try {
-            Object[] datosLista = alumnoControlDao.getListaAlumnos().toArray();
-            for (Object dato : datosLista) {
-                if (dato instanceof Persona) { 
-                    Persona persona = (Persona) dato;
-                    dtm.addRow(new Object[]{persona.getIdPersona(), persona.getNombre(), persona.getApellido(), false});
-                }
+    try {
+        Object[] datosLista = alumnoControlDao.getListaAlumnos().toArray();
+        for (Object dato : datosLista) {
+            if (dato instanceof Persona) { 
+                Persona persona = (Persona) dato;
+                dtm.addRow(new Object[]{persona.getIdPersona(), persona.getNombre(), persona.getApellido(), false});
             }
-        } catch (Exception e) {
-
         }
-
+    } 
+    catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+        
+//    private void CargarTabla() {
+//        
 //        try {
-//            Object[] datosLista = alumnoControlDao.getListaPersonas().CovertirEnArreglo();
+//            Object[] datosLista = alumnoControlDao.getListaAlumnos().toArray();
 //            for (Object dato : datosLista) {
-//                dtm.addRow(new Object[]{dato});
+//                if (dato instanceof Persona) { 
+//                    Persona persona = (Persona) dato;
+//                    dtm.addRow(new Object[]{persona.getIdPersona(), persona.getNombre(), persona.getApellido(), false});
+//                }
 //            }
-//        } 
-//        catch (Exception e) {
+//        } catch (Exception e) {
 //
 //        }
-    }
+//
+////        try {
+////            Object[] datosLista = alumnoControlDao.getListaPersonas().CovertirEnArreglo();
+////            for (Object dato : datosLista) {
+////                dtm.addRow(new Object[]{dato});
+////            }
+////        } 
+////        catch (Exception e) {
+////
+////        }
+//    }
     
 
 //    @SuppressWarnings("unlikely-arg-type")
@@ -146,6 +161,10 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         cbxMateria = new javax.swing.JComboBox<>();
         jButton6 = new javax.swing.JButton();
+        btnOrdenar = new javax.swing.JButton();
+        cbxOrden = new javax.swing.JComboBox<>();
+        jLabel8 = new javax.swing.JLabel();
+        cbxTipoOrden = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("REGISTRO DE ASISTENCIA");
@@ -253,8 +272,6 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
         jLabel9.setForeground(new java.awt.Color(0, 0, 0));
         jLabel9.setText("Paralelo");
 
-        cbxParalelo.setSelectedIndex(-1);
-
         jLabel3.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Tematica");
@@ -285,6 +302,22 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
         jButton6.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Guardar.png"))); // NOI18N
         jButton6.setText("GUARDAR ASISTENCIA");
+
+        btnOrdenar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Ordenar.png"))); // NOI18N
+        btnOrdenar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOrdenarActionPerformed(evt);
+            }
+        });
+
+        cbxOrden.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Asendente", "Desendente" }));
+
+        jLabel8.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel8.setText("Ordenar");
+
+        cbxTipoOrden.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "Apellido" }));
+        cbxTipoOrden.setSelectedIndex(-1);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -323,7 +356,6 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
                     .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -341,7 +373,17 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton6)))
+                        .addComponent(jButton6))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbxTipoOrden, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbxOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnOrdenar)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -349,9 +391,17 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel4))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2)
+                        .addComponent(jLabel4))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cbxOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel8)
+                        .addComponent(cbxTipoOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnOrdenar)
+                        .addGap(1, 1, 1)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -531,6 +581,52 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jTextField1KeyTyped
 
+    private void btnOrdenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdenarActionPerformed
+
+        try {
+            ListaDinamica<Alumno> lista = alumnoControlDao.all();
+
+            String Campo = txtBuscar.getText();
+            String TipoCampo = cbxTipoBusqueda.getSelectedItem().toString();
+
+            switch (TipoCampo) {
+                case "Nombre":
+                    TipoCampo = "Nombre";
+                    break;
+                case "Apellido":
+                    TipoCampo = "Apellido";
+                    break;
+                default:
+                    throw new AssertionError();
+            }
+
+            ListaDinamica<Alumno> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
+
+            Object[][] datos = new Object[ResultadoBusqueda.getLongitud()][4];
+
+            for (int i = 0; i < ResultadoBusqueda.getLongitud(); i++) {
+                Alumno p = ResultadoBusqueda.getInfo(i);
+                datos[i] = new Object[]{
+                    p.getIdAlumno(),
+                    p.getDatosAlumno().getNombre(),
+                    p.getDatosAlumno().getApellido(),
+                    false
+                };
+            }
+
+            Object[] columnas = {"#", "Nombre", "Apellido", "Asistencia"};
+
+            DefaultTableModel modeloTabla = new DefaultTableModel(datos, columnas);
+
+            tblt.setModel(modeloTabla);
+            AgregarCheckbox(3, tblt);
+        } 
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+    }//GEN-LAST:event_btnOrdenarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -574,10 +670,13 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser DateFechaActual;
+    private javax.swing.JButton btnOrdenar;
     private javax.swing.JComboBox<String> cbxHorario;
     private javax.swing.JComboBox<String> cbxMateria;
+    private javax.swing.JComboBox<String> cbxOrden;
     private javax.swing.JComboBox<String> cbxParalelo;
     private javax.swing.JComboBox<String> cbxTipoBusqueda;
+    private javax.swing.JComboBox<String> cbxTipoOrden;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -595,6 +694,7 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

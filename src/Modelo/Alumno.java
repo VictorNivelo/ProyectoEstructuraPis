@@ -55,6 +55,13 @@ public class Alumno {
         this.listaMatriculaAlumno = listaMatriculaAlumno;
     }
     
+    public void agregarMatricula(Matricula matricula) {
+        if (listaMatriculaAlumno == null) {
+            listaMatriculaAlumno = new ListaDinamica<>();
+        }
+        listaMatriculaAlumno.Agregar(matricula);
+    }
+    
     @Override
     public String toString() {
         return "DNI" + DatosAlumno.getNumeroCedula() + " Nombres: " + DatosAlumno.getNombre() +" " +DatosAlumno.getApellido()+ "\n";

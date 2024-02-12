@@ -189,6 +189,18 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
             Limpiar();
         }
     }
+    
+    public  Integer OrdenSeleccionado(){
+        String OrdenO = cbxOrden.getSelectedItem().toString();
+
+        if ("Asendente".equals(OrdenO)) {
+            return 1;
+        }
+        if("Desendente".equals(OrdenO)){
+            return 0;
+        }
+        return null;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -241,6 +253,10 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
         DateFechaNacimiento = new com.toedter.calendar.JDateChooser();
         jLabel20 = new javax.swing.JLabel();
         cbxTipoDni = new javax.swing.JComboBox<>();
+        jLabel21 = new javax.swing.JLabel();
+        cbxOrden = new javax.swing.JComboBox<>();
+        btnOrdenar = new javax.swing.JButton();
+        cbxTipoOrden = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("GESTION DE PERSONAS");
@@ -395,7 +411,7 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
         jLabel1.setText("Buscar por");
 
         cbxTipoBusqueda.setForeground(new java.awt.Color(0, 0, 0));
-        cbxTipoBusqueda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Rol", "Numero cedula", "Nombre", "Apellido", "Genero", "Direccion", "Telefono", "Correo", "Estado de cuenta" }));
+        cbxTipoBusqueda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Rol", "Numero DNI", "Nombre", "Apellido", "Genero", "Direccion", "Telefono", "Correo", "Estado de cuenta" }));
         cbxTipoBusqueda.setSelectedIndex(-1);
 
         jLabel18.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
@@ -462,6 +478,23 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
 
         cbxTipoDni.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cedula", "Pasaporte" }));
         cbxTipoDni.setSelectedIndex(-1);
+
+        jLabel21.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel21.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel21.setText("Ordenar");
+
+        cbxOrden.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Asendente", "Desendente" }));
+
+        btnOrdenar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Ordenar.png"))); // NOI18N
+        btnOrdenar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOrdenarActionPerformed(evt);
+            }
+        });
+
+        cbxTipoOrden.setForeground(new java.awt.Color(0, 0, 0));
+        cbxTipoOrden.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Rol", "Numero DNI", "Nombre", "Apellido", "Genero", "Direccion", "Telefono", "Correo", "Estado de cuenta" }));
+        cbxTipoOrden.setSelectedIndex(-1);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -545,7 +578,15 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
                             .addComponent(cbxTipoDni, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jLabel13)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel21)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbxTipoOrden, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbxOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnOrdenar)))
                 .addContainerGap())
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -553,13 +594,20 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel13)
+                        .addComponent(jLabel17, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cbxOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel21)
+                        .addComponent(cbxTipoOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnOrdenar)
+                        .addGap(1, 1, 1)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel13)
-                            .addComponent(jLabel17, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -632,7 +680,7 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
                             .addComponent(btnRegresar)
                             .addComponent(btnGuardarPersona)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(478, 478, 478)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnEliminar)
                             .addComponent(btnModificar))))
@@ -954,6 +1002,59 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
         
     }//GEN-LAST:event_txtTelefonoKeyTyped
 
+    private void btnOrdenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdenarActionPerformed
+
+        try {
+            ListaDinamica<Persona> lista = personaControlDao.all();
+            String TipoCampo = cbxTipoOrden.getSelectedItem().toString();
+
+            switch (TipoCampo) {
+                case "Tipo de DNI":
+                    TipoCampo = "TipoDni";
+                    break;
+                case "Numero DNI":
+                    TipoCampo = "NumeroCedula";
+                    break;
+                case "Nombre":
+                    TipoCampo = "Nombre";
+                    break;
+                case "Apellido":
+                    TipoCampo = "Apellido";
+                    break;
+                case "Genero":
+                    TipoCampo = "Genero";
+                    break;
+                case "Telefono":
+                    TipoCampo = "Telefono";
+                    break;
+                case "Direccion":
+                    TipoCampo = "Direccion";
+                    break;
+                case "Rol":
+                    TipoCampo = "personaRol.NombreRol";
+                    break;
+                case "Estado de cuenta":
+                    TipoCampo = "personaCuenta.EstadoCuenta";
+                    break;
+                case "Correo":
+                    TipoCampo = "personaCuenta.Correo";
+                    break;
+                default:
+                    throw new AssertionError();
+            }
+
+            Integer orden = OrdenSeleccionado();
+
+            ListaDinamica<Persona> resultadoOrdenado = UtilesControlador.QuickSort(lista, orden, TipoCampo);
+
+            mtp.setPersonasTabla(resultadoOrdenado);
+            mtp.fireTableDataChanged();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnOrdenarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1015,12 +1116,15 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardarPersona;
     private javax.swing.JButton btnModificar;
+    private javax.swing.JButton btnOrdenar;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JComboBox<String> cbxEstadoCuenta;
     private javax.swing.JComboBox<String> cbxGenero;
+    private javax.swing.JComboBox<String> cbxOrden;
     private javax.swing.JComboBox<String> cbxRol;
     private javax.swing.JComboBox<String> cbxTipoBusqueda;
     private javax.swing.JComboBox<String> cbxTipoDni;
+    private javax.swing.JComboBox<String> cbxTipoOrden;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -1035,6 +1139,7 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

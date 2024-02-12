@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
 public class VistaGestionMateria extends javax.swing.JFrame {
     materiaDao materiaControlDao = new materiaDao();
     ListaDinamica<Materia> listaMateria = new ListaDinamica<>();
-    ModeloTablaMateria mtp = new ModeloTablaMateria();
+    ModeloTablaMateria mtm = new ModeloTablaMateria();
 
     /**
      * Creates new form VistaRegistroMateria
@@ -38,8 +38,8 @@ public class VistaGestionMateria extends javax.swing.JFrame {
     }
     
     private void CargarTabla() {
-        mtp.setMateriaTabla(materiaControlDao.getListaMateria());
-        tblMaterias.setModel(mtp);
+        mtm.setMateriaTabla(materiaControlDao.getListaMateria());
+        tblMaterias.setModel(mtm);
         tblMaterias.updateUI();
         cbxCiclo.setSelectedIndex(-1);
         cbxCurso.setSelectedIndex(-1);
@@ -64,7 +64,7 @@ public class VistaGestionMateria extends javax.swing.JFrame {
         }
         else{
             try {
-                materiaControlDao.setMateria(mtp.getMateriaTabla().getInfo(fila));
+                materiaControlDao.setMateria(mtm.getMateriaTabla().getInfo(fila));
                 
                 txtNombreMateria.setText(materiaControlDao.getMateria().getNombreMateria());
                 txtNombreDescripcion.setText(materiaControlDao.getMateria().getDescipcionMateria());
@@ -101,7 +101,7 @@ public class VistaGestionMateria extends javax.swing.JFrame {
             Integer IdPersona = listaMateria.getLongitud() + 1;
             String NombreAsignatura = txtNombreMateria.getText();
             String Descripcion = txtNombreDescripcion.getText();
-            String NumeroHoras = txtNumeroHoras.getText().toString();
+            String NumeroHoras = txtNumeroHoras.getText();
             
             materiaControlDao.getMateria().setIdMateria(IdPersona);
             materiaControlDao.getMateria().setNombreMateria(NombreAsignatura);
@@ -122,7 +122,17 @@ public class VistaGestionMateria extends javax.swing.JFrame {
         }
     }
     
+    public  Integer OrdenSeleccionado(){
+        String OrdenO = cbxOrden.getSelectedItem().toString();
 
+        if ("Asendente".equals(OrdenO)) {
+            return 1;
+        }
+        if("Desendente".equals(OrdenO)){
+            return 0;
+        }
+        return null;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -164,6 +174,10 @@ public class VistaGestionMateria extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
         cbxDocente = new javax.swing.JComboBox<>();
+        jLabel14 = new javax.swing.JLabel();
+        cbxOrden = new javax.swing.JComboBox<>();
+        btnOrdenar = new javax.swing.JButton();
+        cbxTipoOrden = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("GESTION DE MATERIAS");
@@ -326,6 +340,22 @@ public class VistaGestionMateria extends javax.swing.JFrame {
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Buscar.png"))); // NOI18N
 
+        jLabel14.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel14.setText("Ordenar");
+
+        cbxOrden.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Asendente", "Desendente" }));
+
+        btnOrdenar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Ordenar.png"))); // NOI18N
+        btnOrdenar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOrdenarActionPerformed(evt);
+            }
+        });
+
+        cbxTipoOrden.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "Descripcion", "Numero de horas", "Ciclo", "Paralelo" }));
+        cbxTipoOrden.setSelectedIndex(-1);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -382,8 +412,15 @@ public class VistaGestionMateria extends javax.swing.JFrame {
                                 .addComponent(jButton1))
                             .addComponent(jScrollPane1)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 837, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))))
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel14)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cbxTipoOrden, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cbxOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnOrdenar))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(634, 634, 634)
                         .addComponent(btnEliminar)
@@ -396,9 +433,17 @@ public class VistaGestionMateria extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel6))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel7)
+                        .addComponent(jLabel6))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cbxOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel14)
+                        .addComponent(cbxTipoOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnOrdenar)
+                        .addGap(1, 1, 1)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -584,8 +629,8 @@ public class VistaGestionMateria extends javax.swing.JFrame {
 
             ListaDinamica<Materia> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
                         
-            mtp.setMateriaTabla(ResultadoBusqueda);
-            mtp.fireTableDataChanged();
+            mtm.setMateriaTabla(ResultadoBusqueda);
+            mtm.fireTableDataChanged();
             
         } 
         catch (Exception e) {
@@ -652,6 +697,44 @@ public class VistaGestionMateria extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnEliminarActionPerformed
 
+    private void btnOrdenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdenarActionPerformed
+
+        try {
+            ListaDinamica<Materia> lista = materiaControlDao.all();
+            String TipoCampo = cbxTipoOrden.getSelectedItem().toString();
+
+            switch (TipoCampo) {
+                case "Nombre":
+                    TipoCampo = "NombreMateria";
+                    break;
+                case "Descripcion":
+                    TipoCampo = "DescipcionMateria";
+                    break;
+                case "Numero de horas":
+                    TipoCampo = "NumeroHoras";
+                    break;
+                case "Ciclo":
+                    TipoCampo = "cicloMateria.NombreCiclo";
+                    break;
+                case "Paralelo":
+                    TipoCampo = "cursoMateria.Paralelo";
+                    break;
+                default:
+                    throw new AssertionError();
+            }
+
+            Integer orden = OrdenSeleccionado();
+
+            ListaDinamica<Materia> resultadoOrdenado = UtilesControlador.QuickSort(lista, orden, TipoCampo);
+
+            mtm.setMateriaTabla(resultadoOrdenado);
+            mtm.fireTableDataChanged();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnOrdenarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -697,11 +780,14 @@ public class VistaGestionMateria extends javax.swing.JFrame {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardarMateria;
     private javax.swing.JButton btnModificar;
+    private javax.swing.JButton btnOrdenar;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JComboBox<String> cbxCiclo;
     private javax.swing.JComboBox<String> cbxCurso;
     private javax.swing.JComboBox<String> cbxDocente;
+    private javax.swing.JComboBox<String> cbxOrden;
     private javax.swing.JComboBox<String> cbxTipoBusqueda;
+    private javax.swing.JComboBox<String> cbxTipoOrden;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
@@ -709,6 +795,7 @@ public class VistaGestionMateria extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

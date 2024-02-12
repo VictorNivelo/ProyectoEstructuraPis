@@ -5,6 +5,7 @@ import Controlador.Dao.Bridge;
 import Controlador.Dao.Modelo.unidadCurricularDao;
 import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
+import Controlador.Utiles.UtilesControlador;
 import Modelo.UnidadCurricular;
 import Vista.ModeloTabla.ModeloTablaUnidadCurricular;
 import Vista.Utiles.UtilVista;
@@ -19,9 +20,9 @@ import javax.swing.JOptionPane;
  * @author Victor
  */
 public class VistaGestionUnidadCurricular extends javax.swing.JFrame {
-    unidadCurricularDao mallaControlDao = new unidadCurricularDao();
-    ListaDinamica<UnidadCurricular> listaMalla = new ListaDinamica<>();
-    ModeloTablaUnidadCurricular mtm = new ModeloTablaUnidadCurricular();
+    unidadCurricularDao unidadCurricularControlDao = new unidadCurricularDao();
+    ListaDinamica<UnidadCurricular> listaUnidadCurricular = new ListaDinamica<>();
+    ModeloTablaUnidadCurricular mtu = new ModeloTablaUnidadCurricular();
 
     /**
      * Creates new form VistaGestionUnidadCurricular
@@ -36,8 +37,8 @@ public class VistaGestionUnidadCurricular extends javax.swing.JFrame {
     }
     
     private void CargarTabla() {
-        mtm.setUnidadCurricularTabla(mallaControlDao.getListaUnidadCurricular());
-        tblUnidadCurrricular.setModel(mtm);
+        mtu.setUnidadCurricularTabla(unidadCurricularControlDao.getListaUnidadCurricular());
+        tblUnidadCurrricular.setModel(mtu);
         tblUnidadCurrricular.updateUI();
         cbxMalla.setSelectedIndex(-1);
         cbxTipoBusqueda.setSelectedIndex(-1);
@@ -49,7 +50,7 @@ public class VistaGestionUnidadCurricular extends javax.swing.JFrame {
         txtDescripcionUnidad.setText("");
         cbxMalla.setSelectedIndex(-1);
         cbxTipoBusqueda.setSelectedIndex(-1);
-        mallaControlDao.setUnidadCurriculares(null);
+        unidadCurricularControlDao.setUnidadCurriculares(null);
         CargarTabla();
     }
     
@@ -60,12 +61,12 @@ public class VistaGestionUnidadCurricular extends javax.swing.JFrame {
         }
         else{
             try {
-                mallaControlDao.setUnidadCurriculares(mtm.getUnidadCurricularTabla().getInfo(fila));
+                unidadCurricularControlDao.setUnidadCurriculares(mtu.getUnidadCurricularTabla().getInfo(fila));
                 
-                txtCodigoUnidad.setText(mallaControlDao.getUnidadCurriculares().getCodigoUnidadCurricular());
-                txtNombreUnidad.setText(mallaControlDao.getUnidadCurriculares().getNombreUnidadCurricular());
-                txtDescripcionUnidad.setText(mallaControlDao.getUnidadCurriculares().getDescripcionUnidadCurricular());
-                cbxMalla.setSelectedIndex(mallaControlDao.getUnidadCurriculares().getMallaCurricularUnidadCurricular().getIdMallaCurricular() -1);
+                txtCodigoUnidad.setText(unidadCurricularControlDao.getUnidadCurriculares().getCodigoUnidadCurricular());
+                txtNombreUnidad.setText(unidadCurricularControlDao.getUnidadCurriculares().getNombreUnidadCurricular());
+                txtDescripcionUnidad.setText(unidadCurricularControlDao.getUnidadCurriculares().getDescripcionUnidadCurricular());
+                cbxMalla.setSelectedIndex(unidadCurricularControlDao.getUnidadCurriculares().getMallaCurricularUnidadCurricular().getIdMallaCurricular() -1);
             } 
             catch (Exception e) {
                 
@@ -107,27 +108,39 @@ public class VistaGestionUnidadCurricular extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Falta seleccionar el ciclo", "Error", JOptionPane.ERROR_MESSAGE);
         }
         else {
-            Integer IdUnidad = listaMalla.getLongitud() + 1;
+            Integer IdUnidad = listaUnidadCurricular.getLongitud() + 1;
             String Codigo = generarCodigo();
             String Nombre = txtNombreUnidad.getText();
             String Descripcion = txtDescripcionUnidad.getText();
                         
-            mallaControlDao.getUnidadCurriculares().setIdUnidadCurricular(IdUnidad);
-            mallaControlDao.getUnidadCurriculares().setNombreUnidadCurricular(Nombre);
-            mallaControlDao.getUnidadCurriculares().setCodigoUnidadCurricular(Codigo);
-            mallaControlDao.getUnidadCurriculares().setDescripcionUnidadCurricular(Descripcion);
+            unidadCurricularControlDao.getUnidadCurriculares().setIdUnidadCurricular(IdUnidad);
+            unidadCurricularControlDao.getUnidadCurriculares().setNombreUnidadCurricular(Nombre);
+            unidadCurricularControlDao.getUnidadCurriculares().setCodigoUnidadCurricular(Codigo);
+            unidadCurricularControlDao.getUnidadCurriculares().setDescripcionUnidadCurricular(Descripcion);
             
-            mallaControlDao.getUnidadCurriculares().setMallaCurricularUnidadCurricular(UtilVista.obtenerMallaControl(cbxMalla));
+            unidadCurricularControlDao.getUnidadCurriculares().setMallaCurricularUnidadCurricular(UtilVista.obtenerMallaControl(cbxMalla));
                         
-            if (mallaControlDao.Persist()) {
+            if (unidadCurricularControlDao.Persist()) {
                 JOptionPane.showMessageDialog(null, "UNIDAD CURRICULAR GUARDADA EXISTOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
-                mallaControlDao.setUnidadCurriculares(null);
+                unidadCurricularControlDao.setUnidadCurriculares(null);
             } 
             else {
                 JOptionPane.showMessageDialog(null, "NO SE PUEDE REGISTRAR", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
             }
             Limpiar();
         }
+    }
+    
+    public  Integer OrdenSeleccionado(){
+        String OrdenO = cbxOrden.getSelectedItem().toString();
+
+        if ("Asendente".equals(OrdenO)) {
+            return 1;
+        }
+        if("Desendente".equals(OrdenO)){
+            return 0;
+        }
+        return null;
     }
     
     /**
@@ -160,10 +173,14 @@ public class VistaGestionUnidadCurricular extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         cbxTipoBusqueda = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        txtBuscar = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblUnidadCurrricular = new javax.swing.JTable();
         cbxMalla = new javax.swing.JComboBox<>();
+        jLabel11 = new javax.swing.JLabel();
+        cbxOrden = new javax.swing.JComboBox<>();
+        btnOrdenar = new javax.swing.JButton();
+        cbxTipoOrden = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SERVICIO DE GESTION DE UNIDADES CURRICULARES");
@@ -245,6 +262,11 @@ public class VistaGestionUnidadCurricular extends javax.swing.JFrame {
 
         jButton3.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Buscar.png"))); // NOI18N
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Modificar.png"))); // NOI18N
@@ -268,6 +290,9 @@ public class VistaGestionUnidadCurricular extends javax.swing.JFrame {
         jLabel9.setForeground(new java.awt.Color(0, 0, 0));
         jLabel9.setText("Buscar por");
 
+        cbxTipoBusqueda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Codigo", "Nombre", "Descripcion", "Malla" }));
+        cbxTipoBusqueda.setSelectedIndex(-1);
+
         jLabel10.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(0, 0, 0));
         jLabel10.setText("Buscar");
@@ -288,6 +313,22 @@ public class VistaGestionUnidadCurricular extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(tblUnidadCurrricular);
+
+        jLabel11.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel11.setText("Ordenar");
+
+        cbxOrden.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Asendente", "Desendente" }));
+
+        btnOrdenar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Ordenar.png"))); // NOI18N
+        btnOrdenar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOrdenarActionPerformed(evt);
+            }
+        });
+
+        cbxTipoOrden.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Codigo", "Nombre", "Descripcion", "Malla" }));
+        cbxTipoOrden.setSelectedIndex(-1);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -318,7 +359,6 @@ public class VistaGestionUnidadCurricular extends javax.swing.JFrame {
                         .addComponent(jButton2)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton5)
@@ -331,10 +371,20 @@ public class VistaGestionUnidadCurricular extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField5)
+                        .addComponent(txtBuscar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton3))
-                    .addComponent(jScrollPane1))
+                    .addComponent(jScrollPane1)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbxTipoOrden, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbxOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnOrdenar)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -342,9 +392,17 @@ public class VistaGestionUnidadCurricular extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel8))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel3)
+                        .addComponent(jLabel8))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cbxOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel11)
+                        .addComponent(cbxTipoOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnOrdenar)
+                        .addGap(1, 1, 1)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -352,7 +410,7 @@ public class VistaGestionUnidadCurricular extends javax.swing.JFrame {
                     .addComponent(jLabel9)
                     .addComponent(cbxTipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -440,7 +498,7 @@ public class VistaGestionUnidadCurricular extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Falta seleccionar el ciclo", "Error", JOptionPane.ERROR_MESSAGE);
             } 
             else {
-                Integer IdUnidad = mallaControlDao.getUnidadCurriculares().getIdUnidadCurricular();
+                Integer IdUnidad = unidadCurricularControlDao.getUnidadCurriculares().getIdUnidadCurricular();
                 String Codigo = txtCodigoUnidad.getText();
                 String Nombre = txtNombreUnidad.getText();
                 String Descripcion = txtDescripcionUnidad.getText();
@@ -452,7 +510,7 @@ public class VistaGestionUnidadCurricular extends javax.swing.JFrame {
                 unidadModificada.setDescripcionUnidadCurricular(Descripcion);
                 unidadModificada.setMallaCurricularUnidadCurricular(UtilVista.obtenerMallaControl(cbxMalla));
 
-                mallaControlDao.Merge(unidadModificada, IdUnidad - 1);
+                unidadCurricularControlDao.Merge(unidadModificada, IdUnidad - 1);
 
                 CargarTabla();
 
@@ -474,7 +532,7 @@ public class VistaGestionUnidadCurricular extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Escoga un registro");
         } 
         else {
-            mallaControlDao.Eliminar(fila);
+            unidadCurricularControlDao.Eliminar(fila);
             CargarTabla();
         }
         
@@ -485,6 +543,76 @@ public class VistaGestionUnidadCurricular extends javax.swing.JFrame {
         Seleccionar();
         
     }//GEN-LAST:event_tblUnidadCurrricularMouseClicked
+
+    private void btnOrdenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdenarActionPerformed
+
+        try {
+            ListaDinamica<UnidadCurricular> lista = unidadCurricularControlDao.all();
+            String TipoCampo = cbxTipoOrden.getSelectedItem().toString();
+
+            switch (TipoCampo) {
+                case "Codigo":
+                    TipoCampo = "CodigoUnidadCurricular";
+                    break;
+                case "Nombre":
+                    TipoCampo = "NombreUnidadCurricular";
+                    break;
+                case "Descipcion":
+                    TipoCampo = "DescripcionUnidadCurricular";
+                    break;
+                case "Malla":
+                    TipoCampo = "mallaCurricularUnidadCurricular.NombreMallaCurricular";
+                    break;
+                default:
+            }
+
+            Integer orden = OrdenSeleccionado();
+
+            ListaDinamica<UnidadCurricular> resultadoOrdenado = UtilesControlador.QuickSort(lista, orden, TipoCampo);
+
+            mtu.setUnidadCurricularTabla(resultadoOrdenado);
+            mtu.fireTableDataChanged();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnOrdenarActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        
+        try {
+            ListaDinamica<UnidadCurricular> lista = unidadCurricularControlDao.all();
+
+            String Campo = txtBuscar.getText();
+            String TipoCampo = cbxTipoBusqueda.getSelectedItem().toString();
+
+            switch (TipoCampo) {
+                case "Codigo":
+                    TipoCampo = "CodigoUnidadCurricular";
+                    break;
+                case "Nombre":
+                    TipoCampo = "NombreUnidadCurricular";
+                    break;
+                case "Descipcion":
+                    TipoCampo = "DescripcionUnidadCurricular";
+                    break;
+                case "Malla":
+                    TipoCampo = "mallaCurricularUnidadCurricular.NombreMallaCurricular";
+                    break;
+                default:
+            }
+
+            ListaDinamica<UnidadCurricular> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
+
+            mtu.setUnidadCurricularTabla(ResultadoBusqueda);
+            mtu.fireTableDataChanged();
+
+        }
+        catch (Exception e) {
+
+        }
+        
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -527,8 +655,11 @@ public class VistaGestionUnidadCurricular extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnOrdenar;
     private javax.swing.JComboBox<String> cbxMalla;
+    private javax.swing.JComboBox<String> cbxOrden;
     private javax.swing.JComboBox<String> cbxTipoBusqueda;
+    private javax.swing.JComboBox<String> cbxTipoOrden;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -536,6 +667,7 @@ public class VistaGestionUnidadCurricular extends javax.swing.JFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -547,8 +679,8 @@ public class VistaGestionUnidadCurricular extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField5;
     private javax.swing.JTable tblUnidadCurrricular;
+    private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtCodigoUnidad;
     private javax.swing.JTextField txtDescripcionUnidad;
     private javax.swing.JTextField txtNombreUnidad;

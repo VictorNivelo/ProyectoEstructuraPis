@@ -53,28 +53,59 @@ public class UtilesControlador {
         return null;
     }
     
+//    @SuppressWarnings("unchecked")
+//    private static <T> boolean comparar(T elemento1, T elemento2, String campo, Integer orden) {
+//        try {
+//            Field field = getField(elemento1.getClass(), campo);
+//            field.setAccessible(true);
+//
+//            if (Comparable.class.isAssignableFrom(field.getType())) {
+//                Comparable<Object> valor1 = (Comparable<Object>) field.get(elemento1);
+//                Comparable<Object> valor2 = (Comparable<Object>) field.get(elemento2);
+//                int resultadoComparacion = valor1.compareTo(valor2);
+//                return orden == 1 ? resultadoComparacion > 0 : resultadoComparacion < 0;
+//            } 
+//            else {
+//                throw new IllegalArgumentException("El campo no es comparable");
+//            }
+//        } 
+//        catch (IllegalAccessException e) {
+//            
+//            return false;
+//        }
+//    }
+    
     @SuppressWarnings("unchecked")
     private static <T> boolean comparar(T elemento1, T elemento2, String campo, Integer orden) {
         try {
-            Field field = getField(elemento1.getClass(), campo);
-            field.setAccessible(true);
-
-            if (Comparable.class.isAssignableFrom(field.getType())) {
-                Comparable<Object> valor1 = (Comparable<Object>) field.get(elemento1);
-                Comparable<Object> valor2 = (Comparable<Object>) field.get(elemento2);
-                int resultadoComparacion = valor1.compareTo(valor2);
+            String[] campos = campo.split("\\.");
+            Object valor1 = obtenerValorCampo(elemento1, campos);
+            Object valor2 = obtenerValorCampo(elemento2, campos);
+            if (valor1 instanceof Comparable && valor2 instanceof Comparable) {
+                Comparable<Object> comparable1 = (Comparable<Object>) valor1;
+                Comparable<Object> comparable2 = (Comparable<Object>) valor2;
+                int resultadoComparacion = comparable1.compareTo(valor2);
                 return orden == 1 ? resultadoComparacion > 0 : resultadoComparacion < 0;
             } 
             else {
                 throw new IllegalArgumentException("El campo no es comparable");
             }
         } 
-        catch (IllegalAccessException e) {
-            
+        catch (Exception e) {
             return false;
         }
     }
-    
+
+    private static Object obtenerValorCampo(Object objeto, String[] campos) throws IllegalAccessException, NoSuchFieldException {
+        Object valor = objeto;
+        for (String campo : campos) {
+            Field field = valor.getClass().getDeclaredField(campo);
+            field.setAccessible(true);
+            valor = field.get(valor);
+        }
+        return valor;
+    }
+
     public static <T> ListaDinamica<T> SelectSort(ListaDinamica<T> lista, Integer Orden, String Campo) throws ListaVacia, Exception {
         Integer n = lista.getLongitud();
         T[] elementos = lista.toArray();

@@ -140,7 +140,7 @@ public class VistaDocenteCalendario extends javax.swing.JFrame {
                 String Fecha = listaH.getInfo(i).getDiaSemana();
                 String Mensaje = listaH.getInfo(i).getMateriaHorario().getNombreMateria() + " "+
                         listaH.getInfo(i).getMateriaHorario().getCicloMateria().getNombreCiclo()+ " " +
-                        listaH.getInfo(i).getMateriaHorario().getCursoMateria().getParalelo() + " "+
+                        listaH.getInfo(i).getMateriaHorario().getCursoMateria().getParaleloCursa()+ " "+
                         listaH.getInfo(i).getHoraIncio() + " - " + listaH.getInfo(i).getHoraFin();
 //                System.out.println(listaH.getInfo(i).getDiaSemana());
                 c.AgregarEvento(Fecha, Mensaje);

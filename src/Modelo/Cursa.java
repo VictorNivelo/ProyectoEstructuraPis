@@ -10,7 +10,7 @@ import Controlador.TDA.ListaDinamica.ListaDinamica;
  */
 public class Cursa {
     private Integer IdCurso;
-    private String Paralelo;
+    private Paralelo ParaleloCursa;
     
     private Matricula matriculaCursa;
     private ListaDinamica<Matricula> listaMatriculaCursa;
@@ -27,12 +27,12 @@ public class Cursa {
         this.IdCurso = IdCurso;
     }
 
-    public String getParalelo() {
-        return Paralelo;
+    public Paralelo getParaleloCursa() {
+        return ParaleloCursa;
     }
 
-    public void setParalelo(String Paralelo) {
-        this.Paralelo = Paralelo;
+    public void setParaleloCursa(Paralelo ParaleloCursa) {
+        this.ParaleloCursa = ParaleloCursa;
     }
 
     public Matricula getMatriculaCursa() {
@@ -53,7 +53,7 @@ public class Cursa {
     
     @Override
     public String toString() {
-        return Paralelo + "\n";
+        return ParaleloCursa + "\n";
     }
     
 }

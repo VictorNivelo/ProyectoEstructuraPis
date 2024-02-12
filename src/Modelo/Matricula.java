@@ -14,7 +14,7 @@ public class Matricula {
     private String EstadoMatricula;
     
     private Alumno alumnoMatricula;
-    private ListaDinamica<Alumno> listaAlumnos;
+    private ListaDinamica<Alumno> listaAlumnosMatricula;
     
     private PeriodoAcademico periodoAcademicoMatricula;
     private ListaDinamica<PeriodoAcademico> listaPeriodoMatricula;
@@ -79,17 +79,17 @@ public class Matricula {
         this.alumnoMatricula = alumnoMatricula;
     }
 
-    public ListaDinamica<Alumno> getListaAlumnos() {
-        return listaAlumnos;
+    public ListaDinamica<Alumno> getListaAlumnosMatricula() {
+        return listaAlumnosMatricula;
     }
 
-    public void setListaAlumnos(ListaDinamica<Alumno> listaAlumnos) {
-        this.listaAlumnos = listaAlumnos;
+    public void setListaAlumnosMatricula(ListaDinamica<Alumno> listaAlumnosMatricula) {
+        this.listaAlumnosMatricula = listaAlumnosMatricula;
     }
 
     @Override
     public String toString() {
-        return "Codigo:" + CodigoMatricula +  ", Alumno:" + alumnoMatricula.getDatosAlumno().getNumeroCedula() +"\n";
+        return CodigoMatricula +  " Alumno:" + alumnoMatricula.getDatosAlumno().getNumeroCedula() +"\n";
     }
     
 }

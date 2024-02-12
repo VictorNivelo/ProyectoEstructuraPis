@@ -54,7 +54,7 @@ public class ModeloTablaCurso extends AbstractTableModel {
                 case 0:
                     return (p != null) ? p.getIdCurso() : "";
                 case 1:
-                    return (p != null) ? p.getParalelo(): "";
+                    return (p != null) ? p.getParaleloCursa().getNombre(): "";
                 case 2:
                     return (p != null) ? p.getMatriculaCursa().getAlumnoMatricula().getDatosAlumno().getNumeroCedula(): "";
                 case 3:

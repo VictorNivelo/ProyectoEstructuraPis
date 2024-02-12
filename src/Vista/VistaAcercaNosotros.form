@@ -172,6 +172,7 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="99" green="99" red="99" type="rgb"/>
                 </Property>
+                <Property name="lineWrap" type="boolean" value="true"/>
                 <Property name="rows" type="int" value="5"/>
                 <Property name="text" type="java.lang.String" value="Somos una instituci&#xf3;n de educaci&#xf3;n superior laica, aut&#xf3;noma, de derecho p&#xfa;blico, con personer&#xed;a jur&#xed;dica y sin fines de lucro; de alta calidad acad&#xe9;mica y human&#xed;stica. &#xa;Ofrecemos formaci&#xf3;n en la modalidad presencial y a distancia, promoviendo a trav&#xe9;s de la investigaci&#xf3;n cient&#xed;fico-t&#xe9;cnica, los problemas del entorno con calidad, pertinencia &#xa;y equidad. &#xa;Coadyuvamos al desarrollo sustentable de la regi&#xf3;n y del pa&#xed;s, interactuando con la comunidad por medio de propuestas alternativas a los problemas nacionales &#xa;y con responsabilidad social; reconociendo y promoviendo la diversidad cultural y &#xe9;tnica y la sabidur&#xed;a popular. Nos apoyamos en los avances cient&#xed;ficos y tecnol&#xf3;gicos &#xa;en procura de mejorar la calidad de vida del pueblo ecuatoriano."/>
                 <Property name="autoscrolls" type="boolean" value="false"/>
@@ -229,6 +230,7 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="99" green="99" red="99" type="rgb"/>
                 </Property>
+                <Property name="lineWrap" type="boolean" value="true"/>
                 <Property name="rows" type="int" value="5"/>
                 <Property name="text" type="java.lang.String" value="Es misi&#xf3;n de la Universidad Nacional de Loja: la formaci&#xf3;n acad&#xe9;mica y &#xa;profesional, con s&#xf3;lidas bases cient&#xed;ficas y t&#xe9;cnicas, pertinencia social y &#xa;valores; la generaci&#xf3;n y aplicaci&#xf3;n de conocimientos cientificos, tecnol&#xf3;gicos &#xa;y t&#xe9;cnicos, que aporten al desarrollo integral del entorno y al avance de la &#xa;ciencia; el fortalecimiento del pensamiento, la promoci&#xf3;n, desarrollo y &#xa;difusi&#xf3;n de los saberes y culturas; y, la prestaci&#xf3;n de servicios especializados."/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -277,6 +279,7 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="99" green="99" red="99" type="rgb"/>
                 </Property>
+                <Property name="lineWrap" type="boolean" value="true"/>
                 <Property name="rows" type="int" value="5"/>
                 <Property name="text" type="java.lang.String" value="La Universidad Nacional de Loja al 2030 lidera y desarrolla, con pertinencia, &#xa;responsabilidad social y de manera articulada: la formaci&#xf3;n del talento humano &#xa;con alto nivel acad&#xe9;mico-cient&#xed;fico, sensibilidad y compromiso humanista; la &#xa;investigaci&#xf3;n colaborativa por dominios cient&#xed;ficos, tecnol&#xf3;gicos e innovaci&#xf3;n; &#xa;y, la vinculaci&#xf3;n con la sociedad, a trav&#xe9;s de proyectos de transferencia de &#xa;conocimientos en correspondencia con los requerimientos del desarrollo local, &#xa;regional, nacional y binacional; en el marco de un modelo de gesti&#xf3;n &#xa;institucional innovado y de mejora continua."/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">

@@ -84,6 +84,7 @@ public class VistaAcercaNosotros extends javax.swing.JFrame {
         txaSobreNosotros.setColumns(20);
         txaSobreNosotros.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txaSobreNosotros.setForeground(new java.awt.Color(153, 153, 153));
+        txaSobreNosotros.setLineWrap(true);
         txaSobreNosotros.setRows(5);
         txaSobreNosotros.setText("Somos una institución de educación superior laica, autónoma, de derecho público, con personería jurídica y sin fines de lucro; de alta calidad académica y humanística. \nOfrecemos formación en la modalidad presencial y a distancia, promoviendo a través de la investigación científico-técnica, los problemas del entorno con calidad, pertinencia \ny equidad. \nCoadyuvamos al desarrollo sustentable de la región y del país, interactuando con la comunidad por medio de propuestas alternativas a los problemas nacionales \ny con responsabilidad social; reconociendo y promoviendo la diversidad cultural y étnica y la sabiduría popular. Nos apoyamos en los avances científicos y tecnológicos \nen procura de mejorar la calidad de vida del pueblo ecuatoriano.");
         txaSobreNosotros.setAutoscrolls(false);
@@ -109,6 +110,7 @@ public class VistaAcercaNosotros extends javax.swing.JFrame {
         txaMision.setColumns(20);
         txaMision.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txaMision.setForeground(new java.awt.Color(153, 153, 153));
+        txaMision.setLineWrap(true);
         txaMision.setRows(5);
         txaMision.setText("Es misión de la Universidad Nacional de Loja: la formación académica y \nprofesional, con sólidas bases científicas y técnicas, pertinencia social y \nvalores; la generación y aplicación de conocimientos cientificos, tecnológicos \ny técnicos, que aporten al desarrollo integral del entorno y al avance de la \nciencia; el fortalecimiento del pensamiento, la promoción, desarrollo y \ndifusión de los saberes y culturas; y, la prestación de servicios especializados.");
         txaMision.setBorder(null);
@@ -129,6 +131,7 @@ public class VistaAcercaNosotros extends javax.swing.JFrame {
         txaVision.setColumns(20);
         txaVision.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txaVision.setForeground(new java.awt.Color(153, 153, 153));
+        txaVision.setLineWrap(true);
         txaVision.setRows(5);
         txaVision.setText("La Universidad Nacional de Loja al 2030 lidera y desarrolla, con pertinencia, \nresponsabilidad social y de manera articulada: la formación del talento humano \ncon alto nivel académico-científico, sensibilidad y compromiso humanista; la \ninvestigación colaborativa por dominios científicos, tecnológicos e innovación; \ny, la vinculación con la sociedad, a través de proyectos de transferencia de \nconocimientos en correspondencia con los requerimientos del desarrollo local, \nregional, nacional y binacional; en el marco de un modelo de gestión \ninstitucional innovado y de mejora continua.");
         txaVision.setBorder(null);
