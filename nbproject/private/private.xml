@@ -3,32 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Vista/VistaDocenteCalendario.java</file>
-            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Vista/VistaPrincipalSistema.java</file>
-            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Controlador/TDA/ListaDinamica/Nodo.java</file>
-            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Vista/Utiles/UtilVista.java</file>
-            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Modelo/Horario.java</file>
-            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Controlador/Dao/DaoImplement.java</file>
-            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Controlador/Utiles/UtilesControlador.java</file>
+            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Controlador/Dao/Modelo/cursoDao.java</file>
+            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Vista/VistaGestionAsistencia.java</file>
+            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Vista/ModeloTabla/ModeloTablaCurso.java</file>
+            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Vista/VistaDocentesTomaAsistencia.java</file>
+            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Vista/VistaGestionUniversidad.java</file>
+            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Vista/VistaGestionInterfazPrincipal.java</file>
             <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Vista/VistaGestionAlumnos.java</file>
             <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Vista/VistaGestionCurso.java</file>
-            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Controlador/Dao/Bridge.java</file>
-            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Controlador/Dao/Modelo/cursoDao.java</file>
-            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Controlador/Dao/Modelo/matriculaDao.java</file>
-            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Controlador/Dao/DaoInterface.java</file>
-            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Vista/ModeloTabla/ModeloTablaAlumnos.java</file>
-            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Vista/VistaGestionPersonas.java</file>
-            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Controlador/TDA/ListaDinamica/ListaDinamica.java</file>
-            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Vista/VistaAcercaNosotros.java</file>
-            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Modelo/Alumno.java</file>
-            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Vista/VistaGestionCiclo.java</file>
-            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Vista/VistaGestionMateria.java</file>
-            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Vista/VistaGestionInterfazPrincipal.java</file>
-            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Controlador/Dao/Modelo/alumnoDao.java</file>
-            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Vista/ModeloTabla/ModeloTablaMatriculas.java</file>
-            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Modelo/Matricula.java</file>
-            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Vista/VistaGestionDocentes.java</file>
-            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Vista/VistaGestionMatricula.java</file>
         </group>
     </open-files>
 </project-private>

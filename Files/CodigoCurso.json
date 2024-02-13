@@ -1,0 +1,1 @@
+{"Controlador.TDA.ListaDinamica.ListaDinamica":{"cabezera":{"info":{"@class":"Modelo.CodigoCurso","IdCodigoCurso":1,"NombreCodigoCurso":"Primer curso"},"Siguiente":{"info":{"@class":"Modelo.CodigoCurso","IdCodigoCurso":2,"NombreCodigoCurso":"Segundo curso"}}},"ultimo":{"@reference":"..\/cabezera\/Siguiente"},"Longitud":2}}

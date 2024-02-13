@@ -75,7 +75,7 @@ public class UtilesControlador {
 //        }
 //    }
     
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "unused" })
     private static <T> boolean comparar(T elemento1, T elemento2, String campo, Integer orden) {
         try {
             String[] campos = campo.split("\\.");
