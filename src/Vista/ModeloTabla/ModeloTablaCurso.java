@@ -49,97 +49,123 @@ public class ModeloTablaCurso extends AbstractTableModel {
     @Override
     public Object getValueAt(int Fila, int Columna) {
     
-//        try {
-//            Cursa curso = cursoTabla.getInfo(Fila);
-//
-//            switch (Columna) {
-//                case 0:
-//                    return (curso != null) ? curso.getIdCurso() : "";
-//                case 1:
-//                    return (curso != null) ? curso.getParaleloCursa().getNombre() : "";
-//                case 2:
-//                    ListaDinamica<Matricula> listaMatriculas = curso.getListaMatriculaCursa();
-//                    if (listaMatriculas != null && !listaMatriculas.EstaVacio()) {
-//                        StringBuilder sb = new StringBuilder();
-//                        for (int i = 0; i < listaMatriculas.getLongitud(); i++) {
-//                            Matricula matricula = listaMatriculas.getInfo(i);
-//                            if (matricula != null) {
-//                                sb.append(matricula.getAlumnoMatricula().getDatosAlumno().getNumeroCedula());
-//                                if (i < listaMatriculas.getLongitud() - 1) {
-//                                    sb.append(", ");
-//                                }
-//                            }
-//                        }
-//                        return sb.toString();
-//                    } else {
-//                        return "";
-//                    }
-//                case 3:
-//                    StringBuilder estados = new StringBuilder();
-//                    ListaDinamica<Matricula> listaMatriculasEstado = curso.getListaMatriculaCursa();
-//                    if (listaMatriculasEstado != null && !listaMatriculasEstado.EstaVacio()) {
-//                        for (int i = 0; i < listaMatriculasEstado.getLongitud(); i++) {
-//                            Matricula matriculaEstado = listaMatriculasEstado.getInfo(i);
-//                            if (matriculaEstado != null) {
-//                                estados.append(matriculaEstado.getEstadoMatricula());
-//                                if (i < listaMatriculasEstado.getLongitud() - 1) {
-//                                    estados.append(", ");
-//                                }
-//                            }
-//                        }
-//                    }
-//                    return estados.toString();
-//                case 4:
-//                    // Aquí obtenemos el código del curso
-//                    String codigoCurso = (curso != null) ? curso.getCodigoCursoCursa().getNombreCodigoCurso() : "";
-//                    return codigoCurso;
-//                case 5:
-//                    StringBuilder codigos = new StringBuilder();
-//                    ListaDinamica<Matricula> listaMatriculasCodigo = curso.getListaMatriculaCursa();
-//                    if (listaMatriculasCodigo != null && !listaMatriculasCodigo.EstaVacio()) {
-//                        for (int i = 0; i < listaMatriculasCodigo.getLongitud(); i++) {
-//                            Matricula matriculaCodigo = listaMatriculasCodigo.getInfo(i);
-//                            if (matriculaCodigo != null) {
-//                                codigos.append(matriculaCodigo.getCodigoMatricula());
-//                                if (i < listaMatriculasCodigo.getLongitud() - 1) {
-//                                    codigos.append(", ");
-//                                }
-//                            }
-//                        }
-//                    }
-//                    return codigos.toString();
-//                default:
-//                    return null;
-//            }
-//        } catch (ListaVacia | IndexOutOfBoundsException ex) {
-//            ex.printStackTrace();
-//            return null;
-//        }
-
-
         try {
-            Cursa p = cursoTabla.getInfo(Fila);
+            Cursa curso = cursoTabla.getInfo(Fila);
 
             switch (Columna) {
                 case 0:
-                    return (p != null) ? p.getIdCurso() : "";
+                    return (curso != null) ? curso.getIdCurso() : "";
                 case 1:
-                    return (p != null) ? p.getParaleloCursa().getNombre(): "";
+                    return (curso != null && curso.getParaleloCursa() != null) ? curso.getParaleloCursa().getNombre() : "";
+//                    return (curso != null) ? curso.getParaleloCursa().getNombre() : "";
                 case 2:
-                    return (p != null) ? p.getMatriculaCursa().getAlumnoMatricula().getDatosAlumno().getNumeroCedula(): "";
+                    ListaDinamica<Matricula> listaMatriculas = curso.getListaMatriculaCursa();
+                    if (listaMatriculas != null && !listaMatriculas.EstaVacio()) {
+                        StringBuilder sb = new StringBuilder();
+                        for (int i = 0; i < listaMatriculas.getLongitud(); i++) {
+                            Matricula matricula = listaMatriculas.getInfo(i);
+                            if (matricula != null) {
+                                sb.append(matricula.getAlumnoMatricula().getDatosAlumno().getNumeroCedula());
+                                if (i < listaMatriculas.getLongitud() - 1) {
+                                    sb.append(", ");
+                                }
+                            }
+                        }
+                        return sb.toString();
+                    } else {
+                        return "";
+                    }
                 case 3:
-                    return (p != null) ? p.getMatriculaCursa().getEstadoMatricula(): "";
+                    StringBuilder estados = new StringBuilder();
+                    ListaDinamica<Matricula> listaMatriculasEstado = curso.getListaMatriculaCursa();
+                    if (listaMatriculasEstado != null && !listaMatriculasEstado.EstaVacio()) {
+                        for (int i = 0; i < listaMatriculasEstado.getLongitud(); i++) {
+                            Matricula matriculaEstado = listaMatriculasEstado.getInfo(i);
+                            if (matriculaEstado != null) {
+                                estados.append(matriculaEstado.getEstadoMatricula());
+                                if (i < listaMatriculasEstado.getLongitud() - 1) {
+                                    estados.append(", ");
+                                }
+                            }
+                        }
+                    }
+                    return estados.toString();
                 case 4:
-                    return (p != null) ? p.getMatriculaCursa().getCodigoMatricula(): "";
+                    // Aquí obtenemos el código del curso
+                    return (curso != null && curso.getCodigoCursoCursa() != null) ? curso.getCodigoCursoCursa().getNombreCodigoCurso() : "";
+//                    String codigoCurso = (curso != null) ? curso.getCodigoCursoCursa().getNombreCodigoCurso() : "";
+//                    return codigoCurso;
                 case 5:
-                    return (p != null) ? p.getCodigoCursoCursa().getNombreCodigoCurso(): "";
+                    StringBuilder codigos = new StringBuilder();
+                    ListaDinamica<Matricula> listaMatriculasCodigo = curso.getListaMatriculaCursa();
+                    if (listaMatriculasCodigo != null && !listaMatriculasCodigo.EstaVacio()) {
+                        for (int i = 0; i < listaMatriculasCodigo.getLongitud(); i++) {
+                            Matricula matriculaCodigo = listaMatriculasCodigo.getInfo(i);
+                            if (matriculaCodigo != null) {
+                                codigos.append(matriculaCodigo.getCodigoMatricula());
+                                if (i < listaMatriculasCodigo.getLongitud() - 1) {
+                                    codigos.append(", ");
+                                }
+                            }
+                        }
+                    }
+                    return codigos.toString();
                 default:
                     return null;
             }
-        } 
-        catch (ListaVacia | IndexOutOfBoundsException ex) {
+        } catch (ListaVacia | IndexOutOfBoundsException ex) {
+            ex.printStackTrace();
+            return null;
         }
-        return cursoTabla;
+
+
+//        try {
+//            Cursa p = cursoTabla.getInfo(Fila);
+//
+//            switch (Columna) {
+//                case 0:
+//                    return (p != null) ? p.getIdCurso() : "";
+//                case 1:
+//                    return (p != null) ? p.getParaleloCursa().getNombre(): "";
+//                case 2:
+//                    return (p != null) ? p.getListaMatriculaCursa().getInfo(Fila).getAlumnoMatricula().getDatosAlumno().getNumeroCedula(): "";
+//                case 3:
+//                    return (p != null) ? p.getListaMatriculaCursa().getInfo(Fila).getEstadoMatricula(): "";
+//                case 4:
+//                    return (p != null) ? p.getListaMatriculaCursa().getInfo(Fila).getCodigoMatricula(): "";
+//                case 5:
+//                    return (p != null) ? p.getCodigoCursoCursa().getNombreCodigoCurso(): "";
+//                default:
+//                    return null;
+//            }
+//        } 
+//        catch (ListaVacia | IndexOutOfBoundsException ex) {
+//        }
+//        return cursoTabla;
+
+/*Primero si sirve*/
+//            Cursa p = cursoTabla.getInfo(Fila);
+//
+//            switch (Columna) {
+//                case 0:
+//                    return (p != null) ? p.getIdCurso() : "";
+//                case 1:
+//                    return (p != null) ? p.getParaleloCursa().getNombre(): "";
+//                case 2:
+//                    return (p != null) ? p.getMatriculaCursa().getAlumnoMatricula().getDatosAlumno().getNumeroCedula(): "";
+//                case 3:
+//                    return (p != null) ? p.getMatriculaCursa().getEstadoMatricula(): "";
+//                case 4:
+//                    return (p != null) ? p.getMatriculaCursa().getCodigoMatricula(): "";
+//                case 5:
+//                    return (p != null) ? p.getCodigoCursoCursa().getNombreCodigoCurso(): "";
+//                default:
+//                    return null;
+//            }
+//        } 
+//        catch (ListaVacia | IndexOutOfBoundsException ex) {
+//        }
+//        return cursoTabla;
     }
 
 

@@ -78,36 +78,176 @@ public class VistaGestionCurso extends javax.swing.JFrame {
         }
     }
     
+    /*
+    casi sirve
+    if (cbxCodigoCurso.getSelectedIndex() == -1) {
+        JOptionPane.showMessageDialog(null, "Falta seleccionar el ciclo", "Error", JOptionPane.ERROR_MESSAGE);
+    } else if (cbxParalelo.getSelectedIndex() == -1) {
+        JOptionPane.showMessageDialog(null, "Falta seleccionar materia", "Error", JOptionPane.ERROR_MESSAGE);
+    } else if (cbxMatricula.getSelectedIndex() == -1) {
+        JOptionPane.showMessageDialog(null, "Falta seleccionar materia", "Error", JOptionPane.ERROR_MESSAGE);
+    } else {
+        Paralelo paralelo = UtilVista.obtenerControlParalelo(cbxParalelo);
+        Matricula matricula = UtilVista.obtenerMatriculaControl(cbxMatricula);
+
+        // Obtener el nombre del código del curso
+        String nombreCodigoCurso = cbxCodigoCurso.getSelectedItem().toString();
+
+        // Crear un objeto CodigoCurso con el nombre obtenido
+        CodigoCurso codigoCurso = new CodigoCurso();
+        codigoCurso.setNombreCodigoCurso(nombreCodigoCurso);
+
+        // Buscar si ya existe un curso con el mismo código y paralelo
+        boolean cursoExistenteEncontrado = false;
+        for (int i = 0; i < listaCursos.getLongitud(); i++) {
+            Cursa curso = listaCursos.getInfo(i);
+            if (curso.getCodigoCursoCursa().getNombreCodigoCurso().equals(nombreCodigoCurso) && curso.getParaleloCursa().equals(paralelo)) {
+                // Si ya existe un curso con el mismo código y paralelo, agregar la matrícula a su lista de matrículas
+                curso.getListaMatriculaCursa().Agregar(matricula);
+                cursoExistenteEncontrado = true;
+                cursoControlDao.setCursos(curso); // Actualizar el curso en el DAO
+                break;
+            }
+        }
+
+        if (!cursoExistenteEncontrado) {
+            // Si no existe un curso con el mismo código y paralelo, crear un nuevo curso y agregar la matrícula a su lista de matrículas
+            Integer idCiclo = listaCursos.getLongitud() + 1;
+            Cursa nuevoCurso = new Cursa();
+            nuevoCurso.setIdCurso(idCiclo);
+            nuevoCurso.setCodigoCursoCursa(codigoCurso);
+            nuevoCurso.setParaleloCursa(paralelo);
+            ListaDinamica<Matricula> listaMatriculasAgregar = new ListaDinamica<>();
+            listaMatriculasAgregar.Agregar(matricula);
+            nuevoCurso.setListaMatriculaCursa(listaMatriculasAgregar);
+
+            // Agregar el nuevo curso a la lista de cursos
+            listaCursos.Agregar(nuevoCurso);
+        }
+
+        if (cursoControlDao.Persist()) {
+            JOptionPane.showMessageDialog(null, "CICLO GUARDADO EXITOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
+            cursoControlDao.setCursos(null);
+        } else {
+            JOptionPane.showMessageDialog(null, "NO SE PUEDE REGISTRAR", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
+        }
+        Limpiar();
+    }
+    */
+    
     private void Guardar() throws ListaVacia {
 
-        if (cbxCodigoCurso.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(null, "Falta seleccionar el ciclo", "Error", JOptionPane.ERROR_MESSAGE);
+  if (cbxCodigoCurso.getSelectedIndex() == -1) {
+    JOptionPane.showMessageDialog(null, "Falta seleccionar el ciclo", "Error", JOptionPane.ERROR_MESSAGE);
+} else if (cbxParalelo.getSelectedIndex() == -1) {
+    JOptionPane.showMessageDialog(null, "Falta seleccionar materia", "Error", JOptionPane.ERROR_MESSAGE);
+} else if (cbxMatricula.getSelectedIndex() == -1) {
+    JOptionPane.showMessageDialog(null, "Falta seleccionar materia", "Error", JOptionPane.ERROR_MESSAGE);
+} else {
+    Paralelo paralelo = UtilVista.obtenerControlParalelo(cbxParalelo);
+    Matricula matricula = UtilVista.obtenerMatriculaControl(cbxMatricula);
+
+    // Obtener el nombre del código del curso
+    String nombreCodigoCurso = cbxCodigoCurso.getSelectedItem().toString();
+
+    // Crear un objeto CodigoCurso con el nombre obtenido
+    CodigoCurso codigoCurso = new CodigoCurso();
+    codigoCurso.setNombreCodigoCurso(nombreCodigoCurso);
+
+    // Buscar si ya existe un curso con el mismo código y paralelo
+    boolean cursoExistenteEncontrado = false;
+    for (int i = 0; i < listaCursos.getLongitud(); i++) {
+        Cursa curso = listaCursos.getInfo(i);
+        if (curso.getCodigoCursoCursa().getNombreCodigoCurso().equals(nombreCodigoCurso) && curso.getParaleloCursa().getCodigoParalelo().equals(paralelo.getCodigoParalelo())) {
+            // Si ya existe un curso con el mismo código y paralelo, agregar la matrícula a su lista de matrículas
+            curso.getListaMatriculaCursa().Agregar(matricula);
+            cursoExistenteEncontrado = true;
+            cursoControlDao.setCursos(curso); // Actualizar el curso en el DAO
+            break;
         }
-        else if (cbxParalelo.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(null, "Falta seleccionar materia", "Error", JOptionPane.ERROR_MESSAGE);
-        } 
-        else if (cbxMatricula.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(null, "Falta seleccionar materia", "Error", JOptionPane.ERROR_MESSAGE);
-        } 
-        else {
-            Integer idCiclo = listaCursos.getLongitud()+1;
-            
-            cursoControlDao.getCursos().setIdCurso(idCiclo);
-            cursoControlDao.getCursos().setCodigoCursoCursa(UtilVista.obtenerCodigoCursoControl(cbxCodigoCurso));
-            cursoControlDao.getCursos().setParaleloCursa(UtilVista.obtenerControlParalelo(cbxParalelo));
-//            ListaDinamica<Matricula> listaMc = new ListaDinamica();
-//            listaMc.Agregar(UtilVista.obtenerMatriculaControl(cbxMatricula));
-            cursoControlDao.getCursos().setMatriculaCursa(UtilVista.obtenerMatriculaControl(cbxMatricula));
-            
-            if (cursoControlDao.Persist()) {
-                JOptionPane.showMessageDialog(null, "CICLO GUARDADA EXISTOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
-                cursoControlDao.setCursos(null);
-            } 
-            else {
-                JOptionPane.showMessageDialog(null, "NO SE PUEDE REGISTRAR", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
-            }
-            Limpiar();
-        }
+    }
+
+    if (!cursoExistenteEncontrado) {
+        // Si no existe un curso con el mismo código y paralelo, crear un nuevo curso y agregar la matrícula a su lista de matrículas
+        Integer idCiclo = listaCursos.getLongitud() + 1;
+        Cursa nuevoCurso = new Cursa();
+        nuevoCurso.setIdCurso(idCiclo);
+        nuevoCurso.setCodigoCursoCursa(codigoCurso);
+        nuevoCurso.setParaleloCursa(paralelo);
+        ListaDinamica<Matricula> listaMatriculasAgregar = new ListaDinamica<>();
+        listaMatriculasAgregar.Agregar(matricula);
+        nuevoCurso.setListaMatriculaCursa(listaMatriculasAgregar);
+
+        // Agregar el nuevo curso a la lista de cursos
+        listaCursos.Agregar(nuevoCurso);
+    }
+
+    if (cursoControlDao.Persist()) {
+        JOptionPane.showMessageDialog(null, "CICLO GUARDADO EXITOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
+        cursoControlDao.setCursos(null);
+    } else {
+        JOptionPane.showMessageDialog(null, "NO SE PUEDE REGISTRAR", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
+    }
+    Limpiar();
+}
+    
+//        if (cbxCodigoCurso.getSelectedIndex() == -1) {
+//            JOptionPane.showMessageDialog(null, "Falta seleccionar el ciclo", "Error", JOptionPane.ERROR_MESSAGE);
+//        } else if (cbxParalelo.getSelectedIndex() == -1) {
+//            JOptionPane.showMessageDialog(null, "Falta seleccionar materia", "Error", JOptionPane.ERROR_MESSAGE);
+//        } else if (cbxMatricula.getSelectedIndex() == -1) {
+//            JOptionPane.showMessageDialog(null, "Falta seleccionar materia", "Error", JOptionPane.ERROR_MESSAGE);
+//        } else {
+//            Integer idCiclo = listaCursos.getLongitud() + 1;
+//
+//            Cursa nuevoCurso = new Cursa();
+//            nuevoCurso.setIdCurso(idCiclo);
+//            nuevoCurso.setCodigoCursoCursa(UtilVista.obtenerCodigoCursoControl(cbxCodigoCurso));
+//            nuevoCurso.setParaleloCursa(UtilVista.obtenerControlParalelo(cbxParalelo));
+//            ListaDinamica<Matricula> listaMatriculasAgregar = new ListaDinamica<>();
+//            listaMatriculasAgregar.Agregar(UtilVista.obtenerMatriculaControl(cbxMatricula));
+//            nuevoCurso.setListaMatriculaCursa(listaMatriculasAgregar);
+//            
+//
+//            cursoControlDao.setCursos(nuevoCurso);
+//
+//            if (cursoControlDao.Persist()) {
+//                JOptionPane.showMessageDialog(null, "CICLO GUARDADO EXITOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
+//                cursoControlDao.setCursos(null);
+//            } else {
+//                JOptionPane.showMessageDialog(null, "NO SE PUEDE REGISTRAR", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
+//            }
+//            Limpiar();
+//        }
+
+//        if (cbxCodigoCurso.getSelectedIndex() == -1) {
+//            JOptionPane.showMessageDialog(null, "Falta seleccionar el ciclo", "Error", JOptionPane.ERROR_MESSAGE);
+//        }
+//        else if (cbxParalelo.getSelectedIndex() == -1) {
+//            JOptionPane.showMessageDialog(null, "Falta seleccionar materia", "Error", JOptionPane.ERROR_MESSAGE);
+//        } 
+//        else if (cbxMatricula.getSelectedIndex() == -1) {
+//            JOptionPane.showMessageDialog(null, "Falta seleccionar materia", "Error", JOptionPane.ERROR_MESSAGE);
+//        } 
+//        else {
+//            Integer idCiclo = listaCursos.getLongitud()+1;
+//            
+//            cursoControlDao.getCursos().setIdCurso(idCiclo);
+//            cursoControlDao.getCursos().setCodigoCursoCursa(UtilVista.obtenerCodigoCursoControl(cbxCodigoCurso));
+//            cursoControlDao.getCursos().setParaleloCursa(UtilVista.obtenerControlParalelo(cbxParalelo));
+////            ListaDinamica<Matricula> listaMc = new ListaDinamica();
+////            listaMc.Agregar(UtilVista.obtenerMatriculaControl(cbxMatricula));
+//            cursoControlDao.getCursos().setMatriculaCursa(UtilVista.obtenerMatriculaControl(cbxMatricula));
+//            
+//            if (cursoControlDao.Persist()) {
+//                JOptionPane.showMessageDialog(null, "CICLO GUARDADA EXISTOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
+//                cursoControlDao.setCursos(null);
+//            } 
+//            else {
+//                JOptionPane.showMessageDialog(null, "NO SE PUEDE REGISTRAR", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
+//            }
+//            Limpiar();
+//        }
     }
     
         

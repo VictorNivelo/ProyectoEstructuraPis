@@ -110,6 +110,7 @@ public class VistaInicioSesionDocente extends javax.swing.JFrame {
         boolean esDocente = false;
 
         for (Persona persona : listaPersonas.toArray()) {
+            System.out.println(persona);
             Cuenta cuenta = persona.getCuentaPersona();
             if (cuenta != null && cuenta.getCorreo().equals(usuarioIngresado) && cuenta.getContrasena().equals(contrasenaIngresada)) {
                 credencialesCorrectas = true;
