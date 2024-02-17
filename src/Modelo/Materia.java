@@ -15,8 +15,6 @@ public class Materia {
     
     private Ciclo cicloMateria;
     private Cursa cursoMateria;
-    private ListaDinamica<Cursa> listaCursaMateria;
-    private Docente docenteMateria;
     
     public Materia() {
         
@@ -68,22 +66,6 @@ public class Materia {
 
     public void setCursoMateria(Cursa cursoMateria) {
         this.cursoMateria = cursoMateria;
-    }
-
-    public Docente getDocenteMateria() {
-        return docenteMateria;
-    }
-
-    public void setDocenteMateria(Docente docenteMateria) {
-        this.docenteMateria = docenteMateria;
-    }
-
-    public ListaDinamica<Cursa> getListaCursaMateria() {
-        return listaCursaMateria;
-    }
-
-    public void setListaCursaMateria(ListaDinamica<Cursa> listaCursaMateria) {
-        this.listaCursaMateria = listaCursaMateria;
     }
     
     @Override

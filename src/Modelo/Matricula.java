@@ -89,7 +89,7 @@ public class Matricula {
 
     @Override
     public String toString() {
-        return CodigoMatricula +  " Alumno:" + alumnoMatricula.getDatosAlumno().getNumeroCedula() +"\n";
+        return CodigoMatricula +  " " + alumnoMatricula.getDatosAlumno().getNumeroCedula() +  " "+ alumnoMatricula.getDatosAlumno().getNombre() +" "+ alumnoMatricula.getDatosAlumno().getApellido()+"\n";
     }
     
 }

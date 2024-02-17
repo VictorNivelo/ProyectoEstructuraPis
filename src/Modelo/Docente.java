@@ -59,7 +59,7 @@ public class Docente {
     
     @Override
     public String toString() {
-        return DatosDocente.getNumeroCedula()+ " Nombres:"+ DatosDocente.getNombre() +" "+ DatosDocente.getApellido() + "\n";
+        return DatosDocente.getNumeroCedula()+ " "+ DatosDocente.getNombre() +" "+ DatosDocente.getApellido() + "\n";
     }
 
 }

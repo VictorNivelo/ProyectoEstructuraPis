@@ -64,7 +64,7 @@ public class Alumno {
     
     @Override
     public String toString() {
-        return "DNI" + DatosAlumno.getNumeroCedula() + " Nombres: " + DatosAlumno.getNombre() +" " +DatosAlumno.getApellido()+ "\n";
+        return DatosAlumno.getNumeroCedula() + " " + DatosAlumno.getNombre() +" " +DatosAlumno.getApellido()+ "\n";
     }
     
 }

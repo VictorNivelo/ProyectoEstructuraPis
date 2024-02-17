@@ -124,7 +124,7 @@ public class Persona {
 
     @Override
     public String toString() {
-        return "DNI:" + NumeroCedula + ", Nombres:" + Nombre  +" "+ Apellido +  "\n";
+        return NumeroCedula + " " + Nombre  +" "+ Apellido +  "\n";
     }
 
 }

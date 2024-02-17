@@ -15,6 +15,7 @@ public class Cursa {
     private Paralelo ParaleloCursa;
     
     private Matricula matriculaCursa;
+    private Docente docenteCursa;
     private ListaDinamica<Matricula> listaMatriculaCursa;
     
     public Cursa() {
@@ -65,6 +66,14 @@ public class Cursa {
         listaMatriculaCursa.Agregar(matricula);
     }
 
+    public Docente getDocenteCursa() {
+        return docenteCursa;
+    }
+
+    public void setDocenteCursa(Docente docenteCursa) {
+        this.docenteCursa = docenteCursa;
+    }
+
     public void quitarMatricula(Matricula matricula) {
         boolean encontrado = false;
         for (int i = 0; i < listaMatriculaCursa.getLongitud(); i++) {
@@ -94,7 +103,7 @@ public class Cursa {
     
     @Override
     public String toString() {
-        return codigoCursoCursa.getNombreCodigoCurso()+ " " +ParaleloCursa + "\n";
+        return ParaleloCursa + "\n";
     }
     
 }

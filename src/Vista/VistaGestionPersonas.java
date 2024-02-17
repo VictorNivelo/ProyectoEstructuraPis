@@ -91,11 +91,19 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
                 cbxEstadoCuenta.setSelectedItem(personaControlDao.getPersona().getCuentaPersona().getEstadoCuenta());
                 
                 cbxEstadoCuenta.setEnabled(true);
+                txtUsuario.setEnabled(true);
+                txtContrasena.setEnabled(true);
             } 
             catch (Exception e) {
                 
             }
         }
+    }
+    
+    private String generarCorreoInst() {
+        String nombre = txtNombre.getText().contains(" ") ? txtNombre.getText().substring(0, txtNombre.getText().indexOf(" ")) : txtNombre.getText();
+        String apellido = txtApellido.getText().contains(" ") ? txtApellido.getText().substring(0, txtApellido.getText().indexOf(" ")) : txtApellido.getText();
+        return nombre.toLowerCase() + "." + apellido.toLowerCase() + "@unl.edu.ec";
     }
     
     private void Guardar() throws ListaVacia {
@@ -257,6 +265,7 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
         cbxOrden = new javax.swing.JComboBox<>();
         btnOrdenar = new javax.swing.JButton();
         cbxTipoOrden = new javax.swing.JComboBox<>();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("GESTION DE PERSONAS");
@@ -463,6 +472,10 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
             }
         });
 
+        txtUsuario.setEditable(false);
+
+        txtContrasena.setEditable(false);
+
         cbxEstadoCuenta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Activa", "Inactiva", "Suspendida" }));
         cbxEstadoCuenta.setEnabled(false);
 
@@ -496,6 +509,13 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
         cbxTipoOrden.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Rol", "Numero DNI", "Nombre", "Apellido", "Genero", "Direccion", "Telefono", "Correo", "Estado de cuenta" }));
         cbxTipoOrden.setSelectedIndex(-1);
 
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Correo.png"))); // NOI18N
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -520,7 +540,9 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtUsuario))
+                                .addComponent(txtUsuario)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel15, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel10)
@@ -665,7 +687,8 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel11)
-                                    .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton2))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel12)
@@ -808,6 +831,8 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
             }
         }
         cbxEstadoCuenta.setEnabled(false);
+        txtUsuario.setEnabled(false);
+        txtContrasena.setEnabled(false);
         
 //            JOptionPane.showMessageDialog(null, "No se puede modificar");
 
@@ -863,6 +888,8 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
             try {
                 Guardar();
                 cbxEstadoCuenta.setEnabled(false);
+                txtUsuario.setEnabled(false);
+                txtContrasena.setEnabled(false);
             } 
             catch (ListaVacia ex) {
 
@@ -1055,6 +1082,13 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnOrdenarActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        
+        txtUsuario.setText(generarCorreoInst());
+        txtContrasena.setText(txtNumeroCedula.getText());
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1126,6 +1160,7 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbxTipoDni;
     private javax.swing.JComboBox<String> cbxTipoOrden;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

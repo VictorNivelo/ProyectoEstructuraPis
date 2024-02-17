@@ -52,12 +52,8 @@ public class ModeloTablaMateria extends AbstractTableModel {
                 case 5:
                     return (c != null) ? c.getCursoMateria().getParaleloCursa().getNombre(): "";
                 case 6:
-                    return (c != null) ? c.getDocenteMateria().getDatosDocente().getNombre() + " " + c.getDocenteMateria().getDatosDocente().getApellido(): "";
-                case 7:
-                    return (c != null) ? c.getDocenteMateria().getDatosDocente().getNumeroCedula() : "";
-                case 8:
                     return (c != null) ? c.getCursoMateria().getMatriculaCursa().getAlumnoMatricula().getDatosAlumno().getNumeroCedula() : "";
-                case 9:
+                case 7:
                     return (c != null) ? c.getCursoMateria().getMatriculaCursa().getCodigoMatricula(): "";
                 default:
                     return null;

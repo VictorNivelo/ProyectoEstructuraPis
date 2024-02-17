@@ -30,7 +30,7 @@ public class ModeloTablaCurso extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 6;
+        return 8;
     }
     
 //    private String EstadoCuenta(int i) throws ListaVacia {
@@ -48,75 +48,35 @@ public class ModeloTablaCurso extends AbstractTableModel {
     
     @Override
     public Object getValueAt(int Fila, int Columna) {
-    
+
         try {
-            Cursa curso = cursoTabla.getInfo(Fila);
+            Cursa p = cursoTabla.getInfo(Fila);
 
             switch (Columna) {
                 case 0:
-                    return (curso != null) ? curso.getIdCurso() : "";
+                    return (p != null) ? p.getIdCurso() : "";
                 case 1:
-                    return (curso != null && curso.getParaleloCursa() != null) ? curso.getParaleloCursa().getNombre() : "";
-//                    return (curso != null) ? curso.getParaleloCursa().getNombre() : "";
+                    return (p != null) ? p.getCodigoCursoCursa().getNombreCodigoCurso(): "";
                 case 2:
-                    ListaDinamica<Matricula> listaMatriculas = curso.getListaMatriculaCursa();
-                    if (listaMatriculas != null && !listaMatriculas.EstaVacio()) {
-                        StringBuilder sb = new StringBuilder();
-                        for (int i = 0; i < listaMatriculas.getLongitud(); i++) {
-                            Matricula matricula = listaMatriculas.getInfo(i);
-                            if (matricula != null) {
-                                sb.append(matricula.getAlumnoMatricula().getDatosAlumno().getNumeroCedula());
-                                if (i < listaMatriculas.getLongitud() - 1) {
-                                    sb.append(", ");
-                                }
-                            }
-                        }
-                        return sb.toString();
-                    } else {
-                        return "";
-                    }
+                    return (p != null) ? p.getParaleloCursa().getNombre() : "";
                 case 3:
-                    StringBuilder estados = new StringBuilder();
-                    ListaDinamica<Matricula> listaMatriculasEstado = curso.getListaMatriculaCursa();
-                    if (listaMatriculasEstado != null && !listaMatriculasEstado.EstaVacio()) {
-                        for (int i = 0; i < listaMatriculasEstado.getLongitud(); i++) {
-                            Matricula matriculaEstado = listaMatriculasEstado.getInfo(i);
-                            if (matriculaEstado != null) {
-                                estados.append(matriculaEstado.getEstadoMatricula());
-                                if (i < listaMatriculasEstado.getLongitud() - 1) {
-                                    estados.append(", ");
-                                }
-                            }
-                        }
-                    }
-                    return estados.toString();
+                    return (p != null) ? p.getMatriculaCursa().getAlumnoMatricula().getDatosAlumno().getNumeroCedula(): "";
                 case 4:
-                    // Aquí obtenemos el código del curso
-                    return (curso != null && curso.getCodigoCursoCursa() != null) ? curso.getCodigoCursoCursa().getNombreCodigoCurso() : "";
-//                    String codigoCurso = (curso != null) ? curso.getCodigoCursoCursa().getNombreCodigoCurso() : "";
-//                    return codigoCurso;
+                    return (p != null) ? p.getMatriculaCursa().getAlumnoMatricula().getDatosAlumno().getNombre() + " " + p.getMatriculaCursa().getAlumnoMatricula().getDatosAlumno().getApellido(): "";
                 case 5:
-                    StringBuilder codigos = new StringBuilder();
-                    ListaDinamica<Matricula> listaMatriculasCodigo = curso.getListaMatriculaCursa();
-                    if (listaMatriculasCodigo != null && !listaMatriculasCodigo.EstaVacio()) {
-                        for (int i = 0; i < listaMatriculasCodigo.getLongitud(); i++) {
-                            Matricula matriculaCodigo = listaMatriculasCodigo.getInfo(i);
-                            if (matriculaCodigo != null) {
-                                codigos.append(matriculaCodigo.getCodigoMatricula());
-                                if (i < listaMatriculasCodigo.getLongitud() - 1) {
-                                    codigos.append(", ");
-                                }
-                            }
-                        }
-                    }
-                    return codigos.toString();
+                    return (p != null) ? p.getMatriculaCursa().getCodigoMatricula(): "";
+                case 6:
+                    return (p != null) ? p.getDocenteCursa().getDatosDocente().getNumeroCedula(): "";
+                case 7:
+                    return (p != null) ? p.getDocenteCursa().getDatosDocente().getNombre()+" "+ p.getDocenteCursa().getDatosDocente().getApellido(): "";
                 default:
                     return null;
             }
-        } catch (ListaVacia | IndexOutOfBoundsException ex) {
-            ex.printStackTrace();
-            return null;
+        } 
+        catch (ListaVacia | IndexOutOfBoundsException ex) {
+
         }
+        return cursoTabla;
 
 
 //        try {
@@ -175,15 +135,19 @@ public class ModeloTablaCurso extends AbstractTableModel {
             case 0:
                 return "#";
             case 1:
-                return "Paralelo";
+                return "Codigo";
             case 2:
-                return "DNI alumno";
+                return "Paralelo";
             case 3:
-                return "Estado matricula";
+                return "DNI estudiante";
             case 4:
-                return "Codigo matricula";
+                return "Nombres estudiante";
             case 5:
-                return "Codigo curso";
+                return "Codigo matricula";
+            case 6:
+                return "DNI docente";
+            case 7:
+                return "Nombres docente";
 
             default:
                 return null;

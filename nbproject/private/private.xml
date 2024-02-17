@@ -3,12 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Controlador/Dao/Modelo/cursoDao.java</file>
-            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Controlador/TDA/ListaDinamica/Nodo.java</file>
-            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Vista/VistaGestionPersonas.java</file>
-            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Vista/VistaInicioSesionDocente.java</file>
+            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Modelo/Alumno.java</file>
+            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Vista/VistaGestionMateria.java</file>
             <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Vista/VistaGestionCurso.java</file>
-            <file>file:/C:/Users/Victor/Documents/NetBeansProjects/ProyectoEstructuraPis/src/Controlador/TDA/ListaDinamica/ListaDinamica.java</file>
         </group>
     </open-files>
 </project-private>

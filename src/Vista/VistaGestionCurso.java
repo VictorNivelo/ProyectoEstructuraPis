@@ -6,10 +6,8 @@ import Controlador.Dao.Modelo.matriculaDao;
 import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Controlador.Utiles.UtilesControlador;
-import Modelo.CodigoCurso;
 import Modelo.Cursa;
 import Modelo.Matricula;
-import Modelo.Paralelo;
 import Vista.Utiles.UtilVista;
 import Vista.ModeloTabla.ModeloTablaCurso;
 import javax.swing.ImageIcon;
@@ -35,6 +33,8 @@ public class VistaGestionCurso extends javax.swing.JFrame {
         UtilVista.cargarcomboMatricula(cbxMatricula);
         UtilVista.cargarcomboParalelo(cbxParalelo); 
         UtilVista.cargarcomboCodigoCurso(cbxCodigoCurso);
+        UtilVista.cargarcomboDocente(cbxDocente); 
+        cbxDocente.setMaximumRowCount(cbxDocente.getItemCount());
         cbxMatricula.setSelectedIndex(-1);
         cbxMatricula.setMaximumRowCount(cbxMatricula.getItemCount());
         CargarTabla();
@@ -70,6 +70,8 @@ public class VistaGestionCurso extends javax.swing.JFrame {
                 cbxParalelo.setSelectedIndex(cursoControlDao.getCursos().getParaleloCursa().getIdParalelo() -1);
                 cbxMatricula.setSelectedIndex(cursoControlDao.getCursos().getMatriculaCursa().getIdMatricula() -1);
                 cbxCodigoCurso.setSelectedIndex(cursoControlDao.getCursos().getCodigoCursoCursa().getIdCodigoCurso() -1);
+                cbxDocente.setSelectedIndex(cursoControlDao.getCursos().getDocenteCursa().getIdDocente() -1);
+
 
             } 
             catch (Exception e) {
@@ -137,60 +139,35 @@ public class VistaGestionCurso extends javax.swing.JFrame {
     
     private void Guardar() throws ListaVacia {
 
-  if (cbxCodigoCurso.getSelectedIndex() == -1) {
-    JOptionPane.showMessageDialog(null, "Falta seleccionar el ciclo", "Error", JOptionPane.ERROR_MESSAGE);
-} else if (cbxParalelo.getSelectedIndex() == -1) {
-    JOptionPane.showMessageDialog(null, "Falta seleccionar materia", "Error", JOptionPane.ERROR_MESSAGE);
-} else if (cbxMatricula.getSelectedIndex() == -1) {
-    JOptionPane.showMessageDialog(null, "Falta seleccionar materia", "Error", JOptionPane.ERROR_MESSAGE);
-} else {
-    Paralelo paralelo = UtilVista.obtenerControlParalelo(cbxParalelo);
-    Matricula matricula = UtilVista.obtenerMatriculaControl(cbxMatricula);
+        if (cbxParalelo.getSelectedIndex() == -1) {
+            JOptionPane.showMessageDialog(null, "Falta seleccionar el paralelo", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        else if (cbxMatricula.getSelectedIndex() == -1) {
+            JOptionPane.showMessageDialog(null, "Falta seleccionar la matricula", "Error", JOptionPane.ERROR_MESSAGE);
+        } 
+        else if (cbxDocente.getSelectedIndex() == -1) {
+            JOptionPane.showMessageDialog(null, "Falta seleccionar el docebte", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        else {
+            Integer idCiclo = listaCursos.getLongitud() + 1;
 
-    // Obtener el nombre del código del curso
-    String nombreCodigoCurso = cbxCodigoCurso.getSelectedItem().toString();
+            cursoControlDao.getCursos().setIdCurso(idCiclo);
+            cursoControlDao.getCursos().setCodigoCursoCursa(UtilVista.obtenerCodigoCursoControl(cbxCodigoCurso));
+            cursoControlDao.getCursos().setParaleloCursa(UtilVista.obtenerControlParalelo(cbxParalelo));
+            cursoControlDao.getCursos().setMatriculaCursa(UtilVista.obtenerMatriculaControl(cbxMatricula));
+            cursoControlDao.getCursos().setDocenteCursa(UtilVista.obtenerDocenteControl(cbxDocente));
 
-    // Crear un objeto CodigoCurso con el nombre obtenido
-    CodigoCurso codigoCurso = new CodigoCurso();
-    codigoCurso.setNombreCodigoCurso(nombreCodigoCurso);
-
-    // Buscar si ya existe un curso con el mismo código y paralelo
-    boolean cursoExistenteEncontrado = false;
-    for (int i = 0; i < listaCursos.getLongitud(); i++) {
-        Cursa curso = listaCursos.getInfo(i);
-        if (curso.getCodigoCursoCursa().getNombreCodigoCurso().equals(nombreCodigoCurso) && curso.getParaleloCursa().getCodigoParalelo().equals(paralelo.getCodigoParalelo())) {
-            // Si ya existe un curso con el mismo código y paralelo, agregar la matrícula a su lista de matrículas
-            curso.getListaMatriculaCursa().Agregar(matricula);
-            cursoExistenteEncontrado = true;
-            cursoControlDao.setCursos(curso); // Actualizar el curso en el DAO
-            break;
+            if (cursoControlDao.Persist()) {
+                JOptionPane.showMessageDialog(null, "CICLO GUARDADA EXISTOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
+                cursoControlDao.setCursos(null);
+            }
+            else {
+                JOptionPane.showMessageDialog(null, "NO SE PUEDE REGISTRAR", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
+            }
+            Limpiar();
         }
     }
 
-    if (!cursoExistenteEncontrado) {
-        // Si no existe un curso con el mismo código y paralelo, crear un nuevo curso y agregar la matrícula a su lista de matrículas
-        Integer idCiclo = listaCursos.getLongitud() + 1;
-        Cursa nuevoCurso = new Cursa();
-        nuevoCurso.setIdCurso(idCiclo);
-        nuevoCurso.setCodigoCursoCursa(codigoCurso);
-        nuevoCurso.setParaleloCursa(paralelo);
-        ListaDinamica<Matricula> listaMatriculasAgregar = new ListaDinamica<>();
-        listaMatriculasAgregar.Agregar(matricula);
-        nuevoCurso.setListaMatriculaCursa(listaMatriculasAgregar);
-
-        // Agregar el nuevo curso a la lista de cursos
-        listaCursos.Agregar(nuevoCurso);
-    }
-
-    if (cursoControlDao.Persist()) {
-        JOptionPane.showMessageDialog(null, "CICLO GUARDADO EXITOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
-        cursoControlDao.setCursos(null);
-    } else {
-        JOptionPane.showMessageDialog(null, "NO SE PUEDE REGISTRAR", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
-    }
-    Limpiar();
-}
-    
 //        if (cbxCodigoCurso.getSelectedIndex() == -1) {
 //            JOptionPane.showMessageDialog(null, "Falta seleccionar el ciclo", "Error", JOptionPane.ERROR_MESSAGE);
 //        } else if (cbxParalelo.getSelectedIndex() == -1) {
@@ -248,7 +225,7 @@ public class VistaGestionCurso extends javax.swing.JFrame {
 //            }
 //            Limpiar();
 //        }
-    }
+//    }
     
         
 //        if (cbxCodigoCurso.getSelectedIndex() == -1) {
@@ -311,7 +288,6 @@ public class VistaGestionCurso extends javax.swing.JFrame {
         btnEliminar = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         cbxMatricula = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
@@ -335,6 +311,11 @@ public class VistaGestionCurso extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         txtAlumnoBusqueda = new javax.swing.JTextField();
         jButton6 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
+        cbxDocente = new javax.swing.JComboBox<>();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("GESTION DE CURSOS");
@@ -403,11 +384,6 @@ public class VistaGestionCurso extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Paralelo");
-
-        jLabel6.setFont(new java.awt.Font("Candara Light", 1, 32)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("Matricula");
 
         jLabel7.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 0, 0));
@@ -509,6 +485,16 @@ public class VistaGestionCurso extends javax.swing.JFrame {
             }
         });
 
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Buscar.png"))); // NOI18N
+
+        jLabel14.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel14.setText("Docente");
+
+        jLabel12.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel12.setText("Docente");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -527,7 +513,6 @@ public class VistaGestionCurso extends javax.swing.JFrame {
                         .addComponent(cbxCodigoCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton4))
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -545,7 +530,18 @@ public class VistaGestionCurso extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtAlumnoBusqueda)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton6)))
+                        .addComponent(jButton6))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jTextField1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton5))
+                            .addComponent(cbxDocente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -616,17 +612,26 @@ public class VistaGestionCurso extends javax.swing.JFrame {
                                 .addComponent(cbxParalelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jButton3))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel13)
-                                .addComponent(txtAlumnoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jButton6))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel13)
+                                        .addComponent(txtAlumnoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jButton6))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel7)
+                                    .addComponent(cbxMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel12)
+                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jButton5))
+                        .addGap(7, 7, 7)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7)
-                            .addComponent(cbxMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel14)
+                            .addComponent(cbxDocente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 459, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -661,6 +666,9 @@ public class VistaGestionCurso extends javax.swing.JFrame {
             else if (cbxMatricula.getSelectedIndex() == -1) {
                 JOptionPane.showMessageDialog(null, "Falta seleccionar la matricula", "Error", JOptionPane.ERROR_MESSAGE);
             } 
+            else if(cbxDocente.getSelectedIndex() == -1){
+            JOptionPane.showMessageDialog(null, "Falta seleccionar el docebte", "Error", JOptionPane.ERROR_MESSAGE);
+        }
             else {
                 Guardar();
             }
@@ -705,8 +713,8 @@ public class VistaGestionCurso extends javax.swing.JFrame {
                 cursoModificado.setParaleloCursa(UtilVista.obtenerControlParalelo(cbxParalelo));
                 cursoModificado.setMatriculaCursa(UtilVista.obtenerMatriculaControl(cbxMatricula));
                 cursoModificado.setCodigoCursoCursa(UtilVista.obtenerCodigoCursoControl(cbxCodigoCurso));
+                cursoModificado.setDocenteCursa(UtilVista.obtenerDocenteControl(cbxDocente));
 
-                
 //                cursoModificado.setMateriaCurso(UtilVista.obtenerComboMateria(cbxMatricula));
                 
                 cursoControlDao.Merge(cursoModificado, IdCurso - 1);
@@ -903,6 +911,7 @@ public class VistaGestionCurso extends javax.swing.JFrame {
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnOrdenar;
     private javax.swing.JComboBox<String> cbxCodigoCurso;
+    private javax.swing.JComboBox<String> cbxDocente;
     private javax.swing.JComboBox<Object> cbxMatricula;
     private javax.swing.JComboBox<String> cbxOrden;
     private javax.swing.JComboBox<String> cbxParalelo;
@@ -912,22 +921,25 @@ public class VistaGestionCurso extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JTable tblCursos;
     private javax.swing.JTextField txtAlumnoBusqueda;
     private javax.swing.JTextField txtBuscar;
