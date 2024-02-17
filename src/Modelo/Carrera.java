@@ -14,22 +14,11 @@ public class Carrera {
     private Integer Duracion;
     
     private Facultad facutadCarrera;
+    private ListaDinamica<Facultad> listaFacultadCarrera;
     
-    //datos poco usados
-    private MallaCurricular CarreraMalla;
-    private ListaDinamica<MallaCurricular> listaMallaCarrera;
-
     public Carrera() {
         
     }
-
-//    public Carrera(Integer IdCarrera, String NombreCarrera, Integer NumeroCiclos, Integer Duracion, Facultad facutadCarrera) {
-//        this.IdCarrera = IdCarrera;
-//        this.NombreCarrera = NombreCarrera;
-//        this.NumeroCiclos = NumeroCiclos;
-//        this.Duracion = Duracion;
-//        this.facutadCarrera = facutadCarrera;
-//    }
 
     public Integer getIdCarrera() {
         return IdCarrera;
@@ -63,28 +52,20 @@ public class Carrera {
         this.Duracion = Duracion;
     }
 
-    public MallaCurricular getCarreraMalla() {
-        return CarreraMalla;
-    }
-
-    public void setCarreraMalla(MallaCurricular CarreraMalla) {
-        this.CarreraMalla = CarreraMalla;
-    }
-
-    public ListaDinamica<MallaCurricular> getListaMallaCarrera() {
-        return listaMallaCarrera;
-    }
-
-    public void setListaMallaCarrera(ListaDinamica<MallaCurricular> listaMallaCarrera) {
-        this.listaMallaCarrera = listaMallaCarrera;
-    }
-
     public Facultad getFacutadCarrera() {
         return facutadCarrera;
     }
 
     public void setFacutadCarrera(Facultad facutadCarrera) {
         this.facutadCarrera = facutadCarrera;
+    }
+
+    public ListaDinamica<Facultad> getListaFacultadCarrera() {
+        return listaFacultadCarrera;
+    }
+
+    public void setListaFacultadCarrera(ListaDinamica<Facultad> listaFacultadCarrera) {
+        this.listaFacultadCarrera = listaFacultadCarrera;
     }
 
     @Override

@@ -53,28 +53,59 @@ public class UtilesControlador {
         return null;
     }
     
-    @SuppressWarnings("unchecked")
+//    @SuppressWarnings("unchecked")
+//    private static <T> boolean comparar(T elemento1, T elemento2, String campo, Integer orden) {
+//        try {
+//            Field field = getField(elemento1.getClass(), campo);
+//            field.setAccessible(true);
+//
+//            if (Comparable.class.isAssignableFrom(field.getType())) {
+//                Comparable<Object> valor1 = (Comparable<Object>) field.get(elemento1);
+//                Comparable<Object> valor2 = (Comparable<Object>) field.get(elemento2);
+//                int resultadoComparacion = valor1.compareTo(valor2);
+//                return orden == 1 ? resultadoComparacion > 0 : resultadoComparacion < 0;
+//            } 
+//            else {
+//                throw new IllegalArgumentException("El campo no es comparable");
+//            }
+//        } 
+//        catch (IllegalAccessException e) {
+//            
+//            return false;
+//        }
+//    }
+    
+    @SuppressWarnings({ "unchecked", "unused" })
     private static <T> boolean comparar(T elemento1, T elemento2, String campo, Integer orden) {
         try {
-            Field field = getField(elemento1.getClass(), campo);
-            field.setAccessible(true);
-
-            if (Comparable.class.isAssignableFrom(field.getType())) {
-                Comparable<Object> valor1 = (Comparable<Object>) field.get(elemento1);
-                Comparable<Object> valor2 = (Comparable<Object>) field.get(elemento2);
-                int resultadoComparacion = valor1.compareTo(valor2);
+            String[] campos = campo.split("\\.");
+            Object valor1 = obtenerValorCampo(elemento1, campos);
+            Object valor2 = obtenerValorCampo(elemento2, campos);
+            if (valor1 instanceof Comparable && valor2 instanceof Comparable) {
+                Comparable<Object> comparable1 = (Comparable<Object>) valor1;
+                Comparable<Object> comparable2 = (Comparable<Object>) valor2;
+                int resultadoComparacion = comparable1.compareTo(valor2);
                 return orden == 1 ? resultadoComparacion > 0 : resultadoComparacion < 0;
             } 
             else {
                 throw new IllegalArgumentException("El campo no es comparable");
             }
         } 
-        catch (IllegalAccessException e) {
-            
+        catch (Exception e) {
             return false;
         }
     }
-    
+
+    private static Object obtenerValorCampo(Object objeto, String[] campos) throws IllegalAccessException, NoSuchFieldException {
+        Object valor = objeto;
+        for (String campo : campos) {
+            Field field = valor.getClass().getDeclaredField(campo);
+            field.setAccessible(true);
+            valor = field.get(valor);
+        }
+        return valor;
+    }
+
     public static <T> ListaDinamica<T> SelectSort(ListaDinamica<T> lista, Integer Orden, String Campo) throws ListaVacia, Exception {
         Integer n = lista.getLongitud();
         T[] elementos = lista.toArray();
@@ -344,358 +375,3 @@ public class UtilesControlador {
     }
     
 }
-    
-//    private static boolean ClaseCampoEspecifico(Object valorCampo) {
-//        return valorCampo.getClass().getDeclaredFields().length > 0;
-//    }
-//}
-    
-//    private static boolean buscarTipoEspecifico(String texto, String busqueda) {
-//        String textoSinEspacios = texto.replaceAll("\\s", "").replaceAll("[^a-zA-Z0-9]", "");
-//        String busquedaSinEspacios = busqueda.replaceAll("\\s", "").replaceAll("[^a-zA-Z0-9]", "");
-//        return textoSinEspacios.toLowerCase().contains(busquedaSinEspacios.toLowerCase());
-//    }
-//}
-    
-//    public static <T> ListaDinamica<T> BusquedaLineal(ListaDinamica<T> lista, String busqueda, String campo) throws ListaVacia, PosicionNoEncontrada {
-//        ListaDinamica<T> result = new ListaDinamica<>();
-//        Integer ultimaPosicionOcupada = lista.getLongitud();
-//
-//        for (int i = 0; i < ultimaPosicionOcupada; i++) {
-//            T elemento = lista.getInfo(i);
-//
-//            Field campoObjeto = getField(elemento.getClass(), campo);
-//
-//            if (campoObjeto != null) {
-//                try {
-//                    campoObjeto.setAccessible(true);
-//                    Object valorObj = campoObjeto.get(elemento);
-//                    String valorCampo = (valorObj != null) ? valorObj.toString() : "";
-//
-//                    if (buscarTipoEspecifico(valorCampo, busqueda)) {
-//                        result.AgregarFinal(elemento);
-//                    }
-//                } 
-//                catch (IllegalAccessException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }
-//        return result;
-//    }
-
-    
-
-//    private static String eliminarEspaciosYCaracteres(String texto) {
-//        return texto.replaceAll("\\s", "").replaceAll("[^a-zA-Z0-9]", "");
-//    }
-//
-//    private static <T> String concatenarValores(T objeto) {
-//        StringBuilder sb = new StringBuilder();
-//        Field[] campos = objeto.getClass().getDeclaredFields();
-//
-//        for (Field campo : campos) {
-//            try {
-//                campo.setAccessible(true);
-//                Object valorObj = campo.get(objeto);
-//                String valor = (valorObj != null) ? valorObj.toString() : "";
-//                sb.append(valor).append(" ");
-//            } catch (IllegalAccessException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//
-//        return sb.toString();
-//    }
-
-//    public static <T> ListaDinamica<T> BusquedaLineal(ListaDinamica<T> lista, String Busqueda, String Campo) throws ListaVacia, PosicionNoEncontrada {
-//        ListaDinamica<T> result = new ListaDinamica<>();
-//        Integer ultimaPosicionOcupada = lista.getLongitud();
-//
-//        for (int i = 0; i < ultimaPosicionOcupada; i++) {
-//            T elemento = lista.getInfo(i);
-//            Field campo = getField(elemento.getClass(), Campo);
-//
-//            try {
-//                campo.setAccessible(true);
-//                Object valorObj = campo.get(elemento);
-//                String valor = (valorObj != null) ? valorObj.toString() : "";
-//                if (valor.toLowerCase().startsWith(Busqueda.trim().toLowerCase())) {
-//                    result.AgregarFinal(elemento);
-//                }
-//            } 
-//            catch (IllegalAccessException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        return result;
-//    }
-
-    
-//    public static void main(String[] args) throws ListaVacia, Exception {
-//        paraleloDao a = new paraleloDao();
-//        ListaDinamica<Paralelo> lista = a.all();
-//        
-//        ListaDinamica<Paralelo> resultado = SelectSort(lista, 0, "NombreParalelo");
-//        ListaDinamica<Paralelo> resuktadi = BusquedaBinaria(lista, "B", "NombreParalelo");
-//        
-//        System.out.println("Orden");
-//        System.out.println(resultado);
-//        System.out.println("-----------------------------");
-//        System.out.println("Busqueda");
-//        System.out.println(resuktadi);
-//    }
-    
-    
-    
-    
-    
-    //No genericos
-    
-    
-    
-    
-    
-//    public static <T> Field getField(Class<T> clazz, String Atributo) {
-//        Field Campo = null;
-//        for (Field f : clazz.getSuperclass().getDeclaredFields()) {
-//            if (f.getName().equalsIgnoreCase(Atributo)) {
-//                Campo = f;
-//                break;
-//            }
-//        }
-//        for (Field f : clazz.getDeclaredFields()) {
-//            if (f.getName().equalsIgnoreCase(Atributo)) {
-//                Campo = f;
-//                break;
-//            }
-//        }
-//        return Campo;
-//    }
-//    
-//    public static ListaDinamica<Persona> SelectSort(ListaDinamica<Persona> lista, Integer Orden, String Campo) throws ListaVacia, Exception {
-//        Integer n = lista.getLongitud();
-//        Persona[] personas = lista.toArray();
-//        Field Atributo = getField(Persona.class, Campo);
-//
-//        if (Atributo != null) {
-//            for (int i = 0; i < n - 1; i++) {
-//                int k = i;
-//                Persona personaOrden = personas[i];
-//
-//                for (int j = i + 1; j < n; j++) {
-//                    if (personas[j].comparar(personaOrden, Campo, Orden)) {
-//                        personaOrden = personas[j];
-//                        k = j;
-//                    }
-//                }
-//                personas[k] = personas[i];
-//                personas[i] = personaOrden;
-//            }
-//        } 
-//        else {
-//            throw new Exception("No existe el criterio de búsqueda");
-//        }
-//
-//        return lista.toList(personas);
-//    }
-//    
-//    
-//
-////    public static ListaDinamica<Persona> Ordenar(ListaDinamica<Persona> lista, Integer tipo, String field) throws ListaVacia, Exception {
-////        Integer n = lista.getLongitud();
-////        Persona[] personas = lista.toArray();
-////        Field atribute = UtilesControlador.getField(Persona.class, field);
-////        if (atribute != null) {
-////            for (int i = 1; i < n - 1; i++) {
-////                int k = i;
-////                Persona personaOrden = personas[i];
-////                for (int j = i + 1; j < n; j++) {
-////                    if (personas[j].comparar(personaOrden, field, tipo)) {
-////                        personaOrden = personas[j];
-////                        k = j;
-////                    }
-////                }
-////                personas[k] = personas[i];
-////                personas[i] = personaOrden;
-////            }
-////        } 
-////        else {
-////            throw new Exception("No existe el criterio de busqueda");
-////        }
-////        return lista.toList(personas);
-////    }
-//    
-//
-//    public static ListaDinamica<Persona> ShellSort(ListaDinamica<Persona> lista, Integer Orden, String Campo) {
-//        int n = lista.getLongitud();
-//        Persona[] personas = lista.toArray();
-//
-//        for (int intervalo = n / 2; intervalo > 0; intervalo /= 2) {
-//            for (int i = intervalo; i < n; i++) {
-//                Persona ayuda = personas[i];
-//                int j;
-//                for (j = i; j >= intervalo && ayuda.comparar(personas[j - intervalo], Campo, Orden); j -= intervalo) {
-//                    personas[j] = personas[j - intervalo];
-//                }
-//                personas[j] = ayuda;
-//            }
-//        }
-//        return lista.toList(personas);
-//    }
-//
-//    public static ListaDinamica<Persona> QuickSort(ListaDinamica<Persona> listaPersonas, Integer Orden, String Campo) throws ListaVacia, PosicionNoEncontrada {
-//        if (listaPersonas == null || listaPersonas.getLongitud() <= 1) {
-//            return listaPersonas;
-//        }
-//        QuickSortRecursivo(listaPersonas, 0, listaPersonas.getLongitud() - 1, Orden, Campo);
-//        return listaPersonas;
-//    }
-//
-//    private static void QuickSortRecursivo(ListaDinamica<Persona> listaPersonas, int inicio, int fin, Integer orden, String Campo) throws ListaVacia, PosicionNoEncontrada {
-//        if (inicio < fin) {
-//            int indiceParticion = Particionar(listaPersonas, inicio, fin, orden, Campo);
-//            QuickSortRecursivo(listaPersonas, inicio, indiceParticion - 1, orden, Campo);
-//            QuickSortRecursivo(listaPersonas, indiceParticion + 1, fin, orden, Campo);
-//        }
-//    }
-//
-//    private static int Particionar(ListaDinamica<Persona> listaPersonas, int inicio, int fin, Integer orden, String Campo) throws ListaVacia, PosicionNoEncontrada {
-//        Persona pivote = listaPersonas.getInfo(fin);
-//        int i = inicio - 1;
-//
-//        for (int j = inicio; j < fin; j++) {
-//            if (pivote.comparar(listaPersonas.getInfo(j), Campo, orden)) {
-//                i++;
-//                Intercambiar(listaPersonas, i, j);
-//            }
-//        }
-//        Intercambiar(listaPersonas, i + 1, fin);
-//        return i + 1;
-//    }
-//
-//    private static void Intercambiar(ListaDinamica<Persona> listaPersonas, int i, int j) throws ListaVacia, PosicionNoEncontrada {
-//        Persona ayuda = listaPersonas.getInfo(i);
-//        listaPersonas.modificarPosicion(listaPersonas.getInfo(j), i);
-//        listaPersonas.modificarPosicion(ayuda, j);
-//    }
-//
-//    public static ListaDinamica<Persona> BusquedaBinaria(ListaDinamica<Persona> lista, String Busqueda, String Campo) throws ListaVacia, PosicionNoEncontrada {
-//        ListaDinamica<Persona> listaOrdenada = QuickSort(lista, 1, Campo);
-//        ListaDinamica<Persona> ListaPersonas = new ListaDinamica<>();
-//
-//        boolean encontrado = false;
-//        int inicio = 0;
-//        int fin = listaOrdenada.getLongitud() - 1;
-//
-//        while (inicio <= fin) {
-//            int medio = (inicio + fin) / 2;
-//            Persona Mitad = listaOrdenada.getInfo(medio);
-//            Field campo = getField(Persona.class, Campo);
-//
-//            try {
-//                campo.setAccessible(true);
-//                Object ObjetoMitad = campo.get(Mitad);
-//                String valorMedio = (ObjetoMitad != null) ? ObjetoMitad.toString() : "";
-//
-//                if (valorMedio.toLowerCase().contains(Busqueda.trim().toLowerCase())) {
-//                    encontrado = true;
-//                    ListaPersonas.AgregarFinal(Mitad);
-//                    int j = medio - 1;
-//                    while (j >= 0) {
-//                        Persona personaAnterior = listaOrdenada.getInfo(j);
-//                        Object valorAnteriorObj = campo.get(personaAnterior);
-//                        String valorAnterior = (valorAnteriorObj != null) ? valorAnteriorObj.toString() : "";
-//
-//                        if (valorAnterior.toLowerCase().contains(Busqueda.trim().toLowerCase())) {
-//                            ListaPersonas.AgregarFinal(personaAnterior);
-//                            j--;
-//                        } 
-//                        else {
-//                            break;
-//                        }
-//                    }
-//                    int i = medio + 1;
-//                    while (i < listaOrdenada.getLongitud()) {
-//                        Persona personaSiguiente = listaOrdenada.getInfo(i);
-//                        Object valorSiguienteObj = campo.get(personaSiguiente);
-//                        String valorSiguiente = (valorSiguienteObj != null) ? valorSiguienteObj.toString() : "";
-//
-//                        if (valorSiguiente.toLowerCase().contains(Busqueda.trim().toLowerCase())) {
-//                            ListaPersonas.AgregarFinal(personaSiguiente);
-//                            i++;
-//                        } 
-//                        else {
-//                            break;
-//                        }
-//                    }
-//                    break;
-//                } 
-//                else {
-//                    String valorABuscar = Busqueda;
-//                    if (valorMedio.compareToIgnoreCase(valorABuscar) > 0) {
-//                        fin = medio - 1;
-//                    } 
-//                    else {
-//                        inicio = medio + 1;
-//                    }
-//                }
-//            } 
-//            catch (IllegalAccessException e) {
-//                
-//            }
-//        }
-//        return ListaPersonas;
-//    }
-//
-//    public static ListaDinamica<Persona> BusquedaLineal(ListaDinamica<Persona> lista, String Busqueda, String Campo) throws ListaVacia, PosicionNoEncontrada {
-//        ListaDinamica<Persona> result = new ListaDinamica<>();
-//        Integer ultimaPosicionOcupada = lista.getLongitud();
-//
-//        for (int i = 0; i < ultimaPosicionOcupada; i++) {
-//            Persona persona = lista.getInfo(i);
-//            Field campo = getField(Persona.class, Campo);
-//
-//            try {
-//                campo.setAccessible(true);
-//                Object valorObj = campo.get(persona);
-//                String valor = (valorObj != null) ? valorObj.toString() : "";
-//                if (valor.toLowerCase().startsWith(Busqueda.trim().toLowerCase())) {
-//                    result.AgregarFinal(persona);
-//                }
-//            } 
-//            catch (IllegalAccessException e) {
-//
-//            }
-//        }
-//        return result;
-//    }       
-    
-//        public static void main(String[] args) {
-//        try {
-//            
-//            personaDao pc = new personaDao();
-//            ListaDinamica<Persona> a = pc.all();
-//            
-////            System.out.println(Ordenar(a, 0, "nombre"));
-//
-////            System.out.println(ShellSort(a, 0, "nombre"));
-//            System.out.println(BusquedaBinaria(a, "d", "nombre"));
-//            
-////            personaDao pc = new personaDao();
-////            ListaDinamica a = pc.all();
-////            System.out.println(pc.all());
-////            System.out.println(pc.ordenar(a, 0, "Nombre").toString());
-////            System.out.println(ShellSort(a, 0, "nombre"));
-////            System.out.println(BusquedaBinaria(a, "d", "nombre"));
-////            System.out.println(quicksort(a, 1, "Nombre"));
-////            System.out.println(pc.all());
-////            System.out.println("---------------------------");
-////            System.out.println(pc.ordenar(pc.all(), 0, "Nombre"));
-//        } 
-//        catch (Exception e) {
-//        }
-//    }
-    
-    
-//}

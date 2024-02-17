@@ -6,6 +6,7 @@ import Controlador.Dao.Modelo.asistenciaDao;
 import Controlador.Dao.Modelo.carreraDao;
 import Modelo.Ciclo;
 import Controlador.Dao.Modelo.cicloDao;
+import Controlador.Dao.Modelo.codigoCursoDao;
 import Controlador.Dao.Modelo.cursoDao;
 import Controlador.Dao.Modelo.docenteDao;
 import Controlador.Dao.Modelo.facultadDao;
@@ -13,6 +14,7 @@ import Controlador.Dao.Modelo.horarioDao;
 import Controlador.Dao.Modelo.mallaCurricularDao;
 import Controlador.Dao.Modelo.materiaDao;
 import Controlador.Dao.Modelo.matriculaDao;
+import Controlador.Dao.Modelo.paraleloDao;
 import Controlador.Dao.Modelo.periodoAcademicoDao;
 import Controlador.Dao.Modelo.personaDao;
 import Controlador.Dao.Modelo.rolDao;
@@ -22,6 +24,7 @@ import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Modelo.Alumno;
 import Modelo.Asistencia;
 import Modelo.Carrera;
+import Modelo.CodigoCurso;
 import Modelo.Cursa;
 import Modelo.Docente;
 import Modelo.Facultad;
@@ -29,6 +32,7 @@ import Modelo.Horario;
 import Modelo.MallaCurricular;
 import Modelo.Materia;
 import Modelo.Matricula;
+import Modelo.Paralelo;
 import Modelo.PeriodoAcademico;
 import Modelo.Persona;
 import Modelo.Rol;
@@ -60,6 +64,46 @@ public class UtilVista {
     @SuppressWarnings("rawtypes")
     public static Rol obtenerRolControl(JComboBox cbx){
         return (Rol) cbx.getSelectedItem();
+    }
+    
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public static void cargarcomboParalelo(JComboBox cbx) throws ListaVacia{
+        paraleloDao Rc = new paraleloDao();
+        cbx.removeAllItems();
+        
+        if(Rc.getListaParalelo().EstaVacio()){
+            throw new ListaVacia("No hay paralelos que mostrar");
+        }
+        else{
+           for (int i = 0; i < Rc.getListaParalelo().getLongitud(); i++) {
+            cbx.addItem(Rc.getListaParalelo().getInfo(i));
+           }
+        }
+    }
+    
+    @SuppressWarnings("rawtypes")
+    public static Paralelo obtenerControlParalelo(JComboBox cbx){
+        return (Paralelo) cbx.getSelectedItem();
+    }
+    
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public static void cargarcomboCodigoCurso(JComboBox cbx) throws ListaVacia{
+        codigoCursoDao Rc = new codigoCursoDao();
+        cbx.removeAllItems();
+        
+        if(Rc.getListaCodigoCurso().EstaVacio()){
+            throw new ListaVacia("No hay codigos que mostrar");
+        }
+        else{
+           for (int i = 0; i < Rc.getListaCodigoCurso().getLongitud(); i++) {
+            cbx.addItem(Rc.getListaCodigoCurso().getInfo(i));
+           }
+        }
+    }
+    
+    @SuppressWarnings("rawtypes")
+    public static CodigoCurso obtenerCodigoCursoControl(JComboBox cbx){
+        return (CodigoCurso) cbx.getSelectedItem();
     }
     
     @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -134,7 +178,10 @@ public class UtilVista {
         }
         else{
            for (int i = 0; i < MCc.getListaMalla().getLongitud(); i++) {
-            cbx.addItem(MCc.getListaMalla().getInfo(i));
+               MallaCurricular mallaCurriculaP = MCc.getListaMalla().getInfo(i);
+               if (mallaCurriculaP.getEstadoMallaCurricular()!= null && mallaCurriculaP.getEstadoMallaCurricular().equalsIgnoreCase("Activa")) {
+                    cbx.addItem(mallaCurriculaP);
+                }
            }
         }
     }

@@ -433,7 +433,7 @@ public class VistaPersonalAdministracion extends javax.swing.JFrame {
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
 
         try {
-            VistaGestionMalla abrirLogin = new VistaGestionMalla();
+            VistaGestionMallaCurricular abrirLogin = new VistaGestionMallaCurricular();
             abrirLogin.setVisible(true);
             this.setVisible(false);
         }

@@ -29,7 +29,7 @@ public class ModeloTablaMateria extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 6;
+        return 10;
     }
     
     @Override
@@ -50,7 +50,11 @@ public class ModeloTablaMateria extends AbstractTableModel {
                 case 4:
                     return (c != null) ? c.getCicloMateria().getNombreCiclo(): "";
                 case 5:
-                    return (c != null) ? c.getCursoMateria().getParalelo(): "";
+                    return (c != null) ? c.getCursoMateria().getParaleloCursa().getNombre(): "";
+                case 6:
+                    return (c != null) ? c.getCursoMateria().getMatriculaCursa().getAlumnoMatricula().getDatosAlumno().getNumeroCedula() : "";
+                case 7:
+                    return (c != null) ? c.getCursoMateria().getMatriculaCursa().getCodigoMatricula(): "";
                 default:
                     return null;
             }
@@ -72,12 +76,19 @@ public class ModeloTablaMateria extends AbstractTableModel {
             case 2:
                 return "Descripcion materia";
             case 3:
-                return "Numero de horas";
+                return "Nro de horas";
             case 4:
                 return "Ciclo";
             case 5:
                 return "Paralelo";
-
+            case 6:
+                return "Nombre docente";
+            case 7:
+                return "DNI docente";
+            case 8:
+                return "Alumno";
+            case 9:
+                return "Codigo Matricula";
             default:
                 return null;
         }

@@ -133,15 +133,16 @@ public class VistaDocenteCalendario extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
         try {
-            CalendarioApp c = new CalendarioApp();
+            VistaCalendarioDocente c = new VistaCalendarioDocente();
             horarioDao HD = new horarioDao();
             ListaDinamica<Horario> listaH = HD.all();
             for (int i = 0; i < listaH.getLongitud(); i++) {
                 String Fecha = listaH.getInfo(i).getDiaSemana();
                 String Mensaje = listaH.getInfo(i).getMateriaHorario().getNombreMateria() + " "+
                         listaH.getInfo(i).getMateriaHorario().getCicloMateria().getNombreCiclo()+ " " +
-                        listaH.getInfo(i).getMateriaHorario().getCursoMateria().getParalelo();
-                System.out.println(listaH.getInfo(i).getDiaSemana());
+                        listaH.getInfo(i).getMateriaHorario().getCursoMateria().getParaleloCursa()+ " "+
+                        listaH.getInfo(i).getHoraIncio() + " - " + listaH.getInfo(i).getHoraFin();
+//                System.out.println(listaH.getInfo(i).getDiaSemana());
                 c.AgregarEvento(Fecha, Mensaje);
             }
             

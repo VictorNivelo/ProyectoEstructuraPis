@@ -34,8 +34,8 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         
         panelPrincipal.setOpaque(false);
-        txaContenido.setOpaque(false);
-        txaContenido.setBorder(null);
+//        txaContenido.setOpaque(false);
+//        txaContenido.setBorder(null);
         jScrollPane2.setOpaque(false); 
         jScrollPane2.getViewport().setOpaque(false); 
         jScrollPane2.setBorder(null);
@@ -228,6 +228,7 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
         txaContenido.setColumns(20);
         txaContenido.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
         txaContenido.setForeground(new java.awt.Color(255, 255, 255));
+        txaContenido.setLineWrap(true);
         txaContenido.setAutoscrolls(false);
         txaContenido.setBorder(null);
         txaContenido.setCaretColor(new java.awt.Color(0, 0, 0));
@@ -369,7 +370,7 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
 
     private void MenuAcercaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuAcercaMouseClicked
         
-        VistaInicioSesionEstudiante AU = new VistaInicioSesionEstudiante();
+        VistaAcercaNosotros AU = new VistaAcercaNosotros();
         AU.setVisible(true);
         this.setVisible(false);
         

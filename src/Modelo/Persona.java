@@ -26,20 +26,6 @@ public class Persona {
         
     }
 
-//    public Persona(Integer IdPersona, String TipoDni, String NumeroCedula, String Nombre, String Apellido, String Genero, String FechaNacimineto, String Direccion, String Telefono, Rol rolPersona, Cuenta cuentaPersona) {
-//        this.IdPersona = IdPersona;
-//        this.TipoDni = TipoDni;
-//        this.NumeroCedula = NumeroCedula;
-//        this.Nombre = Nombre;
-//        this.Apellido = Apellido;
-//        this.Genero = Genero;
-//        this.FechaNacimineto = FechaNacimineto;
-//        this.Direccion = Direccion;
-//        this.Telefono = Telefono;
-//        this.rolPersona = rolPersona;
-//        this.cuentaPersona = cuentaPersona;
-//    }
-
     public Integer getIdPersona() {
         return IdPersona;
     }
@@ -138,7 +124,7 @@ public class Persona {
 
     @Override
     public String toString() {
-        return "DNI:" + NumeroCedula + ", Nombres:" + Nombre  +" "+ Apellido +  "\n";
+        return NumeroCedula + " " + Nombre  +" "+ Apellido +  "\n";
     }
 
 }

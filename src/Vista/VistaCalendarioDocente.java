@@ -6,7 +6,7 @@ import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class CalendarioApp extends JFrame {
+public class VistaCalendarioDocente extends JFrame {
 
     private JLabel EtiquetaMes;
     private JPanel PanelCalendario;
@@ -15,7 +15,7 @@ public class CalendarioApp extends JFrame {
     private Map<String, ArrayList<String>> MapaRecordatorios;
     SimpleDateFormat Formato = new SimpleDateFormat("dd/MMMM/yyyy");
 
-    public CalendarioApp() {
+    public VistaCalendarioDocente() {
         setTitle("CALENDARIO DOCENTE");
         setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
         setSize(1200, 700);
@@ -260,6 +260,6 @@ public class CalendarioApp extends JFrame {
             java.util.logging.Logger.getLogger(VistaDocenteCalendario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
 
-        SwingUtilities.invokeLater(() -> new CalendarioApp());
+        SwingUtilities.invokeLater(() -> new VistaCalendarioDocente());
     }
 }

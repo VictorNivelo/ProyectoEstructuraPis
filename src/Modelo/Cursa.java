@@ -1,6 +1,7 @@
 
 package Modelo;
 
+import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 
 
@@ -10,27 +11,16 @@ import Controlador.TDA.ListaDinamica.ListaDinamica;
  */
 public class Cursa {
     private Integer IdCurso;
-    private String Paralelo;
+    private CodigoCurso codigoCursoCursa;
+    private Paralelo ParaleloCursa;
     
     private Matricula matriculaCursa;
-    private ListaDinamica<Matricula> listaMatriculaCursa;
-    
     private Docente docenteCursa;
-    private ListaDinamica<Docente> listaDocentesCursa;
-    
-    private Materia MateriaCurso;
-    private ListaDinamica<Materia> listaMateriaCurso;
+    private ListaDinamica<Matricula> listaMatriculaCursa;
     
     public Cursa() {
         
     }
-
-//    public Cursa(Integer IdCurso, String CodigoCurso, String Paralelo, Materia MateriaCurso) {
-//        this.IdCurso = IdCurso;
-//        this.CodigoCurso = CodigoCurso;
-//        this.Paralelo = Paralelo;
-//        this.MateriaCurso = MateriaCurso;
-//    }
 
     public Integer getIdCurso() {
         return IdCurso;
@@ -40,28 +30,12 @@ public class Cursa {
         this.IdCurso = IdCurso;
     }
 
-    public String getParalelo() {
-        return Paralelo;
+    public Paralelo getParaleloCursa() {
+        return ParaleloCursa;
     }
 
-    public void setParalelo(String Paralelo) {
-        this.Paralelo = Paralelo;
-    }
-
-    public Materia getMateriaCurso() {
-        return MateriaCurso;
-    }
-
-    public void setMateriaCurso(Materia MateriaCurso) {
-        this.MateriaCurso = MateriaCurso;
-    }
-
-    public ListaDinamica<Materia> getListaMateriaCurso() {
-        return listaMateriaCurso;
-    }
-
-    public void setListaMateriaCurso(ListaDinamica<Materia> listaMateriaCurso) {
-        this.listaMateriaCurso = listaMateriaCurso;
+    public void setParaleloCursa(Paralelo ParaleloCursa) {
+        this.ParaleloCursa = ParaleloCursa;
     }
 
     public Matricula getMatriculaCursa() {
@@ -80,6 +54,18 @@ public class Cursa {
         this.listaMatriculaCursa = listaMatriculaCursa;
     }
 
+    public CodigoCurso getCodigoCursoCursa() {
+        return codigoCursoCursa;
+    }
+
+    public void setCodigoCursoCursa(CodigoCurso codigoCursoCursa) {
+        this.codigoCursoCursa = codigoCursoCursa;
+    }
+    
+    public void agregarMatricula(Matricula matricula) {
+        listaMatriculaCursa.Agregar(matricula);
+    }
+
     public Docente getDocenteCursa() {
         return docenteCursa;
     }
@@ -88,17 +74,36 @@ public class Cursa {
         this.docenteCursa = docenteCursa;
     }
 
-    public ListaDinamica<Docente> getListaDocentesCursa() {
-        return listaDocentesCursa;
+    public void quitarMatricula(Matricula matricula) {
+        boolean encontrado = false;
+        for (int i = 0; i < listaMatriculaCursa.getLongitud(); i++) {
+            try {
+                Matricula matriculaActual = listaMatriculaCursa.getInfo(i);
+                if (matriculaActual.equals(matricula)) {
+                    listaMatriculaCursa.eliminar(i);
+                    encontrado = true;
+                    break;
+                }
+            } 
+            catch (ListaVacia e) {
+                System.out.println("Error: " + e.getMessage());
+            }
+        }
+        if (!encontrado) {
+            System.out.println("Matrícula no encontrada en la lista");
+        }
     }
 
-    public void setListaDocentesCursa(ListaDinamica<Docente> listaDocentesCursa) {
-        this.listaDocentesCursa = listaDocentesCursa;
+    public void mostrarMatriculas() {
+        System.out.println("Matrículas en el curso:");
+        for (Matricula m : listaMatriculaCursa.toArray()) {
+            System.out.println("- " + m.getAlumnoMatricula().getDatosAlumno().getNumeroCedula()); // Suponiendo que Alumno tiene un atributo nombre
+        }
     }
     
     @Override
     public String toString() {
-        return "Paralelo:" + Paralelo + "\n";
+        return ParaleloCursa + "\n";
     }
     
 }

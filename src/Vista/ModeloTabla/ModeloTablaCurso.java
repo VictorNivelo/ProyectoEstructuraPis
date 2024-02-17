@@ -4,6 +4,7 @@ package Vista.ModeloTabla;
 import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Modelo.Cursa;
+import Modelo.Matricula;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -29,7 +30,7 @@ public class ModeloTablaCurso extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 5;
+        return 8;
     }
     
 //    private String EstadoCuenta(int i) throws ListaVacia {
@@ -44,6 +45,7 @@ public class ModeloTablaCurso extends AbstractTableModel {
 //        }
 //    }
 //    
+    
     @Override
     public Object getValueAt(int Fila, int Columna) {
 
@@ -54,20 +56,76 @@ public class ModeloTablaCurso extends AbstractTableModel {
                 case 0:
                     return (p != null) ? p.getIdCurso() : "";
                 case 1:
-                    return (p != null) ? p.getDocenteCursa().getDatosDocente().getNumeroCedula(): "";
+                    return (p != null) ? p.getCodigoCursoCursa().getNombreCodigoCurso(): "";
                 case 2:
-                    return (p != null) ? p.getDocenteCursa().getDatosDocente().getNombre(): "";
+                    return (p != null) ? p.getParaleloCursa().getNombre() : "";
                 case 3:
-                    return (p != null) ? p.getParalelo() : "";
+                    return (p != null) ? p.getMatriculaCursa().getAlumnoMatricula().getDatosAlumno().getNumeroCedula(): "";
                 case 4:
+                    return (p != null) ? p.getMatriculaCursa().getAlumnoMatricula().getDatosAlumno().getNombre() + " " + p.getMatriculaCursa().getAlumnoMatricula().getDatosAlumno().getApellido(): "";
+                case 5:
                     return (p != null) ? p.getMatriculaCursa().getCodigoMatricula(): "";
+                case 6:
+                    return (p != null) ? p.getDocenteCursa().getDatosDocente().getNumeroCedula(): "";
+                case 7:
+                    return (p != null) ? p.getDocenteCursa().getDatosDocente().getNombre()+" "+ p.getDocenteCursa().getDatosDocente().getApellido(): "";
                 default:
                     return null;
             }
         } 
         catch (ListaVacia | IndexOutOfBoundsException ex) {
+
         }
         return cursoTabla;
+
+
+//        try {
+//            Cursa p = cursoTabla.getInfo(Fila);
+//
+//            switch (Columna) {
+//                case 0:
+//                    return (p != null) ? p.getIdCurso() : "";
+//                case 1:
+//                    return (p != null) ? p.getParaleloCursa().getNombre(): "";
+//                case 2:
+//                    return (p != null) ? p.getListaMatriculaCursa().getInfo(Fila).getAlumnoMatricula().getDatosAlumno().getNumeroCedula(): "";
+//                case 3:
+//                    return (p != null) ? p.getListaMatriculaCursa().getInfo(Fila).getEstadoMatricula(): "";
+//                case 4:
+//                    return (p != null) ? p.getListaMatriculaCursa().getInfo(Fila).getCodigoMatricula(): "";
+//                case 5:
+//                    return (p != null) ? p.getCodigoCursoCursa().getNombreCodigoCurso(): "";
+//                default:
+//                    return null;
+//            }
+//        } 
+//        catch (ListaVacia | IndexOutOfBoundsException ex) {
+//        }
+//        return cursoTabla;
+
+/*Primero si sirve*/
+//            Cursa p = cursoTabla.getInfo(Fila);
+//
+//            switch (Columna) {
+//                case 0:
+//                    return (p != null) ? p.getIdCurso() : "";
+//                case 1:
+//                    return (p != null) ? p.getParaleloCursa().getNombre(): "";
+//                case 2:
+//                    return (p != null) ? p.getMatriculaCursa().getAlumnoMatricula().getDatosAlumno().getNumeroCedula(): "";
+//                case 3:
+//                    return (p != null) ? p.getMatriculaCursa().getEstadoMatricula(): "";
+//                case 4:
+//                    return (p != null) ? p.getMatriculaCursa().getCodigoMatricula(): "";
+//                case 5:
+//                    return (p != null) ? p.getCodigoCursoCursa().getNombreCodigoCurso(): "";
+//                default:
+//                    return null;
+//            }
+//        } 
+//        catch (ListaVacia | IndexOutOfBoundsException ex) {
+//        }
+//        return cursoTabla;
     }
 
 
@@ -77,13 +135,19 @@ public class ModeloTablaCurso extends AbstractTableModel {
             case 0:
                 return "#";
             case 1:
-                return "DNI docente";
+                return "Codigo";
             case 2:
-                return "Nombre docente";
-            case 3:
                 return "Paralelo";
+            case 3:
+                return "DNI estudiante";
             case 4:
+                return "Nombres estudiante";
+            case 5:
                 return "Codigo matricula";
+            case 6:
+                return "DNI docente";
+            case 7:
+                return "Nombres docente";
 
             default:
                 return null;

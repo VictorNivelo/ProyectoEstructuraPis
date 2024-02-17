@@ -2,8 +2,10 @@
 package Controlador.Dao.Modelo;
 
 import Controlador.Dao.DaoImplement;
+import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Modelo.Cursa;
+import Modelo.Matricula;
 
 /**
  *
@@ -41,5 +43,5 @@ public class cursoDao extends DaoImplement<Cursa>{
         cursos.setIdCurso(all().getLongitud()+1);
         return Persist(cursos);
     }
-    
+
 }

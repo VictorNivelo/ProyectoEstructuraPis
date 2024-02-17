@@ -13,19 +13,11 @@ public class Alumno {
     
     private Persona DatosAlumno;
     
-    private Matricula matriculaAlumno;
     private ListaDinamica<Matricula> listaMatriculaAlumno;
 
     public Alumno() {
         
     }
-
-//    public Alumno(Integer IdAlumno, Persona DatosAlumno, String Estado, Matricula matriculaAlumno) {
-//        this.IdAlumno = IdAlumno;
-//        this.DatosAlumno = DatosAlumno;
-//        this.EstadoAlumno = Estado;
-//        this.matriculaAlumno = matriculaAlumno;
-//    }
 
     public Integer getIdAlumno() {
         return IdAlumno;
@@ -50,13 +42,9 @@ public class Alumno {
     public void setDatosAlumno(Persona DatosAlumno) {
         this.DatosAlumno = DatosAlumno;
     }
-
-    public Matricula getMatriculaAlumno() {
-        return matriculaAlumno;
-    }
-
-    public void setMatriculaAlumno(Matricula matriculaAlumno) {
-        this.matriculaAlumno = matriculaAlumno;
+    
+    public void AgregarMatricula(Matricula matricula) {
+        listaMatriculaAlumno.Agregar(matricula);
     }
 
     public ListaDinamica<Matricula> getListaMatriculaAlumno() {
@@ -67,9 +55,16 @@ public class Alumno {
         this.listaMatriculaAlumno = listaMatriculaAlumno;
     }
     
+    public void agregarMatricula(Matricula matricula) {
+        if (listaMatriculaAlumno == null) {
+            listaMatriculaAlumno = new ListaDinamica<>();
+        }
+        listaMatriculaAlumno.Agregar(matricula);
+    }
+    
     @Override
     public String toString() {
-        return "DNI" + DatosAlumno.getNumeroCedula() + " Nombres: " + DatosAlumno.getNombre() +" " +DatosAlumno.getApellido()+ "\n";
+        return DatosAlumno.getNumeroCedula() + " " + DatosAlumno.getNombre() +" " +DatosAlumno.getApellido()+ "\n";
     }
     
 }

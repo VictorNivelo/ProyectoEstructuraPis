@@ -15,12 +15,6 @@ public class PeriodoAcademico {
         
     }
 
-//    public PeriodoAcademico(Integer IdPeriodoAcademino, String FechaInicio, String FechaFin) {
-//        this.IdPeriodoAcademino = IdPeriodoAcademino;
-//        this.FechaInicio = FechaInicio;
-//        this.FechaFin = FechaFin;
-//    }
-
     public Integer getIdPeriodoAcademino() {
         return IdPeriodoAcademino;
     }
