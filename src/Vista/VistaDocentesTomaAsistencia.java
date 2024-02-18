@@ -1,7 +1,6 @@
 package Vista;
 
 import Controlador.Dao.Modelo.alumnoDao;
-import Controlador.Dao.Modelo.horarioDao;
 import Controlador.Dao.Modelo.materiaDao;
 import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
@@ -14,10 +13,8 @@ import Modelo.Matricula;
 import Modelo.Alumno;
 import Modelo.ControlAccesoDocente;
 import Modelo.Cursa;
-import Modelo.Horario;
 import Modelo.Materia;
 import Modelo.Persona;
-import Vista.Utiles.UtilVista;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
@@ -30,7 +27,6 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
     DefaultTableModel dtm = new DefaultTableModel();
     alumnoDao alumnoControlDao = new alumnoDao();
     materiaDao materiaControlDao = new materiaDao();
-    horarioDao horarioControlDao = new horarioDao();
 
     /**
      * Creates new form VistaTomaAsistencia
@@ -104,36 +100,7 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
         catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    private ListaDinamica<Horario> obtenerHorariosPorMateria(String nombreMateria) {
-        ListaDinamica<Horario> horariosPorMateria = new ListaDinamica<>();
-        ListaDinamica<Horario> todosLosHorarios = horarioControlDao.all();
-
-        for (Horario horario : todosLosHorarios.toArray()) {
-            if (horario.getMateriaHorario().getNombreMateria().equals(nombreMateria)) {
-                horariosPorMateria.AgregarFinal(horario);
-            }
-        }
-        return horariosPorMateria;
-    }
-    
-    private void cargarHorariosPorMateria(String nombreMateria) {
-        ListaDinamica<Horario> horariosPorMateria = obtenerHorariosPorMateria(nombreMateria);
-
-        cbxHorario.removeAllItems();
-
-        for (Horario horario : horariosPorMateria.toArray()) {
-            String horarioInfo = horario.getDiaSemana() + " " + horario.getHoraIncio()+ " - " + horario.getHoraFin();
-            cbxHorario.addItem(horarioInfo);
-        }
-    }
-    
-    private void cbxMateriaActionPerformed(java.awt.event.ActionEvent evt) {
-        String nombreMateriaSeleccionada = cbxMateria.getSelectedItem().toString();
-        cargarHorariosPorMateria(nombreMateriaSeleccionada);
-    }
-    
+    }    
     
     public void AgregarCheckbox(int columna, JTable tabla) {
         TableColumn columnaTabla = tabla.getColumnModel().getColumn(columna);
