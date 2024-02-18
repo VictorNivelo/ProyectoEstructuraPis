@@ -7,6 +7,7 @@ import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Controlador.Utiles.UtilesControlador;
 import Modelo.Universidad;
 import Vista.ModeloTabla.ModeloTablaUniversidad;
+import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.ImageIcon;
@@ -286,6 +287,12 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
             }
         });
 
+        txtTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTelefonoKeyTyped(evt);
+            }
+        });
+
         tblUniversidades.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -308,6 +315,7 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
         jLabel12.setText("Ordenar");
 
         cbxOrden.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Asendente", "Desendente" }));
+        cbxOrden.setSelectedIndex(-1);
 
         btnOrdenar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Ordenar.png"))); // NOI18N
         btnOrdenar.addActionListener(new java.awt.event.ActionListener() {
@@ -382,18 +390,18 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel3)
                         .addComponent(jLabel9))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(cbxOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel12)
-                        .addComponent(cbxTipoOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnOrdenar)
-                        .addGap(1, 1, 1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(cbxOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cbxTipoOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel12))
+                            .addComponent(btnOrdenar))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jLabel10)
@@ -421,7 +429,7 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
                             .addComponent(DateFundacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 440, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3)
@@ -597,40 +605,63 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
     private void btnOrdenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdenarActionPerformed
 
         try {
-            ListaDinamica<Universidad> lista = universidadControlDao.all();
-            String TipoCampo = cbxTipoOrden.getSelectedItem().toString();
+            if (cbxTipoOrden.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "No ha seleccionado el campo", "FALTA SELCCIONAR", JOptionPane.WARNING_MESSAGE);
+            } 
+            else if (cbxOrden.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "No ha seleccionado el orden", "FALTA SELCCIONAR", JOptionPane.WARNING_MESSAGE);
+            } 
+            else {
+                ListaDinamica<Universidad> lista = universidadControlDao.all();
+                String TipoCampo = cbxTipoOrden.getSelectedItem().toString();
 
-            switch (TipoCampo) {
-                case "Nombre":
-                    TipoCampo = "NombreUniversidad";
-                    break;
-                case "Direccion":
-                    TipoCampo = "DireccionUniversidad";
-                    break;
-                case "Telefono":
-                    TipoCampo = "NumeroTelefono";
-                    break;
-                case "Correo":
-                    TipoCampo = "CorreoUniversidad";
-                    break;
-                case "Fecha de fundacion":
-                    TipoCampo = "FechaFundacion";
-                    break;
-                default:
-                    throw new AssertionError();
+                switch (TipoCampo) {
+                    case "Nombre":
+                        TipoCampo = "NombreUniversidad";
+                        break;
+                    case "Direccion":
+                        TipoCampo = "DireccionUniversidad";
+                        break;
+                    case "Telefono":
+                        TipoCampo = "NumeroTelefono";
+                        break;
+                    case "Correo":
+                        TipoCampo = "CorreoUniversidad";
+                        break;
+                    case "Fecha de fundacion":
+                        TipoCampo = "FechaFundacion";
+                        break;
+                    default:
+                        throw new AssertionError();
+                }
+
+                Integer orden = OrdenSeleccionado();
+
+                ListaDinamica<Universidad> resultadoOrdenado = UtilesControlador.QuickSort(lista, orden, TipoCampo);
+
+                mtu.setUniversidadTabla(resultadoOrdenado);
+                mtu.fireTableDataChanged();
             }
-
-            Integer orden = OrdenSeleccionado();
-
-            ListaDinamica<Universidad> resultadoOrdenado = UtilesControlador.QuickSort(lista, orden, TipoCampo);
-
-            mtu.setUniversidadTabla(resultadoOrdenado);
-            mtu.fireTableDataChanged();
-        }
+        } 
         catch (Exception e) {
             e.printStackTrace();
         }
+        
     }//GEN-LAST:event_btnOrdenarActionPerformed
+
+    private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyTyped
+        
+        Character c = evt.getKeyChar();
+
+        if (!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE) {
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Solo ingreso de numeros", "CARACTER NO VALIDO", JOptionPane.WARNING_MESSAGE);
+        }
+        if (txtTelefono.getText().length() >= 10 && c != KeyEvent.VK_BACK_SPACE) {
+            evt.consume();
+        }
+        
+    }//GEN-LAST:event_txtTelefonoKeyTyped
 
     /**
      * @param args the command line arguments

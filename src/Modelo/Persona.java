@@ -1,8 +1,6 @@
 
 package Modelo;
 
-import Controlador.TDA.ListaDinamica.ListaDinamica;
-
 /**
  *
  * @author Victor
@@ -19,9 +17,11 @@ public class Persona {
     private String Telefono;
     
     private Rol rolPersona;
+    private Integer RolID;
+    
     private Cuenta cuentaPersona;
-    private ListaDinamica<Rol> listaRolPersona;
-
+    private Integer CuendaID;
+    
     public Persona() {
         
     }
@@ -114,12 +114,20 @@ public class Persona {
         this.cuentaPersona = cuentaPersona;
     }
 
-    public ListaDinamica<Rol> getListaRolPersona() {
-        return listaRolPersona;
+    public Integer getRolID() {
+        return RolID;
     }
 
-    public void setListaRolPersona(ListaDinamica<Rol> listaRolPersona) {
-        this.listaRolPersona = listaRolPersona;
+    public void setRolID(Integer RolID) {
+        this.RolID = RolID;
+    }
+
+    public Integer getCuendaID() {
+        return CuendaID;
+    }
+
+    public void setCuendaID(Integer CuendaID) {
+        this.CuendaID = CuendaID;
     }
 
     @Override

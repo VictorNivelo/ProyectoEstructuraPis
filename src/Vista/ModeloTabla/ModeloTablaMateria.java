@@ -52,9 +52,13 @@ public class ModeloTablaMateria extends AbstractTableModel {
                 case 5:
                     return (c != null) ? c.getCursoMateria().getParaleloCursa().getNombre(): "";
                 case 6:
-                    return (c != null) ? c.getCursoMateria().getMatriculaCursa().getAlumnoMatricula().getDatosAlumno().getNumeroCedula() : "";
+                    return (c != null) ? c.getCursoMateria().getDocenteCursa().getDatosDocente().getNumeroCedula() : "";
                 case 7:
-                    return (c != null) ? c.getCursoMateria().getMatriculaCursa().getCodigoMatricula(): "";
+                    return (c != null) ? c.getCursoMateria().getDocenteCursa().getDatosDocente().getNombre() + " " + c.getCursoMateria().getDocenteCursa().getDatosDocente().getApellido(): "";
+                case 8:
+                    return (c != null) ? c.getCursoMateria().getMatriculaCursa().getAlumnoMatricula().getDatosAlumno().getNumeroCedula(): "";
+                case 9:
+                    return (c != null) ? c.getCursoMateria().getMatriculaCursa().getAlumnoMatricula().getDatosAlumno().getNombre()+" "+c.getCursoMateria().getMatriculaCursa().getAlumnoMatricula().getDatosAlumno().getApellido():"";
                 default:
                     return null;
             }
@@ -82,13 +86,13 @@ public class ModeloTablaMateria extends AbstractTableModel {
             case 5:
                 return "Paralelo";
             case 6:
-                return "Nombre docente";
-            case 7:
                 return "DNI docente";
+            case 7:
+                return "Nombre docente";
             case 8:
-                return "Alumno";
+                return "DNI alumno";
             case 9:
-                return "Codigo Matricula";
+                return "Nombre alumno";
             default:
                 return null;
         }

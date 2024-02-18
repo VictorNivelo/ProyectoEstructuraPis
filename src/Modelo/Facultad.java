@@ -1,8 +1,6 @@
 
 package Modelo;
 
-import Controlador.TDA.ListaDinamica.ListaDinamica;
-
 /**
  *
  * @author Victor
@@ -13,7 +11,7 @@ public class Facultad {
     private String FechaCreacion;
     
     private Universidad universidadFacultad;
-    private ListaDinamica<Universidad> listaUniversidadFacultad;
+    private Integer UniversidadID;
 
     public Facultad() {
 
@@ -51,12 +49,12 @@ public class Facultad {
         this.universidadFacultad = universidadFacultad;
     }
 
-    public ListaDinamica<Universidad> getListaUniversidadFacultad() {
-        return listaUniversidadFacultad;
+    public Integer getUniversidadID() {
+        return UniversidadID;
     }
 
-    public void setListaUniversidadFacultad(ListaDinamica<Universidad> listaUniversidadFacultad) {
-        this.listaUniversidadFacultad = listaUniversidadFacultad;
+    public void setUniversidadID(Integer UniversidadID) {
+        this.UniversidadID = UniversidadID;
     }
         
     @Override

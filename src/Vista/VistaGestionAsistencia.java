@@ -369,6 +369,7 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
         });
 
         cbxOrden.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Asendente", "Desendente" }));
+        cbxOrden.setSelectedIndex(-1);
 
         cbxTipoOrden.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Numero de cedula", "Nombre", "Apellido", "Genero", "Estado", "Telefono", "Correo", "Codido matricula" }));
         cbxTipoOrden.setSelectedIndex(-1);
@@ -465,15 +466,13 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
                                 .addComponent(cbxTipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel13)
                                 .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel8)
-                            .addComponent(cbxHorario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel8)
+                        .addComponent(cbxHorario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 428, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnRegresar)
@@ -699,33 +698,41 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
     private void btnOrdenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdenarActionPerformed
 
         try {
-            ListaDinamica<Asistencia> lista = AsistenciaControl.all();
-            String TipoCampo = cbxTipoOrden.getSelectedItem().toString();
+            if (cbxTipoOrden.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "No ha seleccionado el campo", "FALTA SELCCIONAR", JOptionPane.WARNING_MESSAGE);
+            } 
+            else if (cbxOrden.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "No ha seleccionado el orden", "FALTA SELCCIONAR", JOptionPane.WARNING_MESSAGE);
+            } 
+            else {
+                ListaDinamica<Asistencia> lista = AsistenciaControl.all();
+                String TipoCampo = cbxTipoOrden.getSelectedItem().toString();
 
-            switch (TipoCampo) {
-                case "Tematica":
-                    TipoCampo = "AsistenciaTematica.NombreTematica";
-                    break;
-                case "Fecha":
-                    TipoCampo = "AsistenciaTematica.FechaTematica";
-                    break;
-                case "Estado de asistencia":
-                    TipoCampo = "EstadoAsistencia";
-                    break;
-                case "Observacion":
-                    TipoCampo = "Observacion";
-                    break;
-                default:
-                    throw new AssertionError();
+                switch (TipoCampo) {
+                    case "Tematica":
+                        TipoCampo = "AsistenciaTematica.NombreTematica";
+                        break;
+                    case "Fecha":
+                        TipoCampo = "AsistenciaTematica.FechaTematica";
+                        break;
+                    case "Estado de asistencia":
+                        TipoCampo = "EstadoAsistencia";
+                        break;
+                    case "Observacion":
+                        TipoCampo = "Observacion";
+                        break;
+                    default:
+                        throw new AssertionError();
+                }
+
+                Integer orden = OrdenSeleccionado();
+
+                ListaDinamica<Asistencia> resultadoOrdenado = UtilesControlador.QuickSort(lista, orden, TipoCampo);
+
+                mta.setAsistenciaTabla(resultadoOrdenado);
+                mta.fireTableDataChanged();
             }
-
-            Integer orden = OrdenSeleccionado();
-
-            ListaDinamica<Asistencia> resultadoOrdenado = UtilesControlador.QuickSort(lista, orden, TipoCampo);
-
-            mta.setAsistenciaTabla(resultadoOrdenado);
-            mta.fireTableDataChanged();
-        }
+        } 
         catch (Exception e) {
             e.printStackTrace();
         }

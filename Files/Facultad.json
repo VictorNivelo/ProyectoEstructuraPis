@@ -1,1 +1,40 @@
-{"Controlador.TDA.ListaDinamica.ListaDinamica":{"cabezera":{"info":{"@class":"Modelo.Facultad","IdFacultad":1,"NombreFacultad":"Energia y recursos","FechaCreacion":"02\/febrero\/2024","universidadFacultad":{"IdUniversidad":1,"NombreUniversidad":"Universidad Nacional De Loja","DireccionUniversidad":"AV. Pio Jaramillo","NumeroTelefono":"(07) 254-7252","CorreoUniversidad":"comunicacion@unl.edu.ec","FechaFundacion":"31\/diciembre\/1859"}},"Siguiente":{"info":{"@class":"Modelo.Facultad","IdFacultad":2,"NombreFacultad":"Derechos u otyrsad","FechaCreacion":"02\/febrero\/2024","universidadFacultad":{"IdUniversidad":1,"NombreUniversidad":"Universidad Nacional De Loja","DireccionUniversidad":"AV. Pio Jaramillo","NumeroTelefono":"(07) 254-7252","CorreoUniversidad":"comunicacion@unl.edu.ec","FechaFundacion":"31\/diciembre\/1859"}}}},"ultimo":{"@reference":"..\/cabezera\/Siguiente"},"Longitud":2}}
+{
+    "Controlador.TDA.ListaDinamica.ListaDinamica": {
+        "cabezera": {
+            "info": {
+                "@class": "Modelo.Facultad",
+                "IdFacultad": 1,
+                "NombreFacultad": "Energia y recursos",
+                "FechaCreacion": "02\/febrero\/2024",
+                "universidadFacultad": {
+                    "IdUniversidad": 1,
+                    "NombreUniversidad": "Universidad Nacional De Loja",
+                    "DireccionUniversidad": "AV. Pio Jaramillo",
+                    "NumeroTelefono": "(07) 254-7252",
+                    "CorreoUniversidad": "comunicacion@unl.edu.ec",
+                    "FechaFundacion": "31\/diciembre\/1859"
+                }
+            },
+            "Siguiente": {
+                "info": {
+                    "@class": "Modelo.Facultad",
+                    "IdFacultad": 2,
+                    "NombreFacultad": "Derechos u otyrsad",
+                    "FechaCreacion": "03\/febrero\/2024",
+                    "universidadFacultad": {
+                        "IdUniversidad": 1,
+                        "NombreUniversidad": "Universidad Nacional De Loja",
+                        "DireccionUniversidad": "AV. Pio Jaramillo",
+                        "NumeroTelefono": "(07) 254-7252",
+                        "CorreoUniversidad": "comunicacion@unl.edu.ec",
+                        "FechaFundacion": "31\/diciembre\/1859"
+                    }
+                }
+            }
+        },
+        "ultimo": {
+            "@reference": "..\/cabezera\/Siguiente"
+        },
+        "Longitud": 2
+    }
+}

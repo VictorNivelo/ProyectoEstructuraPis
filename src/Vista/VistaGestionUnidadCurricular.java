@@ -9,6 +9,7 @@ import Controlador.Utiles.UtilesControlador;
 import Modelo.UnidadCurricular;
 import Vista.ModeloTabla.ModeloTablaUnidadCurricular;
 import Vista.Utiles.UtilVista;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -238,6 +239,12 @@ public class VistaGestionUnidadCurricular extends javax.swing.JFrame {
         txtCodigoUnidad.setEditable(false);
         txtCodigoUnidad.setEnabled(false);
 
+        txtNombreUnidad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreUnidadKeyTyped(evt);
+            }
+        });
+
         jLabel8.setFont(new java.awt.Font("Candara Light", 1, 32)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(0, 0, 0));
         jLabel8.setText("Lista de unidades curriculares");
@@ -319,6 +326,7 @@ public class VistaGestionUnidadCurricular extends javax.swing.JFrame {
         jLabel11.setText("Ordenar");
 
         cbxOrden.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Asendente", "Desendente" }));
+        cbxOrden.setSelectedIndex(-1);
 
         btnOrdenar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Ordenar.png"))); // NOI18N
         btnOrdenar.addActionListener(new java.awt.event.ActionListener() {
@@ -392,18 +400,18 @@ public class VistaGestionUnidadCurricular extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel3)
                         .addComponent(jLabel8))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(cbxOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel11)
-                        .addComponent(cbxTipoOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnOrdenar)
-                        .addGap(1, 1, 1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(cbxOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cbxTipoOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel11))
+                            .addComponent(btnOrdenar))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(txtCodigoUnidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -427,7 +435,7 @@ public class VistaGestionUnidadCurricular extends javax.swing.JFrame {
                             .addComponent(jLabel7)
                             .addComponent(cbxMalla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 440, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
@@ -547,40 +555,56 @@ public class VistaGestionUnidadCurricular extends javax.swing.JFrame {
     private void btnOrdenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdenarActionPerformed
 
         try {
-            ListaDinamica<UnidadCurricular> lista = unidadCurricularControlDao.all();
-            String TipoCampo = cbxTipoOrden.getSelectedItem().toString();
+            if (cbxTipoOrden.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "No ha seleccionado el campo", "FALTA SELCCIONAR", JOptionPane.WARNING_MESSAGE);
+            } 
+            else if (cbxOrden.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "No ha seleccionado el orden", "FALTA SELCCIONAR", JOptionPane.WARNING_MESSAGE);
+            } 
+            else {
+                ListaDinamica<UnidadCurricular> lista = unidadCurricularControlDao.all();
+                String TipoCampo = cbxTipoOrden.getSelectedItem().toString();
 
-            switch (TipoCampo) {
-                case "Codigo":
-                    TipoCampo = "CodigoUnidadCurricular";
-                    break;
-                case "Nombre":
-                    TipoCampo = "NombreUnidadCurricular";
-                    break;
-                case "Descipcion":
-                    TipoCampo = "DescripcionUnidadCurricular";
-                    break;
-                case "Malla":
-                    TipoCampo = "mallaCurricularUnidadCurricular.NombreMallaCurricular";
-                    break;
-                default:
+                switch (TipoCampo) {
+                    case "Codigo":
+                        TipoCampo = "CodigoUnidadCurricular";
+                        break;
+                    case "Nombre":
+                        TipoCampo = "NombreUnidadCurricular";
+                        break;
+                    case "Descipcion":
+                        TipoCampo = "DescripcionUnidadCurricular";
+                        break;
+                    case "Malla":
+                        TipoCampo = "mallaCurricularUnidadCurricular.NombreMallaCurricular";
+                        break;
+                    default:
+                }
+
+                Integer orden = OrdenSeleccionado();
+
+                ListaDinamica<UnidadCurricular> resultadoOrdenado = UtilesControlador.QuickSort(lista, orden, TipoCampo);
+
+                mtu.setUnidadCurricularTabla(resultadoOrdenado);
+                mtu.fireTableDataChanged();
             }
-
-            Integer orden = OrdenSeleccionado();
-
-            ListaDinamica<UnidadCurricular> resultadoOrdenado = UtilesControlador.QuickSort(lista, orden, TipoCampo);
-
-            mtu.setUnidadCurricularTabla(resultadoOrdenado);
-            mtu.fireTableDataChanged();
-        }
+        } 
         catch (Exception e) {
             e.printStackTrace();
         }
+        
     }//GEN-LAST:event_btnOrdenarActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         
         try {
+            if (cbxTipoOrden.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "No ha seleccionado el campo", "FALTA SELCCIONAR", JOptionPane.WARNING_MESSAGE);
+            } 
+            else if (cbxOrden.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "No ha seleccionado el orden", "FALTA SELCCIONAR", JOptionPane.WARNING_MESSAGE);
+            } 
+            else {
             ListaDinamica<UnidadCurricular> lista = unidadCurricularControlDao.all();
 
             String Campo = txtBuscar.getText();
@@ -606,6 +630,7 @@ public class VistaGestionUnidadCurricular extends javax.swing.JFrame {
 
             mtu.setUnidadCurricularTabla(ResultadoBusqueda);
             mtu.fireTableDataChanged();
+            }
 
         }
         catch (Exception e) {
@@ -613,6 +638,20 @@ public class VistaGestionUnidadCurricular extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void txtNombreUnidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreUnidadKeyTyped
+        
+        char c = evt.getKeyChar();
+
+        if (!Character.isLetter(c) && c != KeyEvent.VK_BACK_SPACE && c != ' ') {
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Solo ingreso de letras", "CARACTER NO VALIDO", JOptionPane.WARNING_MESSAGE);
+        }
+        if (c != KeyEvent.VK_BACK_SPACE) {
+
+        }
+        
+    }//GEN-LAST:event_txtNombreUnidadKeyTyped
 
     /**
      * @param args the command line arguments

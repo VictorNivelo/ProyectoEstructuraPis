@@ -29,9 +29,9 @@ public class VistaGestionCiclo extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
         UtilVista.cargarcomboUnidad(cbxUnidad);
+        UtilVista.cargarcomboCodigoCurso(cbxNombreCiclo);
         cbxNombreCiclo.setMaximumRowCount(cbxNombreCiclo.getItemCount());
         CargarTabla();
-        
     }
     
     private void CargarTabla() {
@@ -60,7 +60,7 @@ public class VistaGestionCiclo extends javax.swing.JFrame {
             try {
                 cicloControlDao.setCiclos(mtc.getCicloTabla().getInfo(fila));
                 
-                cbxNombreCiclo.setSelectedItem(cicloControlDao.getCiclos().getNombreCiclo());
+                cbxNombreCiclo.setSelectedIndex(cicloControlDao.getCiclos().getNombreCiclo().getIdNombreCiclo()-1);
                 cbxUnidad.setSelectedIndex(cicloControlDao.getCiclos().getUnidadCurricularCiclo().getIdUnidadCurricular() -1);
                 
             } 
@@ -72,8 +72,8 @@ public class VistaGestionCiclo extends javax.swing.JFrame {
     
     public Integer ObtenerNombreCiclo(String NombreCiclo) {
         Integer ciclo = 0;
-
-        switch (NombreCiclo) {
+        String NombreCiclos = cbxNombreCiclo.getSelectedItem().toString();
+        switch (NombreCiclos) {
             case "Primer ciclo":
                 ciclo = 1;
                 break;
@@ -105,7 +105,7 @@ public class VistaGestionCiclo extends javax.swing.JFrame {
                 ciclo = 10;
                 break;
             default:
-                ciclo = null;
+                ciclo = cicloControlDao.getListaCiclos().getLongitud()+1;
                 break;
         }
         return ciclo;
@@ -124,7 +124,7 @@ public class VistaGestionCiclo extends javax.swing.JFrame {
             String NombreCiclo = cbxNombreCiclo.getSelectedItem().toString();
             
             cicloControlDao.getCiclos().setIdCiclo(idCiclo);
-            cicloControlDao.getCiclos().setNombreCiclo(NombreCiclo);
+            cicloControlDao.getCiclos().setNombreCiclo(UtilVista.obtenerCodigoCursoControl(cbxNombreCiclo));
             cicloControlDao.getCiclos().setNumeroCiclo(ObtenerNombreCiclo(NombreCiclo));
             cicloControlDao.getCiclos().setUnidadCurricularCiclo(UtilVista.obtenerUnidadControl(cbxUnidad));
             
@@ -185,6 +185,7 @@ public class VistaGestionCiclo extends javax.swing.JFrame {
         cbxOrden = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
         cbxTipoOrden = new javax.swing.JComboBox<>();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("GESTION DE CICLOS");
@@ -200,8 +201,6 @@ public class VistaGestionCiclo extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Nombre ");
 
-        cbxNombreCiclo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Primer ciclo", "Segundo ciclo", "Tercer ciclo", "Cuarto ciclo", "Quinto ciclo", "Sexto ciclo", "Septimo ciclo", "Octavo ciclo", "Noveno ciclo", "Decimo ciclo" }));
-        cbxNombreCiclo.setSelectedIndex(-1);
         cbxNombreCiclo.setToolTipText("");
 
         jLabel6.setFont(new java.awt.Font("Candara Light", 1, 32)); // NOI18N
@@ -322,6 +321,7 @@ public class VistaGestionCiclo extends javax.swing.JFrame {
         });
 
         cbxOrden.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Asendente", "Desendente" }));
+        cbxOrden.setSelectedIndex(-1);
 
         jLabel7.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 0, 0));
@@ -329,6 +329,13 @@ public class VistaGestionCiclo extends javax.swing.JFrame {
 
         cbxTipoOrden.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "Numero de ciclo", "Unidad" }));
         cbxTipoOrden.setSelectedIndex(-1);
+
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Agregar.png"))); // NOI18N
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -345,7 +352,9 @@ public class VistaGestionCiclo extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbxNombreCiclo, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cbxNombreCiclo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -387,37 +396,36 @@ public class VistaGestionCiclo extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel3)
                         .addComponent(jLabel6))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(cbxOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cbxTipoOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel7))
+                            .addComponent(btnOrdenar))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel4)
+                        .addComponent(cbxNombreCiclo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton2))
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(cbxOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel7)
-                        .addComponent(cbxTipoOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(btnOrdenar)
-                        .addGap(1, 1, 1)))
+                        .addComponent(jLabel5)
+                        .addComponent(cbxTipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton1)
+                        .addComponent(jLabel8)
+                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(cbxTipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1)
-                            .addComponent(jLabel8)
-                            .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(cbxNombreCiclo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel9)
-                            .addComponent(cbxUnidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel9)
+                        .addComponent(cbxUnidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar)
                     .addComponent(btnRegresar)
@@ -531,7 +539,7 @@ public class VistaGestionCiclo extends javax.swing.JFrame {
                 
                 Ciclo cicloModificado = new Ciclo();
                 cicloModificado.setIdCiclo(IdCiclo);
-                cicloModificado.setNombreCiclo(NombreCiclo);
+                cicloModificado.setNombreCiclo(UtilVista.obtenerCodigoCursoControl(cbxNombreCiclo));
                 cicloModificado.setNumeroCiclo(ObtenerNombreCiclo(NombreCiclo));
                 cicloModificado.setUnidadCurricularCiclo(UtilVista.obtenerUnidadControl(cbxUnidad));
                 
@@ -571,35 +579,51 @@ public class VistaGestionCiclo extends javax.swing.JFrame {
     private void btnOrdenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdenarActionPerformed
 
         try {
-            ListaDinamica<Ciclo> lista = cicloControlDao.all();
-            String TipoCampo = cbxTipoOrden.getSelectedItem().toString();
+            if (cbxTipoOrden.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "No ha seleccionado el campo", "FALTA SELCCIONAR", JOptionPane.WARNING_MESSAGE);
+            } 
+            else if (cbxOrden.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "No ha seleccionado el orden", "FALTA SELCCIONAR", JOptionPane.WARNING_MESSAGE);
+            } 
+            else {
+                ListaDinamica<Ciclo> lista = cicloControlDao.all();
+                String TipoCampo = cbxTipoOrden.getSelectedItem().toString();
 
-            switch (TipoCampo) {
-                case "Nombre":
-                    TipoCampo = "NombreCiclo";
-                    break;
-                case "Numero de ciclo":
-                    TipoCampo = "NumeroCiclo";
-                    break;
-                case "Unidad":
-                    TipoCampo = "unidadCurricularCiclo.NombreUnidadCurricular";
-                    break;
-                default:
-                    throw new AssertionError();
+                switch (TipoCampo) {
+                    case "Nombre":
+                        TipoCampo = "NombreCiclo";
+                        break;
+                    case "Numero de ciclo":
+                        TipoCampo = "NumeroCiclo";
+                        break;
+                    case "Unidad":
+                        TipoCampo = "unidadCurricularCiclo.NombreUnidadCurricular";
+                        break;
+                    default:
+                        throw new AssertionError();
+                }
+
+                Integer orden = OrdenSeleccionado();
+
+                ListaDinamica<Ciclo> resultadoOrdenado = UtilesControlador.QuickSort(lista, orden, TipoCampo);
+
+                mtc.setCicloTabla(resultadoOrdenado);
+                mtc.fireTableDataChanged();
             }
-
-            Integer orden = OrdenSeleccionado();
-
-            ListaDinamica<Ciclo> resultadoOrdenado = UtilesControlador.QuickSort(lista, orden, TipoCampo);
-
-            mtc.setCicloTabla(resultadoOrdenado);
-            mtc.fireTableDataChanged();
-        }
+        } 
         catch (Exception e) {
             e.printStackTrace();
         }
         
     }//GEN-LAST:event_btnOrdenarActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        
+        VistaGestionCicloNombre vgn = new VistaGestionCicloNombre();
+        vgn.setVisible(true);
+        this.setVisible(false);
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -655,6 +679,7 @@ public class VistaGestionCiclo extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbxTipoOrden;
     private javax.swing.JComboBox<String> cbxUnidad;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

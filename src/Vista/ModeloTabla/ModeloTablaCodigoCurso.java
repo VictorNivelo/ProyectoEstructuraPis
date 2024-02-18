@@ -3,7 +3,7 @@ package Vista.ModeloTabla;
 
 import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
-import Modelo.CodigoCurso;
+import Modelo.NombreCiclo;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -12,13 +12,13 @@ import javax.swing.table.AbstractTableModel;
  */
 public class ModeloTablaCodigoCurso extends AbstractTableModel {
 
-    private ListaDinamica<CodigoCurso> codigoCursoTabla;
+    private ListaDinamica<NombreCiclo> codigoCursoTabla;
 
-    public ListaDinamica<CodigoCurso> getCodigoCursoTabla() {
+    public ListaDinamica<NombreCiclo> getCodigoCursoTabla() {
         return codigoCursoTabla;
     }
 
-    public void setCodigoCursoTabla(ListaDinamica<CodigoCurso> codigoCursoTabla) {
+    public void setCodigoCursoTabla(ListaDinamica<NombreCiclo> codigoCursoTabla) {
         this.codigoCursoTabla = codigoCursoTabla;
     }
     
@@ -36,13 +36,13 @@ public class ModeloTablaCodigoCurso extends AbstractTableModel {
     public Object getValueAt(int Fila, int Columna) {
 
         try {
-            CodigoCurso p = codigoCursoTabla.getInfo(Fila);
+            NombreCiclo p = codigoCursoTabla.getInfo(Fila);
 
             switch (Columna) {
                 case 0:
-                    return (p != null) ? p.getIdCodigoCurso(): "";
+                    return (p != null) ? p.getIdNombreCiclo(): "";
                 case 1:
-                    return (p != null) ? p.getNombreCodigoCurso(): "";
+                    return (p != null) ? p.getNombreCiclo(): "";
                 default:
                     return null;
             }

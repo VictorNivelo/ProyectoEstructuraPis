@@ -1,8 +1,6 @@
 
 package Modelo;
 
-import Controlador.TDA.ListaDinamica.ListaDinamica;
-
 /**
  *
  * @author Victor
@@ -14,10 +12,10 @@ public class Matricula {
     private String EstadoMatricula;
     
     private Alumno alumnoMatricula;
-    private ListaDinamica<Alumno> listaAlumnosMatricula;
+    private Integer AlumnoID;
     
     private PeriodoAcademico periodoAcademicoMatricula;
-    private ListaDinamica<PeriodoAcademico> listaPeriodoMatricula;
+    private Integer PeriodoID;
     
     public Matricula() {
         
@@ -63,14 +61,6 @@ public class Matricula {
         this.periodoAcademicoMatricula = periodoAcademicoMatricula;
     }
 
-    public ListaDinamica<PeriodoAcademico> getListaPeriodoMatricula() {
-        return listaPeriodoMatricula;
-    }
-
-    public void setListaPeriodoMatricula(ListaDinamica<PeriodoAcademico> listaPeriodoMatricula) {
-        this.listaPeriodoMatricula = listaPeriodoMatricula;
-    }
-
     public Alumno getAlumnoMatricula() {
         return alumnoMatricula;
     }
@@ -79,12 +69,20 @@ public class Matricula {
         this.alumnoMatricula = alumnoMatricula;
     }
 
-    public ListaDinamica<Alumno> getListaAlumnosMatricula() {
-        return listaAlumnosMatricula;
+    public Integer getAlumnoID() {
+        return AlumnoID;
     }
 
-    public void setListaAlumnosMatricula(ListaDinamica<Alumno> listaAlumnosMatricula) {
-        this.listaAlumnosMatricula = listaAlumnosMatricula;
+    public void setAlumnoID(Integer AlumnoID) {
+        this.AlumnoID = AlumnoID;
+    }
+
+    public Integer getPeriodoID() {
+        return PeriodoID;
+    }
+
+    public void setPeriodoID(Integer PeriodoID) {
+        this.PeriodoID = PeriodoID;
     }
 
     @Override

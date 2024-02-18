@@ -302,6 +302,7 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
         jLabel5.setText("Ordenar");
 
         cbxOrden.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Asendente", "Desendente" }));
+        cbxOrden.setSelectedIndex(-1);
 
         btnOrdenar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Ordenar.png"))); // NOI18N
         btnOrdenar.addActionListener(new java.awt.event.ActionListener() {
@@ -505,10 +506,10 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
         
         try {
             if (cbxAlumno.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta llenar nombre de la carrera", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta seleccionar alumno", "Error", JOptionPane.INFORMATION_MESSAGE);
             } 
             else if (cbxEstado.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta llenar nombre de la carrera", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta seleccionar estado", "Error", JOptionPane.INFORMATION_MESSAGE);
             } 
             else {
                 Guardar();
@@ -579,8 +580,14 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
             ListaDinamica<Persona> lista = PD.all();
 
             String Campo = txtAlumnoBusqueda.getText();
+            
+            ListaDinamica<Persona> ResultadoBusqueda = new ListaDinamica<>();
 
-            ListaDinamica<Persona> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, "NumeroCedula");
+            ListaDinamica<Persona> ResultadoCe = UtilesControlador.BusquedaLineal(lista, Campo, "NumeroCedula");
+            ResultadoBusqueda.concatenar(ResultadoCe);
+            
+            ListaDinamica<Persona> ResultadoN = UtilesControlador.BusquedaLineal(lista, Campo, "Nombre");
+            ResultadoBusqueda.concatenar(ResultadoN);
 
             cbxAlumno.removeAllItems();
 
@@ -599,59 +606,67 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
 
     private void txtAlumnoBusquedaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAlumnoBusquedaKeyTyped
         
-        Character c = evt.getKeyChar();
-
-        if (!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE) {
-            evt.consume();
-            JOptionPane.showMessageDialog(null, "Solo ingreso de numeros", "CARACTER NO VALIDO", JOptionPane.WARNING_MESSAGE);
-        }
-        if (txtAlumnoBusqueda.getText().length() >= 10 && c != KeyEvent.VK_BACK_SPACE) {
-            evt.consume();
-        }
+//        Character c = evt.getKeyChar();
+//
+//        if (!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE) {
+//            evt.consume();
+//            JOptionPane.showMessageDialog(null, "Solo ingreso de numeros", "CARACTER NO VALIDO", JOptionPane.WARNING_MESSAGE);
+//        }
+//        if (txtAlumnoBusqueda.getText().length() >= 10 && c != KeyEvent.VK_BACK_SPACE) {
+//            evt.consume();
+//        }
         
     }//GEN-LAST:event_txtAlumnoBusquedaKeyTyped
 
     private void btnOrdenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdenarActionPerformed
         
         try {
-            ListaDinamica<Alumno> lista = alumnoControlDao.all();
-            String TipoCampo = cbxTipoOrden.getSelectedItem().toString();
+            if (cbxTipoOrden.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "No ha seleccionado el campo", "FALTA SELCCIONAR", JOptionPane.WARNING_MESSAGE);
+            } 
+            else if (cbxOrden.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "No ha seleccionado el orden", "FALTA SELCCIONAR", JOptionPane.WARNING_MESSAGE);
+            } 
+            else {
+                ListaDinamica<Alumno> lista = alumnoControlDao.all();
+                String TipoCampo = cbxTipoOrden.getSelectedItem().toString();
 
-            switch (TipoCampo) {
-                case "Numero de cedula":
-                    TipoCampo = "DatosAlumno.NumeroCedula";
-                    break;
-                case "Nombre":
-                    TipoCampo = "DatosAlumno.Nombre";
-                    break;
-                case "Apellido":
-                    TipoCampo = "DatosAlumno.Apellido";
-                    break;
-                case "Genero":
-                    TipoCampo = "DatosAlumno.Genero";
-                    break;
-                case "Telefono":
-                    TipoCampo = "DatosAlumno.Telefono";
-                    break;
-                case "Estado":
-                    TipoCampo = "EstadoAlumno";
-                    break;
-                case "Correo":
-                    TipoCampo = "DatosAlumno.cuentaPersona.Correo";
-                    break;
-                case "Codigo de matricula":
-                    TipoCampo = "matriculaAlumno.CodigoMatricula";
-                    break;
-                default:
-                    
+                switch (TipoCampo) {
+                    case "Numero de cedula":
+                        TipoCampo = "DatosAlumno.NumeroCedula";
+                        break;
+                    case "Nombre":
+                        TipoCampo = "DatosAlumno.Nombre";
+                        break;
+                    case "Apellido":
+                        TipoCampo = "DatosAlumno.Apellido";
+                        break;
+                    case "Genero":
+                        TipoCampo = "DatosAlumno.Genero";
+                        break;
+                    case "Telefono":
+                        TipoCampo = "DatosAlumno.Telefono";
+                        break;
+                    case "Estado":
+                        TipoCampo = "EstadoAlumno";
+                        break;
+                    case "Correo":
+                        TipoCampo = "DatosAlumno.cuentaPersona.Correo";
+                        break;
+                    case "Codigo de matricula":
+                        TipoCampo = "matriculaAlumno.CodigoMatricula";
+                        break;
+                    default:
+
+                }
+
+                Integer orden = OrdenSeleccionado();
+
+                ListaDinamica<Alumno> resultadoOrdenado = UtilesControlador.QuickSort(lista, orden, TipoCampo);
+
+                mta.setAlumnosTabla(resultadoOrdenado);
+                mta.fireTableDataChanged();
             }
-
-            Integer orden = OrdenSeleccionado();
-
-            ListaDinamica<Alumno> resultadoOrdenado = UtilesControlador.QuickSort(lista, orden, TipoCampo);
-
-            mta.setAlumnosTabla(resultadoOrdenado);
-            mta.fireTableDataChanged();
         } 
         catch (Exception e) {
             e.printStackTrace();

@@ -18,7 +18,7 @@ public class VistaCalendarioDocente extends JFrame {
     public VistaCalendarioDocente() {
         setTitle("CALENDARIO DOCENTE");
         setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
-        setSize(1200, 700);
+        setSize(1225, 725);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         MesActual = Calendar.getInstance().get(Calendar.MONTH);
@@ -87,7 +87,7 @@ public class VistaCalendarioDocente extends JFrame {
         JButton botonRegresar = new JButton("REGRESAR");
         botonRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Regresar.png")));
         botonRegresar.addActionListener(e -> {
-            VistaDocenteCalendario otraInterfaz = new VistaDocenteCalendario();
+            VistaDocentes otraInterfaz = new VistaDocentes();
             otraInterfaz.setLocationRelativeTo(this);
             otraInterfaz.setVisible(true);
             dispose();

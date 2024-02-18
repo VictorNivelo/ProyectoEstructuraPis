@@ -307,6 +307,12 @@ public class VistaGestionCarrera extends javax.swing.JFrame {
         jLabel10.setForeground(new java.awt.Color(0, 0, 0));
         jLabel10.setText("Nro de ciclos");
 
+        txtNumeroCiclos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNumeroCiclosKeyTyped(evt);
+            }
+        });
+
         jLabel11.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(0, 0, 0));
         jLabel11.setText("Facultad");
@@ -325,6 +331,7 @@ public class VistaGestionCarrera extends javax.swing.JFrame {
         jLabel12.setText("Ordenar");
 
         cbxOrden.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Asendente", "Desendente" }));
+        cbxOrden.setSelectedIndex(-1);
 
         cbxTipoOrden.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "Duracion", "Numero de ciclos", "Facultad" }));
         cbxTipoOrden.setSelectedIndex(-1);
@@ -394,17 +401,18 @@ public class VistaGestionCarrera extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel3)
                         .addComponent(jLabel6))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(cbxOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel12)
-                        .addComponent(cbxTipoOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnOrdenar)
-                        .addGap(1, 1, 1)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnOrdenar)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(cbxOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cbxTipoOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel12)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton6, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -622,38 +630,57 @@ public class VistaGestionCarrera extends javax.swing.JFrame {
     private void btnOrdenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdenarActionPerformed
 
         try {
-            ListaDinamica<Carrera> lista = carreraControlDao.all();
-            String TipoCampo = cbxTipoOrden.getSelectedItem().toString();
+            if (cbxTipoOrden.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "No ha seleccionado el campo", "FALTA SELCCIONAR", JOptionPane.WARNING_MESSAGE);
+            } 
+            else if (cbxOrden.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "No ha seleccionado el orden", "FALTA SELCCIONAR", JOptionPane.WARNING_MESSAGE);
+            } 
+            else {
+                ListaDinamica<Carrera> lista = carreraControlDao.all();
+                String TipoCampo = cbxTipoOrden.getSelectedItem().toString();
 
-            switch (TipoCampo) {
-                case "Nombre":
-                    TipoCampo = "NombreCarrera";
-                    break;
-                case "Duracion":
-                    TipoCampo = "Duracion";
-                    break;
-                case "Numero de ciclos":
-                    TipoCampo = "NumeroCiclos";
-                    break;
-                case "Facultad":
-                    TipoCampo = "facutadCarrera.NombreFacultad";
-                    break;
-                default:
-                    throw new AssertionError();
+                switch (TipoCampo) {
+                    case "Nombre":
+                        TipoCampo = "NombreCarrera";
+                        break;
+                    case "Duracion":
+                        TipoCampo = "Duracion";
+                        break;
+                    case "Numero de ciclos":
+                        TipoCampo = "NumeroCiclos";
+                        break;
+                    case "Facultad":
+                        TipoCampo = "facutadCarrera.NombreFacultad";
+                        break;
+                    default:
+                        throw new AssertionError();
+                }
+
+                Integer orden = OrdenSeleccionado();
+
+                ListaDinamica<Carrera> resultadoOrdenado = UtilesControlador.QuickSort(lista, orden, TipoCampo);
+
+                mtc.setCarreraTabla(resultadoOrdenado);
+                mtc.fireTableDataChanged();
             }
-
-            Integer orden = OrdenSeleccionado();
-
-            ListaDinamica<Carrera> resultadoOrdenado = UtilesControlador.QuickSort(lista, orden, TipoCampo);
-
-            mtc.setCarreraTabla(resultadoOrdenado);
-            mtc.fireTableDataChanged();
-        }
+        } 
         catch (Exception e) {
             e.printStackTrace();
         }
 
     }//GEN-LAST:event_btnOrdenarActionPerformed
+
+    private void txtNumeroCiclosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumeroCiclosKeyTyped
+        
+        Character c = evt.getKeyChar();
+
+        if (!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE) {
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Solo ingreso de numeros", "CARACTER NO VALIDO", JOptionPane.WARNING_MESSAGE);
+        }
+        
+    }//GEN-LAST:event_txtNumeroCiclosKeyTyped
 
     /**
      * @param args the command line arguments

@@ -1,8 +1,6 @@
 
 package Modelo;
 
-import Controlador.TDA.ListaDinamica.ListaDinamica;
-
 /**
  *
  * @author Victor
@@ -14,7 +12,7 @@ public class MallaCurricular {
     private String EstadoMallaCurricular;
     
     private Carrera carreraMallaCurricula;
-    private ListaDinamica<Carrera> listaCarreraMallaCurricula;
+    private Integer CarreraID;
     
     public MallaCurricular() {
         
@@ -60,12 +58,12 @@ public class MallaCurricular {
         this.carreraMallaCurricula = carreraMallaCurricula;
     }
 
-    public ListaDinamica<Carrera> getListaCarreraMallaCurricula() {
-        return listaCarreraMallaCurricula;
+    public Integer getCarreraID() {
+        return CarreraID;
     }
 
-    public void setListaCarreraMallaCurricula(ListaDinamica<Carrera> listaCarreraMallaCurricula) {
-        this.listaCarreraMallaCurricula = listaCarreraMallaCurricula;
+    public void setCarreraID(Integer CarreraID) {
+        this.CarreraID = CarreraID;
     }
     
     @Override

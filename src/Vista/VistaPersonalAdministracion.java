@@ -10,6 +10,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -144,8 +145,8 @@ public class VistaPersonalAdministracion extends javax.swing.JFrame {
         panelPrincipal.setToolTipText("");
 
         jButton5.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Regresar.png"))); // NOI18N
-        jButton5.setText("REGRESAR");
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/CerraSesion.png"))); // NOI18N
+        jButton5.setText("CERRAR SESION");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
@@ -390,9 +391,18 @@ public class VistaPersonalAdministracion extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
 
-        VistaInicioSesionEstudiante abrirLogin = new VistaInicioSesionEstudiante();
-        abrirLogin.setVisible(true);
-        this.setVisible(false);
+        try {
+            int result = JOptionPane.showConfirmDialog(null, "Estas seguro que quieres cerrar sesion?", "CONFIRMAR CIERRE DE SESION", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+            if (result == JOptionPane.YES_OPTION) {
+                VistaPrincipalSistema abrirLogin = new VistaPrincipalSistema();
+                abrirLogin.setVisible(true);
+                this.setVisible(false);
+            }
+        } 
+        catch (Exception e) {
+            
+        }
 
     }//GEN-LAST:event_jButton5ActionPerformed
 

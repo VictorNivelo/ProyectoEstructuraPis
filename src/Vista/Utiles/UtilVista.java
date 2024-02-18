@@ -6,7 +6,7 @@ import Controlador.Dao.Modelo.asistenciaDao;
 import Controlador.Dao.Modelo.carreraDao;
 import Modelo.Ciclo;
 import Controlador.Dao.Modelo.cicloDao;
-import Controlador.Dao.Modelo.codigoCursoDao;
+import Controlador.Dao.Modelo.nombreCicloDao;
 import Controlador.Dao.Modelo.cursoDao;
 import Controlador.Dao.Modelo.docenteDao;
 import Controlador.Dao.Modelo.facultadDao;
@@ -24,7 +24,7 @@ import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Modelo.Alumno;
 import Modelo.Asistencia;
 import Modelo.Carrera;
-import Modelo.CodigoCurso;
+import Modelo.NombreCiclo;
 import Modelo.Cursa;
 import Modelo.Docente;
 import Modelo.Facultad;
@@ -88,22 +88,22 @@ public class UtilVista {
     
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public static void cargarcomboCodigoCurso(JComboBox cbx) throws ListaVacia{
-        codigoCursoDao Rc = new codigoCursoDao();
+        nombreCicloDao Rc = new nombreCicloDao();
         cbx.removeAllItems();
         
-        if(Rc.getListaCodigoCurso().EstaVacio()){
-            throw new ListaVacia("No hay codigos que mostrar");
+        if(Rc.getListaNombreCiclo().EstaVacio()){
+            throw new ListaVacia("No hay nombres que mostrar");
         }
         else{
-           for (int i = 0; i < Rc.getListaCodigoCurso().getLongitud(); i++) {
-            cbx.addItem(Rc.getListaCodigoCurso().getInfo(i));
+           for (int i = 0; i < Rc.getListaNombreCiclo().getLongitud(); i++) {
+            cbx.addItem(Rc.getListaNombreCiclo().getInfo(i));
            }
         }
     }
     
     @SuppressWarnings("rawtypes")
-    public static CodigoCurso obtenerCodigoCursoControl(JComboBox cbx){
-        return (CodigoCurso) cbx.getSelectedItem();
+    public static NombreCiclo obtenerCodigoCursoControl(JComboBox cbx){
+        return (NombreCiclo) cbx.getSelectedItem();
     }
     
     @SuppressWarnings({ "unchecked", "rawtypes" })

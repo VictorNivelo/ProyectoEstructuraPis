@@ -1,22 +1,22 @@
 
 package Modelo;
 
-import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
-import Controlador.TDA.ListaDinamica.ListaDinamica;
-
-
 /**
  *
  * @author Victor
  */
 public class Cursa {
     private Integer IdCurso;
-    private CodigoCurso codigoCursoCursa;
+    private String CodigoCursa;
+    
     private Paralelo ParaleloCursa;
+    private Integer ParaleloID;
     
     private Matricula matriculaCursa;
+    private Integer MatriculaID;
+    
     private Docente docenteCursa;
-    private ListaDinamica<Matricula> listaMatriculaCursa;
+    private Integer DocenteID;
     
     public Cursa() {
         
@@ -46,26 +46,6 @@ public class Cursa {
         this.matriculaCursa = matriculaCursa;
     }
 
-    public ListaDinamica<Matricula> getListaMatriculaCursa() {
-        return listaMatriculaCursa;
-    }
-
-    public void setListaMatriculaCursa(ListaDinamica<Matricula> listaMatriculaCursa) {
-        this.listaMatriculaCursa = listaMatriculaCursa;
-    }
-
-    public CodigoCurso getCodigoCursoCursa() {
-        return codigoCursoCursa;
-    }
-
-    public void setCodigoCursoCursa(CodigoCurso codigoCursoCursa) {
-        this.codigoCursoCursa = codigoCursoCursa;
-    }
-    
-    public void agregarMatricula(Matricula matricula) {
-        listaMatriculaCursa.Agregar(matricula);
-    }
-
     public Docente getDocenteCursa() {
         return docenteCursa;
     }
@@ -74,31 +54,36 @@ public class Cursa {
         this.docenteCursa = docenteCursa;
     }
 
-    public void quitarMatricula(Matricula matricula) {
-        boolean encontrado = false;
-        for (int i = 0; i < listaMatriculaCursa.getLongitud(); i++) {
-            try {
-                Matricula matriculaActual = listaMatriculaCursa.getInfo(i);
-                if (matriculaActual.equals(matricula)) {
-                    listaMatriculaCursa.eliminar(i);
-                    encontrado = true;
-                    break;
-                }
-            } 
-            catch (ListaVacia e) {
-                System.out.println("Error: " + e.getMessage());
-            }
-        }
-        if (!encontrado) {
-            System.out.println("Matrícula no encontrada en la lista");
-        }
+    public String getCodigoCursa() {
+        return CodigoCursa;
     }
 
-    public void mostrarMatriculas() {
-        System.out.println("Matrículas en el curso:");
-        for (Matricula m : listaMatriculaCursa.toArray()) {
-            System.out.println("- " + m.getAlumnoMatricula().getDatosAlumno().getNumeroCedula()); // Suponiendo que Alumno tiene un atributo nombre
-        }
+    public void setCodigoCursa(String CodigoCursa) {
+        this.CodigoCursa = CodigoCursa;
+    }
+
+    public Integer getMatriculaID() {
+        return MatriculaID;
+    }
+
+    public void setMatriculaID(Integer MatriculaID) {
+        this.MatriculaID = MatriculaID;
+    }
+
+    public Integer getDocenteID() {
+        return DocenteID;
+    }
+
+    public void setDocenteID(Integer DocenteID) {
+        this.DocenteID = DocenteID;
+    }
+
+    public Integer getParaleloID() {
+        return ParaleloID;
+    }
+
+    public void setParaleloID(Integer ParaleloID) {
+        this.ParaleloID = ParaleloID;
     }
     
     @Override

@@ -1,8 +1,6 @@
 
 package Modelo;
 
-import Controlador.TDA.ListaDinamica.ListaDinamica;
-
 
 /**
  *
@@ -10,11 +8,13 @@ import Controlador.TDA.ListaDinamica.ListaDinamica;
  */
 public class Ciclo {
     private Integer IdCiclo;
-    private String NombreCiclo;
     private Integer NumeroCiclo;
+    
+    private NombreCiclo NombreCiclo;
+    private Integer NombreCicloID;
 
     private UnidadCurricular unidadCurricularCiclo;
-    private ListaDinamica<UnidadCurricular> listaUnidadCurriculaCiclo;
+    private Integer UnidadCurricularID;
 
     public Ciclo() {
         
@@ -28,11 +28,11 @@ public class Ciclo {
         this.IdCiclo = IdCiclo;
     }
 
-    public String getNombreCiclo() {
+    public NombreCiclo getNombreCiclo() {
         return NombreCiclo;
     }
 
-    public void setNombreCiclo(String NombreCiclo) {
+    public void setNombreCiclo(NombreCiclo NombreCiclo) {
         this.NombreCiclo = NombreCiclo;
     }
 
@@ -52,14 +52,22 @@ public class Ciclo {
         this.unidadCurricularCiclo = unidadCurricularCiclo;
     }
 
-    public ListaDinamica<UnidadCurricular> getListaUnidadCurriculaCiclo() {
-        return listaUnidadCurriculaCiclo;
+    public Integer getUnidadCurricularID() {
+        return UnidadCurricularID;
     }
 
-    public void setListaUnidadCurriculaCiclo(ListaDinamica<UnidadCurricular> listaUnidadCurriculaCiclo) {
-        this.listaUnidadCurriculaCiclo = listaUnidadCurriculaCiclo;
+    public void setUnidadCurricularID(Integer UnidadCurricularID) {
+        this.UnidadCurricularID = UnidadCurricularID;
     }
-    
+
+    public Integer getNombreCicloID() {
+        return NombreCicloID;
+    }
+
+    public void setNombreCicloID(Integer NombreCicloID) {
+        this.NombreCicloID = NombreCicloID;
+    }
+
     @Override
     public String toString() {
         return NombreCiclo+"\n";
