@@ -2,10 +2,8 @@
 package Controlador.Dao.Modelo;
 
 import Controlador.Dao.DaoImplement;
-import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Modelo.Cursa;
-import Modelo.Matricula;
 
 /**
  *

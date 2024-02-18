@@ -1,7 +1,8 @@
-
 package Vista;
 
 import Controlador.Dao.Modelo.alumnoDao;
+import Controlador.Dao.Modelo.horarioDao;
+import Controlador.Dao.Modelo.materiaDao;
 import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Controlador.Utiles.UtilesControlador;
@@ -11,32 +12,35 @@ import javax.swing.ImageIcon;
 import javax.swing.JTable;
 import Modelo.Matricula;
 import Modelo.Alumno;
-import Modelo.Ciclo;
+import Modelo.ControlAccesoDocente;
 import Modelo.Cursa;
+import Modelo.Horario;
 import Modelo.Materia;
 import Modelo.Persona;
 import Vista.Utiles.UtilVista;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
-
 /**
  *
  * @author Victor
  */
 public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
+
     DefaultTableModel dtm = new DefaultTableModel();
     alumnoDao alumnoControlDao = new alumnoDao();
+    materiaDao materiaControlDao = new materiaDao();
+    horarioDao horarioControlDao = new horarioDao();
 
     /**
      * Creates new form VistaTomaAsistencia
+     *
      * @throws Controlador.TDA.ListaDinamica.Excepcion.ListaVacia
      */
     public VistaDocentesTomaAsistencia() throws ListaVacia {
         initComponents();
         this.setLocationRelativeTo(null);
-        UtilVista.cargarcomboHorario(cbxHorario);
-        UtilVista.CargarComboMateria(cbxMateria);
+//        UtilVista.cargarcomboHorario(cbxHorario);
         setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
         DateFechaActual.setDateFormatString("dd/MMMM/yyyy");
         dtm.setColumnIdentifiers(new String[]{"#", "Nombre", "Apellido", "Asistencia"});
@@ -44,73 +48,92 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
         tblt.setModel(dtm);
         AgregarCheckbox(3, tblt);
         cbxHorario.setSelectedIndex(-1);
+        cargarMateriasDocente();
+        cbxMateria.setSelectedIndex(-1);
     }
-    
-    private void CargarTabla() {
-    try {
-        Object[] datosLista = alumnoControlDao.getListaAlumnos().toArray();
-        for (Object dato : datosLista) {
-            if (dato instanceof Persona) { 
-                Persona persona = (Persona) dato;
-                dtm.addRow(new Object[]{persona.getIdPersona(), persona.getNombre(), persona.getApellido(), false});
+
+    private void cargarMateriasDocente() {
+        int idDocenteLogeado = ControlAccesoDocente.getIdDocenteLogeado();
+        cbxMateria.removeAllItems();
+        ListaDinamica<Materia> listaMaterias = materiaControlDao.all();
+        for (Materia materia : listaMaterias.toArray()) {
+            int idDocenteMateria = materia.getCursoMateria().getDocenteCursa().getIdDocente();
+
+            if (idDocenteLogeado == idDocenteMateria) {
+                cbxMateria.addItem(materia.getNombreMateria());
             }
         }
-    } 
-    catch (Exception e) {
-        e.printStackTrace();
     }
-}
-        
-//    private void CargarTabla() {
-//        
-//        try {
-//            Object[] datosLista = alumnoControlDao.getListaAlumnos().toArray();
-//            for (Object dato : datosLista) {
-//                if (dato instanceof Persona) { 
-//                    Persona persona = (Persona) dato;
-//                    dtm.addRow(new Object[]{persona.getIdPersona(), persona.getNombre(), persona.getApellido(), false});
-//                }
-//            }
-//        } catch (Exception e) {
-//
-//        }
-//
-////        try {
-////            Object[] datosLista = alumnoControlDao.getListaPersonas().CovertirEnArreglo();
-////            for (Object dato : datosLista) {
-////                dtm.addRow(new Object[]{dato});
-////            }
-////        } 
-////        catch (Exception e) {
-////
-////        }
-//    }
-    
 
-//    @SuppressWarnings("unlikely-arg-type")
-//    public ListaDinamica<Alumno> getAlumnosPorCicloParalelo(Ciclo cicloSeleccionado, String paralelo) throws ListaVacia {
-//        ListaDinamica<Alumno> listaFiltrada = new ListaDinamica<>();
-//
-//        ListaDinamica<Alumno> listaCompleta = alumnoControlDao.getListaAlumnos();
-//
-//        for (int i = 0; i < listaCompleta.getLongitud(); i++) {
-//            Alumno alumno = listaCompleta.getInfo(i);
-//
-//            ListaDinamica<Cursa> cursosAsignados = alumno.getMatriculaAlumno().getListaCursoMatricula();
-//
-//            for (int j = 0; j < cursosAsignados.getLongitud(); j++) {
-//                Cursa cursa = cursosAsignados.getInfo(j);
-//
-//                if (cursa.getMateriaCurso().getCicloMateria().getNombreCiclo().equals(cicloSeleccionado) &&
-//                    cursa.getParalelo().equals(paralelo)) {
-//                    listaFiltrada.Agregar(alumno);
-//                    break;
-//                }
-//            }
-//        }
-//
-//        return listaFiltrada;
-//    }
+    private void CargarTabla() {
+        try {
+            Object[] datosLista = alumnoControlDao.getListaAlumnos().toArray();
+            for (Object dato : datosLista) {
+                if (dato instanceof Persona) {
+                    Persona persona = (Persona) dato;
+                    dtm.addRow(new Object[]{persona.getIdPersona(), persona.getNombre(), persona.getApellido(), false});
+                }
+            }
+        } 
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void CargarTablas() {
+        try {
+            ListaDinamica<Materia> listaMaterias = materiaControlDao.all();
+            dtm.setRowCount(0);
+            
+            for (Materia materia : listaMaterias.toArray()) {
+                Cursa cursoMateria = materia.getCursoMateria();
+                Matricula matricula = cursoMateria.getMatriculaCursa();
+                
+                if (matricula.getEstadoMatricula().equals("Activa")) {
+                    Alumno alumno = matricula.getAlumnoMatricula();
+
+                    Persona datosAlumno = alumno.getDatosAlumno();
+                    dtm.addRow(new Object[]{
+                        alumno.getIdAlumno(),
+                        datosAlumno.getNombre(),
+                        datosAlumno.getApellido()
+                    });
+                }
+            }
+        } 
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private ListaDinamica<Horario> obtenerHorariosPorMateria(String nombreMateria) {
+        ListaDinamica<Horario> horariosPorMateria = new ListaDinamica<>();
+        ListaDinamica<Horario> todosLosHorarios = horarioControlDao.all();
+
+        for (Horario horario : todosLosHorarios.toArray()) {
+            if (horario.getMateriaHorario().getNombreMateria().equals(nombreMateria)) {
+                horariosPorMateria.AgregarFinal(horario);
+            }
+        }
+        return horariosPorMateria;
+    }
+    
+    private void cargarHorariosPorMateria(String nombreMateria) {
+        ListaDinamica<Horario> horariosPorMateria = obtenerHorariosPorMateria(nombreMateria);
+
+        cbxHorario.removeAllItems();
+
+        for (Horario horario : horariosPorMateria.toArray()) {
+            String horarioInfo = horario.getDiaSemana() + " " + horario.getHoraIncio()+ " - " + horario.getHoraFin();
+            cbxHorario.addItem(horarioInfo);
+        }
+    }
+    
+    private void cbxMateriaActionPerformed(java.awt.event.ActionEvent evt) {
+        String nombreMateriaSeleccionada = cbxMateria.getSelectedItem().toString();
+        cargarHorariosPorMateria(nombreMateriaSeleccionada);
+    }
+    
     
     public void AgregarCheckbox(int columna, JTable tabla) {
         TableColumn columnaTabla = tabla.getColumnModel().getColumn(columna);
@@ -121,6 +144,7 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
     public boolean estaSeleccionada(int fila, int columna, JTable tabla) {
         return tabla.getValueAt(fila, columna) != null;
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -506,46 +530,9 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-
         
-//        dtm.setRowCount(0);
-//
-//        String MateriaSeleccionada = cbxMateria.getSelectedItem().toString();
-//        String paraleloSeleccionado = cbxParalelo.getSelectedItem().toString();
-//
-//        try {
-//            Object[] datosLista = alumnoControlDao.getListaAlumnos().toArray();
-//            for (Object dato : datosLista) {
-//                try {
-//                    if (dato instanceof Alumno) {
-//                        Alumno alumno = (Alumno) dato;
-//
-//                        if (alumno.getDatosAlumno().getRolPersona().getNombreRol().equalsIgnoreCase("estudiante")) {
-//                            Matricula matricula = alumno.getMatriculaAlumno();
-//
-//                            if (matricula != null && matricula.getCursoMatricula()!= null) {
-//                                Cursa cursoAsignado = matricula.getCursoMatricula();
-//                                
-//                                if (cursoAsignado.getMateriaCurso().getCicloMateria().getNombreCiclo().equalsIgnoreCase(MateriaSeleccionada)
-//                                        && cursoAsignado.getParalelo().equalsIgnoreCase(paraleloSeleccionado)) {
-//                                    dtm.addRow(new Object[]{alumno.getIdAlumno(), alumno.getDatosAlumno().getNombre(),
-//                                            alumno.getDatosAlumno().getApellido(), false});
-//                                }
-//                            }
-//                        }
-//                    }
-//                } 
-//                catch (NullPointerException ex) {
-//                    ex.printStackTrace();
-//                }
-//            }
-//        } 
-//        catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//        tblt.setModel(dtm);
-    
+        CargarTablas();
+            
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

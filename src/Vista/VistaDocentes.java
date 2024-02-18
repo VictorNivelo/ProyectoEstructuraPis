@@ -3,8 +3,8 @@ package Vista;
 
 import Controlador.Dao.Modelo.horarioDao;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
+import Modelo.ControlAccesoDocente;
 import Modelo.Horario;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -243,27 +243,51 @@ public class VistaDocentes extends javax.swing.JFrame {
         try {
             VistaCalendarioDocente c = new VistaCalendarioDocente();
             horarioDao HD = new horarioDao();
+
+            int idDocenteLogeado = ControlAccesoDocente.getIdDocenteLogeado();
+
             ListaDinamica<Horario> listaH = HD.all();
+
             for (int i = 0; i < listaH.getLongitud(); i++) {
-                String Fecha = listaH.getInfo(i).getDiaSemana();
-                String Mensaje = listaH.getInfo(i).getMateriaHorario().getNombreMateria() + " "+
-                        listaH.getInfo(i).getMateriaHorario().getCicloMateria().getNombreCiclo().getNombreCiclo()+ " " +
-                        listaH.getInfo(i).getMateriaHorario().getCursoMateria().getParaleloCursa()+ " "+
-                        listaH.getInfo(i).getHoraIncio() + " - " + listaH.getInfo(i).getHoraFin();
-                c.AgregarEvento(Fecha, Mensaje);
+                Horario horario = listaH.getInfo(i);
+
+                if (horario.getMateriaHorario().getCursoMateria().getDocenteCursa().getIdDocente() == idDocenteLogeado) {
+                    String Fecha = horario.getDiaSemana();
+                    String Mensaje = horario.getMateriaHorario().getNombreMateria() + " "
+                            + horario.getMateriaHorario().getCicloMateria().getNombreCiclo().getNombreCiclo() + " "
+                            + horario.getMateriaHorario().getCursoMateria().getParaleloCursa() + " "
+                            + horario.getHoraIncio() + " - " + horario.getHoraFin();
+                    c.AgregarEvento(Fecha, Mensaje);
+                }
             }
-            
+
             c.setVisible(true);
             this.dispose();
         } 
         catch (Exception e) {
             
         }
-//        
-//        VistaCalendarioDocente vdc = new VistaCalendarioDocente();
-//        vdc.setVisible(true);
-//        this.setVisible(false);
-//        
+        
+//        try {
+//            VistaCalendarioDocente c = new VistaCalendarioDocente();
+//            horarioDao HD = new horarioDao();
+//            ListaDinamica<Horario> listaH = HD.all();
+//            for (int i = 0; i < listaH.getLongitud(); i++) {
+//                String Fecha = listaH.getInfo(i).getDiaSemana();
+//                String Mensaje = listaH.getInfo(i).getMateriaHorario().getNombreMateria() + " "+
+//                        listaH.getInfo(i).getMateriaHorario().getCicloMateria().getNombreCiclo().getNombreCiclo()+ " " +
+//                        listaH.getInfo(i).getMateriaHorario().getCursoMateria().getParaleloCursa()+ " "+
+//                        listaH.getInfo(i).getHoraIncio() + " - " + listaH.getInfo(i).getHoraFin();
+//                c.AgregarEvento(Fecha, Mensaje);
+//            }
+//            
+//            c.setVisible(true);
+//            this.dispose();
+//        } 
+//        catch (Exception e) {
+//            
+//        }
+        
     }//GEN-LAST:event_btnCalendarioActionPerformed
 
     /**

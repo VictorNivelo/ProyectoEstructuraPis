@@ -2,9 +2,10 @@
 package Vista;
 
 import Controlador.Dao.Modelo.materiaDao;
-import Controlador.Dao.Modelo.personaDao;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
+import Modelo.ControlAccesoDocente;
 import Modelo.Cuenta;
+import Modelo.Docente;
 import Modelo.Materia;
 import Modelo.Persona;
 import Modelo.Rol;
@@ -21,7 +22,6 @@ import javax.swing.JOptionPane;
  * @author Victor
  */
 public class VistaInicioSesionDocente extends javax.swing.JFrame {
-    personaDao personaControlDao = new personaDao();
     materiaDao materiaControlDao = new materiaDao();
 
     /**
@@ -114,6 +114,7 @@ public class VistaInicioSesionDocente extends javax.swing.JFrame {
         boolean credencialesCorrectas = false;
         boolean esDocente = false;
         String nombreUsuario = "";
+        Docente docenteLogeado = null;
         
         for(Materia materia : listaMateria.toArray()){
             Cuenta cuenta = materia.getCursoMateria().getDocenteCursa().getDatosDocente().getCuentaPersona();
@@ -121,6 +122,7 @@ public class VistaInicioSesionDocente extends javax.swing.JFrame {
                 credencialesCorrectas = true;
                 if(materia.getCursoMateria().getDocenteCursa().getDatosDocente().getRolPersona() != null && materia.getCursoMateria().getDocenteCursa().getDatosDocente().getRolPersona().getNombreRol().equals("Docente")){
                     esDocente = true;
+                    docenteLogeado = materia.getCursoMateria().getDocenteCursa();
                     String nombre = materia.getCursoMateria().getDocenteCursa().getDatosDocente().getNombre();
                     String apellido = materia.getCursoMateria().getDocenteCursa().getDatosDocente().getApellido();
                     nombreUsuario = nombre + " " + apellido;
@@ -134,6 +136,7 @@ public class VistaInicioSesionDocente extends javax.swing.JFrame {
         }
 
         if (credencialesCorrectas && esDocente) {
+            ControlAccesoDocente.setDocenteLogeado(docenteLogeado);
             procesarDocente();
             dispose();
             lblNombreUsuarioIngresado.setText(nombreUsuario);        } 
@@ -144,44 +147,6 @@ public class VistaInicioSesionDocente extends javax.swing.JFrame {
         }
     }
         
-        
-        
-        /*ListaDinamica<Persona> listaPersonas = personaControlDao.all();
-
-        String usuarioIngresado = txtCorreo.getText();
-        char[] c = txtContrasenia.getPassword();
-        String contrasenaIngresada = new String(c);
-
-        boolean credencialesCorrectas = false;
-        boolean esDocente = false;
-
-        for (Persona persona : listaPersonas.toArray()) {
-            System.out.println(persona);
-            Cuenta cuenta = persona.getCuentaPersona();
-            if (cuenta != null && cuenta.getCorreo().equals(usuarioIngresado) && cuenta.getContrasena().equals(contrasenaIngresada)) {
-                credencialesCorrectas = true;
-                if (persona.getRolPersona() != null && persona.getRolPersona().getNombreRol().equals("Docente")) {
-                    esDocente = true;
-                    break;
-                } 
-                else {
-                    JOptionPane.showMessageDialog(null, "Solo los docentes pueden acceder ", "ACCESO DENEGADO", JOptionPane.WARNING_MESSAGE);
-                    return;
-                }
-            }
-        }
-
-        if (credencialesCorrectas && esDocente) {
-            procesarDocente();
-            dispose();
-        } 
-        else {
-            JOptionPane.showMessageDialog(null, "Inicio de sesión fallido. Verifique sus credenciales.", "CREDENCIALES INCORRECTAS", JOptionPane.WARNING_MESSAGE);
-            txtCorreo.setText("");
-            txtContrasenia.setText("");
-        }*/
-    
-
     private static void procesarAdministrador() {
         System.out.println("Es un administrador");
     }

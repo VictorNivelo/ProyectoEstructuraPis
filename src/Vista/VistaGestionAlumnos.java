@@ -10,7 +10,6 @@ import Modelo.Alumno;
 import Modelo.Persona;
 import Vista.ModeloTabla.ModeloTablaAlumnos;
 import Vista.Utiles.UtilVista;
-import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 

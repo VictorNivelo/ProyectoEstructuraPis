@@ -4,7 +4,6 @@ package Vista.ModeloTabla;
 import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Modelo.Cursa;
-import Modelo.Matricula;
 import javax.swing.table.AbstractTableModel;
 
 /**
