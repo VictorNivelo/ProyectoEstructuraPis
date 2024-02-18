@@ -12,6 +12,7 @@ public class Docente {
     private String AniosExperiencia;
     
     private Persona DatosDocente;
+    private Integer PersonaDocenteID;
     
     public Docente() {
         
@@ -55,6 +56,14 @@ public class Docente {
 
     public void setDatosDocente(Persona DatosDocente) {
         this.DatosDocente = DatosDocente;
+    }
+
+    public Integer getPersonaDocenteID() {
+        return PersonaDocenteID;
+    }
+
+    public void setPersonaDocenteID(Integer PersonaDocenteID) {
+        this.PersonaDocenteID = PersonaDocenteID;
     }
     
     @Override

@@ -1,7 +1,6 @@
 
 package Modelo;
 
-import Controlador.TDA.ListaDinamica.ListaDinamica;
 
 /**
  *
@@ -15,7 +14,7 @@ public class Horario {
     private String HoraFin;
     
     private Materia materiaHorario;
-    private ListaDinamica<Materia> listaMateriaHorario;
+    private Integer MateriaID;
 
     public Horario() {
         
@@ -69,12 +68,12 @@ public class Horario {
         this.CodigoHorario = CodigoHorario;
     }
 
-    public ListaDinamica<Materia> getListaMateriaHorario() {
-        return listaMateriaHorario;
+    public Integer getMateriaID() {
+        return MateriaID;
     }
 
-    public void setListaMateriaHorario(ListaDinamica<Materia> listaMateriaHorario) {
-        this.listaMateriaHorario = listaMateriaHorario;
+    public void setMateriaID(Integer MateriaID) {
+        this.MateriaID = MateriaID;
     }
     
     @Override

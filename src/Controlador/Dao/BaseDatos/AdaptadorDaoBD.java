@@ -65,6 +65,20 @@ public class AdaptadorDaoBD<T> implements InterfazDaoBD<T> {
         conexion.setConnection(null);
         return idGenerado;
     }
+    
+    public Boolean saveB(T obj) throws Exception {
+        String query = queryInsert(obj);
+        Boolean band = false;
+
+        try (PreparedStatement statement = conexion.getConnection().prepareStatement(query)) {
+            int affectedRows = statement.executeUpdate();
+            band = affectedRows > 0;
+        } finally {
+            conexion.getConnection().close();
+            conexion.setConnection(null);
+        }
+        return band;
+    }
 
     /**
      * Metodo que permite modificar un registro en la base de datos, para

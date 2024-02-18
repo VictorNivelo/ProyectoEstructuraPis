@@ -1,8 +1,6 @@
 
 package Modelo;
 
-import Controlador.TDA.ListaDinamica.ListaDinamica;
-
 /**
  *
  * @author Victor
@@ -12,9 +10,8 @@ public class Alumno {
     private String EstadoAlumno;
     
     private Persona DatosAlumno;
+    private Integer PersonaAlumnoID;
     
-    private ListaDinamica<Matricula> listaMatriculaAlumno;
-
     public Alumno() {
         
     }
@@ -42,24 +39,13 @@ public class Alumno {
     public void setDatosAlumno(Persona DatosAlumno) {
         this.DatosAlumno = DatosAlumno;
     }
-    
-    public void AgregarMatricula(Matricula matricula) {
-        listaMatriculaAlumno.Agregar(matricula);
+
+    public Integer getPersonaAlumnoID() {
+        return PersonaAlumnoID;
     }
 
-    public ListaDinamica<Matricula> getListaMatriculaAlumno() {
-        return listaMatriculaAlumno;
-    }
-
-    public void setListaMatriculaAlumno(ListaDinamica<Matricula> listaMatriculaAlumno) {
-        this.listaMatriculaAlumno = listaMatriculaAlumno;
-    }
-    
-    public void agregarMatricula(Matricula matricula) {
-        if (listaMatriculaAlumno == null) {
-            listaMatriculaAlumno = new ListaDinamica<>();
-        }
-        listaMatriculaAlumno.Agregar(matricula);
+    public void setPersonaAlumnoID(Integer PersonaAlumnoID) {
+        this.PersonaAlumnoID = PersonaAlumnoID;
     }
     
     @Override

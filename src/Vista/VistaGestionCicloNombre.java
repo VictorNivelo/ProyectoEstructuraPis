@@ -1,11 +1,11 @@
 
 package Vista;
 
-import Controlador.Dao.Modelo.codigoCursoDao;
+import Controlador.Dao.Modelo.nombreCicloDao;
 import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Controlador.Utiles.UtilesControlador;
-import Modelo.CodigoCurso;
+import Modelo.NombreCiclo;
 import Vista.ModeloTabla.ModeloTablaCodigoCurso;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
@@ -15,15 +15,15 @@ import javax.swing.JOptionPane;
  *
  * @author Victor
  */
-public class VistaGestionCodigoCurso extends javax.swing.JFrame {
-    codigoCursoDao codigoCursoControlDao = new codigoCursoDao();
+public class VistaGestionCicloNombre extends javax.swing.JFrame {
+    nombreCicloDao codigoCursoControlDao = new nombreCicloDao();
     ModeloTablaCodigoCurso mtcc = new ModeloTablaCodigoCurso();
-    ListaDinamica<CodigoCurso> listaCodigoCurso = new ListaDinamica<>();
+    ListaDinamica<NombreCiclo> listaCodigoCurso = new ListaDinamica<>();
 
     /**
      * Creates new form VistaGestionParalelo
      */
-    public VistaGestionCodigoCurso() {
+    public VistaGestionCicloNombre() {
         initComponents();
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
@@ -31,14 +31,14 @@ public class VistaGestionCodigoCurso extends javax.swing.JFrame {
     }
     
     private void CargarTabla() {
-        mtcc.setCodigoCursoTabla(codigoCursoControlDao.getListaCodigoCurso());
+        mtcc.setCodigoCursoTabla(codigoCursoControlDao.getListaNombreCiclo());
         tblParalelo.setModel(mtcc);
         tblParalelo.updateUI();
     }
     
     private void Limpiar() throws ListaVacia {
         txtCodigoCurso.setText("");
-        codigoCursoControlDao.setCodigosCursos(null);
+        codigoCursoControlDao.setNombreCiclo(null);
         CargarTabla();
     }
     
@@ -49,9 +49,9 @@ public class VistaGestionCodigoCurso extends javax.swing.JFrame {
         }
         else{
             try {
-                codigoCursoControlDao.setCodigosCursos(mtcc.getCodigoCursoTabla().getInfo(fila));
+                codigoCursoControlDao.setNombreCiclo(mtcc.getCodigoCursoTabla().getInfo(fila));
                 
-                txtCodigoCurso.setText(codigoCursoControlDao.getCodigosCursos().getNombreCodigoCurso());
+                txtCodigoCurso.setText(codigoCursoControlDao.getNombreCiclo().getNombreCiclo());
                 
             } 
             catch (Exception e) {
@@ -69,12 +69,12 @@ public class VistaGestionCodigoCurso extends javax.swing.JFrame {
             Integer IdCurso = listaCodigoCurso.getLongitud() + 1;
             String Nombre = txtCodigoCurso.getText();
             
-            codigoCursoControlDao.getCodigosCursos().setIdCodigoCurso(IdCurso);
-            codigoCursoControlDao.getCodigosCursos().setNombreCodigoCurso(Nombre);
+            codigoCursoControlDao.getNombreCiclo().setIdNombreCiclo(IdCurso);
+            codigoCursoControlDao.getNombreCiclo().setNombreCiclo(Nombre);
                                    
             if (codigoCursoControlDao.Persist()) {
-                JOptionPane.showMessageDialog(null, "PARALELO GUARDADO EXISTOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
-                codigoCursoControlDao.setCodigosCursos(null);
+                JOptionPane.showMessageDialog(null, "NOMBRE GUARDADO EXISTOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
+                codigoCursoControlDao.setNombreCiclo(null);
             } 
             else {
                 JOptionPane.showMessageDialog(null, "NO SE PUEDE REGISTRAR", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
@@ -140,7 +140,7 @@ public class VistaGestionCodigoCurso extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Haettenschweiler", 0, 48)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("SERVICIO DE ADMINISTRACION DE PARALELO");
+        jLabel2.setText("SERVICIO DE CREACION DE CICLOS");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -151,7 +151,7 @@ public class VistaGestionCodigoCurso extends javax.swing.JFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(43, 43, 43)
                 .addComponent(jLabel2)
-                .addContainerGap(249, Short.MAX_VALUE))
+                .addContainerGap(401, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -176,7 +176,7 @@ public class VistaGestionCodigoCurso extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Candara Light", 1, 32)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel5.setText("Lista de codigos de curso");
+        jLabel5.setText("Lista de nombre de ciclos");
 
         btnRegresar.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Regresar.png"))); // NOI18N
@@ -252,6 +252,7 @@ public class VistaGestionCodigoCurso extends javax.swing.JFrame {
         jLabel9.setText("Ordenar");
 
         cbxOrden.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Asendente", "Desendente" }));
+        cbxOrden.setSelectedIndex(-1);
 
         btnOrdenar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Ordenar.png"))); // NOI18N
         btnOrdenar.addActionListener(new java.awt.event.ActionListener() {
@@ -315,17 +316,18 @@ public class VistaGestionCodigoCurso extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel3)
                         .addComponent(jLabel5))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(cbxOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel9)
-                        .addComponent(cbxTipoOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnOrdenar)
-                        .addGap(1, 1, 1)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(cbxOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cbxTipoOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel9))
+                            .addComponent(btnOrdenar))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel4)
@@ -395,14 +397,12 @@ public class VistaGestionCodigoCurso extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Falta seleccionar el paralelo", "Error", JOptionPane.ERROR_MESSAGE);
             } 
             else {
-                //Datos de paralelo
-                Integer IdMateria = codigoCursoControlDao.getCodigosCursos().getIdCodigoCurso();
+                Integer IdMateria = codigoCursoControlDao.getNombreCiclo().getIdNombreCiclo();
                 String Nombre = txtCodigoCurso.getText();
 
-                CodigoCurso paraleloModificado = new CodigoCurso();
-                paraleloModificado.setIdCodigoCurso(IdMateria);
-                paraleloModificado.setNombreCodigoCurso(Nombre);
-
+                NombreCiclo paraleloModificado = new NombreCiclo();
+                paraleloModificado.setIdNombreCiclo(IdMateria);
+                paraleloModificado.setNombreCiclo(Nombre);
 
                 codigoCursoControlDao.Merge(paraleloModificado, IdMateria - 1);
 
@@ -436,7 +436,7 @@ public class VistaGestionCodigoCurso extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         
         try {
-            ListaDinamica<CodigoCurso> lista = codigoCursoControlDao.all();
+            ListaDinamica<NombreCiclo> lista = codigoCursoControlDao.all();
             
             String Campo = txtBuscar.getText();
             String TipoCampo = cbxTipoBusqueda.getSelectedItem().toString();
@@ -452,7 +452,7 @@ public class VistaGestionCodigoCurso extends javax.swing.JFrame {
                     throw new AssertionError();
             }
 
-            ListaDinamica<CodigoCurso> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
+            ListaDinamica<NombreCiclo> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
                         
             mtcc.setCodigoCursoTabla(ResultadoBusqueda);
             mtcc.fireTableDataChanged();
@@ -481,7 +481,7 @@ public class VistaGestionCodigoCurso extends javax.swing.JFrame {
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         
         try {
-            VistaGestionCurso vgc = new VistaGestionCurso();
+            VistaGestionCiclo vgc = new VistaGestionCiclo();
             vgc.setVisible(true);
             this.setVisible(false);
         } 
@@ -494,30 +494,39 @@ public class VistaGestionCodigoCurso extends javax.swing.JFrame {
     private void btnOrdenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdenarActionPerformed
 
         try {
-            ListaDinamica<CodigoCurso> lista = codigoCursoControlDao.all();
-            String TipoCampo = cbxTipoOrden.getSelectedItem().toString();
+            if (cbxTipoOrden.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "No ha seleccionado el campo", "FALTA SELCCIONAR", JOptionPane.WARNING_MESSAGE);
+            } 
+            else if (cbxOrden.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "No ha seleccionado el orden", "FALTA SELCCIONAR", JOptionPane.WARNING_MESSAGE);
+            } 
+            else {
+                ListaDinamica<NombreCiclo> lista = codigoCursoControlDao.all();
+                String TipoCampo = cbxTipoOrden.getSelectedItem().toString();
 
-            switch (TipoCampo) {
-                case "Codigo":
-                    TipoCampo = "CodigoParalelo";
-                    break;
-                case "Nombre":
-                    TipoCampo = "Nombre";
-                    break;
-                default:
-                    throw new AssertionError();
+                switch (TipoCampo) {
+                    case "Codigo":
+                        TipoCampo = "CodigoParalelo";
+                        break;
+                    case "Nombre":
+                        TipoCampo = "Nombre";
+                        break;
+                    default:
+                        throw new AssertionError();
+                }
+
+                Integer orden = OrdenSeleccionado();
+
+                ListaDinamica<NombreCiclo> resultadoOrdenado = UtilesControlador.QuickSort(lista, orden, TipoCampo);
+
+                mtcc.setCodigoCursoTabla(resultadoOrdenado);
+                mtcc.fireTableDataChanged();
             }
-
-            Integer orden = OrdenSeleccionado();
-
-            ListaDinamica<CodigoCurso> resultadoOrdenado = UtilesControlador.QuickSort(lista, orden, TipoCampo);
-
-            mtcc.setCodigoCursoTabla(resultadoOrdenado);
-            mtcc.fireTableDataChanged();
         }
         catch (Exception e) {
             e.printStackTrace();
         }
+        
     }//GEN-LAST:event_btnOrdenarActionPerformed
 
     /**
@@ -537,21 +546,23 @@ public class VistaGestionCodigoCurso extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VistaGestionCodigoCurso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaGestionCicloNombre.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VistaGestionCodigoCurso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaGestionCicloNombre.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VistaGestionCodigoCurso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaGestionCicloNombre.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VistaGestionCodigoCurso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaGestionCicloNombre.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VistaGestionCodigoCurso().setVisible(true);
+                new VistaGestionCicloNombre().setVisible(true);
             }
         });
     }

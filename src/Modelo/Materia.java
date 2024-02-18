@@ -1,7 +1,6 @@
 
 package Modelo;
 
-import Controlador.TDA.ListaDinamica.ListaDinamica;
 
 /**
  *
@@ -14,7 +13,10 @@ public class Materia {
     private String NumeroHoras;
     
     private Ciclo cicloMateria;
+    private Integer CicloID;
+    
     private Cursa cursoMateria;
+    private Integer CursaID;
     
     public Materia() {
         
@@ -66,6 +68,22 @@ public class Materia {
 
     public void setCursoMateria(Cursa cursoMateria) {
         this.cursoMateria = cursoMateria;
+    }
+
+    public Integer getCicloID() {
+        return CicloID;
+    }
+
+    public void setCicloID(Integer CicloID) {
+        this.CicloID = CicloID;
+    }
+
+    public Integer getCursaID() {
+        return CursaID;
+    }
+
+    public void setCursaID(Integer CursaID) {
+        this.CursaID = CursaID;
     }
     
     @Override

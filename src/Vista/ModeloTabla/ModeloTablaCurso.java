@@ -4,7 +4,6 @@ package Vista.ModeloTabla;
 import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Modelo.Cursa;
-import Modelo.Matricula;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -56,7 +55,7 @@ public class ModeloTablaCurso extends AbstractTableModel {
                 case 0:
                     return (p != null) ? p.getIdCurso() : "";
                 case 1:
-                    return (p != null) ? p.getCodigoCursoCursa().getNombreCodigoCurso(): "";
+                    return (p != null) ? p.getCodigoCursa(): "";
                 case 2:
                     return (p != null) ? p.getParaleloCursa().getNombre() : "";
                 case 3:

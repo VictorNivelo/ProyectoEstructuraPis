@@ -1,13 +1,32 @@
 
 package Vista;
 
+import Controlador.Dao.Modelo.horarioDao;
+import Controlador.TDA.ListaDinamica.ListaDinamica;
+import Modelo.ControlAccesoDocente;
+import Modelo.Horario;
+import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.Timer;
 
 /**
  *
  * @author romer
  */
 public class VistaDocentes extends javax.swing.JFrame {
+    
+    private final String[] imagenes = {
+        "/Vista/RecursosGraficos/Fondos/Fondo1.jpg",
+        "/Vista/RecursosGraficos/Fondos/Fondo2.jpg",
+        "/Vista/RecursosGraficos/Fondos/Fondo3.jpg",
+        "/Vista/RecursosGraficos/Fondos/Fondo4.jpg"
+    };
+
+    private int indiceImagenActual = 0;
+    private Timer timer;
 
     /**
      * Creates new form VistaDocentes
@@ -16,6 +35,19 @@ public class VistaDocentes extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
+        
+        timer = new Timer(3000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cambiarImagen();
+            }
+        });
+        timer.start();
+    }
+    
+    private void cambiarImagen() {
+        indiceImagenActual = (indiceImagenActual + 1) % imagenes.length;
+        panelPrincipal.repaint();
     }
 
     /**
@@ -26,15 +58,26 @@ public class VistaDocentes extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        panelPrincipal = new javax.swing.JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                ImageIcon icon = new ImageIcon(getClass().getResource(imagenes[indiceImagenActual]));
+                g.drawImage(icon.getImage(), 0, 0, getWidth(), getHeight(), this);
+            }
+        };
+        
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        PanelPresentacion = new Vista.Utiles.BordesRedondos();
+        jLabel1 = new javax.swing.JLabel();
+        lblNombreUsuarioIngresado = new javax.swing.JLabel();
         btnRegresar = new javax.swing.JButton();
         btnAsistencias = new javax.swing.JButton();
         btnCalendario = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("VISTA GENERAL DOCENTE");
         setBackground(new java.awt.Color(172, 174, 185));
 
         jPanel3.setBackground(new java.awt.Color(61, 90, 134));
@@ -42,95 +85,125 @@ public class VistaDocentes extends javax.swing.JFrame {
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/LojoUNL.png"))); // NOI18N
 
-        jLabel7.setFont(new java.awt.Font("Haettenschweiler", 0, 48)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setText("ADMINISTRACION DOCENTE");
-        jLabel7.setToolTipText("");
+        PanelPresentacion.setBackground(new java.awt.Color(0, 0, 0,0));
+        PanelPresentacion.setRoundBottomLeft(40);
+        PanelPresentacion.setRoundBottomRight(40);
+        PanelPresentacion.setRoundTopLeft(40);
+        PanelPresentacion.setRoundTopRight(40);
+
+        jLabel1.setFont(new java.awt.Font("Segoe Script", 1, 32)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Bienvenido");
+
+        lblNombreUsuarioIngresado.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        lblNombreUsuarioIngresado.setForeground(new java.awt.Color(255, 255, 255));
+        lblNombreUsuarioIngresado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblNombreUsuarioIngresado.setText(" ");
+
+        javax.swing.GroupLayout PanelPresentacionLayout = new javax.swing.GroupLayout(PanelPresentacion);
+        PanelPresentacion.setLayout(PanelPresentacionLayout);
+        PanelPresentacionLayout.setHorizontalGroup(
+            PanelPresentacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelPresentacionLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(PanelPresentacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblNombreUsuarioIngresado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 761, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        PanelPresentacionLayout.setVerticalGroup(
+            PanelPresentacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelPresentacionLayout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(jLabel1)
+                .addGap(21, 21, 21)
+                .addComponent(lblNombreUsuarioIngresado)
+                .addContainerGap(19, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(184, 184, 184)
+                .addGap(75, 75, 75)
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 606, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(266, Short.MAX_VALUE))
+                .addGap(25, 25, 25)
+                .addComponent(PanelPresentacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addComponent(PanelPresentacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
         btnRegresar.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Regresar.png"))); // NOI18N
-        btnRegresar.setText("Regresar");
+        btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/CerraSesion.png"))); // NOI18N
+        btnRegresar.setText("CERRAR SESION");
         btnRegresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRegresarActionPerformed(evt);
             }
         });
 
-        btnAsistencias.setFont(new java.awt.Font("Candara Light", 1, 32)); // NOI18N
-        btnAsistencias.setText("Asistencias");
+        btnAsistencias.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        btnAsistencias.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Asistencia.png"))); // NOI18N
+        btnAsistencias.setText("ASISTENCIAS");
         btnAsistencias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAsistenciasActionPerformed(evt);
             }
         });
 
-        btnCalendario.setText("Calendario");
+        btnCalendario.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        btnCalendario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Calendario.png"))); // NOI18N
+        btnCalendario.setText("CALENDARIO");
         btnCalendario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCalendarioActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout panelPrincipalLayout = new javax.swing.GroupLayout(panelPrincipal);
+        panelPrincipal.setLayout(panelPrincipalLayout);
+        panelPrincipalLayout.setHorizontalGroup(
+            panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 1200, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPrincipalLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnRegresar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 732, Short.MAX_VALUE)
                 .addComponent(btnAsistencias)
-                .addGap(88, 88, 88)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnCalendario)
                 .addContainerGap())
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        panelPrincipalLayout.setVerticalGroup(
+            panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelPrincipalLayout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 489, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnCalendario)
-                            .addComponent(btnRegresar))
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnAsistencias)
-                        .addGap(20, 20, 20))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 524, Short.MAX_VALUE)
+                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCalendario)
+                    .addComponent(btnRegresar)
+                    .addComponent(btnAsistencias))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -138,9 +211,19 @@ public class VistaDocentes extends javax.swing.JFrame {
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
 
-        VistaInicioSesionDocente abrirLogin = new VistaInicioSesionDocente();
-        abrirLogin.setVisible(true);
-        this.setVisible(false);
+        try {
+            int result = JOptionPane.showConfirmDialog(null, "Estas seguro que quieres cerrar sesion?", "CONFIRMAR CIERRE DE SESION", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+            if (result == JOptionPane.YES_OPTION) {
+                VistaPrincipalSistema abrirLogin = new VistaPrincipalSistema();
+                abrirLogin.setVisible(true);
+                this.setVisible(false);
+            }
+        } 
+        catch (Exception e) {
+            
+        }
+        
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnAsistenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsistenciasActionPerformed
@@ -157,9 +240,54 @@ public class VistaDocentes extends javax.swing.JFrame {
 
     private void btnCalendarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalendarioActionPerformed
 
-        VistaDocenteCalendario vdc = new VistaDocenteCalendario();
-        vdc.setVisible(true);
-        this.setVisible(false);
+        try {
+            VistaCalendarioDocente c = new VistaCalendarioDocente();
+            horarioDao HD = new horarioDao();
+
+            int idDocenteLogeado = ControlAccesoDocente.getIdDocenteLogeado();
+
+            ListaDinamica<Horario> listaH = HD.all();
+
+            for (int i = 0; i < listaH.getLongitud(); i++) {
+                Horario horario = listaH.getInfo(i);
+
+                if (horario.getMateriaHorario().getCursoMateria().getDocenteCursa().getIdDocente() == idDocenteLogeado) {
+                    String Fecha = horario.getDiaSemana();
+                    String Mensaje = horario.getMateriaHorario().getNombreMateria() + " "
+                            + horario.getMateriaHorario().getCicloMateria().getNombreCiclo().getNombreCiclo() + " "
+                            + horario.getMateriaHorario().getCursoMateria().getParaleloCursa() + " "
+                            + horario.getHoraIncio() + " - " + horario.getHoraFin();
+                    c.AgregarEvento(Fecha, Mensaje);
+                }
+            }
+
+            c.setVisible(true);
+            this.dispose();
+        } 
+        catch (Exception e) {
+            
+        }
+        
+//        try {
+//            VistaCalendarioDocente c = new VistaCalendarioDocente();
+//            horarioDao HD = new horarioDao();
+//            ListaDinamica<Horario> listaH = HD.all();
+//            for (int i = 0; i < listaH.getLongitud(); i++) {
+//                String Fecha = listaH.getInfo(i).getDiaSemana();
+//                String Mensaje = listaH.getInfo(i).getMateriaHorario().getNombreMateria() + " "+
+//                        listaH.getInfo(i).getMateriaHorario().getCicloMateria().getNombreCiclo().getNombreCiclo()+ " " +
+//                        listaH.getInfo(i).getMateriaHorario().getCursoMateria().getParaleloCursa()+ " "+
+//                        listaH.getInfo(i).getHoraIncio() + " - " + listaH.getInfo(i).getHoraFin();
+//                c.AgregarEvento(Fecha, Mensaje);
+//            }
+//            
+//            c.setVisible(true);
+//            this.dispose();
+//        } 
+//        catch (Exception e) {
+//            
+//        }
+        
     }//GEN-LAST:event_btnCalendarioActionPerformed
 
     /**
@@ -198,12 +326,14 @@ public class VistaDocentes extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private Vista.Utiles.BordesRedondos PanelPresentacion;
     private javax.swing.JButton btnAsistencias;
     private javax.swing.JButton btnCalendario;
     private javax.swing.JButton btnRegresar;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
+    public static javax.swing.JLabel lblNombreUsuarioIngresado;
+    private javax.swing.JPanel panelPrincipal;
     // End of variables declaration//GEN-END:variables
 }

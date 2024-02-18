@@ -1,7 +1,7 @@
-
 package Vista;
 
 import Controlador.Dao.Modelo.alumnoDao;
+import Controlador.Dao.Modelo.materiaDao;
 import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Controlador.Utiles.UtilesControlador;
@@ -11,33 +11,32 @@ import javax.swing.ImageIcon;
 import javax.swing.JTable;
 import Modelo.Matricula;
 import Modelo.Alumno;
-import Modelo.Ciclo;
+import Modelo.ControlAccesoDocente;
 import Modelo.Cursa;
 import Modelo.Materia;
 import Modelo.Persona;
-import Vista.Utiles.UtilVista;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
-
 
 /**
  *
  * @author Victor
  */
 public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
+
     DefaultTableModel dtm = new DefaultTableModel();
     alumnoDao alumnoControlDao = new alumnoDao();
+    materiaDao materiaControlDao = new materiaDao();
 
     /**
      * Creates new form VistaTomaAsistencia
+     *
      * @throws Controlador.TDA.ListaDinamica.Excepcion.ListaVacia
      */
     public VistaDocentesTomaAsistencia() throws ListaVacia {
         initComponents();
         this.setLocationRelativeTo(null);
-        UtilVista.cargarcomboHorario(cbxHorario);
-        UtilVista.cargarcomboCurso(cbxParalelo);
-        UtilVista.CargarComboMateria(cbxMateria);
+//        UtilVista.cargarcomboHorario(cbxHorario);
         setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
         DateFechaActual.setDateFormatString("dd/MMMM/yyyy");
         dtm.setColumnIdentifiers(new String[]{"#", "Nombre", "Apellido", "Asistencia"});
@@ -45,73 +44,63 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
         tblt.setModel(dtm);
         AgregarCheckbox(3, tblt);
         cbxHorario.setSelectedIndex(-1);
+        cargarMateriasDocente();
+        cbxMateria.setSelectedIndex(-1);
     }
-    
-    private void CargarTabla() {
-    try {
-        Object[] datosLista = alumnoControlDao.getListaAlumnos().toArray();
-        for (Object dato : datosLista) {
-            if (dato instanceof Persona) { 
-                Persona persona = (Persona) dato;
-                dtm.addRow(new Object[]{persona.getIdPersona(), persona.getNombre(), persona.getApellido(), false});
+
+    private void cargarMateriasDocente() {
+        int idDocenteLogeado = ControlAccesoDocente.getIdDocenteLogeado();
+        cbxMateria.removeAllItems();
+        ListaDinamica<Materia> listaMaterias = materiaControlDao.all();
+        for (Materia materia : listaMaterias.toArray()) {
+            int idDocenteMateria = materia.getCursoMateria().getDocenteCursa().getIdDocente();
+
+            if (idDocenteLogeado == idDocenteMateria) {
+                cbxMateria.addItem(materia.getNombreMateria());
             }
         }
-    } 
-    catch (Exception e) {
-        e.printStackTrace();
     }
-}
-        
-//    private void CargarTabla() {
-//        
-//        try {
-//            Object[] datosLista = alumnoControlDao.getListaAlumnos().toArray();
-//            for (Object dato : datosLista) {
-//                if (dato instanceof Persona) { 
-//                    Persona persona = (Persona) dato;
-//                    dtm.addRow(new Object[]{persona.getIdPersona(), persona.getNombre(), persona.getApellido(), false});
-//                }
-//            }
-//        } catch (Exception e) {
-//
-//        }
-//
-////        try {
-////            Object[] datosLista = alumnoControlDao.getListaPersonas().CovertirEnArreglo();
-////            for (Object dato : datosLista) {
-////                dtm.addRow(new Object[]{dato});
-////            }
-////        } 
-////        catch (Exception e) {
-////
-////        }
-//    }
-    
 
-//    @SuppressWarnings("unlikely-arg-type")
-//    public ListaDinamica<Alumno> getAlumnosPorCicloParalelo(Ciclo cicloSeleccionado, String paralelo) throws ListaVacia {
-//        ListaDinamica<Alumno> listaFiltrada = new ListaDinamica<>();
-//
-//        ListaDinamica<Alumno> listaCompleta = alumnoControlDao.getListaAlumnos();
-//
-//        for (int i = 0; i < listaCompleta.getLongitud(); i++) {
-//            Alumno alumno = listaCompleta.getInfo(i);
-//
-//            ListaDinamica<Cursa> cursosAsignados = alumno.getMatriculaAlumno().getListaCursoMatricula();
-//
-//            for (int j = 0; j < cursosAsignados.getLongitud(); j++) {
-//                Cursa cursa = cursosAsignados.getInfo(j);
-//
-//                if (cursa.getMateriaCurso().getCicloMateria().getNombreCiclo().equals(cicloSeleccionado) &&
-//                    cursa.getParalelo().equals(paralelo)) {
-//                    listaFiltrada.Agregar(alumno);
-//                    break;
-//                }
-//            }
-//        }
-//
-//        return listaFiltrada;
-//    }
+    private void CargarTabla() {
+        try {
+            Object[] datosLista = alumnoControlDao.getListaAlumnos().toArray();
+            for (Object dato : datosLista) {
+                if (dato instanceof Persona) {
+                    Persona persona = (Persona) dato;
+                    dtm.addRow(new Object[]{persona.getIdPersona(), persona.getNombre(), persona.getApellido(), false});
+                }
+            }
+        } 
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void CargarTablas() {
+        try {
+            ListaDinamica<Materia> listaMaterias = materiaControlDao.all();
+            dtm.setRowCount(0);
+            
+            for (Materia materia : listaMaterias.toArray()) {
+                Cursa cursoMateria = materia.getCursoMateria();
+                Matricula matricula = cursoMateria.getMatriculaCursa();
+                
+                if (matricula.getEstadoMatricula().equals("Activa")) {
+                    Alumno alumno = matricula.getAlumnoMatricula();
+
+                    Persona datosAlumno = alumno.getDatosAlumno();
+                    dtm.addRow(new Object[]{
+                        alumno.getIdAlumno(),
+                        datosAlumno.getNombre(),
+                        datosAlumno.getApellido()
+                    });
+                }
+            }
+        } 
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }    
     
     public void AgregarCheckbox(int columna, JTable tabla) {
         TableColumn columnaTabla = tabla.getColumnModel().getColumn(columna);
@@ -122,6 +111,7 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
     public boolean estaSeleccionada(int fila, int columna, JTable tabla) {
         return tabla.getValueAt(fila, columna) != null;
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -148,8 +138,6 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
-        jLabel9 = new javax.swing.JLabel();
-        cbxParalelo = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
@@ -268,10 +256,6 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
             }
         });
 
-        jLabel9.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel9.setText("Paralelo");
-
         jLabel3.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Tematica");
@@ -311,6 +295,7 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
         });
 
         cbxOrden.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Asendente", "Desendente" }));
+        cbxOrden.setSelectedIndex(-1);
 
         jLabel8.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(0, 0, 0));
@@ -338,13 +323,9 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cbxHorario, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cbxMateria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cbxParalelo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(cbxMateria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -391,18 +372,18 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel2)
                         .addComponent(jLabel4))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(cbxOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel8)
-                        .addComponent(cbxTipoOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnOrdenar)
-                        .addGap(1, 1, 1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(cbxOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cbxTipoOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel8))
+                            .addComponent(btnOrdenar))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -413,17 +394,13 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
                             .addComponent(jButton1)
                             .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(DateFechaActual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel13)
                             .addComponent(cbxMateria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(2, 2, 2)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel9)
-                            .addComponent(cbxParalelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel11)
@@ -520,46 +497,9 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-
         
-//        dtm.setRowCount(0);
-//
-//        String MateriaSeleccionada = cbxMateria.getSelectedItem().toString();
-//        String paraleloSeleccionado = cbxParalelo.getSelectedItem().toString();
-//
-//        try {
-//            Object[] datosLista = alumnoControlDao.getListaAlumnos().toArray();
-//            for (Object dato : datosLista) {
-//                try {
-//                    if (dato instanceof Alumno) {
-//                        Alumno alumno = (Alumno) dato;
-//
-//                        if (alumno.getDatosAlumno().getRolPersona().getNombreRol().equalsIgnoreCase("estudiante")) {
-//                            Matricula matricula = alumno.getMatriculaAlumno();
-//
-//                            if (matricula != null && matricula.getCursoMatricula()!= null) {
-//                                Cursa cursoAsignado = matricula.getCursoMatricula();
-//                                
-//                                if (cursoAsignado.getMateriaCurso().getCicloMateria().getNombreCiclo().equalsIgnoreCase(MateriaSeleccionada)
-//                                        && cursoAsignado.getParalelo().equalsIgnoreCase(paraleloSeleccionado)) {
-//                                    dtm.addRow(new Object[]{alumno.getIdAlumno(), alumno.getDatosAlumno().getNombre(),
-//                                            alumno.getDatosAlumno().getApellido(), false});
-//                                }
-//                            }
-//                        }
-//                    }
-//                } 
-//                catch (NullPointerException ex) {
-//                    ex.printStackTrace();
-//                }
-//            }
-//        } 
-//        catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//        tblt.setModel(dtm);
-    
+        CargarTablas();
+            
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -584,42 +524,51 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
     private void btnOrdenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdenarActionPerformed
 
         try {
-            ListaDinamica<Alumno> lista = alumnoControlDao.all();
+            if (cbxTipoOrden.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "No ha seleccionado el campo", "FALTA SELCCIONAR", JOptionPane.WARNING_MESSAGE);
+            } 
+            else if (cbxOrden.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "No ha seleccionado el orden", "FALTA SELCCIONAR", JOptionPane.WARNING_MESSAGE);
+            } 
+            else {
 
-            String Campo = txtBuscar.getText();
-            String TipoCampo = cbxTipoBusqueda.getSelectedItem().toString();
+                ListaDinamica<Alumno> lista = alumnoControlDao.all();
 
-            switch (TipoCampo) {
-                case "Nombre":
-                    TipoCampo = "Nombre";
-                    break;
-                case "Apellido":
-                    TipoCampo = "Apellido";
-                    break;
-                default:
-                    throw new AssertionError();
+                String Campo = txtBuscar.getText();
+                String TipoCampo = cbxTipoBusqueda.getSelectedItem().toString();
+
+                switch (TipoCampo) {
+                    case "Nombre":
+                        TipoCampo = "Nombre";
+                        break;
+                    case "Apellido":
+                        TipoCampo = "Apellido";
+                        break;
+                    default:
+                        throw new AssertionError();
+                }
+
+                ListaDinamica<Alumno> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
+
+                Object[][] datos = new Object[ResultadoBusqueda.getLongitud()][4];
+
+                for (int i = 0; i < ResultadoBusqueda.getLongitud(); i++) {
+                    Alumno p = ResultadoBusqueda.getInfo(i);
+                    datos[i] = new Object[]{
+                        p.getIdAlumno(),
+                        p.getDatosAlumno().getNombre(),
+                        p.getDatosAlumno().getApellido(),
+                        false
+                    };
+                }
+
+                Object[] columnas = {"#", "Nombre", "Apellido", "Asistencia"};
+
+                DefaultTableModel modeloTabla = new DefaultTableModel(datos, columnas);
+
+                tblt.setModel(modeloTabla);
+                AgregarCheckbox(3, tblt);
             }
-
-            ListaDinamica<Alumno> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
-
-            Object[][] datos = new Object[ResultadoBusqueda.getLongitud()][4];
-
-            for (int i = 0; i < ResultadoBusqueda.getLongitud(); i++) {
-                Alumno p = ResultadoBusqueda.getInfo(i);
-                datos[i] = new Object[]{
-                    p.getIdAlumno(),
-                    p.getDatosAlumno().getNombre(),
-                    p.getDatosAlumno().getApellido(),
-                    false
-                };
-            }
-
-            Object[] columnas = {"#", "Nombre", "Apellido", "Asistencia"};
-
-            DefaultTableModel modeloTabla = new DefaultTableModel(datos, columnas);
-
-            tblt.setModel(modeloTabla);
-            AgregarCheckbox(3, tblt);
         } 
         catch (Exception e) {
             e.printStackTrace();
@@ -674,7 +623,6 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbxHorario;
     private javax.swing.JComboBox<String> cbxMateria;
     private javax.swing.JComboBox<String> cbxOrden;
-    private javax.swing.JComboBox<String> cbxParalelo;
     private javax.swing.JComboBox<String> cbxTipoBusqueda;
     private javax.swing.JComboBox<String> cbxTipoOrden;
     private javax.swing.JButton jButton1;
@@ -695,7 +643,6 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;

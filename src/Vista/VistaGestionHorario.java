@@ -9,6 +9,7 @@ import Controlador.Utiles.UtilesControlador;
 import Modelo.Horario;
 import Vista.ModeloTabla.ModeloTablaHorario;
 import Vista.Utiles.UtilVista;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -239,8 +240,18 @@ public class VistaGestionHorario extends javax.swing.JFrame {
         jLabel5.setText("Hora fin");
 
         txtHoraInicio.setToolTipText("");
+        txtHoraInicio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtHoraInicioKeyTyped(evt);
+            }
+        });
 
         txtHoraFin.setToolTipText("");
+        txtHoraFin.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtHoraFinKeyTyped(evt);
+            }
+        });
 
         jLabel7.setFont(new java.awt.Font("Candara Light", 1, 32)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 0, 0));
@@ -343,6 +354,7 @@ public class VistaGestionHorario extends javax.swing.JFrame {
         jLabel12.setText("Ordenar");
 
         cbxOrden.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Asendente", "Desendente" }));
+        cbxOrden.setSelectedIndex(-1);
 
         btnOrdenar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Ordenar.png"))); // NOI18N
         btnOrdenar.addActionListener(new java.awt.event.ActionListener() {
@@ -425,14 +437,13 @@ public class VistaGestionHorario extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnOrdenar)
                         .addGap(1, 1, 1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -627,40 +638,77 @@ public class VistaGestionHorario extends javax.swing.JFrame {
     private void btnOrdenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdenarActionPerformed
 
         try {
-            ListaDinamica<Horario> lista = horarioControlDao.all();
-            String TipoCampo = cbxTipoOrden.getSelectedItem().toString();
+            if (cbxTipoOrden.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "No ha seleccionado el campo", "FALTA SELCCIONAR", JOptionPane.WARNING_MESSAGE);
+            } 
+            else if (cbxOrden.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "No ha seleccionado el orden", "FALTA SELCCIONAR", JOptionPane.WARNING_MESSAGE);
+            } 
+            else {
+                ListaDinamica<Horario> lista = horarioControlDao.all();
+                String TipoCampo = cbxTipoOrden.getSelectedItem().toString();
 
-            switch (TipoCampo) {
-                case "Dia":
-                    TipoCampo = "DiaSemana";
-                    break;
-                case "Hora de inicio":
-                    TipoCampo = "HoraIncio";
-                    break;
-                case "Hora de fin":
-                    TipoCampo = "HoraFin";
-                    break;
-                case "Materia":
-                    TipoCampo = "materiaHorario.NombreMateria";
-                    break;
-                case "Codigo":
-                    TipoCampo = "CodigoHorario";
-                    break;
-                default:
-                    throw new AssertionError();
+                switch (TipoCampo) {
+                    case "Dia":
+                        TipoCampo = "DiaSemana";
+                        break;
+                    case "Hora de inicio":
+                        TipoCampo = "HoraIncio";
+                        break;
+                    case "Hora de fin":
+                        TipoCampo = "HoraFin";
+                        break;
+                    case "Materia":
+                        TipoCampo = "materiaHorario.NombreMateria";
+                        break;
+                    case "Codigo":
+                        TipoCampo = "CodigoHorario";
+                        break;
+                    default:
+                        throw new AssertionError();
+                }
+
+                Integer orden = OrdenSeleccionado();
+
+                ListaDinamica<Horario> resultadoOrdenado = UtilesControlador.QuickSort(lista, orden, TipoCampo);
+
+                mth.setHorarioTabla(resultadoOrdenado);
+                mth.fireTableDataChanged();
             }
-
-            Integer orden = OrdenSeleccionado();
-
-            ListaDinamica<Horario> resultadoOrdenado = UtilesControlador.QuickSort(lista, orden, TipoCampo);
-
-            mth.setHorarioTabla(resultadoOrdenado);
-            mth.fireTableDataChanged();
-        }
+        } 
         catch (Exception e) {
             e.printStackTrace();
         }
+        
     }//GEN-LAST:event_btnOrdenarActionPerformed
+
+    private void txtHoraInicioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtHoraInicioKeyTyped
+        
+        Character c = evt.getKeyChar();
+
+        if (!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE && c != ':') {
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Solo ingreso de números y ':'", "CARACTER NO VALIDO", JOptionPane.WARNING_MESSAGE);
+        }
+        if (txtHoraInicio.getText().length() >= 5 && c != KeyEvent.VK_BACK_SPACE) {
+            evt.consume();
+        }
+        
+    }//GEN-LAST:event_txtHoraInicioKeyTyped
+
+    private void txtHoraFinKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtHoraFinKeyTyped
+        
+        Character c = evt.getKeyChar();
+
+        if (!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE && c != ':') {
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Solo ingreso de números y ':'", "CARACTER NO VALIDO", JOptionPane.WARNING_MESSAGE);
+        }
+        if (txtHoraInicio.getText().length() >= 5 && c != KeyEvent.VK_BACK_SPACE) {
+            evt.consume();
+        }
+        
+    }//GEN-LAST:event_txtHoraFinKeyTyped
 
     /**
      * @param args the command line arguments

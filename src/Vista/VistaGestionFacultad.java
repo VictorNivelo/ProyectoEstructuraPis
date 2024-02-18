@@ -96,6 +96,7 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
             facultadControlDao.getFacultades().setNombreFacultad(Nombre);
             facultadControlDao.getFacultades().setFechaCreacion(Fs);
             facultadControlDao.getFacultades().setUniversidadFacultad(UtilVista.obtenerUniversidadControl(cbxUniversidad));
+            facultadControlDao.getFacultades().setIdFacultad(UtilVista.obtenerUniversidadControl(cbxUniversidad).getIdUniversidad());
 //            Universidad U = new Universidad(1, "Universidad Nacional de Loja", "Argelia", "(07) 254-7252", "comunicacion@unl.edu.ec", "31 de diciembre de 1859");
 //            
 //            facultadControlDao.getFacultades().setFacultadUniversidad(U);
@@ -235,7 +236,7 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
         jLabel8.setText("Buscar por");
         jLabel8.setToolTipText("");
 
-        cbxTipoBusqueda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "Fecha de creacion", "Carrera" }));
+        cbxTipoBusqueda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "Fecha de creacion", "Universidad" }));
         cbxTipoBusqueda.setSelectedIndex(-1);
 
         jButton3.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
@@ -299,6 +300,7 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
         jLabel11.setText("Ordenar");
 
         cbxOrden.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Asendente", "Desendente" }));
+        cbxOrden.setSelectedIndex(-1);
 
         btnOrdenar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Ordenar.png"))); // NOI18N
         btnOrdenar.addActionListener(new java.awt.event.ActionListener() {
@@ -307,7 +309,7 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
             }
         });
 
-        cbxTipoOrden.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "Fecha de creacion", "Carrera" }));
+        cbxTipoOrden.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "Fecha de creacion", "Universidad" }));
         cbxTipoOrden.setSelectedIndex(-1);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -372,18 +374,18 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel3)
                         .addComponent(jLabel7))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(cbxOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel11)
-                        .addComponent(cbxTipoOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnOrdenar)
-                        .addGap(1, 1, 1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(cbxOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cbxTipoOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel11))
+                            .addComponent(btnOrdenar))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3)
                     .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -395,7 +397,7 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(2, 2, 2)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -459,6 +461,7 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
                 facultadModificada.setNombreFacultad(Nombre);
                 facultadModificada.setFechaCreacion(FechaFormateada);
                 facultadModificada.setUniversidadFacultad(UtilVista.obtenerUniversidadControl(cbxUniversidad));
+                facultadModificada.setIdFacultad(UtilVista.obtenerUniversidadControl(cbxUniversidad).getIdUniversidad());
                 
                 facultadControlDao.Merge(facultadModificada, IdFacultad - 1);
                 
@@ -540,8 +543,8 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
                 case "Fecha de creacion":
                     TipoCampo = "FechaCreacion";
                     break;
-                case "Carrera":
-                    TipoCampo = "FacultadCarrera.NombreCarrera";
+                case "Universidad":
+                    TipoCampo = "universidadFacultad";
                     break;
                 default:
                     throw new AssertionError();
@@ -575,29 +578,37 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
     private void btnOrdenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdenarActionPerformed
 
         try {
-            ListaDinamica<Facultad> lista = facultadControlDao.all();
-            String TipoCampo = cbxTipoOrden.getSelectedItem().toString();
-
-            switch (TipoCampo) {
-                case "Nombre":
-                    TipoCampo = "NombreFacultad";
-                    break;
-                case "Fecha de creacion":
-                    TipoCampo = "FechaCreacion";
-                    break;
-                case "Carrera":
-                    TipoCampo = "FacultadCarrera.NombreCarrera";
-                    break;
-                default:
-                    throw new AssertionError();
+            if(cbxTipoOrden.getSelectedIndex() == -1){
+                JOptionPane.showMessageDialog(null, "No ha seleccionado el campo", "FALTA SELCCIONAR", JOptionPane.WARNING_MESSAGE);
             }
+            else if(cbxOrden.getSelectedIndex() == -1){
+                JOptionPane.showMessageDialog(null, "No ha seleccionado el orden", "FALTA SELCCIONAR", JOptionPane.WARNING_MESSAGE);
+            }
+            else {
+                ListaDinamica<Facultad> lista = facultadControlDao.all();
+                String TipoCampo = cbxTipoOrden.getSelectedItem().toString();
 
-            Integer orden = OrdenSeleccionado();
+                switch (TipoCampo) {
+                    case "Nombre":
+                        TipoCampo = "NombreFacultad";
+                        break;
+                    case "Fecha de creacion":
+                        TipoCampo = "FechaCreacion";
+                        break;
+                    case "Universidad":
+                        TipoCampo = "universidadFacultad";
+                        break;
+                    default:
+                        throw new AssertionError();
+                }
 
-            ListaDinamica<Facultad> resultadoOrdenado = UtilesControlador.QuickSort(lista, orden, TipoCampo);
+                Integer orden = OrdenSeleccionado();
 
-            mtf.setFacultadTabla(resultadoOrdenado);
-            mtf.fireTableDataChanged();
+                ListaDinamica<Facultad> resultadoOrdenado = UtilesControlador.QuickSort(lista, orden, TipoCampo);
+
+                mtf.setFacultadTabla(resultadoOrdenado);
+                mtf.fireTableDataChanged();
+            }
         }
         catch (Exception e) {
             e.printStackTrace();

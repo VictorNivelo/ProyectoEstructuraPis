@@ -268,7 +268,7 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
         jLabel11.setForeground(new java.awt.Color(0, 0, 0));
         jLabel11.setText("Buscar por");
 
-        cbxTipoBusqueda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Numero de cedula", "Nombre", "Apellido", "Genero", "Especialidad", "Titulacion", "Materia", "Paralelo" }));
+        cbxTipoBusqueda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Numero de cedula", "Nombre", "Apellido", "Genero", "Especialidad", "Titulacion", "Experiencia" }));
         cbxTipoBusqueda.setSelectedIndex(-1);
 
         jLabel12.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
@@ -346,8 +346,9 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
         jLabel9.setText("Ordenar");
 
         cbxOrden.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Asendente", "Desendente" }));
+        cbxOrden.setSelectedIndex(-1);
 
-        cbxTipoOrden.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Numero de cedula", "Nombre", "Apellido", "Genero", "Especialidad", "Titulacion", "Materia", "Paralelo" }));
+        cbxTipoOrden.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Numero de cedula", "Nombre", "Apellido", "Genero", "Especialidad", "Titulacion", "Experiencia" }));
         cbxTipoOrden.setSelectedIndex(-1);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -421,18 +422,18 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel10)
                         .addComponent(jLabel13))
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(cbxOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel9)
-                        .addComponent(cbxTipoOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(btnOrdenar)
-                        .addGap(1, 1, 1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(cbxOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cbxTipoOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel9))
+                            .addComponent(btnOrdenar))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel11)
@@ -447,7 +448,7 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
                             .addComponent(txtDocenteBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
@@ -605,7 +606,7 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
             String TipoCampo = cbxTipoBusqueda.getSelectedItem().toString();
             
             switch (TipoCampo) {
-                case "Numero cedula":
+                case "Numero de cedula":
                     TipoCampo = "DatosDocente.NumeroCedula";
                     break;
                 case "Nombre":
@@ -626,11 +627,8 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
                 case "Años ecperiencia":
                     TipoCampo = "AniosExperiencia";
                     break;
-                case "Materia":
-                    TipoCampo = "cursoDocente.MateriaCurso.NombreMateria";
-                    break;
-                case "Paralelo":
-                    TipoCampo = "cursoDocente.Paralelo";
+                case "Experiencia":
+                    TipoCampo = "AniosExperiencia";
                     break;
                 default:
                     throw new AssertionError();
@@ -695,7 +693,13 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
 
             String Campo = txtDocenteBusqueda.getText();
 
-            ListaDinamica<Persona> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, "NumeroCedula");
+            ListaDinamica<Persona> ResultadoBusqueda = new ListaDinamica<>();
+
+            ListaDinamica<Persona> ResultadoCe = UtilesControlador.BusquedaLineal(lista, Campo, "NumeroCedula");
+            ResultadoBusqueda.concatenar(ResultadoCe);
+            
+            ListaDinamica<Persona> ResultadoN = UtilesControlador.BusquedaLineal(lista, Campo, "Nombre");
+            ResultadoBusqueda.concatenar(ResultadoN);
 
             cbxDocente.removeAllItems();
 
@@ -714,66 +718,72 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
 
     private void txtDocenteBusquedaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDocenteBusquedaKeyTyped
         
-        Character c = evt.getKeyChar();
-
-        if (!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE) {
-            evt.consume();
-            JOptionPane.showMessageDialog(null, "Solo ingreso de numeros", "CARACTER NO VALIDO", JOptionPane.WARNING_MESSAGE);
-        }
-        if (txtDocenteBusqueda.getText().length() >= 10 && c != KeyEvent.VK_BACK_SPACE) {
-            evt.consume();
-        }
+//        Character c = evt.getKeyChar();
+//
+//        if (!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE) {
+//            evt.consume();
+//            JOptionPane.showMessageDialog(null, "Solo ingreso de numeros", "CARACTER NO VALIDO", JOptionPane.WARNING_MESSAGE);
+//        }
+//        if (txtDocenteBusqueda.getText().length() >= 10 && c != KeyEvent.VK_BACK_SPACE) {
+//            evt.consume();
+//        }
         
     }//GEN-LAST:event_txtDocenteBusquedaKeyTyped
 
     private void btnOrdenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdenarActionPerformed
 
         try {
-            ListaDinamica<Docente> lista = docenteControlDao.all();
-            String TipoCampo = cbxTipoOrden.getSelectedItem().toString();
-
-            switch (TipoCampo) {
-                case "Numero cedula":
-                    TipoCampo = "DatosDocente.NumeroCedula";
-                    break;
-                case "Nombre":
-                    TipoCampo = "DatosDocente.Nombre";
-                    break;
-                case "Apellido":
-                    TipoCampo = "DatosDocente.Apellido";
-                    break;
-                case "Genero":
-                    TipoCampo = "DatosDocente.Genero";
-                    break;
-                case "Especialidad":
-                    TipoCampo = "Especialidad";
-                    break;
-                case "Titulacion":
-                    TipoCampo = "Titulacion";
-                    break;
-                case "Años ecperiencia":
-                    TipoCampo = "AniosExperiencia";
-                    break;
-                case "Materia":
-                    TipoCampo = "cursoDocente.MateriaCurso.NombreMateria";
-                    break;
-                case "Paralelo":
-                    TipoCampo = "cursoDocente.Paralelo";
-                    break;
-                default:
-                    throw new AssertionError();
+            if (cbxTipoOrden.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "No ha seleccionado el campo", "FALTA SELCCIONAR", JOptionPane.WARNING_MESSAGE);
+            } 
+            else if (cbxOrden.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "No ha seleccionado el orden", "FALTA SELCCIONAR", JOptionPane.WARNING_MESSAGE);
             }
+            else {
+                ListaDinamica<Docente> lista = docenteControlDao.all();
+                String TipoCampo = cbxTipoOrden.getSelectedItem().toString();
 
-            Integer orden = OrdenSeleccionado();
+                switch (TipoCampo) {
+                    case "Numero de cedula":
+                        TipoCampo = "DatosDocente.NumeroCedula";
+                        break;
+                    case "Nombre":
+                        TipoCampo = "DatosDocente.Nombre";
+                        break;
+                    case "Apellido":
+                        TipoCampo = "DatosDocente.Apellido";
+                        break;
+                    case "Genero":
+                        TipoCampo = "DatosDocente.Genero";
+                        break;
+                    case "Especialidad":
+                        TipoCampo = "Especialidad";
+                        break;
+                    case "Titulacion":
+                        TipoCampo = "Titulacion";
+                        break;
+                    case "Años ecperiencia":
+                        TipoCampo = "AniosExperiencia";
+                        break;
+                    case "Experiencia":
+                        TipoCampo = "AniosExperiencia";
+                        break;
+                    default:
+                        throw new AssertionError();
+                }
 
-            ListaDinamica<Docente> resultadoOrdenado = UtilesControlador.QuickSort(lista, orden, TipoCampo);
+                Integer orden = OrdenSeleccionado();
 
-            mtd.setDocenteTabla(resultadoOrdenado);
-            mtd.fireTableDataChanged();
+                ListaDinamica<Docente> resultadoOrdenado = UtilesControlador.QuickSort(lista, orden, TipoCampo);
+
+                mtd.setDocenteTabla(resultadoOrdenado);
+                mtd.fireTableDataChanged();
+            }
         }
         catch (Exception e) {
             e.printStackTrace();
         }
+        
     }//GEN-LAST:event_btnOrdenarActionPerformed
 
     /**

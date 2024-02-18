@@ -1,8 +1,6 @@
 
 package Modelo;
 
-import Controlador.TDA.ListaDinamica.ListaDinamica;
-
 /**
  *
  * @author Victor
@@ -14,8 +12,8 @@ public class UnidadCurricular {
     private String DescripcionUnidadCurricular;
     
     private MallaCurricular mallaCurricularUnidadCurricular;
-    private ListaDinamica<MallaCurricular> listaMallaCurricularUnidadCurricula;
-
+    private Integer MallaCurricularID;
+    
 
     public Integer getIdUnidadCurricular() {
         return IdUnidadCurricular;
@@ -57,12 +55,12 @@ public class UnidadCurricular {
         this.mallaCurricularUnidadCurricular = mallaCurricularUnidadCurricular;
     }
 
-    public ListaDinamica<MallaCurricular> getListaMallaCurricularUnidadCurricula() {
-        return listaMallaCurricularUnidadCurricula;
+    public Integer getMallaCurricularID() {
+        return MallaCurricularID;
     }
 
-    public void setListaMallaCurricularUnidadCurricula(ListaDinamica<MallaCurricular> listaMallaCurricularUnidadCurricula) {
-        this.listaMallaCurricularUnidadCurricula = listaMallaCurricularUnidadCurricula;
+    public void setMallaCurricularID(Integer MallaCurricularID) {
+        this.MallaCurricularID = MallaCurricularID;
     }
 
     @Override
