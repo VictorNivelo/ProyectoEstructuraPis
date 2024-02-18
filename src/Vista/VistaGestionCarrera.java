@@ -585,36 +585,40 @@ public class VistaGestionCarrera extends javax.swing.JFrame {
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         
         try {
-            ListaDinamica<Carrera> lista = carreraControlDao.all();
-            
-            String Campo = txtBuscar.getText();
-            String TipoCampo = cbxTipoBusqueda.getSelectedItem().toString();
-            
-            switch (TipoCampo) {
-                case "Nombre":
-                    TipoCampo = "NombreCarrera";
-                    break;
-                case "Duracion":
-                    TipoCampo = "Duracion";
-                    break;
-                case "Numero de ciclos":
-                    TipoCampo = "NumeroCiclos";
-                    break;
-                case "Facultad":
-                    TipoCampo = "facutadCarrera.NombreFacultad";
-                    break;
-                default:
-                    throw new AssertionError();
+            if (cbxTipoBusqueda.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Porfavor seleccione donde quiere buscar", "Error", JOptionPane.WARNING_MESSAGE);
+            } 
+            else {
+                ListaDinamica<Carrera> lista = carreraControlDao.all();
+
+                String Campo = txtBuscar.getText();
+                String TipoCampo = cbxTipoBusqueda.getSelectedItem().toString();
+
+                switch (TipoCampo) {
+                    case "Nombre":
+                        TipoCampo = "NombreCarrera";
+                        break;
+                    case "Duracion":
+                        TipoCampo = "Duracion";
+                        break;
+                    case "Numero de ciclos":
+                        TipoCampo = "NumeroCiclos";
+                        break;
+                    case "Facultad":
+                        TipoCampo = "facutadCarrera.NombreFacultad";
+                        break;
+                    default:
+                        throw new AssertionError();
+                }
+
+                ListaDinamica<Carrera> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
+
+                mtc.setCarreraTabla(ResultadoBusqueda);
+                mtc.fireTableDataChanged();
             }
-            
-            ListaDinamica<Carrera> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
-                        
-            mtc.setCarreraTabla(ResultadoBusqueda);
-            mtc.fireTableDataChanged();
-            
         } 
         catch (Exception e) {
-            
+
         }
         
     }//GEN-LAST:event_jButton6ActionPerformed

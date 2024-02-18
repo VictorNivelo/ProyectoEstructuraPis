@@ -87,16 +87,22 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
     }
 
     private void Guardar() throws ListaVacia {
+        
+        Date fechaNacimiento = DateFechaC.getDate();
         if (txtNombre.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Falta llenar nombre", "Error", JOptionPane.WARNING_MESSAGE);
         } 
         else if (DateFechaC.getDate() == null) {
             JOptionPane.showMessageDialog(null, "Falta llenar fecha", "Error", JOptionPane.WARNING_MESSAGE);
-        } 
+        }
+        else if (!validarFechaNoFutura(fechaNacimiento)) {
+            JOptionPane.showMessageDialog(null, "La fecha de la creacion de la facultad no puede ser futura", "Error", JOptionPane.WARNING_MESSAGE);
+        }
         else if (cbxUniversidad.getSelectedIndex() == -1) {
             JOptionPane.showMessageDialog(null, "Falta seleccionar universidad", "Error", JOptionPane.WARNING_MESSAGE);
         } 
         else {
+                        
             String nombre = txtNombre.getText();
             Date fechaCreacion = DateFechaC.getDate();
             String fechaCreacionStr = Formato.format(fechaCreacion);
@@ -127,6 +133,11 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
                 e.printStackTrace();
             }
         }
+    }
+    
+    private boolean validarFechaNoFutura(Date date) {
+        Date hoy = new Date();
+        return !date.after(hoy);
     }
 
     public  Integer OrdenSeleccionado(){
@@ -451,6 +462,7 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         
         int fila = tblDocentes.getSelectedRow();
+        Date fechaNacimiento = DateFechaC.getDate();
         if (fila < 0) {
             JOptionPane.showMessageDialog(null, "Escoga un registro");
         } 
@@ -460,7 +472,10 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
             } 
             else if (DateFechaC.getDate() == null) {
                 JOptionPane.showMessageDialog(null, "Falta llenar fecha", "Error", JOptionPane.WARNING_MESSAGE);
-            } 
+            }
+            else if (!validarFechaNoFutura(fechaNacimiento)) {
+                JOptionPane.showMessageDialog(null, "La fecha de la creacion de la facultad no puede ser futura", "Error", JOptionPane.WARNING_MESSAGE);
+            }
             else if (cbxUniversidad.getSelectedIndex() == -1) {
                 JOptionPane.showMessageDialog(null, "Falta seleccionar universidad", "Error", JOptionPane.WARNING_MESSAGE);
             }
@@ -519,11 +534,15 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         
         try {
+            Date fechaNacimiento = DateFechaC.getDate();
             if (txtNombre.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Falta llenar nombre", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (DateFechaC.getDate() == null) {
                 JOptionPane.showMessageDialog(null, "Falta llenar fecha", "Error", JOptionPane.WARNING_MESSAGE);
+            } 
+            else if (!validarFechaNoFutura(fechaNacimiento)) {
+                JOptionPane.showMessageDialog(null, "La fecha de la creacion de la facultad no puede ser futura", "Error", JOptionPane.WARNING_MESSAGE);
             }
             else if (cbxUniversidad.getSelectedIndex() == -1) {
                 JOptionPane.showMessageDialog(null, "Falta seleccionar universidad", "Error", JOptionPane.WARNING_MESSAGE);
@@ -547,35 +566,39 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         
         try {
-            ListaDinamica<Facultad> lista = facultadControlDao.all();
-            
-            String Campo = txtBuscar.getText();
-            String TipoCampo = cbxTipoBusqueda.getSelectedItem().toString();
+            if (cbxTipoBusqueda.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Porfavor seleccione donde quiere buscar", "Error", JOptionPane.WARNING_MESSAGE);
+            } 
+            else {
+                ListaDinamica<Facultad> lista = facultadControlDao.all();
 
-            
-            switch (TipoCampo) {
-                case "Nombre":
-                    TipoCampo = "NombreFacultad";
-                    break;
-                case "Fecha de creacion":
-                    TipoCampo = "FechaCreacion";
-                    break;
-                case "Universidad":
-                    TipoCampo = "universidadFacultad";
-                    break;
-                default:
-                    throw new AssertionError();
+                String Campo = txtBuscar.getText();
+                String TipoCampo = cbxTipoBusqueda.getSelectedItem().toString();
+
+                switch (TipoCampo) {
+                    case "Nombre":
+                        TipoCampo = "NombreFacultad";
+                        break;
+                    case "Fecha de creacion":
+                        TipoCampo = "FechaCreacion";
+                        break;
+                    case "Universidad":
+                        TipoCampo = "universidadFacultad";
+                        break;
+                    default:
+                        throw new AssertionError();
+                }
+
+                ListaDinamica<Facultad> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
+
+                mtf.setFacultadTabla(ResultadoBusqueda);
+                mtf.fireTableDataChanged();
             }
-            
-            ListaDinamica<Facultad> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
-                        
-            mtf.setFacultadTabla(ResultadoBusqueda);
-            mtf.fireTableDataChanged();
-            
         } 
         catch (Exception e) {
-            
+
         }
+        
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped

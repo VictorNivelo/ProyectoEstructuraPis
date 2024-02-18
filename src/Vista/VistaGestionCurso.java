@@ -765,37 +765,41 @@ public class VistaGestionCurso extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
         try {
-            ListaDinamica<Cursa> lista = cursoControlDao.all();
+            if (cbxTipoBusqueda.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Porfavor seleccione donde quiere buscar", "Error", JOptionPane.WARNING_MESSAGE);
+            } 
+            else {
+                ListaDinamica<Cursa> lista = cursoControlDao.all();
 
-            String Campo = txtBuscar.getText();
-            String TipoCampo = cbxTipoBusqueda.getSelectedItem().toString();
+                String Campo = txtBuscar.getText();
+                String TipoCampo = cbxTipoBusqueda.getSelectedItem().toString();
 
-            switch (TipoCampo) {
-                case "Codigo":
-                    TipoCampo = "CodigoCursa";
-                    break;
-                case "Paralelo":
-                    TipoCampo = "ParaleloCursa.Nombre";
-                    break;
-                case "Matricula":
-                    TipoCampo = "matriculaCursa.CodigoMatricula";
-                    break;
-                case "DNI estudiante":
-                    TipoCampo = "matriculaCursa.alumnoMatricula.DatosAlumno.NumeroCedula";
-                    break;
-                case "DNI dodente":
-                    TipoCampo = "docenteCursa.DatosDocente.NumeroCedula";
-                    break;
+                switch (TipoCampo) {
+                    case "Codigo":
+                        TipoCampo = "CodigoCursa";
+                        break;
+                    case "Paralelo":
+                        TipoCampo = "ParaleloCursa.Nombre";
+                        break;
+                    case "Matricula":
+                        TipoCampo = "matriculaCursa.CodigoMatricula";
+                        break;
+                    case "DNI estudiante":
+                        TipoCampo = "matriculaCursa.alumnoMatricula.DatosAlumno.NumeroCedula";
+                        break;
+                    case "DNI dodente":
+                        TipoCampo = "docenteCursa.DatosDocente.NumeroCedula";
+                        break;
 
-                default:
-                    throw new AssertionError();
+                    default:
+                        throw new AssertionError();
+                }
+
+                ListaDinamica<Cursa> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
+
+                mtc.setCursoTabla(ResultadoBusqueda);
+                mtc.fireTableDataChanged();
             }
-
-            ListaDinamica<Cursa> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
-
-            mtc.setCursoTabla(ResultadoBusqueda);
-            mtc.fireTableDataChanged();
-
         } 
         catch (Exception e) {
 

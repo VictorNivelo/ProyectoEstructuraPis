@@ -452,31 +452,35 @@ public class VistaGestionPeriodoAcademico extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
         try {
-            ListaDinamica<PeriodoAcademico> lista = periodoControlDao.all();
+            if (cbxTipoBusqueda.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Porfavor seleccione donde quiere buscar", "Error", JOptionPane.WARNING_MESSAGE);
+            } 
+            else {
+                ListaDinamica<PeriodoAcademico> lista = periodoControlDao.all();
 
-            String Campo = txtBuscar.getText();
-            String TipoCampo = cbxTipoBusqueda.getSelectedItem().toString();
+                String Campo = txtBuscar.getText();
+                String TipoCampo = cbxTipoBusqueda.getSelectedItem().toString();
 
-            switch (TipoCampo) {
-                case "Fecha de inicio":
-                    TipoCampo = "FechaInicio";
-                    break;
-                case "Fecha fin":
-                    TipoCampo = "FechaFin";
-                    break;
-                case "Estado":
-                    TipoCampo = "EstadoPeriodoAcademico";
-                    break;
-                default:
-                    throw new AssertionError();
+                switch (TipoCampo) {
+                    case "Fecha de inicio":
+                        TipoCampo = "FechaInicio";
+                        break;
+                    case "Fecha fin":
+                        TipoCampo = "FechaFin";
+                        break;
+                    case "Estado":
+                        TipoCampo = "EstadoPeriodoAcademico";
+                        break;
+                    default:
+                        throw new AssertionError();
+                }
+
+                ListaDinamica<PeriodoAcademico> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
+
+                mtp.setPeriodosTabla(ResultadoBusqueda);
+                mtp.fireTableDataChanged();
             }
-
-            ListaDinamica<PeriodoAcademico> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
-
-            mtp.setPeriodosTabla(ResultadoBusqueda);
-            mtp.fireTableDataChanged();
-
-        }
+        } 
         catch (Exception e) {
 
         }

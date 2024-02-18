@@ -88,8 +88,10 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
         }
     }
     
+    @SuppressWarnings("unused")
     private void Guardar() throws ListaVacia {
-
+        
+        Date fechaNacimiento = DateFechaTematica.getDate();
         if (cbxHorario.getSelectedIndex() == -1) {
             JOptionPane.showMessageDialog(null, "Falta seleccionar ek gorario", "Error", JOptionPane.WARNING_MESSAGE);
         }
@@ -105,7 +107,11 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
         else if (DateFechaTematica.getDate() == null) {
             JOptionPane.showMessageDialog(null, "Falta llenar fecha", "Error", JOptionPane.WARNING_MESSAGE);
         }
+        else if (!validarFechaNoFutura(fechaNacimiento)) {
+            JOptionPane.showMessageDialog(null, "La fecha de la asistencia no puede ser futura", "Error", JOptionPane.WARNING_MESSAGE);
+        }
         else {
+                        
             Integer IdAsistencia = listaAsistencia.getLongitud() + 1;
             
             int indiceSeleccionado = cbxEstadoAsistencia.getSelectedIndex();
@@ -137,6 +143,11 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
             }
             Limpiar();
         }
+    }
+    
+    private boolean validarFechaNoFutura(Date date) {
+        Date hoy = new Date();
+        return !date.after(hoy);
     }
     
     public  Integer OrdenSeleccionado(){
@@ -516,34 +527,38 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
         try {
-            ListaDinamica<Asistencia> lista = AsistenciaControl.all();
+            if (cbxTipoBusqueda.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Porfavor seleccione donde quiere buscar", "Error", JOptionPane.WARNING_MESSAGE);
+            } 
+            else {
+                ListaDinamica<Asistencia> lista = AsistenciaControl.all();
 
-            String Campo = txtBuscar.getText();
-            String TipoCampo = cbxTipoBusqueda.getSelectedItem().toString();
+                String Campo = txtBuscar.getText();
+                String TipoCampo = cbxTipoBusqueda.getSelectedItem().toString();
 
-            switch (TipoCampo) {
-                case "Tematica":
-                    TipoCampo = "AsistenciaTematica.NombreTematica";
-                    break;
-                case "Fecha":
-                    TipoCampo = "AsistenciaTematica.FechaTematica";
-                    break;
-                case "Estado de asistencia":
-                    TipoCampo = "EstadoAsistencia";
-                    break;
-                case "Observacion":
-                    TipoCampo = "Observacion";
-                    break;
-                default:
-                    throw new AssertionError();
+                switch (TipoCampo) {
+                    case "Tematica":
+                        TipoCampo = "AsistenciaTematica.NombreTematica";
+                        break;
+                    case "Fecha":
+                        TipoCampo = "AsistenciaTematica.FechaTematica";
+                        break;
+                    case "Estado de asistencia":
+                        TipoCampo = "EstadoAsistencia";
+                        break;
+                    case "Observacion":
+                        TipoCampo = "Observacion";
+                        break;
+                    default:
+                        throw new AssertionError();
+                }
+
+                ListaDinamica<Asistencia> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
+
+                mta.setAsistenciaTabla(ResultadoBusqueda);
+                mta.fireTableDataChanged();
             }
-
-            ListaDinamica<Asistencia> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
-
-            mta.setAsistenciaTabla(ResultadoBusqueda);
-            mta.fireTableDataChanged();
-
-        }
+        } 
         catch (Exception e) {
 
         }
@@ -563,9 +578,11 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnEliminarActionPerformed
 
+    @SuppressWarnings("unused")
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         
         int fila = tblAsistencia.getSelectedRow();
+        Date fechaNacimiento = DateFechaTematica.getDate();
         if (fila < 0) {
             JOptionPane.showMessageDialog(null, "Escoga un registro");
         } 
@@ -584,7 +601,10 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
             } 
             else if (DateFechaTematica.getDate() == null) {
                 JOptionPane.showMessageDialog(null, "Falta llenar fecha", "Error", JOptionPane.WARNING_MESSAGE);
-            } 
+            }
+            else if (!validarFechaNoFutura(fechaNacimiento)) {
+                JOptionPane.showMessageDialog(null, "La fecha de la asistencia no puede ser futura", "Error", JOptionPane.WARNING_MESSAGE);
+            }
             else {
 
                 Integer IdAsistencia = AsistenciaControl.getAsistencias().getIdAsistencia();
@@ -628,6 +648,7 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
     private void btnRegistrarAsistenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarAsistenciasActionPerformed
         
         try {
+            Date fechaNacimiento = DateFechaTematica.getDate();
             if (cbxHorario.getSelectedIndex() == -1) {
                 JOptionPane.showMessageDialog(null, "Falta seleccionar ek gorario", "Error", JOptionPane.WARNING_MESSAGE);
             }
@@ -642,8 +663,11 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
             } 
             else if (DateFechaTematica.getDate() == null) {
                 JOptionPane.showMessageDialog(null, "Falta llenar fecha", "Error", JOptionPane.WARNING_MESSAGE);
-            } 
-            else {
+            }
+            else if (!validarFechaNoFutura(fechaNacimiento)) {
+                JOptionPane.showMessageDialog(null, "La fecha de la asistencia no puede ser futura", "Error", JOptionPane.WARNING_MESSAGE);
+            }
+            else {                
                 Guardar();
             }
         } 

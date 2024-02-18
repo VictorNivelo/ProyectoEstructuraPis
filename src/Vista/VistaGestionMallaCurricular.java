@@ -590,36 +590,40 @@ public class VistaGestionMallaCurricular extends javax.swing.JFrame {
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         
         try {
-            ListaDinamica<MallaCurricular> lista = mallaControlDao.all();
-            
-            String Campo = txtBuscar.getText();
-            String TipoCampo = cbxTipoBusqueda.getSelectedItem().toString();
-            
-            switch (TipoCampo) {
-                case "Nombre":
-                    TipoCampo = "NombreMallaCurricular";
-                    break;
-                case "Duracion":
-                    TipoCampo = "DuracionMallaCurricular";
-                    break;
-                case "Estado de malla":
-                    TipoCampo = "EstadoMallaCurricular";
-                    break;
-                case "Carrera":
-                    TipoCampo = "carreraMallaCurricula.NombreCarrera";
-                    break;
-                default:
-                    throw new AssertionError();
+            if (cbxTipoBusqueda.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Porfavor seleccione donde quiere buscar", "Error", JOptionPane.WARNING_MESSAGE);
+            } 
+            else {
+                ListaDinamica<MallaCurricular> lista = mallaControlDao.all();
+
+                String Campo = txtBuscar.getText();
+                String TipoCampo = cbxTipoBusqueda.getSelectedItem().toString();
+
+                switch (TipoCampo) {
+                    case "Nombre":
+                        TipoCampo = "NombreMallaCurricular";
+                        break;
+                    case "Duracion":
+                        TipoCampo = "DuracionMallaCurricular";
+                        break;
+                    case "Estado de malla":
+                        TipoCampo = "EstadoMallaCurricular";
+                        break;
+                    case "Carrera":
+                        TipoCampo = "carreraMallaCurricula.NombreCarrera";
+                        break;
+                    default:
+                        throw new AssertionError();
+                }
+
+                ListaDinamica<MallaCurricular> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
+
+                mtm.setMallaTabla(ResultadoBusqueda);
+                mtm.fireTableDataChanged();
             }
-            
-            ListaDinamica<MallaCurricular> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
-                        
-            mtm.setMallaTabla(ResultadoBusqueda);
-            mtm.fireTableDataChanged();
-            
         } 
         catch (Exception e) {
-            
+
         }
         
     }//GEN-LAST:event_jButton6ActionPerformed

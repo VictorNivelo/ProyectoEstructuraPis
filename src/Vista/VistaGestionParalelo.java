@@ -508,30 +508,34 @@ public class VistaGestionParalelo extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         
         try {
-            ListaDinamica<Paralelo> lista = paraleloControlDao.all();
-            
-            String Campo = txtBuscar.getText();
-            String TipoCampo = cbxTipoBusqueda.getSelectedItem().toString();
-            
-            switch (TipoCampo) {
-                case "Codigo":
-                    TipoCampo = "CodigoParalelo";
-                    break;
-                case "Nombre":
-                    TipoCampo = "Nombre";
-                    break;
-                default:
-                    throw new AssertionError();
-            }
+            if (cbxTipoBusqueda.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Porfavor seleccione donde quiere buscar", "Error", JOptionPane.WARNING_MESSAGE);
+            } 
+            else {
+                ListaDinamica<Paralelo> lista = paraleloControlDao.all();
 
-            ListaDinamica<Paralelo> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
-                        
-            mtp.setParaleloTabla(ResultadoBusqueda);
-            mtp.fireTableDataChanged();
-            
+                String Campo = txtBuscar.getText();
+                String TipoCampo = cbxTipoBusqueda.getSelectedItem().toString();
+
+                switch (TipoCampo) {
+                    case "Codigo":
+                        TipoCampo = "CodigoParalelo";
+                        break;
+                    case "Nombre":
+                        TipoCampo = "Nombre";
+                        break;
+                    default:
+                        throw new AssertionError();
+                }
+
+                ListaDinamica<Paralelo> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
+
+                mtp.setParaleloTabla(ResultadoBusqueda);
+                mtp.fireTableDataChanged();
+            }
         } 
         catch (Exception e) {
-            
+
         }
         
     }//GEN-LAST:event_jButton3ActionPerformed

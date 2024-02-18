@@ -489,33 +489,37 @@ public class VistaGestionCiclo extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
         try {
-            ListaDinamica<Ciclo> lista = cicloControlDao.all();
-            
-            String Campo = txtBuscar.getText();
-            String TipoCampo = cbxTipoBusqueda.getSelectedItem().toString();
-            
-            switch (TipoCampo) {
-                case "Nombre":
-                    TipoCampo = "NombreCiclo";
-                    break;
-                case "Numero de ciclo":
-                    TipoCampo = "NumeroCiclo";
-                    break;
-                case "Unidad":
-                    TipoCampo = "unidadCurricularCiclo.NombreUnidadCurricular";
-                    break;
-                default:
-                    throw new AssertionError();
+            if (cbxTipoBusqueda.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Porfavor seleccione donde quiere buscar", "Error", JOptionPane.WARNING_MESSAGE);
+            } 
+            else {
+                ListaDinamica<Ciclo> lista = cicloControlDao.all();
+
+                String Campo = txtBuscar.getText();
+                String TipoCampo = cbxTipoBusqueda.getSelectedItem().toString();
+
+                switch (TipoCampo) {
+                    case "Nombre":
+                        TipoCampo = "NombreCiclo";
+                        break;
+                    case "Numero de ciclo":
+                        TipoCampo = "NumeroCiclo";
+                        break;
+                    case "Unidad":
+                        TipoCampo = "unidadCurricularCiclo.NombreUnidadCurricular";
+                        break;
+                    default:
+                        throw new AssertionError();
+                }
+
+                ListaDinamica<Ciclo> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
+
+                mtc.setCicloTabla(ResultadoBusqueda);
+                mtc.fireTableDataChanged();
             }
-            
-            ListaDinamica<Ciclo> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
-                        
-            mtc.setCicloTabla(ResultadoBusqueda);
-            mtc.fireTableDataChanged();
-            
         } 
         catch (Exception e) {
-            
+
         }
         
     }//GEN-LAST:event_jButton1ActionPerformed

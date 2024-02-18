@@ -90,6 +90,7 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
     
     private void Guardar() throws ListaVacia {
         
+        Date fechaNacimiento = DateFundacion.getDate();
         if (txtNombreU.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Falta llenar el nombre de la universidad", "Error", JOptionPane.WARNING_MESSAGE);
         }
@@ -105,7 +106,11 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
         else if (DateFundacion.getDate() == null) {
             JOptionPane.showMessageDialog(null, "Falta llenar fecha de fundacion", "Error", JOptionPane.WARNING_MESSAGE);
         } 
+        else if (!validarFechaNoFutura(fechaNacimiento)) {
+            JOptionPane.showMessageDialog(null, "La fecha de fundacion no puede ser futura", "Error", JOptionPane.WARNING_MESSAGE);
+        }
         else {
+            
             String nombre = txtNombreU.getText();
             String direccion = txtDireccionU.getText();
             String telefono = txtTelefono.getText();
@@ -179,6 +184,11 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
 //            }
 //            Limpiar();
 //        }
+    }
+    
+    private boolean validarFechaNoFutura(Date date) {
+        Date hoy = new Date();
+        return !date.after(hoy);
     }
     
     public  Integer OrdenSeleccionado(){
@@ -525,6 +535,7 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         
         try {
+            Date fechaNacimiento = DateFundacion.getDate();
             if (txtNombreU.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Falta llenar el nombre de la universidad", "Error", JOptionPane.WARNING_MESSAGE);
             } 
@@ -539,7 +550,10 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
             } 
             else if (DateFundacion.getDate() == null) {
                 JOptionPane.showMessageDialog(null, "Falta llenar fecha de fundacion", "Error", JOptionPane.WARNING_MESSAGE);
-            } 
+            }
+            else if (!validarFechaNoFutura(fechaNacimiento)) {
+                JOptionPane.showMessageDialog(null, "La fecha de fundacion no puede ser futura", "Error", JOptionPane.WARNING_MESSAGE);
+            }
             else {
                 Guardar();
             }
@@ -553,6 +567,7 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         
         int fila = tblUniversidades.getSelectedRow();
+        Date fechaNacimiento = DateFundacion.getDate();
         if (fila < 0) {
             JOptionPane.showMessageDialog(null, "Escoga un registro");
         } else {
@@ -571,8 +586,12 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
             } 
             else if (DateFundacion.getDate() == null) {
                 JOptionPane.showMessageDialog(null, "Falta llenar fecha de fundacion", "Error", JOptionPane.WARNING_MESSAGE);
-            } 
+            }
+            else if (!validarFechaNoFutura(fechaNacimiento)) {
+                JOptionPane.showMessageDialog(null, "La fecha de fundacion no puede ser futura", "Error", JOptionPane.WARNING_MESSAGE);
+            }
             else {
+                                
                 Integer IdUniversidad = universidadControlDao.getUniversidades().getIdUniversidad();
                 String Nombre = txtNombreU.getText();
                 String Direccion = txtDireccionU.getText();
@@ -619,38 +638,42 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
-         try {
-            ListaDinamica<Universidad> lista = universidadControlDao.all();
+        try {
+            if (cbxTipoBusqueda.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Porfavor seleccione donde quiere buscar", "Error", JOptionPane.WARNING_MESSAGE);
+            } 
+            else {
+                ListaDinamica<Universidad> lista = universidadControlDao.all();
 
-            String Campo = txtBuscar.getText();
-            String TipoCampo = cbxTipoBusqueda.getSelectedItem().toString();
-            
-            switch (TipoCampo) {
-                case "Nombre":
-                    TipoCampo = "NombreUniversidad";
-                    break;
-                case "Direccion":
-                    TipoCampo = "DireccionUniversidad";
-                    break;
-                case "Telefono":
-                    TipoCampo = "NumeroTelefono";
-                    break;
-                case "Correo":
-                    TipoCampo = "CorreoUniversidad";
-                    break;
-                case "Fecha de fundacion":
-                    TipoCampo = "FechaFundacion";
-                    break;
-                default:
-                    throw new AssertionError();
+                String Campo = txtBuscar.getText();
+                String TipoCampo = cbxTipoBusqueda.getSelectedItem().toString();
+
+                switch (TipoCampo) {
+                    case "Nombre":
+                        TipoCampo = "NombreUniversidad";
+                        break;
+                    case "Direccion":
+                        TipoCampo = "DireccionUniversidad";
+                        break;
+                    case "Telefono":
+                        TipoCampo = "NumeroTelefono";
+                        break;
+                    case "Correo":
+                        TipoCampo = "CorreoUniversidad";
+                        break;
+                    case "Fecha de fundacion":
+                        TipoCampo = "FechaFundacion";
+                        break;
+                    default:
+                        throw new AssertionError();
+                }
+
+                ListaDinamica<Universidad> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
+
+                mtu.setUniversidadTabla(ResultadoBusqueda);
+                mtu.fireTableDataChanged();
             }
-
-            ListaDinamica<Universidad> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
-
-            mtu.setUniversidadTabla(ResultadoBusqueda);
-            mtu.fireTableDataChanged();
-
-        }
+        } 
         catch (Exception e) {
 
         }
