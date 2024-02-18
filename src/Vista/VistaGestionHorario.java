@@ -222,7 +222,7 @@ public class VistaGestionHorario extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         cbxOrden = new javax.swing.JComboBox<>();
         btnOrdenar = new javax.swing.JButton();
-        cbxTipoBusqueda1 = new javax.swing.JComboBox<>();
+        cbxTipoBusqueda = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("GESTION DE HORARIOS");
@@ -391,8 +391,8 @@ public class VistaGestionHorario extends javax.swing.JFrame {
             }
         });
 
-        cbxTipoBusqueda1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dia", "Codigo", "Hora de inicio", "Hora de fin", "Materia" }));
-        cbxTipoBusqueda1.setSelectedIndex(-1);
+        cbxTipoBusqueda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dia", "Codigo", "Hora de inicio", "Hora de fin", "Materia" }));
+        cbxTipoBusqueda.setSelectedIndex(-1);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -430,7 +430,7 @@ public class VistaGestionHorario extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbxTipoBusqueda1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbxTipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -454,17 +454,18 @@ public class VistaGestionHorario extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel7)
                         .addComponent(jLabel8))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(cbxOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel12)
-                        .addComponent(cbxTipoOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnOrdenar)
-                        .addGap(1, 1, 1)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(cbxOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cbxTipoOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel12))
+                            .addComponent(btnOrdenar))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -479,7 +480,7 @@ public class VistaGestionHorario extends javax.swing.JFrame {
                                     .addComponent(jLabel3)
                                     .addComponent(jLabel9)
                                     .addComponent(jLabel10)
-                                    .addComponent(cbxTipoBusqueda1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(cbxTipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel6)
@@ -574,6 +575,7 @@ public class VistaGestionHorario extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Falta seleccionar asistencia", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else {
+
                 Integer IdHorario = horarioControlDao.getHorarios().getIdHorario();
                 Date Dia = DateHorario.getDate();
                 String FechaHorario = Formato.format(Dia);
@@ -626,39 +628,43 @@ public class VistaGestionHorario extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
         try {
-            ListaDinamica<Horario> lista = horarioControlDao.all();
-            
-            String Campo = txtBuscar.getText();
-            String TipoCampo = cbxTipoOrden.getSelectedItem().toString();
-            
-            switch (TipoCampo) {
-                case "Dia":
-                    TipoCampo = "DiaSemana";
-                    break;
-                case "Hora de inicio":
-                    TipoCampo = "HoraIncio";
-                    break;
-                case "Hora de fin":
-                    TipoCampo = "HoraFin";
-                    break;
-                case "Materia":
-                    TipoCampo = "materiaHorario.NombreMateria";
-                    break;
-                case "Codigo":
-                    TipoCampo = "CodigoHorario";
-                    break;
-                default:
-                    throw new AssertionError();
+            if (cbxTipoBusqueda.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Porfavor seleccione donde quiere buscar", "Error", JOptionPane.WARNING_MESSAGE);
+            } 
+            else {
+                ListaDinamica<Horario> lista = horarioControlDao.all();
+
+                String Campo = txtBuscar.getText();
+                String TipoCampo = cbxTipoOrden.getSelectedItem().toString();
+
+                switch (TipoCampo) {
+                    case "Dia":
+                        TipoCampo = "DiaSemana";
+                        break;
+                    case "Hora de inicio":
+                        TipoCampo = "HoraIncio";
+                        break;
+                    case "Hora de fin":
+                        TipoCampo = "HoraFin";
+                        break;
+                    case "Materia":
+                        TipoCampo = "materiaHorario.NombreMateria";
+                        break;
+                    case "Codigo":
+                        TipoCampo = "CodigoHorario";
+                        break;
+                    default:
+                        throw new AssertionError();
+                }
+
+                ListaDinamica<Horario> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
+
+                mth.setHorarioTabla(ResultadoBusqueda);
+                mth.fireTableDataChanged();
             }
-            
-            ListaDinamica<Horario> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
-                        
-            mth.setHorarioTabla(ResultadoBusqueda);
-            mth.fireTableDataChanged();
-            
         } 
         catch (Exception e) {
-            
+
         }
         
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -786,7 +792,7 @@ public class VistaGestionHorario extends javax.swing.JFrame {
     private javax.swing.JButton btnOrdenar;
     private javax.swing.JComboBox<String> cbxMateria;
     private javax.swing.JComboBox<String> cbxOrden;
-    private javax.swing.JComboBox<String> cbxTipoBusqueda1;
+    private javax.swing.JComboBox<String> cbxTipoBusqueda;
     private javax.swing.JComboBox<String> cbxTipoOrden;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;

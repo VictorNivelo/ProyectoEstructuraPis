@@ -152,6 +152,7 @@ public class VistaInicioSesionDocente extends javax.swing.JFrame {
         System.out.println("Es un administrador");
     }
     
+    @SuppressWarnings("static-access")
     private static void procesarDocente() {
 
         try {

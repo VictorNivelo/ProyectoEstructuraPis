@@ -90,7 +90,7 @@
                       <Group type="102" attributes="0">
                           <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="cbxTipoBusqueda1" min="-2" pref="150" max="-2" attributes="0"/>
+                          <Component id="cbxTipoBusqueda" min="-2" pref="150" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -150,7 +150,7 @@
                       <Component id="btnBuscar" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="txtCodigo" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="cbxTipoBusqueda1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="cbxTipoBusqueda" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
@@ -574,7 +574,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnOrdenarActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JComboBox" name="cbxTipoBusqueda1">
+        <Component class="javax.swing.JComboBox" name="cbxTipoBusqueda">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="5">

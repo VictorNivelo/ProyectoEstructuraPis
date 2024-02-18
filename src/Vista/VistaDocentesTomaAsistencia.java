@@ -19,6 +19,7 @@ import Modelo.Materia;
 import Modelo.Persona;
 import Vista.Utiles.UtilVista;
 import java.awt.event.KeyEvent;
+import java.util.Date;
 import javax.swing.JOptionPane;
 
 /**
@@ -128,50 +129,57 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
     }
     
     private void Guardar() throws ListaVacia {
-
+        Date fechaNacimiento = DateFechaActual.getDate();
         if (DateFechaActual.getDate() == null) {
             JOptionPane.showMessageDialog(null, "Falta seleccionar la fecha", "Error", JOptionPane.WARNING_MESSAGE);
+        } 
+        else if (!validarFechaNoFutura(fechaNacimiento)) {
+            JOptionPane.showMessageDialog(null, "La fecha de la asistencia no puede ser futura", "Error", JOptionPane.WARNING_MESSAGE);
         }
         else if (cbxMateria.getSelectedIndex() == -1) {
             JOptionPane.showMessageDialog(null, "Falta seleccionar la materia", "Error", JOptionPane.WARNING_MESSAGE);
         }
-//        else if (cbxHorario.getSelectedIndex() == -1) {
-//            JOptionPane.showMessageDialog(null, "Falta seleccionar el horario", "Error", JOptionPane.WARNING_MESSAGE);
-//        } 
         else if (txtTematica.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Falta llenar duracion", "Error", JOptionPane.WARNING_MESSAGE);
-        }
+        } 
         else if (txtObservacion.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Falta llenar duracion", "Error", JOptionPane.WARNING_MESSAGE);
-        }
+        } 
         else {
-            
+
             for (int i = 0; i < tblt.getRowCount(); i++) {
-            boolean estaPresente = (boolean) tblt.getValueAt(i, 3);
-            String estadoAsistencia = estaPresente ? "Presente" : "Ausente";
+                boolean estaPresente = (boolean) tblt.getValueAt(i, 3);
+                String estadoAsistencia = estaPresente ? "Presente" : "Ausente";
 
-            Integer idAsistencia = listaAsistencia.getLongitud() + 1;
+                Integer idAsistencia = listaAsistencia.getLongitud() + 1;
 
-            Asistencia nuevaAsistencia = new Asistencia();
-            nuevaAsistencia.setIdAsistencia(idAsistencia);
-            nuevaAsistencia.setEstadoAsistencia(estadoAsistencia);
-            nuevaAsistencia.setObservacion(txtObservacion.getText());
-            nuevaAsistencia.setHorarioAsistencia(UtilVista.obtenerHorarioControl(cbxHorario));
+                Asistencia nuevaAsistencia = new Asistencia();
+                nuevaAsistencia.setIdAsistencia(idAsistencia);
+                nuevaAsistencia.setEstadoAsistencia(estadoAsistencia);
+                nuevaAsistencia.setObservacion(txtObservacion.getText());
+                nuevaAsistencia.setHorarioAsistencia(UtilVista.obtenerHorarioControl(cbxHorario));
 
-            asistenciaControlDao.setAsistencias(nuevaAsistencia);
-            try {
-                if (asistenciaControlDao.Persist()) {
-                    JOptionPane.showMessageDialog(null, "Asistencia guardada exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE);
-                    asistenciaControlDao.setAsistencias(null);
-                } else {
-                    JOptionPane.showMessageDialog(null, "No se pudo guardar la asistencia", "Error", JOptionPane.ERROR_MESSAGE);
+                asistenciaControlDao.setAsistencias(nuevaAsistencia);
+                try {
+                    if (asistenciaControlDao.Persist()) {
+                        JOptionPane.showMessageDialog(null, "Asistencia guardada exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE);
+                        asistenciaControlDao.setAsistencias(null);
+                    } 
+                    else {
+                        JOptionPane.showMessageDialog(null, "No se pudo guardar la asistencia", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                } 
+                catch (Exception e) {
+                    e.printStackTrace();
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
             }
+            Limpiar();
         }
-        Limpiar();
-        }
+    }
+    
+    private boolean validarFechaNoFutura(Date date) {
+        Date hoy = new Date();
+        return !date.after(hoy);
     }
 
     /**
@@ -507,47 +515,49 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
         try {
-            ListaDinamica<Alumno> lista = alumnoControlDao.all();
+            if (cbxTipoBusqueda.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Porfavor seleccione donde quiere buscar", "Error", JOptionPane.WARNING_MESSAGE);
+            } 
+            else {
+                ListaDinamica<Alumno> lista = alumnoControlDao.all();
 
-            String Campo = txtBuscar.getText();
-            String TipoCampo = cbxTipoBusqueda.getSelectedItem().toString();
+                String Campo = txtBuscar.getText();
+                String TipoCampo = cbxTipoBusqueda.getSelectedItem().toString();
 
-            switch (TipoCampo) {
-                case "Nombre":
-                    TipoCampo = "Nombre";
-                    break;
-                case "Apellido":
-                    TipoCampo = "Apellido";
-                    break;
-                default:
-                    throw new AssertionError();
-            }
+                switch (TipoCampo) {
+                    case "Nombre":
+                        TipoCampo = "Nombre";
+                        break;
+                    case "Apellido":
+                        TipoCampo = "Apellido";
+                        break;
+                    default:
+                        throw new AssertionError();
+                }
 
-            ListaDinamica<Alumno> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
-            
-            Object[][] datos = new Object[ResultadoBusqueda.getLongitud()][3];
-            
-            for (int i = 0; i < ResultadoBusqueda.getLongitud(); i++) {
-                Alumno p = ResultadoBusqueda.getInfo(i);
-                datos[i] = new Object[]{
-                    p.getIdAlumno(),
-                    p.getDatosAlumno().getNombre(),
-                    p.getDatosAlumno().getApellido(),
+                ListaDinamica<Alumno> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
 
-                };
-            }
+                Object[][] datos = new Object[ResultadoBusqueda.getLongitud()][3];
 
-            Object[] columnas = {"#", "Nombre", "Apellido", "Asistencia"};
+                for (int i = 0; i < ResultadoBusqueda.getLongitud(); i++) {
+                    Alumno p = ResultadoBusqueda.getInfo(i);
+                    datos[i] = new Object[]{
+                        p.getIdAlumno(),
+                        p.getDatosAlumno().getNombre(),
+                        p.getDatosAlumno().getApellido(),};
+                }
 
-            DefaultTableModel modeloTabla = new DefaultTableModel(datos, columnas);
-            
-            tblt.setModel(modeloTabla);
-            AgregarCheckbox(3, tblt);
+                Object[] columnas = {"#", "Nombre", "Apellido", "Asistencia"};
+
+                DefaultTableModel modeloTabla = new DefaultTableModel(datos, columnas);
+
+                tblt.setModel(modeloTabla);
+                AgregarCheckbox(3, tblt);
 //                        AgregarCheckbox(3, tblt);
 //            dtm.setPersonasTabla(ResultadoBusqueda);
 //            mtp.fireTableDataChanged();
-
-        }
+            }
+        } 
         catch (Exception e) {
 
         }
@@ -645,8 +655,28 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         
         try {
-            Guardar();
-        } catch (Exception e) {
+            Date fechaNacimiento = DateFechaActual.getDate();
+            if (DateFechaActual.getDate() == null) {
+                JOptionPane.showMessageDialog(null, "Falta seleccionar la fecha", "Error", JOptionPane.WARNING_MESSAGE);
+            } 
+            else if (!validarFechaNoFutura(fechaNacimiento)) {
+                JOptionPane.showMessageDialog(null, "La fecha de la asistencia no puede ser futura", "Error", JOptionPane.WARNING_MESSAGE);
+            } 
+            else if (cbxMateria.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Falta seleccionar la materia", "Error", JOptionPane.WARNING_MESSAGE);
+            } 
+            else if (txtTematica.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Falta llenar duracion", "Error", JOptionPane.WARNING_MESSAGE);
+            } 
+            else if (txtObservacion.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Falta llenar duracion", "Error", JOptionPane.WARNING_MESSAGE);
+            } 
+            else {
+                Guardar();
+            }
+        } 
+        catch (Exception e) {
+
         }
         
     }//GEN-LAST:event_jButton6ActionPerformed

@@ -623,34 +623,37 @@ public class VistaGestionUnidadCurricular extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         
         try {
-            
-            ListaDinamica<UnidadCurricular> lista = unidadCurricularControlDao.all();
+            if (cbxTipoBusqueda.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Porfavor seleccione donde quiere buscar", "Error", JOptionPane.WARNING_MESSAGE);
+            } 
+            else {
+                ListaDinamica<UnidadCurricular> lista = unidadCurricularControlDao.all();
 
-            String Campo = txtBuscar.getText();
-            String TipoCampo = cbxTipoBusqueda.getSelectedItem().toString();
+                String Campo = txtBuscar.getText();
+                String TipoCampo = cbxTipoBusqueda.getSelectedItem().toString();
 
-            switch (TipoCampo) {
-                case "Codigo":
-                    TipoCampo = "CodigoUnidadCurricular";
-                    break;
-                case "Nombre":
-                    TipoCampo = "NombreUnidadCurricular";
-                    break;
-                case "Descripcion":
-                    TipoCampo = "DescripcionUnidadCurricular";
-                    break;
-                case "Malla":
-                    TipoCampo = "mallaCurricularUnidadCurricular.NombreMallaCurricular";
-                    break;
-                default:
+                switch (TipoCampo) {
+                    case "Codigo":
+                        TipoCampo = "CodigoUnidadCurricular";
+                        break;
+                    case "Nombre":
+                        TipoCampo = "NombreUnidadCurricular";
+                        break;
+                    case "Descripcion":
+                        TipoCampo = "DescripcionUnidadCurricular";
+                        break;
+                    case "Malla":
+                        TipoCampo = "mallaCurricularUnidadCurricular.NombreMallaCurricular";
+                        break;
+                    default:
+                }
+
+                ListaDinamica<UnidadCurricular> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
+
+                mtu.setUnidadCurricularTabla(ResultadoBusqueda);
+                mtu.fireTableDataChanged();
             }
-
-            ListaDinamica<UnidadCurricular> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
-
-            mtu.setUnidadCurricularTabla(ResultadoBusqueda);
-            mtu.fireTableDataChanged();
-
-        }
+        } 
         catch (Exception e) {
 
         }

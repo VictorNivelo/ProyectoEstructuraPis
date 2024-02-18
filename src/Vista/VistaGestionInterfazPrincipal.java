@@ -281,7 +281,7 @@ public class VistaGestionInterfazPrincipal extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         cbxOrden = new javax.swing.JComboBox<>();
         btnOrdenar = new javax.swing.JButton();
-        cbxTipoBusqueda1 = new javax.swing.JComboBox<>();
+        cbxTipoBusqueda = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("PERSONALIZACION DE PANTALLA PRINCIPAL");
@@ -469,8 +469,8 @@ public class VistaGestionInterfazPrincipal extends javax.swing.JFrame {
             }
         });
 
-        cbxTipoBusqueda1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Codigo", "Imagen", "Tiempo", "Contenido", "Estado" }));
-        cbxTipoBusqueda1.setSelectedIndex(-1);
+        cbxTipoBusqueda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Codigo", "Imagen", "Tiempo", "Contenido", "Estado" }));
+        cbxTipoBusqueda.setSelectedIndex(-1);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -514,7 +514,7 @@ public class VistaGestionInterfazPrincipal extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbxTipoBusqueda1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbxTipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -563,7 +563,7 @@ public class VistaGestionInterfazPrincipal extends javax.swing.JFrame {
                     .addComponent(btnBuscar)
                     .addComponent(jLabel11)
                     .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbxTipoBusqueda1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbxTipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE)
@@ -743,42 +743,46 @@ public class VistaGestionInterfazPrincipal extends javax.swing.JFrame {
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         
         try {
-            ListaDinamica<Presentacion> lista = presentacionControlDao.all();
-            
-            String Campo = txtBuscar.getText();
-            String TipoCampo = cbxTipoOrden.getSelectedItem().toString();
-            
-            switch (TipoCampo) {
-                case "Codigo":
-                    TipoCampo = "Codigo";
-                    break;
-                case "Imagen":
-                    TipoCampo = "Imagen";
-                    break;
-                case "Titulo":
-                    TipoCampo = "Titulo";
-                    break;
-                case "Contenido":
-                    TipoCampo = "Contenido";
-                    break;
-                case "Tiempo":
-                    TipoCampo = "Tiempo";
-                    break;
-                case "Estado":
-                    TipoCampo = "EstadoPresentacion";
-                    break;
-                default:
-                    throw new AssertionError();
+            if (cbxTipoBusqueda.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Porfavor seleccione donde quiere buscar", "Error", JOptionPane.WARNING_MESSAGE);
+            } 
+            else {
+                ListaDinamica<Presentacion> lista = presentacionControlDao.all();
+
+                String Campo = txtBuscar.getText();
+                String TipoCampo = cbxTipoOrden.getSelectedItem().toString();
+
+                switch (TipoCampo) {
+                    case "Codigo":
+                        TipoCampo = "Codigo";
+                        break;
+                    case "Imagen":
+                        TipoCampo = "Imagen";
+                        break;
+                    case "Titulo":
+                        TipoCampo = "Titulo";
+                        break;
+                    case "Contenido":
+                        TipoCampo = "Contenido";
+                        break;
+                    case "Tiempo":
+                        TipoCampo = "Tiempo";
+                        break;
+                    case "Estado":
+                        TipoCampo = "EstadoPresentacion";
+                        break;
+                    default:
+                        throw new AssertionError();
+                }
+
+                ListaDinamica<Presentacion> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
+
+                mtp.setPresentacionTabla(ResultadoBusqueda);
+                mtp.fireTableDataChanged();
             }
-            
-            ListaDinamica<Presentacion> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
-                        
-            mtp.setPresentacionTabla(ResultadoBusqueda);
-            mtp.fireTableDataChanged();
-            
         } 
         catch (Exception e) {
-            
+
         }
         
     }//GEN-LAST:event_btnBuscarActionPerformed
@@ -920,7 +924,7 @@ public class VistaGestionInterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnOrdenar;
     private javax.swing.JComboBox<String> cbxEstadoPresentacion;
     private javax.swing.JComboBox<String> cbxOrden;
-    private javax.swing.JComboBox<String> cbxTipoBusqueda1;
+    private javax.swing.JComboBox<String> cbxTipoBusqueda;
     private javax.swing.JComboBox<String> cbxTipoOrden;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;

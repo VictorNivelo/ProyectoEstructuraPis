@@ -36,6 +36,7 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
         UtilVista.cargarcomboRoles(cbxRol);
         DateFechaNacimiento.setDateFormatString("dd/MMMM/yyyy");
         cbxTipoBusqueda.setMaximumRowCount(cbxTipoBusqueda.getItemCount());
+        cbxTipoOrden.setMaximumRowCount(cbxTipoOrden.getItemCount());
         CargarTabla();
     }
     
@@ -110,6 +111,7 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
     
     private void Guardar() throws ListaVacia {
 
+        Date fechaNacimiento = DateFechaNacimiento.getDate();
         String numeroCedula = txtNumeroCedula.getText();
         boolean numeroCedulaExistente = false;
         for (Persona persona : personaControlDao.getListaPersonas().toArray()) {
@@ -125,6 +127,9 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
         else if (txtNumeroCedula.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Falta llenar numero dni", "Error", JOptionPane.WARNING_MESSAGE);
         } 
+        else if (txtNumeroCedula.getText().length() < 10) {
+            JOptionPane.showMessageDialog(null, "El número de cédula debe tener al menos 10 dígitos", "Error", JOptionPane.WARNING_MESSAGE);
+        }
         else if (txtNombre.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Falta llenar nombre", "Error", JOptionPane.WARNING_MESSAGE);
         } 
@@ -136,12 +141,24 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
         }
         else if (DateFechaNacimiento.getDate() == null) {
             JOptionPane.showMessageDialog(null, "Falta llenar fecha nacimiento", "Error", JOptionPane.WARNING_MESSAGE);
-        }
+        } 
+        else if (!validarFechaNoFutura(fechaNacimiento)) {
+            JOptionPane.showMessageDialog(null, "La fecha de nacimiento no puede ser futura", "Error", JOptionPane.WARNING_MESSAGE);
+        } 
+        else if (!validarFechaNoMenor(fechaNacimiento)) {
+            JOptionPane.showMessageDialog(null, "La fecha de nacimiento debe ser posterior a 1900", "Error", JOptionPane.WARNING_MESSAGE);
+        } 
         else if (txtDireccion.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Falta llenar direccion", "Error", JOptionPane.WARNING_MESSAGE);
         }
         else if (txtTelefono.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Falta llenar numero celular", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+        else if (txtTelefono.getText().length() < 10) {
+            JOptionPane.showMessageDialog(null, "El número de teléfono debe tener al menos 10 dígitos", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+        else if (!validarNumeroTelefonoEcuatoriano(txtTelefono.getText())) {
+            JOptionPane.showMessageDialog(null, "El número de teléfono no es válido para Ecuador", "Error", JOptionPane.WARNING_MESSAGE);
         }
         else if (cbxRol.getSelectedIndex() == -1) {
             JOptionPane.showMessageDialog(null, "Falta seleccionar rol", "Error", JOptionPane.WARNING_MESSAGE);
@@ -159,7 +176,7 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "El número de cédula ya está registrado", "Error", JOptionPane.WARNING_MESSAGE);
         }
         else {
-            //Datos de persona a registrar
+                        //Datos de persona a registrar
             Integer IdPersona = listaPersonas.getLongitud() + 1;
             String TipoDni = cbxTipoDni.getSelectedItem().toString();
             String NumeroCedula = txtNumeroCedula.getText();
@@ -223,6 +240,24 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
         }
         return null;
     }
+    
+    private boolean validarFechaNoFutura(Date date) {
+        Date hoy = new Date();
+        return !date.after(hoy);
+    }
+
+    private boolean validarFechaNoMenor(Date date) {
+        Date fechaLimite = new Date(1900 - 1900, 0, 1);
+        return !date.before(fechaLimite);
+    }
+    
+    public boolean validarNumeroTelefonoEcuatoriano(String telefono) {
+    if (telefono.length() != 10 || !telefono.startsWith("09"))
+        return false;
+
+    String numeros = telefono.substring(2);
+    return numeros.matches("\\d+");
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -757,6 +792,7 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         
         int fila = tblPersonas.getSelectedRow();
+        Date fechaNacimiento = DateFechaNacimiento.getDate();
         if (fila < 0) {
             JOptionPane.showMessageDialog(null, "Escoga un registro");
         } 
@@ -766,7 +802,10 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
             } 
             else if (txtNumeroCedula.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Falta llenar numero dni", "Error", JOptionPane.WARNING_MESSAGE);
-            } 
+            }
+            else if (txtNumeroCedula.getText().length() < 10) {
+                JOptionPane.showMessageDialog(null, "El número de cédula debe tener al menos 10 dígitos", "Error", JOptionPane.WARNING_MESSAGE);
+            }
             else if (txtNombre.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Falta llenar nombre", "Error", JOptionPane.WARNING_MESSAGE);
             } 
@@ -778,13 +817,25 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
             } 
             else if (DateFechaNacimiento.getDate() == null) {
                 JOptionPane.showMessageDialog(null, "Falta llenar fecha nacimiento", "Error", JOptionPane.WARNING_MESSAGE);
+            }
+            else if (!validarFechaNoFutura(fechaNacimiento)) {
+                JOptionPane.showMessageDialog(null, "La fecha de nacimiento no puede ser futura", "Error", JOptionPane.WARNING_MESSAGE);
             } 
+            else if (!validarFechaNoMenor(fechaNacimiento)) {
+                JOptionPane.showMessageDialog(null, "La fecha de nacimiento debe ser posterior a 1900", "Error", JOptionPane.WARNING_MESSAGE);
+            }
             else if (txtDireccion.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Falta llenar direccion", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (txtTelefono.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Falta llenar numero celular", "Error", JOptionPane.WARNING_MESSAGE);
-            } 
+            }
+            else if (txtTelefono.getText().length() < 10) {
+                JOptionPane.showMessageDialog(null, "El número de teléfono debe tener al menos 10 dígitos", "Error", JOptionPane.WARNING_MESSAGE);
+            }
+            else if (!validarNumeroTelefonoEcuatoriano(txtTelefono.getText())) {
+                JOptionPane.showMessageDialog(null, "El número de teléfono no es válido para Ecuador", "Error", JOptionPane.WARNING_MESSAGE);
+            }
             else if (cbxRol.getSelectedIndex() == -1) {
                 JOptionPane.showMessageDialog(null, "Falta seleccionar rol", "Error", JOptionPane.WARNING_MESSAGE);
             } 
@@ -867,12 +918,16 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
 
     private void btnGuardarPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarPersonaActionPerformed
         
+        Date fechaNacimiento = DateFechaNacimiento.getDate();
         if (cbxTipoDni.getSelectedIndex() == -1) {
             JOptionPane.showMessageDialog(null, "Falta seleccionar Tipo DNI", "Error", JOptionPane.WARNING_MESSAGE);
         }
         else if (txtNumeroCedula.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Falta llenar numero dni", "Error", JOptionPane.WARNING_MESSAGE);
-        } 
+        }
+        else if (txtNumeroCedula.getText().length() < 10) {
+            JOptionPane.showMessageDialog(null, "El número de cédula debe tener al menos 10 dígitos", "Error", JOptionPane.WARNING_MESSAGE);
+        }
         else if (txtNombre.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Falta llenar nombre", "Error", JOptionPane.WARNING_MESSAGE);
         } 
@@ -885,11 +940,23 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
         else if (DateFechaNacimiento.getDate() == null) {
             JOptionPane.showMessageDialog(null, "Falta llenar fecha nacimiento", "Error", JOptionPane.WARNING_MESSAGE);
         }
+        else if (!validarFechaNoFutura(fechaNacimiento)) {
+            JOptionPane.showMessageDialog(null, "La fecha de nacimiento no puede ser futura", "Error", JOptionPane.WARNING_MESSAGE);
+        } 
+        else if (!validarFechaNoMenor(fechaNacimiento)) {
+            JOptionPane.showMessageDialog(null, "La fecha de nacimiento debe ser posterior a 1900", "Error", JOptionPane.WARNING_MESSAGE);
+        }
         else if (txtDireccion.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Falta llenar direccion", "Error", JOptionPane.WARNING_MESSAGE);
         }
         else if (txtTelefono.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Falta llenar numero celular", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+        else if (txtTelefono.getText().length() < 10) {
+            JOptionPane.showMessageDialog(null, "El número de teléfono debe tener al menos 10 dígitos", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+        else if (!validarNumeroTelefonoEcuatoriano(txtTelefono.getText())) {
+            JOptionPane.showMessageDialog(null, "El número de teléfono no es válido para Ecuador", "Error", JOptionPane.WARNING_MESSAGE);
         }
         else if (cbxRol.getSelectedIndex() == -1) {
             JOptionPane.showMessageDialog(null, "Falta seleccionar rol", "Error", JOptionPane.WARNING_MESSAGE);
@@ -920,54 +987,58 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
         try {
-            ListaDinamica<Persona> lista = personaControlDao.all();
-            
-            String Campo = txtBuscar.getText();
-            String TipoCampo = cbxTipoBusqueda.getSelectedItem().toString();
-            
-            switch (TipoCampo) {
-                case "Tipo de DNI":
-                    TipoCampo = "TipoDni";
-                    break;
-                case "Numero DNI":
-                    TipoCampo = "NumeroCedula";
-                    break;
-                case "Nombre":
-                    TipoCampo = "Nombre";
-                    break;
-                case "Apellido":
-                    TipoCampo = "Apellido";
-                    break;
-                case "Genero":
-                    TipoCampo = "Genero";
-                    break;
-                case "Telefono":
-                    TipoCampo = "Telefono";
-                    break;
-                case "Direccion":
-                    TipoCampo = "Direccion";
-                    break;
-                case "Rol":
-                    TipoCampo = "personaRol.NombreRol";
-                    break;
-                case "Estado de cuenta":
-                    TipoCampo = "personaCuenta.EstadoCuenta";
-                    break;
-                case "Correo":
-                    TipoCampo = "personaCuenta.Correo";
-                    break;
-                default:
-                    throw new AssertionError();
+            if (cbxTipoBusqueda.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Porfavor seleccione donde quiere buscar", "Error", JOptionPane.WARNING_MESSAGE);
+            } 
+            else {
+                ListaDinamica<Persona> lista = personaControlDao.all();
+
+                String Campo = txtBuscar.getText();
+                String TipoCampo = cbxTipoBusqueda.getSelectedItem().toString();
+
+                switch (TipoCampo) {
+                    case "Tipo de DNI":
+                        TipoCampo = "TipoDni";
+                        break;
+                    case "Numero DNI":
+                        TipoCampo = "NumeroCedula";
+                        break;
+                    case "Nombre":
+                        TipoCampo = "Nombre";
+                        break;
+                    case "Apellido":
+                        TipoCampo = "Apellido";
+                        break;
+                    case "Genero":
+                        TipoCampo = "Genero";
+                        break;
+                    case "Telefono":
+                        TipoCampo = "Telefono";
+                        break;
+                    case "Direccion":
+                        TipoCampo = "Direccion";
+                        break;
+                    case "Rol":
+                        TipoCampo = "personaRol.NombreRol";
+                        break;
+                    case "Estado de cuenta":
+                        TipoCampo = "personaCuenta.EstadoCuenta";
+                        break;
+                    case "Correo":
+                        TipoCampo = "personaCuenta.Correo";
+                        break;
+                    default:
+                        throw new AssertionError();
+                }
+
+                ListaDinamica<Persona> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
+
+                mtp.setPersonasTabla(ResultadoBusqueda);
+                mtp.fireTableDataChanged();
             }
-            
-            ListaDinamica<Persona> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
-                        
-            mtp.setPersonasTabla(ResultadoBusqueda);
-            mtp.fireTableDataChanged();
-            
         } 
         catch (Exception e) {
-            
+
         }
         
     }//GEN-LAST:event_jButton1ActionPerformed

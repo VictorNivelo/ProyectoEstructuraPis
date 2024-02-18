@@ -622,48 +622,52 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         
         try {
-            ListaDinamica<Docente> lista = docenteControlDao.all();
-            
-            String Campo = txtBuscar.getText();
-            String TipoCampo = cbxTipoBusqueda.getSelectedItem().toString();
-            
-            switch (TipoCampo) {
-                case "Numero de cedula":
-                    TipoCampo = "DatosDocente.NumeroCedula";
-                    break;
-                case "Nombre":
-                    TipoCampo = "DatosDocente.Nombre";
-                    break;
-                case "Apellido":
-                    TipoCampo = "DatosDocente.Apellido";
-                    break;
-                case "Genero":
-                    TipoCampo = "DatosDocente.Genero";
-                    break;
-                case "Especialidad":
-                    TipoCampo = "Especialidad";
-                    break;
-                case "Titulacion":
-                    TipoCampo = "Titulacion";
-                    break;
-                case "Años ecperiencia":
-                    TipoCampo = "AniosExperiencia";
-                    break;
-                case "Experiencia":
-                    TipoCampo = "AniosExperiencia";
-                    break;
-                default:
-                    throw new AssertionError();
+            if (cbxTipoBusqueda.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Porfavor seleccione donde quiere buscar", "Error", JOptionPane.WARNING_MESSAGE);
+            } 
+            else {
+                ListaDinamica<Docente> lista = docenteControlDao.all();
+
+                String Campo = txtBuscar.getText();
+                String TipoCampo = cbxTipoBusqueda.getSelectedItem().toString();
+
+                switch (TipoCampo) {
+                    case "Numero de cedula":
+                        TipoCampo = "DatosDocente.NumeroCedula";
+                        break;
+                    case "Nombre":
+                        TipoCampo = "DatosDocente.Nombre";
+                        break;
+                    case "Apellido":
+                        TipoCampo = "DatosDocente.Apellido";
+                        break;
+                    case "Genero":
+                        TipoCampo = "DatosDocente.Genero";
+                        break;
+                    case "Especialidad":
+                        TipoCampo = "Especialidad";
+                        break;
+                    case "Titulacion":
+                        TipoCampo = "Titulacion";
+                        break;
+                    case "Años ecperiencia":
+                        TipoCampo = "AniosExperiencia";
+                        break;
+                    case "Experiencia":
+                        TipoCampo = "AniosExperiencia";
+                        break;
+                    default:
+                        throw new AssertionError();
+                }
+
+                ListaDinamica<Docente> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
+
+                mtd.setDocenteTabla(ResultadoBusqueda);
+                mtd.fireTableDataChanged();
             }
-            
-            ListaDinamica<Docente> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
-                        
-            mtd.setDocenteTabla(ResultadoBusqueda);
-            mtd.fireTableDataChanged();
-            
         } 
         catch (Exception e) {
-            
+
         }
         
     }//GEN-LAST:event_jButton3ActionPerformed

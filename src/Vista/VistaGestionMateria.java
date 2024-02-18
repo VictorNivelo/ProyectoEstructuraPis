@@ -585,39 +585,43 @@ public class VistaGestionMateria extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
         try {
-            ListaDinamica<Materia> lista = materiaControlDao.all();
-            
-            String Campo = txtBuscar.getText();
-            String TipoCampo = cbxTipoBusqueda.getSelectedItem().toString();
-            
-            switch (TipoCampo) {
-                case "Nombre":
-                    TipoCampo = "NombreMateria";
-                    break;
-                case "Descripcion":
-                    TipoCampo = "DescipcionMateria";
-                    break;
-                case "Numero de horas":
-                    TipoCampo = "NumeroHoras";
-                    break;
-                case "Ciclo":
-                    TipoCampo = "cicloMateria.NombreCiclo";
-                    break;
-                case "Paralelo":
-                    TipoCampo = "cursoMateria.Paralelo";
-                    break;
-                default:
-                    throw new AssertionError();
-            }
+            if (cbxTipoBusqueda.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Porfavor seleccione donde quiere buscar", "Error", JOptionPane.WARNING_MESSAGE);
+            } 
+            else {
+                ListaDinamica<Materia> lista = materiaControlDao.all();
 
-            ListaDinamica<Materia> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
-                        
-            mtm.setMateriaTabla(ResultadoBusqueda);
-            mtm.fireTableDataChanged();
-            
+                String Campo = txtBuscar.getText();
+                String TipoCampo = cbxTipoBusqueda.getSelectedItem().toString();
+
+                switch (TipoCampo) {
+                    case "Nombre":
+                        TipoCampo = "NombreMateria";
+                        break;
+                    case "Descripcion":
+                        TipoCampo = "DescipcionMateria";
+                        break;
+                    case "Numero de horas":
+                        TipoCampo = "NumeroHoras";
+                        break;
+                    case "Ciclo":
+                        TipoCampo = "cicloMateria.NombreCiclo";
+                        break;
+                    case "Paralelo":
+                        TipoCampo = "cursoMateria.Paralelo";
+                        break;
+                    default:
+                        throw new AssertionError();
+                }
+
+                ListaDinamica<Materia> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
+
+                mtm.setMateriaTabla(ResultadoBusqueda);
+                mtm.fireTableDataChanged();
+            }
         } 
         catch (Exception e) {
-            
+
         }
         
     }//GEN-LAST:event_jButton1ActionPerformed

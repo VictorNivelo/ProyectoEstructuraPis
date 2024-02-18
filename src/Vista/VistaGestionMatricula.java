@@ -16,8 +16,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -576,42 +574,46 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         
         try {
-            ListaDinamica<Matricula> lista = MatriculaControlDao.all();
-            
-            String Campo = txtBuscar.getText();
-            String TipoCampo = cbxTipoBusqueda.getSelectedItem().toString();
-            
-            switch (TipoCampo) {
-                case "Codigo":
-                    TipoCampo = "CodigoMatricula";
-                    break;
-                case "Fecha":
-                    TipoCampo = "FechaMatricula";
-                    break;
-                case "Estado":
-                    TipoCampo = "EstadoMatricula";
-                    break;
-                case "Periodo":
-                    TipoCampo = "periodoAcademicoMatricula.FechaInicio";
-                    break;
-                case "DNI alumno":
-                    TipoCampo = "alumnoMatricula.DatosAlumno.NumeroCedula";
-                    break;
-                case "Nombre alumno":
-                    TipoCampo = "alumnoMatricula.DatosAlumno.Nombre";
-                    break;
-                default:
-                    throw new AssertionError();
-            }
+            if (cbxTipoBusqueda.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Porfavor seleccione donde quiere buscar", "Error", JOptionPane.WARNING_MESSAGE);
+            } 
+            else {
+                ListaDinamica<Matricula> lista = MatriculaControlDao.all();
 
-            ListaDinamica<Matricula> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
-                        
-            mtm.setMatriculas(ResultadoBusqueda);
-            mtm.fireTableDataChanged();
-            
+                String Campo = txtBuscar.getText();
+                String TipoCampo = cbxTipoBusqueda.getSelectedItem().toString();
+
+                switch (TipoCampo) {
+                    case "Codigo":
+                        TipoCampo = "CodigoMatricula";
+                        break;
+                    case "Fecha":
+                        TipoCampo = "FechaMatricula";
+                        break;
+                    case "Estado":
+                        TipoCampo = "EstadoMatricula";
+                        break;
+                    case "Periodo":
+                        TipoCampo = "periodoAcademicoMatricula.FechaInicio";
+                        break;
+                    case "DNI alumno":
+                        TipoCampo = "alumnoMatricula.DatosAlumno.NumeroCedula";
+                        break;
+                    case "Nombre alumno":
+                        TipoCampo = "alumnoMatricula.DatosAlumno.Nombre";
+                        break;
+                    default:
+                        throw new AssertionError();
+                }
+
+                ListaDinamica<Matricula> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
+
+                mtm.setMatriculas(ResultadoBusqueda);
+                mtm.fireTableDataChanged();
+            }
         } 
         catch (Exception e) {
-            
+
         }
         
     }//GEN-LAST:event_btnBuscarActionPerformed
