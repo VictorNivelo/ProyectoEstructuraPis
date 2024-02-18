@@ -9,7 +9,7 @@ public class Asistencia {
     private Integer IdAsistencia;
     private String Observacion;
     
-    private EstadoAsistencia EstadoAsistencia;
+    private String EstadoAsistencia;
     private Integer EstadoAsistenciaID;
     
     private Horario horarioAsistencia;
@@ -30,11 +30,11 @@ public class Asistencia {
         this.IdAsistencia = IdAsistencia;
     }
 
-    public EstadoAsistencia getEstadoAsistencia() {
+    public String getEstadoAsistencia() {
         return EstadoAsistencia;
     }
 
-    public void setEstadoAsistencia(EstadoAsistencia EstadoAsistencia) {
+    public void setEstadoAsistencia(String EstadoAsistencia) {
         this.EstadoAsistencia = EstadoAsistencia;
     }
 

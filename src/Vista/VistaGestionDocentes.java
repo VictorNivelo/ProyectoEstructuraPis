@@ -75,38 +75,60 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
         }
     }
     
-    private void Guardar() throws ListaVacia {
+    private boolean docenteExiste(Docente nuevoDocente) {
+        ListaDinamica<Docente> docentes = docenteControlDao.getListaDocentes();
+        for (Docente d : docentes.toArray()) {
+            if (d.getIdDocente().equals(nuevoDocente.getIdDocente())) {
+                return true;
+            }
+        }
+        return false;
+    }
 
+    private void Guardar() throws ListaVacia {
         if (cbxDocente.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(null, "Falta seleccionar docente", "Error", JOptionPane.INFORMATION_MESSAGE);
-        }
+            JOptionPane.showMessageDialog(null, "Falta seleccionar un docente", "Error", JOptionPane.WARNING_MESSAGE);
+        } 
         else if (txtEspecialidad.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar especialidad", "Error", JOptionPane.INFORMATION_MESSAGE);
-        }
+            JOptionPane.showMessageDialog(null, "Falta llenar la especialidad", "Error", JOptionPane.WARNING_MESSAGE);
+        } 
         else if (txtTitulacion.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar titulacion", "Error", JOptionPane.INFORMATION_MESSAGE);
-        }
+            JOptionPane.showMessageDialog(null, "Falta llenar la titulación", "Error", JOptionPane.WARNING_MESSAGE);
+        } 
         else if (txtAniosExperiencia.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar años de experiencia", "Error", JOptionPane.INFORMATION_MESSAGE);
-        }
+            JOptionPane.showMessageDialog(null, "Falta llenar los años de experiencia", "Error", JOptionPane.WARNING_MESSAGE);
+        } 
         else {
-            Integer IdDocente =  listaDocentes.getLongitud()+1;
-            String Especialidad = txtEspecialidad.getText();
-            String Titulacion = txtTitulacion.getText();
-            String A = txtAniosExperiencia.getText();
-                                    
-            docenteControlDao.getDocentes().setIdDocente(IdDocente);
-            docenteControlDao.getDocentes().setEspecialidad(Especialidad);
-            docenteControlDao.getDocentes().setTitulacion(Titulacion);
-            docenteControlDao.getDocentes().setAniosExperiencia(A);
-            docenteControlDao.getDocentes().setDatosDocente(UtilVista.obtenerPersonaDocentesControl(cbxDocente));
-            
-            if (docenteControlDao.Persist()) {
-                JOptionPane.showMessageDialog(null, "DOCENTE GUARDADA EXISTOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
-                docenteControlDao.setDocentes(null);
+            Integer idDocente = listaDocentes.getLongitud() + 1;
+            String especialidad = txtEspecialidad.getText();
+            String titulacion = txtTitulacion.getText();
+            String aniosExperiencia = txtAniosExperiencia.getText();
+            Persona datosDocente = UtilVista.obtenerPersonaDocentesControl(cbxDocente);
+
+            Docente nuevoDocente = new Docente();
+            nuevoDocente.setIdDocente(idDocente);
+            nuevoDocente.setEspecialidad(especialidad);
+            nuevoDocente.setTitulacion(titulacion);
+            nuevoDocente.setAniosExperiencia(aniosExperiencia);
+            nuevoDocente.setDatosDocente(datosDocente);
+
+            if (docenteExiste(nuevoDocente)) {
+                JOptionPane.showMessageDialog(null, "El docente ya existe", "Error", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+
+            docenteControlDao.setDocentes(nuevoDocente);
+            try {
+                if (docenteControlDao.Persist()) {
+                    JOptionPane.showMessageDialog(null, "Docente guardado exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE);
+                    docenteControlDao.setDocentes(null);
+                } 
+                else {
+                    JOptionPane.showMessageDialog(null, "No se pudo guardar el docente", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             } 
-            else {
-                JOptionPane.showMessageDialog(null, "NO SE PUEDE REGISTRAR", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
+            catch (Exception e) {
+                e.printStackTrace();
             }
             Limpiar();
         }
@@ -495,16 +517,16 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
         
         try {
             if (cbxDocente.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar docente", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta seleccionar docente", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (txtEspecialidad.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar especialidad", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar especialidad", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (txtTitulacion.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar titulacion", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar titulacion", "Error", JOptionPane.WARNING_MESSAGE);
             }
             else if (txtAniosExperiencia.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar años de experiencia", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar años de experiencia", "Error", JOptionPane.WARNING_MESSAGE);
             }
             else {
                 Guardar();
@@ -538,16 +560,16 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
         } 
         else {
             if (cbxDocente.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar docente", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta seleccionar docente", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (txtEspecialidad.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar especialidad", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar especialidad", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (txtTitulacion.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar titulacion", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar titulacion", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (txtAniosExperiencia.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar años de experiencia", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar años de experiencia", "Error", JOptionPane.WARNING_MESSAGE);
             }
             else {
 
@@ -688,28 +710,33 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
     private void btnBuscarDocenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarDocenteActionPerformed
 
         try {
-            personaDao PD = new personaDao();
-            ListaDinamica<Persona> lista = PD.all();
+            if (txtDocenteBusqueda.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Ingrese el docente a buscar", "FALTA LLENAR", JOptionPane.WARNING_MESSAGE);
+            } 
+            else {
+                personaDao PD = new personaDao();
+                ListaDinamica<Persona> lista = PD.all();
 
-            String Campo = txtDocenteBusqueda.getText();
+                String Campo = txtDocenteBusqueda.getText();
 
-            ListaDinamica<Persona> ResultadoBusqueda = new ListaDinamica<>();
+                ListaDinamica<Persona> ResultadoBusqueda = new ListaDinamica<>();
 
-            ListaDinamica<Persona> ResultadoCe = UtilesControlador.BusquedaLineal(lista, Campo, "NumeroCedula");
-            ResultadoBusqueda.concatenar(ResultadoCe);
-            
-            ListaDinamica<Persona> ResultadoN = UtilesControlador.BusquedaLineal(lista, Campo, "Nombre");
-            ResultadoBusqueda.concatenar(ResultadoN);
+                ListaDinamica<Persona> ResultadoCe = UtilesControlador.BusquedaLineal(lista, Campo, "NumeroCedula");
+                ResultadoBusqueda.concatenar(ResultadoCe);
 
-            cbxDocente.removeAllItems();
+                ListaDinamica<Persona> ResultadoN = UtilesControlador.BusquedaLineal(lista, Campo, "Nombre");
+                ResultadoBusqueda.concatenar(ResultadoN);
 
-            for (Persona pb : ResultadoBusqueda.toArray()) {
-                if (pb.getRolPersona().getNombreRol().equals("Docente")) {
-                    cbxDocente.addItem(pb);
+                cbxDocente.removeAllItems();
+
+                for (Persona pb : ResultadoBusqueda.toArray()) {
+                    if (pb.getRolPersona().getNombreRol().equals("Docente")) {
+                        cbxDocente.addItem(pb);
+                    }
                 }
             }
 
-        } 
+        }
         catch (Exception e) {
 
         }

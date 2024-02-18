@@ -93,6 +93,8 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
                 cbxEstadoCuenta.setEnabled(true);
                 txtUsuario.setEnabled(true);
                 txtContrasena.setEnabled(true);
+                txtNumeroCedula.setEnabled(false);
+                cbxTipoDni.setEnabled(false);
             } 
             catch (Exception e) {
                 
@@ -108,41 +110,53 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
     
     private void Guardar() throws ListaVacia {
 
+        String numeroCedula = txtNumeroCedula.getText();
+        boolean numeroCedulaExistente = false;
+        for (Persona persona : personaControlDao.getListaPersonas().toArray()) {
+            if (persona.getNumeroCedula().equals(numeroCedula)) {
+                numeroCedulaExistente = true;
+                break;
+            }
+        }
+
         if (cbxTipoDni.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(null, "Falta seleccionar Tipo DNI", "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta seleccionar Tipo DNI", "Error", JOptionPane.WARNING_MESSAGE);
         }
         else if (txtNumeroCedula.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar numero dni", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta llenar numero dni", "Error", JOptionPane.WARNING_MESSAGE);
         } 
         else if (txtNombre.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar nombre", "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta llenar nombre", "Error", JOptionPane.WARNING_MESSAGE);
         } 
         else if (txtApellido.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar apellido", "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta llenar apellido", "Error", JOptionPane.WARNING_MESSAGE);
         } 
         else if (cbxGenero.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(null, "Falta seleccionar genero", "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta seleccionar genero", "Error", JOptionPane.WARNING_MESSAGE);
         }
         else if (DateFechaNacimiento.getDate() == null) {
-            JOptionPane.showMessageDialog(null, "Falta llenar fecha nacimiento", "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta llenar fecha nacimiento", "Error", JOptionPane.WARNING_MESSAGE);
         }
         else if (txtDireccion.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar direccion", "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta llenar direccion", "Error", JOptionPane.WARNING_MESSAGE);
         }
         else if (txtTelefono.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar numero celular", "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta llenar numero celular", "Error", JOptionPane.WARNING_MESSAGE);
         }
         else if (cbxRol.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(null, "Falta seleccionar rol", "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta seleccionar rol", "Error", JOptionPane.WARNING_MESSAGE);
         }
         else if (txtUsuario.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar usuario", "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta llenar usuario", "Error", JOptionPane.WARNING_MESSAGE);
         }
         else if (txtContrasena.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar contraseña", "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta llenar contraseña", "Error", JOptionPane.WARNING_MESSAGE);
         }
         else if (cbxEstadoCuenta.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(null, "Falta seleccionar estado de cuenta", "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta seleccionar estado de cuenta", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+        else if (numeroCedulaExistente) {
+            JOptionPane.showMessageDialog(null, "El número de cédula ya está registrado", "Error", JOptionPane.WARNING_MESSAGE);
         }
         else {
             //Datos de persona a registrar
@@ -748,40 +762,40 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
         } 
         else {
             if (cbxTipoDni.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar Tipo DNI", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta seleccionar Tipo DNI", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (txtNumeroCedula.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar numero dni", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar numero dni", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (txtNombre.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar nombre", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar nombre", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (txtApellido.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar apellido", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar apellido", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (cbxGenero.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar genero", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta seleccionar genero", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (DateFechaNacimiento.getDate() == null) {
-                JOptionPane.showMessageDialog(null, "Falta llenar fecha nacimiento", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar fecha nacimiento", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (txtDireccion.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar direccion", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar direccion", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (txtTelefono.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar numero celular", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar numero celular", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (cbxRol.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar rol", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta seleccionar rol", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (txtUsuario.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar usuario", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar usuario", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (txtContrasena.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar contraseña", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar contraseña", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (cbxEstadoCuenta.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar estado de cuenta", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta seleccionar estado de cuenta", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else {
 
@@ -836,6 +850,8 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
         cbxEstadoCuenta.setEnabled(false);
         txtUsuario.setEnabled(false);
         txtContrasena.setEnabled(false);
+        txtNumeroCedula.setEnabled(true);
+        cbxTipoDni.setEnabled(true);
         
 //            JOptionPane.showMessageDialog(null, "No se puede modificar");
 
@@ -852,40 +868,40 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
     private void btnGuardarPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarPersonaActionPerformed
         
         if (cbxTipoDni.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(null, "Falta seleccionar Tipo DNI", "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta seleccionar Tipo DNI", "Error", JOptionPane.WARNING_MESSAGE);
         }
         else if (txtNumeroCedula.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar numero dni", "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta llenar numero dni", "Error", JOptionPane.WARNING_MESSAGE);
         } 
         else if (txtNombre.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar nombre", "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta llenar nombre", "Error", JOptionPane.WARNING_MESSAGE);
         } 
         else if (txtApellido.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar apellido", "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta llenar apellido", "Error", JOptionPane.WARNING_MESSAGE);
         } 
         else if (cbxGenero.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(null, "Falta seleccionar genero", "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta seleccionar genero", "Error", JOptionPane.WARNING_MESSAGE);
         }
         else if (DateFechaNacimiento.getDate() == null) {
-            JOptionPane.showMessageDialog(null, "Falta llenar fecha nacimiento", "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta llenar fecha nacimiento", "Error", JOptionPane.WARNING_MESSAGE);
         }
         else if (txtDireccion.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar direccion", "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta llenar direccion", "Error", JOptionPane.WARNING_MESSAGE);
         }
         else if (txtTelefono.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar numero celular", "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta llenar numero celular", "Error", JOptionPane.WARNING_MESSAGE);
         }
         else if (cbxRol.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(null, "Falta seleccionar rol", "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta seleccionar rol", "Error", JOptionPane.WARNING_MESSAGE);
         }
         else if (txtUsuario.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar usuario", "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta llenar usuario", "Error", JOptionPane.WARNING_MESSAGE);
         }
         else if (txtContrasena.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar contraseña", "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta llenar contraseña", "Error", JOptionPane.WARNING_MESSAGE);
         }
         else if (cbxEstadoCuenta.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(null, "Falta seleccionar estado de cuenta", "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta seleccionar estado de cuenta", "Error", JOptionPane.WARNING_MESSAGE);
         }
         else{
             try {
@@ -1006,15 +1022,15 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
 
     private void txtDireccionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDireccionKeyTyped
         
-        char c = evt.getKeyChar();
-
-        if (!Character.isLetter(c) && c != KeyEvent.VK_BACK_SPACE && c != ' ') {
-            evt.consume();
-            JOptionPane.showMessageDialog(null, "Solo ingreso de letras", "CARACTER NO VALIDO", JOptionPane.WARNING_MESSAGE);
-        }
-        if (c != KeyEvent.VK_BACK_SPACE) {
-
-        }
+//        char c = evt.getKeyChar();
+//
+//        if (!Character.isLetter(c) && c != KeyEvent.VK_BACK_SPACE && c != ' ') {
+//            evt.consume();
+//            JOptionPane.showMessageDialog(null, "Solo ingreso de letras", "CARACTER NO VALIDO", JOptionPane.WARNING_MESSAGE);
+//        }
+//        if (c != KeyEvent.VK_BACK_SPACE) {
+//
+//        }
         
     }//GEN-LAST:event_txtDireccionKeyTyped
 
@@ -1096,8 +1112,16 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         
-        txtUsuario.setText(generarCorreoInst());
-        txtContrasena.setText(txtNumeroCedula.getText());
+        if (txtNombre.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Se necesita el nombre para generar el correo", "FALTA COMPLETAR", JOptionPane.WARNING_MESSAGE);
+        } 
+        else if (txtApellido.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Se necesita el apellido para generar el correo", "FALTA COMPLETAR", JOptionPane.WARNING_MESSAGE);
+        } 
+        else {
+            txtUsuario.setText(generarCorreoInst());
+            txtContrasena.setText(txtNumeroCedula.getText());
+        }
         
     }//GEN-LAST:event_jButton2ActionPerformed
 

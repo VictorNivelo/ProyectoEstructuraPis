@@ -5,6 +5,8 @@ import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Controlador.Dao.Modelo.materiaDao;
 import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.Utiles.UtilesControlador;
+import Modelo.Ciclo;
+import Modelo.Cursa;
 import Modelo.Materia;
 import Vista.Utiles.UtilVista;
 import Vista.ModeloTabla.ModeloTablaMateria;
@@ -78,44 +80,70 @@ public class VistaGestionMateria extends javax.swing.JFrame {
         }
     }
         
-    private void Guardar() throws ListaVacia {
+    private boolean materiaExiste(Materia nuevaMateria) {
+        ListaDinamica<Materia> materias = materiaControlDao.getListaMateria();
+        for (Materia m : materias.toArray()) {
+            if (m.getNombreMateria().equals(nuevaMateria.getNombreMateria())
+                    && m.getDescipcionMateria().equals(nuevaMateria.getDescipcionMateria())
+                    && m.getNumeroHoras().equals(nuevaMateria.getNumeroHoras())
+                    && m.getCursoMateria().getIdCurso().equals(nuevaMateria.getCursoMateria().getIdCurso())
+                    && m.getCicloMateria().getIdCiclo().equals(nuevaMateria.getCicloMateria().getIdCiclo())) {
+                return true;
+            }
+        }
+        return false;
+    }
 
+    private void Guardar() throws ListaVacia {
         if (txtNombreMateria.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar numero dni", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta llenar el nombre de la materia", "Error", JOptionPane.WARNING_MESSAGE);
         } 
         else if (txtNombreDescripcion.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar nombre", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-        else if(txtNumeroHoras.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Falta llenar numero de horas", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-        else if(cbxCurso.getSelectedIndex() == -1){
-            JOptionPane.showMessageDialog(null, "Falta seleccionar el curso", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-        
+            JOptionPane.showMessageDialog(null, "Falta llenar la descripción de la materia", "Error", JOptionPane.WARNING_MESSAGE);
+        } 
+        else if (txtNumeroHoras.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Falta llenar el número de horas de la materia", "Error", JOptionPane.WARNING_MESSAGE);
+        } 
+        else if (cbxCurso.getSelectedIndex() == -1) {
+            JOptionPane.showMessageDialog(null, "Falta seleccionar el curso de la materia", "Error", JOptionPane.WARNING_MESSAGE);
+        } 
+        else if (cbxCiclo.getSelectedIndex() == -1) {
+            JOptionPane.showMessageDialog(null, "Falta seleccionar el ciclo de la materia", "Error", JOptionPane.WARNING_MESSAGE);
+        } 
         else {
-            //Datos de meteria
-            Integer IdPersona = listaMateria.getLongitud() + 1;
-            String NombreAsignatura = txtNombreMateria.getText();
-            String Descripcion = txtNombreDescripcion.getText();
-            String NumeroHoras = txtNumeroHoras.getText();
-            
-            materiaControlDao.getMateria().setIdMateria(IdPersona);
-            materiaControlDao.getMateria().setNombreMateria(NombreAsignatura);
-            materiaControlDao.getMateria().setDescipcionMateria(Descripcion);
-            materiaControlDao.getMateria().setNumeroHoras(NumeroHoras);
-            materiaControlDao.getMateria().setCursoMateria(UtilVista.obtenerCursoControl(cbxCurso));
-            materiaControlDao.getMateria().setCicloMateria(UtilVista.obtenerCicloControl(cbxCiclo));
-            
-            
-            if (materiaControlDao.Persist()) {
-                JOptionPane.showMessageDialog(null, "MATERIA GUARDADA EXISTOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
-                materiaControlDao.setMateria(null);
+            String nombreMateria = txtNombreMateria.getText();
+            String descripcion = txtNombreDescripcion.getText();
+            String numeroHoras = txtNumeroHoras.getText();
+            Cursa curso = UtilVista.obtenerCursoControl(cbxCurso);
+            Ciclo ciclo = UtilVista.obtenerCicloControl(cbxCiclo);
+
+            Materia nuevaMateria = new Materia();
+            nuevaMateria.setNombreMateria(nombreMateria);
+            nuevaMateria.setDescipcionMateria(descripcion);
+            nuevaMateria.setNumeroHoras(numeroHoras);
+            nuevaMateria.setCursoMateria(curso);
+            nuevaMateria.setCicloMateria(ciclo);
+
+            if (materiaExiste(nuevaMateria)) {
+                JOptionPane.showMessageDialog(null, "La materia ya existe", "Error", JOptionPane.INFORMATION_MESSAGE);
             } 
             else {
-                JOptionPane.showMessageDialog(null, "NO SE PUEDE GUARDAR", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
+                Integer idMateria = listaMateria.getLongitud() + 1;
+                nuevaMateria.setIdMateria(idMateria);
+
+                try {
+                    materiaControlDao.setMateria(nuevaMateria);
+                    if (materiaControlDao.Persist()) {
+                        JOptionPane.showMessageDialog(null, "Materia guardada exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE);
+                        Limpiar();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "No se pudo guardar la materia", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
-            Limpiar();
         }
     }
     
@@ -473,16 +501,16 @@ public class VistaGestionMateria extends javax.swing.JFrame {
     private void btnGuardarMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarMateriaActionPerformed
         
         if(txtNombreMateria.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Nombre de materia vacio", "CAMPO VACIO", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Nombre de materia vacio", "CAMPO VACIO", JOptionPane.WARNING_MESSAGE);
         }
         else if(txtNombreDescripcion.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Descripcion vacia", "CAMPO VACIO", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Descripcion vacia", "CAMPO VACIO", JOptionPane.WARNING_MESSAGE);
         }
         else if(txtNumeroHoras.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Falta llenar numero de horas", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta llenar numero de horas", "Error", JOptionPane.WARNING_MESSAGE);
         }
         else if (cbxCurso.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(null, "Falta seleccionar horario", "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta seleccionar horario", "Error", JOptionPane.WARNING_MESSAGE);
         } 
         else{
             try {
@@ -504,16 +532,16 @@ public class VistaGestionMateria extends javax.swing.JFrame {
         else {
 
             if (txtNombreMateria.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Nombre de materia vacio", "CAMPO VACIO", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Nombre de materia vacio", "CAMPO VACIO", JOptionPane.WARNING_MESSAGE);
             } 
             else if (txtNombreDescripcion.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Descripcion vacia", "CAMPO VACIO", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Descripcion vacia", "CAMPO VACIO", JOptionPane.WARNING_MESSAGE);
             }
             else if (txtNumeroHoras.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar numero de horas", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar numero de horas", "Error", JOptionPane.WARNING_MESSAGE);
             }
             else if (cbxCurso.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar horario", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta seleccionar horario", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else {
                 //Datos de materia

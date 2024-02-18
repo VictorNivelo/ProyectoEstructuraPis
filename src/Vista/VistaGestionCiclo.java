@@ -114,18 +114,18 @@ public class VistaGestionCiclo extends javax.swing.JFrame {
     private void Guardar() throws ListaVacia {
 
         if (cbxNombreCiclo.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(null, "Falta seleccionar el ciclo", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta seleccionar el ciclo", "Error", JOptionPane.WARNING_MESSAGE);
         }
         else if (cbxUnidad.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(null, "Falta seleccionar materia", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta seleccionar materia", "Error", JOptionPane.WARNING_MESSAGE);
         } 
         else {
             Integer idCiclo = listaCiclos.getLongitud()+1;
-            String NombreCiclo = cbxNombreCiclo.getSelectedItem().toString();
+            String NumeroCiclo = cbxNombreCiclo.getSelectedItem().toString();
             
             cicloControlDao.getCiclos().setIdCiclo(idCiclo);
             cicloControlDao.getCiclos().setNombreCiclo(UtilVista.obtenerCodigoCursoControl(cbxNombreCiclo));
-            cicloControlDao.getCiclos().setNumeroCiclo(ObtenerNombreCiclo(NombreCiclo));
+            cicloControlDao.getCiclos().setNumeroCiclo(ObtenerNombreCiclo(NumeroCiclo));
             cicloControlDao.getCiclos().setUnidadCurricularCiclo(UtilVista.obtenerUnidadControl(cbxUnidad));
             
             if (cicloControlDao.Persist()) {
@@ -463,10 +463,10 @@ public class VistaGestionCiclo extends javax.swing.JFrame {
         
         try {
             if (cbxNombreCiclo.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar el ciclo", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta seleccionar el ciclo", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (cbxUnidad.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar unidad", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta seleccionar unidad", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else {
                 Guardar();
@@ -528,10 +528,10 @@ public class VistaGestionCiclo extends javax.swing.JFrame {
         } 
         else {
             if (cbxNombreCiclo.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar el ciclo", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta seleccionar el ciclo", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (cbxUnidad.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar materia", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta seleccionar materia", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else {
                 Integer IdCiclo = cicloControlDao.getCiclos().getIdCiclo();

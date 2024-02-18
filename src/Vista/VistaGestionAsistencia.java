@@ -91,19 +91,19 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
     private void Guardar() throws ListaVacia {
 
         if (cbxHorario.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(null, "Falta seleccionar ek gorario", "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta seleccionar ek gorario", "Error", JOptionPane.WARNING_MESSAGE);
         }
         else if (cbxEstadoAsistencia.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(null, "Falta seleccionar la asistencia", "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta seleccionar la asistencia", "Error", JOptionPane.WARNING_MESSAGE);
         } 
         else if (txtObservacion.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar duracion", "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta llenar duracion", "Error", JOptionPane.WARNING_MESSAGE);
         }
         else if (txtTematica.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar duracion", "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta llenar duracion", "Error", JOptionPane.WARNING_MESSAGE);
         }
         else if (DateFechaTematica.getDate() == null) {
-            JOptionPane.showMessageDialog(null, "Falta llenar fecha", "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta llenar fecha", "Error", JOptionPane.WARNING_MESSAGE);
         }
         else {
             Integer IdAsistencia = listaAsistencia.getLongitud() + 1;
@@ -124,7 +124,7 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
                                     
             AsistenciaControl.getAsistencias().setIdAsistencia(IdAsistencia);
             AsistenciaControl.getAsistencias().setHorarioAsistencia(UtilVista.obtenerHorarioControl(cbxHorario));
-            AsistenciaControl.getAsistencias().setEstadoAsistencia(estadoSeleccionado);
+//            AsistenciaControl.getAsistencias().setEstadoAsistencia(estadoSeleccionado);
             AsistenciaControl.getAsistencias().setObservacion(Observacion);
             AsistenciaControl.getAsistencias().setAsistenciaTematica(t);
                         
@@ -133,7 +133,7 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
                 AsistenciaControl.setAsistencias(null);
             } 
             else {
-                JOptionPane.showMessageDialog(null, "NO SE PUEDE REGISTRAR", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "NO SE PUEDE REGISTRAR", "INFORMACION", JOptionPane.WARNING_MESSAGE);
             }
             Limpiar();
         }
@@ -571,19 +571,19 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
         } 
         else {
             if (cbxHorario.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar ek gorario", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta seleccionar ek gorario", "Error", JOptionPane.WARNING_MESSAGE);
             }
             else if (cbxEstadoAsistencia.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar la asistencia", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta seleccionar la asistencia", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (txtObservacion.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar duracion", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar duracion", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (txtTematica.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar duracion", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar duracion", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (DateFechaTematica.getDate() == null) {
-                JOptionPane.showMessageDialog(null, "Falta llenar fecha", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar fecha", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else {
 
@@ -604,7 +604,7 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
 
                 Asistencia asistenciaModificada = new Asistencia();
                 asistenciaModificada.setIdAsistencia(IdAsistencia);
-                asistenciaModificada.setEstadoAsistencia(estadoSeleccionado);
+//                asistenciaModificada.setEstadoAsistencia(estadoSeleccionado);
                 asistenciaModificada.setObservacion(Observacion);
                 asistenciaModificada.setAsistenciaTematica(t);
                 asistenciaModificada.setHorarioAsistencia(UtilVista.obtenerHorarioControl(cbxHorario));
@@ -629,19 +629,19 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
         
         try {
             if (cbxHorario.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar ek gorario", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta seleccionar ek gorario", "Error", JOptionPane.WARNING_MESSAGE);
             }
             else if (cbxEstadoAsistencia.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar la asistencia", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta seleccionar la asistencia", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (txtObservacion.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar duracion", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar duracion", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (txtTematica.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar duracion", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar duracion", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (DateFechaTematica.getDate() == null) {
-                JOptionPane.showMessageDialog(null, "Falta llenar fecha", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar fecha", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else {
                 Guardar();

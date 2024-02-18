@@ -1,6 +1,7 @@
 package Vista;
 
 import Controlador.Dao.Modelo.alumnoDao;
+import Controlador.Dao.Modelo.asistenciaDao;
 import Controlador.Dao.Modelo.materiaDao;
 import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
@@ -11,10 +12,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JTable;
 import Modelo.Matricula;
 import Modelo.Alumno;
+import Modelo.Asistencia;
 import Modelo.ControlAccesoDocente;
 import Modelo.Cursa;
 import Modelo.Materia;
 import Modelo.Persona;
+import Vista.Utiles.UtilVista;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
@@ -27,6 +30,8 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
     DefaultTableModel dtm = new DefaultTableModel();
     alumnoDao alumnoControlDao = new alumnoDao();
     materiaDao materiaControlDao = new materiaDao();
+    asistenciaDao asistenciaControlDao = new asistenciaDao();
+    ListaDinamica<Asistencia> listaAsistencia = new ListaDinamica<>();
 
     /**
      * Creates new form VistaTomaAsistencia
@@ -36,7 +41,7 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
     public VistaDocentesTomaAsistencia() throws ListaVacia {
         initComponents();
         this.setLocationRelativeTo(null);
-//        UtilVista.cargarcomboHorario(cbxHorario);
+        UtilVista.cargarcomboHorario(cbxHorario);
         setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
         DateFechaActual.setDateFormatString("dd/MMMM/yyyy");
         dtm.setColumnIdentifiers(new String[]{"#", "Nombre", "Apellido", "Asistencia"});
@@ -112,6 +117,62 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
         return tabla.getValueAt(fila, columna) != null;
     }
     
+    private void Limpiar() throws ListaVacia {
+        DateFechaActual.setDate(null);
+        cbxMateria.setSelectedIndex(-1);
+        cbxHorario.setSelectedIndex(-1);
+        txtTematica.setText("");
+        txtObservacion.setText("");
+        asistenciaControlDao.setAsistencias(null);
+        CargarTabla();
+    }
+    
+    private void Guardar() throws ListaVacia {
+
+        if (DateFechaActual.getDate() == null) {
+            JOptionPane.showMessageDialog(null, "Falta seleccionar la fecha", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+        else if (cbxMateria.getSelectedIndex() == -1) {
+            JOptionPane.showMessageDialog(null, "Falta seleccionar la materia", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+//        else if (cbxHorario.getSelectedIndex() == -1) {
+//            JOptionPane.showMessageDialog(null, "Falta seleccionar el horario", "Error", JOptionPane.WARNING_MESSAGE);
+//        } 
+        else if (txtTematica.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Falta llenar duracion", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+        else if (txtObservacion.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Falta llenar duracion", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+        else {
+            
+            for (int i = 0; i < tblt.getRowCount(); i++) {
+            boolean estaPresente = (boolean) tblt.getValueAt(i, 3);
+            String estadoAsistencia = estaPresente ? "Presente" : "Ausente";
+
+            Integer idAsistencia = listaAsistencia.getLongitud() + 1;
+
+            Asistencia nuevaAsistencia = new Asistencia();
+            nuevaAsistencia.setIdAsistencia(idAsistencia);
+            nuevaAsistencia.setEstadoAsistencia(estadoAsistencia);
+            nuevaAsistencia.setObservacion(txtObservacion.getText());
+            nuevaAsistencia.setHorarioAsistencia(UtilVista.obtenerHorarioControl(cbxHorario));
+
+            asistenciaControlDao.setAsistencias(nuevaAsistencia);
+            try {
+                if (asistenciaControlDao.Persist()) {
+                    JOptionPane.showMessageDialog(null, "Asistencia guardada exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE);
+                    asistenciaControlDao.setAsistencias(null);
+                } else {
+                    JOptionPane.showMessageDialog(null, "No se pudo guardar la asistencia", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        Limpiar();
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -139,7 +200,7 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtTematica = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         DateFechaActual = new com.toedter.calendar.JDateChooser();
         jLabel11 = new javax.swing.JLabel();
@@ -260,9 +321,9 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Tematica");
 
-        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtTematica.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextField1KeyTyped(evt);
+                txtTematicaKeyTyped(evt);
             }
         });
 
@@ -286,6 +347,11 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
         jButton6.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Guardar.png"))); // NOI18N
         jButton6.setText("GUARDAR ASISTENCIA");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         btnOrdenar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Ordenar.png"))); // NOI18N
         btnOrdenar.addActionListener(new java.awt.event.ActionListener() {
@@ -316,7 +382,7 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
                         .addComponent(jButton4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton5))
-                    .addComponent(jTextField1)
+                    .addComponent(txtTematica)
                     .addComponent(txtObservacion)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -408,7 +474,7 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtTematica, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel12)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -507,7 +573,7 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyTyped
+    private void txtTematicaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTematicaKeyTyped
         
         char c = evt.getKeyChar();
 
@@ -519,7 +585,7 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
 
         }
         
-    }//GEN-LAST:event_jTextField1KeyTyped
+    }//GEN-LAST:event_txtTematicaKeyTyped
 
     private void btnOrdenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdenarActionPerformed
 
@@ -575,6 +641,15 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_btnOrdenarActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        
+        try {
+            Guardar();
+        } catch (Exception e) {
+        }
+        
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -646,9 +721,9 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTable tblt;
     private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtObservacion;
+    private javax.swing.JTextField txtTematica;
     // End of variables declaration//GEN-END:variables
 }
