@@ -1,8 +1,10 @@
 
 package Vista;
 
+import Controlador.Dao.Modelo.alumnoDao;
 import Controlador.Dao.Modelo.personaDao;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
+import Modelo.Alumno;
 import Modelo.Cuenta;
 import Modelo.Persona;
 import Modelo.Rol;
@@ -91,7 +93,7 @@ public class VistaInicioSesionEstudiante extends javax.swing.JFrame {
                     procesarAdministrador();
                     break;
                 case "Estudiante":
-                    procesarEstudiante();
+                    procesarEstudiante(persona.getNombre());
                     break;
                 default:
                     break;
@@ -125,7 +127,10 @@ public class VistaInicioSesionEstudiante extends javax.swing.JFrame {
         }
 
         if (credencialesCorrectas && esEstudiante) {
-            procesarEstudiante();
+            alumnoDao alumnoDao = new alumnoDao();
+            Alumno alumno = alumnoDao.obtenerAlumnoPorUsuario(usuarioIngresado);
+        String nombreAlumno = (alumno != null) ? alumno.getDatosAlumno().getNombre(): "";
+            procesarEstudiante(nombreAlumno);
             dispose();
         }
         else {
@@ -139,9 +144,9 @@ public class VistaInicioSesionEstudiante extends javax.swing.JFrame {
         System.out.println("Es un administrador");
     }
 
-    private static void procesarEstudiante() {
+    private static void procesarEstudiante(String nombreAlumno) {
         try {
-            VistaAlumnoEva abrirAsistencia = new VistaAlumnoEva(null, false);
+            VistaAlumnoEva abrirAsistencia = new VistaAlumnoEva(null, false,nombreAlumno);
             abrirAsistencia.setVisible(true);
         } 
         catch (Exception e) {

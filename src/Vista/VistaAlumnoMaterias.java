@@ -362,7 +362,7 @@ public class VistaAlumnoMaterias extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        VistaAlumnoEva ea = new VistaAlumnoEva(null, true);
+        VistaAlumnoEva ea = new VistaAlumnoEva(null, true,"");
         dispose();
         ea.setVisible(true);
     }//GEN-LAST:event_btnRegresarActionPerformed
