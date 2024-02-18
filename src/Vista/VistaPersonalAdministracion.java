@@ -134,7 +134,6 @@ public class VistaPersonalAdministracion extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
         MenuAsistencia = new javax.swing.JMenu();
         jMenuItem14 = new javax.swing.JMenuItem();
-        jMenuItem15 = new javax.swing.JMenuItem();
         MenuInterfaz = new javax.swing.JMenu();
         jMenuItem16 = new javax.swing.JMenuItem();
 
@@ -347,15 +346,6 @@ public class VistaPersonalAdministracion extends javax.swing.JFrame {
             }
         });
         MenuAsistencia.add(jMenuItem14);
-
-        jMenuItem15.setFont(new java.awt.Font("SansSerif", 0, 13)); // NOI18N
-        jMenuItem15.setText("Gestion asistencia");
-        jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem15ActionPerformed(evt);
-            }
-        });
-        MenuAsistencia.add(jMenuItem15);
 
         MenuHerramientas.add(MenuAsistencia);
 
@@ -583,19 +573,6 @@ public class VistaPersonalAdministracion extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jMenuItem14ActionPerformed
 
-    private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
-
-        try {
-            VistaGestionAsistencia abrirAsistencia;
-            abrirAsistencia = new VistaGestionAsistencia();
-            abrirAsistencia.setVisible(true);
-            this.setVisible(false);
-        }
-        catch (ListaVacia ex) {
-
-        }
-    }//GEN-LAST:event_jMenuItem15ActionPerformed
-
     private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
 
         VistaGestionInterfazPrincipal vip = new VistaGestionInterfazPrincipal();
@@ -655,7 +632,6 @@ public class VistaPersonalAdministracion extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
-    private javax.swing.JMenuItem jMenuItem15;
     private javax.swing.JMenuItem jMenuItem16;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;

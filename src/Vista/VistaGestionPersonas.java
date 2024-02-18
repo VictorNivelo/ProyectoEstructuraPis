@@ -36,6 +36,7 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
         UtilVista.cargarcomboRoles(cbxRol);
         DateFechaNacimiento.setDateFormatString("dd/MMMM/yyyy");
         cbxTipoBusqueda.setMaximumRowCount(cbxTipoBusqueda.getItemCount());
+        cbxTipoOrden.setMaximumRowCount(cbxTipoOrden.getItemCount());
         CargarTabla();
     }
     
