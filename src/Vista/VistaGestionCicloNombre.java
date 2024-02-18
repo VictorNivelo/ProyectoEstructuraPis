@@ -60,26 +60,47 @@ public class VistaGestionCicloNombre extends javax.swing.JFrame {
         }
     }
     
-    private void Guardar() throws ListaVacia {
+    private boolean nombreCicloExiste(NombreCiclo nuevoNombreCiclo) {
+        ListaDinamica<NombreCiclo> nombres = codigoCursoControlDao.getListaNombreCiclo();
+        for (NombreCiclo nombre : nombres.toArray()) {
+            if (nombre.getNombreCiclo().equals(nuevoNombreCiclo.getNombreCiclo())) {
+                return true;
+            }
+        }
+        return false;
+    }
 
+    private void Guardar() throws ListaVacia {
         if (txtCodigoCurso.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta seleccionar el paralelo", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta llenar el nombre del ciclo", "Error", JOptionPane.WARNING_MESSAGE);
         } 
         else {
-            Integer IdCurso = listaCodigoCurso.getLongitud() + 1;
-            String Nombre = txtCodigoCurso.getText();
-            
-            codigoCursoControlDao.getNombreCiclo().setIdNombreCiclo(IdCurso);
-            codigoCursoControlDao.getNombreCiclo().setNombreCiclo(Nombre);
-                                   
-            if (codigoCursoControlDao.Persist()) {
-                JOptionPane.showMessageDialog(null, "NOMBRE GUARDADO EXISTOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
-                codigoCursoControlDao.setNombreCiclo(null);
-            } 
-            else {
-                JOptionPane.showMessageDialog(null, "NO SE PUEDE REGISTRAR", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
+            String nombre = txtCodigoCurso.getText();
+            NombreCiclo nuevoNombreCiclo = new NombreCiclo();
+            nuevoNombreCiclo.setNombreCiclo(nombre);
+
+            if (nombreCicloExiste(nuevoNombreCiclo)) {
+                JOptionPane.showMessageDialog(null, "El nombre del ciclo ya existe", "NOMBRE DE CICLO EXISTENTE", JOptionPane.INFORMATION_MESSAGE);
+                return;
             }
-            Limpiar();
+
+            try {
+                Integer idCurso = listaCodigoCurso.getLongitud() + 1;
+                nuevoNombreCiclo.setIdNombreCiclo(idCurso);
+
+                codigoCursoControlDao.setNombreCiclo(nuevoNombreCiclo);
+                if (codigoCursoControlDao.Persist()) {
+                    JOptionPane.showMessageDialog(null, "NOMBRE DE CICLO GUARDADO EXITOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
+                    codigoCursoControlDao.setNombreCiclo(null);
+                } 
+                else {
+                    JOptionPane.showMessageDialog(null, "NO SE PUEDE REGISTRAR", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
+                }
+                Limpiar();
+            } 
+            catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
     
@@ -372,7 +393,7 @@ public class VistaGestionCicloNombre extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         
         if (txtCodigoCurso.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta seleccionar el paralelo", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta seleccionar el paralelo", "Error", JOptionPane.WARNING_MESSAGE);
         } 
         else {
             try {
@@ -394,7 +415,7 @@ public class VistaGestionCicloNombre extends javax.swing.JFrame {
         else {
 
             if (txtCodigoCurso.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar el paralelo", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta seleccionar el paralelo", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else {
                 Integer IdMateria = codigoCursoControlDao.getNombreCiclo().getIdNombreCiclo();

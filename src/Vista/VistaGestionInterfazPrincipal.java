@@ -111,19 +111,19 @@ public class VistaGestionInterfazPrincipal extends javax.swing.JFrame {
     private void Guardar() throws ListaVacia {
 
         if (txtImagen.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar seleccionar la imagen", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta llenar seleccionar la imagen", "Error", JOptionPane.WARNING_MESSAGE);
         }
         else if (txtTiempo.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar el tiempo", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta llenar el tiempo", "Error", JOptionPane.WARNING_MESSAGE);
         }
         else if (txtTitulo.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar el titulo", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta llenar el titulo", "Error", JOptionPane.WARNING_MESSAGE);
         } 
         else if (txtContenido.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar el contenido", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta llenar el contenido", "Error", JOptionPane.WARNING_MESSAGE);
         } 
         else if (cbxEstadoPresentacion.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(null, "Falta seleccionar el estado de la presentacion", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta seleccionar el estado de la presentacion", "Error", JOptionPane.WARNING_MESSAGE);
         }
         else {
             Integer IdPresentacion = listaPresentacion.getLongitud() + 1;
@@ -617,19 +617,19 @@ public class VistaGestionInterfazPrincipal extends javax.swing.JFrame {
         
 
         if (txtImagen.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar seleccionar la imagen", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta llenar seleccionar la imagen", "Error", JOptionPane.WARNING_MESSAGE);
         } 
         else if (txtTiempo.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar el tiempo", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta llenar el tiempo", "Error", JOptionPane.WARNING_MESSAGE);
         }
         else if (txtTitulo.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar el titulo", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta llenar el titulo", "Error", JOptionPane.WARNING_MESSAGE);
         } 
         else if (txtContenido.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar el contenido", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta llenar el contenido", "Error", JOptionPane.WARNING_MESSAGE);
         } 
         else if (cbxEstadoPresentacion.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(null, "Falta seleccionar el estado de la presentacion", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta seleccionar el estado de la presentacion", "Error", JOptionPane.WARNING_MESSAGE);
         } 
         else {
             try {
@@ -658,19 +658,19 @@ public class VistaGestionInterfazPrincipal extends javax.swing.JFrame {
         } 
         else {
             if (txtImagen.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar seleccionar la imagen", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar seleccionar la imagen", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (txtTiempo.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar el tiempo", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar el tiempo", "Error", JOptionPane.WARNING_MESSAGE);
             }
             else if (txtTitulo.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar el titulo", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar el titulo", "Error", JOptionPane.WARNING_MESSAGE);
             }
             else if (txtContenido.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar el contenido", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar el contenido", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (cbxEstadoPresentacion.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar el estado de la presentacion", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta seleccionar el estado de la presentacion", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else {
 

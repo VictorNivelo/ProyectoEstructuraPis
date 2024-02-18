@@ -73,37 +73,56 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
         }
     }
     
-    private void Guardar() throws ListaVacia {
+    private boolean alumnoExiste(Alumno nuevoAlumno) {
+        ListaDinamica<Alumno> alumnos = alumnoControlDao.getListaAlumnos();
+        for (Alumno a : alumnos.toArray()) {
+            if (a.getIdAlumno().equals(nuevoAlumno.getIdAlumno())) {
+                return true;
+            }
+        }
+        return false;
+    }
 
+    private void Guardar() throws ListaVacia {
         if (cbxAlumno.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(null, "Falta llenar nombre de la carrera", "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta seleccionar un alumno", "Error", JOptionPane.WARNING_MESSAGE);
         } 
         else if (cbxEstado.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(null, "Falta llenar nombre de la carrera", "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta seleccionar el estado del alumno", "Error", JOptionPane.WARNING_MESSAGE);
         } 
         else {
-            Integer IdAlumno = listaAlumnos.getLongitud() + 1;
-            String Estado = cbxEstado.getSelectedItem().toString();
-                                   
-            alumnoControlDao.getAlumnos().setIdAlumno(IdAlumno);
-            alumnoControlDao.getAlumnos().setDatosAlumno(UtilVista.obtenerPersonaAlumnosControl(cbxAlumno));
-            alumnoControlDao.getAlumnos().setEstadoAlumno(Estado);
-            //Agregar la matricula al alumno
-//            Matricula matricula = UtilVista.obtenerMatriculaControl(cbxMatricula);
-//            alumnoControlDao.getAlumnos().getListaMatriculaAlumno().Agregar(matricula);
-            
-            if (alumnoControlDao.Persist()) {
-                JOptionPane.showMessageDialog(null, "ALUMNO GUARDADA EXISTOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
-                alumnoControlDao.setAlumnos(null);
+            Integer idAlumno = listaAlumnos.getLongitud() + 1;
+            String estado = cbxEstado.getSelectedItem().toString();
+            Persona datosAlumno = UtilVista.obtenerPersonaAlumnosControl(cbxAlumno);
+
+            Alumno nuevoAlumno = new Alumno();
+            nuevoAlumno.setIdAlumno(idAlumno);
+            nuevoAlumno.setDatosAlumno(datosAlumno);
+            nuevoAlumno.setEstadoAlumno(estado);
+
+            if (alumnoExiste(nuevoAlumno)) {
+                JOptionPane.showMessageDialog(null, "El alumno ya existe", "Error", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+
+            alumnoControlDao.setAlumnos(nuevoAlumno);
+            try {
+                if (alumnoControlDao.Persist()) {
+                    JOptionPane.showMessageDialog(null, "Alumno guardado exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE);
+                    alumnoControlDao.setAlumnos(null);
+                } 
+                else {
+                    JOptionPane.showMessageDialog(null, "No se pudo guardar el alumno", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             } 
-            else {
-                JOptionPane.showMessageDialog(null, "NO SE PUEDE REGISTRAR", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
+            catch (Exception e) {
+                e.printStackTrace();
             }
             Limpiar();
             cbxEstado.setEnabled(false);
         }
     }
-    
+
     public  Integer OrdenSeleccionado(){
         String OrdenO = cbxOrden.getSelectedItem().toString();
 
@@ -505,10 +524,10 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
         
         try {
             if (cbxAlumno.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar alumno", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta seleccionar alumno", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (cbxEstado.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar estado", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta seleccionar estado", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else {
                 Guardar();
@@ -528,10 +547,10 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
         } 
         else {
             if (cbxAlumno.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar alumno", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta seleccionar alumno", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (cbxEstado.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar estado", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta seleccionar estado", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else {
                 Integer IdAlumno = alumnoControlDao.getAlumnos().getIdAlumno();
@@ -575,27 +594,31 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         
         try {
-            personaDao PD = new personaDao();
-            ListaDinamica<Persona> lista = PD.all();
+            if (txtAlumnoBusqueda.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Ingrese el alumno a buscar", "FALTA LLENAR", JOptionPane.WARNING_MESSAGE);
+            } 
+            else {
+                personaDao PD = new personaDao();
+                ListaDinamica<Persona> lista = PD.all();
 
-            String Campo = txtAlumnoBusqueda.getText();
-            
-            ListaDinamica<Persona> ResultadoBusqueda = new ListaDinamica<>();
+                String Campo = txtAlumnoBusqueda.getText();
 
-            ListaDinamica<Persona> ResultadoCe = UtilesControlador.BusquedaLineal(lista, Campo, "NumeroCedula");
-            ResultadoBusqueda.concatenar(ResultadoCe);
-            
-            ListaDinamica<Persona> ResultadoN = UtilesControlador.BusquedaLineal(lista, Campo, "Nombre");
-            ResultadoBusqueda.concatenar(ResultadoN);
+                ListaDinamica<Persona> ResultadoBusqueda = new ListaDinamica<>();
 
-            cbxAlumno.removeAllItems();
+                ListaDinamica<Persona> ResultadoCe = UtilesControlador.BusquedaLineal(lista, Campo, "NumeroCedula");
+                ResultadoBusqueda.concatenar(ResultadoCe);
 
-            for (Persona pb : ResultadoBusqueda.toArray()) {
-                if (pb.getRolPersona().getNombreRol().equals("Estudiante")) {
-                    cbxAlumno.addItem(pb);
+                ListaDinamica<Persona> ResultadoN = UtilesControlador.BusquedaLineal(lista, Campo, "Nombre");
+                ResultadoBusqueda.concatenar(ResultadoN);
+
+                cbxAlumno.removeAllItems();
+
+                for (Persona pb : ResultadoBusqueda.toArray()) {
+                    if (pb.getRolPersona().getNombreRol().equals("Estudiante")) {
+                        cbxAlumno.addItem(pb);
+                    }
                 }
             }
-
         } 
         catch (Exception e) {
 

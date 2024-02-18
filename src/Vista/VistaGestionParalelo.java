@@ -87,28 +87,51 @@ public class VistaGestionParalelo extends javax.swing.JFrame {
         return "P-" + String.format("%04d", ultimoId);
     }
     
-    private void Guardar() throws ListaVacia {
+    private boolean paraleloExiste(Paralelo nuevoParalelo) {
+        ListaDinamica<Paralelo> paralelos = paraleloControlDao.getListaParalelo();
+        for (Paralelo p : paralelos.toArray()) {
+            if (p.getCodigoParalelo().equals(nuevoParalelo.getCodigoParalelo())
+                    && p.getNombre().equals(nuevoParalelo.getNombre())) {
+                return true;
+            }
+        }
+        return false;
+    }
 
+    private void Guardar() throws ListaVacia {
         if (txtNombreParalelo.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta seleccionar el paralelo", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta llenar el nombre del paralelo", "Error", JOptionPane.WARNING_MESSAGE);
         } 
         else {
-            Integer IdCurso = listaParalelo.getLongitud() + 1;
-            String Codigo = generarCodigo();
-            String Nombre = txtNombreParalelo.getText().toUpperCase();
-            
-            paraleloControlDao.getParalelo().setIdParalelo(IdCurso);
-            paraleloControlDao.getParalelo().setCodigoParalelo(Codigo);
-            paraleloControlDao.getParalelo().setNombre(Nombre);
-                                   
-            if (paraleloControlDao.persist()) {
-                JOptionPane.showMessageDialog(null, "PARALELO GUARDADO EXISTOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
-                paraleloControlDao.setParalelo(null);
+            String nombreParalelo = txtNombreParalelo.getText().toUpperCase();
+
+            Paralelo nuevoParalelo = new Paralelo();
+            nuevoParalelo.setCodigoParalelo(generarCodigo());
+            nuevoParalelo.setNombre(nombreParalelo);
+
+            if (paraleloExiste(nuevoParalelo)) {
+                JOptionPane.showMessageDialog(null, "El paralelo ya existe", "Error", JOptionPane.ERROR_MESSAGE);
             } 
             else {
-                JOptionPane.showMessageDialog(null, "NO SE PUEDE REGISTRAR", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
+                Integer idParalelo = listaParalelo.getLongitud() + 1;
+                nuevoParalelo.setIdParalelo(idParalelo);
+
+                paraleloControlDao.setParalelo(nuevoParalelo);
+
+                try {
+                    if (paraleloControlDao.persist()) {
+                        JOptionPane.showMessageDialog(null, "Paralelo guardado exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE);
+                        paraleloControlDao.setParalelo(null);
+                    } 
+                    else {
+                        JOptionPane.showMessageDialog(null, "No se pudo registrar el paralelo", "Información", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                } 
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+                Limpiar();
             }
-            Limpiar();
         }
     }
     
@@ -370,14 +393,15 @@ public class VistaGestionParalelo extends javax.swing.JFrame {
                                 .addComponent(jLabel9))
                             .addComponent(btnOrdenar))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel7)
-                    .addComponent(cbxTipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3)
-                    .addComponent(jLabel8)
-                    .addComponent(txtCodigoParalelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel6)
+                        .addComponent(jLabel7)
+                        .addComponent(cbxTipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel8)
+                        .addComponent(txtCodigoParalelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -416,7 +440,7 @@ public class VistaGestionParalelo extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         
         if (txtNombreParalelo.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta seleccionar el paralelo", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta seleccionar el paralelo", "Error", JOptionPane.WARNING_MESSAGE);
         } 
         else {
             try {
@@ -438,7 +462,7 @@ public class VistaGestionParalelo extends javax.swing.JFrame {
         else {
 
             if (txtNombreParalelo.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar el paralelo", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta seleccionar el paralelo", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else {
                 //Datos de paralelo

@@ -5,6 +5,7 @@ import Controlador.Dao.Modelo.mallaCurricularDao;
 import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Controlador.Utiles.UtilesControlador;
+import Modelo.Carrera;
 import Modelo.MallaCurricular;
 import Vista.ModeloTabla.ModeloTablaMallaCurricular;
 import Vista.Utiles.UtilVista;
@@ -74,43 +75,68 @@ public class VistaGestionMallaCurricular extends javax.swing.JFrame {
         }
     }
     
-    private void Guardar() throws ListaVacia {
+    private boolean mallaExiste(MallaCurricular nuevaMalla) {
+        ListaDinamica<MallaCurricular> mallas = mallaControlDao.getListaMalla();
+        for (MallaCurricular m : mallas.toArray()) {
+            if (m.getNombreMallaCurricular().equals(nuevaMalla.getNombreMallaCurricular())
+                    && m.getDuracionMallaCurricular().equals(nuevaMalla.getDuracionMallaCurricular())
+                    && m.getEstadoMallaCurricular().equals(nuevaMalla.getEstadoMallaCurricular())
+                    && m.getCarreraMallaCurricula().getIdCarrera().equals(nuevaMalla.getCarreraMallaCurricula().getIdCarrera())) {
+                return true;
+            }
+        }
+        return false;
+    }
 
+    private void Guardar() throws ListaVacia {
         if (txtNombreMalla.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar nombre", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta llenar nombre", "Error", JOptionPane.WARNING_MESSAGE);
         } 
         else if (txtDuracionMalla.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar duracion", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta llenar duracion", "Error", JOptionPane.WARNING_MESSAGE);
         } 
         else if (cbxEstadoMalla.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(null, "Falta seleccionar el estado de la malla", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta seleccionar el estado de la malla", "Error", JOptionPane.WARNING_MESSAGE);
         } 
         else if (cbxCarrera.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(null, "Falta seleccionar el ciclo", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+            JOptionPane.showMessageDialog(null, "Falta seleccionar la carrera", "Error", JOptionPane.WARNING_MESSAGE);
+        } 
         else {
-            Integer IdMalla = listaMalla.getLongitud() + 1;
-            String Nombre = txtNombreMalla.getText();
-            Integer Duracion = Integer.valueOf(txtDuracionMalla.getText());
-            String EstadoMalla = cbxEstadoMalla.getSelectedItem().toString();
-                        
-            mallaControlDao.getMallaCurricular().setIdMallaCurricular(IdMalla);
-            mallaControlDao.getMallaCurricular().setNombreMallaCurricular(Nombre);
-            mallaControlDao.getMallaCurricular().setDuracionMallaCurricular(Duracion);
-            mallaControlDao.getMallaCurricular().setEstadoMallaCurricular(EstadoMalla);
-            
-            mallaControlDao.getMallaCurricular().setCarreraMallaCurricula(UtilVista.obtenerCarreraControl(cbxCarrera));
-            
-            cbxEstadoMalla.setEnabled(false);
-                        
-            if (mallaControlDao.Persist()) {
-                JOptionPane.showMessageDialog(null, "MALLA GUARDADA EXISTOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
-                mallaControlDao.setMallaCurricular(null);
-            } 
-            else {
-                JOptionPane.showMessageDialog(null, "NO SE PUEDE REGISTRAR", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
+            //Datos de la malla curricular
+            String nombre = txtNombreMalla.getText();
+            Integer duracion = Integer.valueOf(txtDuracionMalla.getText());
+            String estadoMalla = cbxEstadoMalla.getSelectedItem().toString();
+
+            Carrera carreraMalla = UtilVista.obtenerCarreraControl(cbxCarrera);
+
+            MallaCurricular nuevaMalla = new MallaCurricular();
+            nuevaMalla.setNombreMallaCurricular(nombre);
+            nuevaMalla.setDuracionMallaCurricular(duracion);
+            nuevaMalla.setEstadoMallaCurricular(estadoMalla);
+            nuevaMalla.setCarreraMallaCurricula(carreraMalla);
+
+            if (mallaExiste(nuevaMalla)) {
+                JOptionPane.showMessageDialog(null, "La malla curricular ya existe", "MALLA CURRICULAR EXISTENTE", JOptionPane.INFORMATION_MESSAGE);
+                return;
             }
-            Limpiar();
+
+            Integer idMalla = listaMalla.getLongitud() + 1;
+            nuevaMalla.setIdMallaCurricular(idMalla);
+
+            try {
+                mallaControlDao.setMallaCurricular(nuevaMalla);
+                if (mallaControlDao.Persist()) {
+                    JOptionPane.showMessageDialog(null, "MALLA CURRICULAR GUARDADA EXITOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
+                    mallaControlDao.setMallaCurricular(null);
+                } 
+                else {
+                    JOptionPane.showMessageDialog(null, "NO SE PUEDE REGISTRAR", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
+                }
+                Limpiar();
+            } 
+            catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
     
@@ -478,16 +504,16 @@ public class VistaGestionMallaCurricular extends javax.swing.JFrame {
         
         try {
             if (txtNombreMalla.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar nombre", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar nombre", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (txtDuracionMalla.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar duracion", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar duracion", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (cbxEstadoMalla.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar el estado de la malla", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta seleccionar el estado de la malla", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (cbxCarrera.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar el ciclo", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta seleccionar el ciclo", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else {
                 Guardar();
@@ -507,16 +533,16 @@ public class VistaGestionMallaCurricular extends javax.swing.JFrame {
         } 
         else {
             if (txtNombreMalla.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar nombre", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar nombre", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (txtDuracionMalla.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar duracion", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar duracion", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (cbxEstadoMalla.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar el estado de la malla", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta seleccionar el estado de la malla", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (cbxCarrera.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar el ciclo", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta seleccionar el ciclo", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else {
                 Integer IdMalla = mallaControlDao.getMallaCurricular().getIdMallaCurricular();

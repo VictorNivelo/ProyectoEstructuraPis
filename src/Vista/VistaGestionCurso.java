@@ -3,11 +3,13 @@ package Vista;
 
 import Controlador.Dao.Bridge;
 import Controlador.Dao.Modelo.cursoDao;
+import Controlador.Dao.Modelo.docenteDao;
 import Controlador.Dao.Modelo.matriculaDao;
 import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Controlador.Utiles.UtilesControlador;
 import Modelo.Cursa;
+import Modelo.Docente;
 import Modelo.Matricula;
 import Vista.Utiles.UtilVista;
 import Vista.ModeloTabla.ModeloTablaCurso;
@@ -54,8 +56,8 @@ public class VistaGestionCurso extends javax.swing.JFrame {
     
     private void Limpiar() throws ListaVacia {
         txtCodigoCursa.setText("");
-        txtAlumnoBusqueda.setText("");
-        txtDocenteCursa.setText("");
+        txtMatriculaBusqueda.setText("");
+        txtDocenteBusqueda.setText("");
         cbxParalelo.setSelectedIndex(-1);
         cbxMatricula.setSelectedIndex(-1);
         cbxDocente.setSelectedIndex(-1);
@@ -166,13 +168,13 @@ public class VistaGestionCurso extends javax.swing.JFrame {
     private void Guardar() throws ListaVacia {
 
         if (cbxParalelo.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(null, "Falta seleccionar el paralelo", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta seleccionar el paralelo", "Error", JOptionPane.WARNING_MESSAGE);
         }
         else if (cbxMatricula.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(null, "Falta seleccionar la matricula", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta seleccionar la matricula", "Error", JOptionPane.WARNING_MESSAGE);
         } 
         else if (cbxDocente.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(null, "Falta seleccionar el docebte", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta seleccionar el docebte", "Error", JOptionPane.WARNING_MESSAGE);
         }
         else {
             Integer idCiclo = listaCursos.getLongitud() + 1;
@@ -334,10 +336,10 @@ public class VistaGestionCurso extends javax.swing.JFrame {
         cbxTipoBusqueda = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        txtAlumnoBusqueda = new javax.swing.JTextField();
+        txtMatriculaBusqueda = new javax.swing.JTextField();
         jButton6 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
-        txtDocenteCursa = new javax.swing.JTextField();
+        txtDocenteBusqueda = new javax.swing.JTextField();
         cbxDocente = new javax.swing.JComboBox<>();
         jLabel14 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
@@ -506,6 +508,11 @@ public class VistaGestionCurso extends javax.swing.JFrame {
         });
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Buscar.png"))); // NOI18N
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jLabel14.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(0, 0, 0));
@@ -548,7 +555,7 @@ public class VistaGestionCurso extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtAlumnoBusqueda)
+                        .addComponent(txtMatriculaBusqueda)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton6))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -558,7 +565,7 @@ public class VistaGestionCurso extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(txtDocenteCursa)
+                                .addComponent(txtDocenteBusqueda)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton5))
                             .addComponent(cbxDocente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -636,7 +643,7 @@ public class VistaGestionCurso extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel13)
-                                        .addComponent(txtAlumnoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(txtMatriculaBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(jButton6))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -645,7 +652,7 @@ public class VistaGestionCurso extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel12)
-                                    .addComponent(txtDocenteCursa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(txtDocenteBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jButton5))
                         .addGap(7, 7, 7)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -680,13 +687,13 @@ public class VistaGestionCurso extends javax.swing.JFrame {
         
         try {
             if (cbxParalelo.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar el paralelo", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta seleccionar el paralelo", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (cbxMatricula.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar la matricula", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta seleccionar la matricula", "Error", JOptionPane.WARNING_MESSAGE);
             }
             else if (cbxDocente.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar el docebte", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta seleccionar el docebte", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else {
                 Guardar();
@@ -719,13 +726,13 @@ public class VistaGestionCurso extends javax.swing.JFrame {
         } 
         else {
             if (cbxParalelo.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar el paralelo", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta seleccionar el paralelo", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (cbxMatricula.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar la matricula", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta seleccionar la matricula", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (cbxDocente.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar el docebte", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta seleccionar el docebte", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else {
                 Integer IdCurso = cursoControlDao.getCursos().getIdCurso();
@@ -869,31 +876,70 @@ public class VistaGestionCurso extends javax.swing.JFrame {
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
 
         try {
-            matriculaDao PD = new matriculaDao();
-            ListaDinamica<Matricula> lista = PD.all();
+            if (txtMatriculaBusqueda.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Ingrese la matricula a buscar", "FALTA LLENAR", JOptionPane.WARNING_MESSAGE);
+            } 
+            else {
+                matriculaDao PD = new matriculaDao();
+                ListaDinamica<Matricula> lista = PD.all();
 
-            String Campo = txtAlumnoBusqueda.getText();
+                String Campo = txtMatriculaBusqueda.getText();
 
-            ListaDinamica<Matricula> ResultadoBusqueda = new ListaDinamica<>();
+                ListaDinamica<Matricula> ResultadoBusqueda = new ListaDinamica<>();
 
-            ListaDinamica<Matricula> ResultadoCodigo = UtilesControlador.BusquedaLineal(lista, Campo, "CodigoMatricula");
-            ResultadoBusqueda.concatenar(ResultadoCodigo);
+                ListaDinamica<Matricula> ResultadoCodigo = UtilesControlador.BusquedaLineal(lista, Campo, "CodigoMatricula");
+                ResultadoBusqueda.concatenar(ResultadoCodigo);
 
-            ListaDinamica<Matricula> ResultadoCedula = UtilesControlador.BusquedaLineal(lista, Campo, "alumnoMatricula.DatosAlumno.NumeroCedula");
-            ResultadoBusqueda.concatenar(ResultadoCedula);
+                ListaDinamica<Matricula> ResultadoCedula = UtilesControlador.BusquedaLineal(lista, Campo, "alumnoMatricula.DatosAlumno.NumeroCedula");
+                ResultadoBusqueda.concatenar(ResultadoCedula);
 
-            cbxMatricula.removeAllItems();
+                cbxMatricula.removeAllItems();
 
-            for (Matricula matricula : ResultadoBusqueda.toArray()) {
-                cbxMatricula.addItem(matricula);
+                for (Matricula matricula : ResultadoBusqueda.toArray()) {
+                    cbxMatricula.addItem(matricula);
+                }
             }
 
         } 
         catch (Exception e) {
-            
+
         }
 
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        
+        try {
+            if (txtDocenteBusqueda.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Ingrese el docente a buscar", "FALTA LLENAR", JOptionPane.WARNING_MESSAGE);
+            } 
+            else {
+                docenteDao PD = new docenteDao();
+                ListaDinamica<Docente> lista = PD.all();
+
+                String Campo = txtDocenteBusqueda.getText();
+
+                ListaDinamica<Docente> ResultadoBusqueda = new ListaDinamica<>();
+
+                ListaDinamica<Docente> ResultadoCe = UtilesControlador.BusquedaLineal(lista, Campo, "DatosDocente.NumeroCedula");
+                ResultadoBusqueda.concatenar(ResultadoCe);
+
+                ListaDinamica<Docente> ResultadoN = UtilesControlador.BusquedaLineal(lista, Campo, "DatosDocente.Nombre");
+                ResultadoBusqueda.concatenar(ResultadoN);
+
+                cbxDocente.removeAllItems();
+
+                for (Docente pb : ResultadoBusqueda.toArray()) {
+                    cbxDocente.addItem(pb);
+                }
+            }
+
+        } 
+        catch (Exception e) {
+
+        }
+        
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -946,7 +992,7 @@ public class VistaGestionCurso extends javax.swing.JFrame {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnOrdenar;
-    private javax.swing.JComboBox<String> cbxDocente;
+    private javax.swing.JComboBox<Object> cbxDocente;
     private javax.swing.JComboBox<Object> cbxMatricula;
     private javax.swing.JComboBox<String> cbxOrden;
     private javax.swing.JComboBox<String> cbxParalelo;
@@ -974,9 +1020,9 @@ public class VistaGestionCurso extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblCursos;
-    private javax.swing.JTextField txtAlumnoBusqueda;
     private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtCodigoCursa;
-    private javax.swing.JTextField txtDocenteCursa;
+    private javax.swing.JTextField txtDocenteBusqueda;
+    private javax.swing.JTextField txtMatriculaBusqueda;
     // End of variables declaration//GEN-END:variables
 }

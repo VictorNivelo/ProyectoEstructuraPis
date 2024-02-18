@@ -6,6 +6,7 @@ import Controlador.Dao.Modelo.unidadCurricularDao;
 import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Controlador.Utiles.UtilesControlador;
+import Modelo.MallaCurricular;
 import Modelo.UnidadCurricular;
 import Vista.ModeloTabla.ModeloTablaUnidadCurricular;
 import Vista.Utiles.UtilVista;
@@ -90,45 +91,69 @@ public class VistaGestionUnidadCurricular extends javax.swing.JFrame {
             }
         } 
         catch (FileNotFoundException e) {
+            
         }
 
         ultimoId++;
 
         return "UC-" + String.format("%04d", ultimoId);
     }
-    
-    private void Guardar() throws ListaVacia {
+ 
+    private boolean unidadCurricularExiste(UnidadCurricular nuevaUnidadCurricular) {
+        ListaDinamica<UnidadCurricular> unidades = unidadCurricularControlDao.getListaUnidadCurricular();
+        for (UnidadCurricular unidad : unidades.toArray()) {
+            if (unidad.getNombreUnidadCurricular().equals(nuevaUnidadCurricular.getNombreUnidadCurricular())
+                    && unidad.getDescripcionUnidadCurricular().equals(nuevaUnidadCurricular.getDescripcionUnidadCurricular())
+                    && unidad.getMallaCurricularUnidadCurricular().getIdMallaCurricular().equals(nuevaUnidadCurricular.getMallaCurricularUnidadCurricular().getIdMallaCurricular())) {
+                return true;
+            }
+        }
+        return false;
+    }
 
+    private void Guardar() throws ListaVacia {
         if (txtNombreUnidad.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar nombre", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta llenar nombre", "Error", JOptionPane.WARNING_MESSAGE);
         } 
         else if (txtDescripcionUnidad.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar descripcion", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta llenar descripción", "Error", JOptionPane.WARNING_MESSAGE);
         } 
         else if (cbxMalla.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(null, "Falta seleccionar el ciclo", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+            JOptionPane.showMessageDialog(null, "Falta seleccionar la malla", "Error", JOptionPane.WARNING_MESSAGE);
+        } 
         else {
-            Integer IdUnidad = listaUnidadCurricular.getLongitud() + 1;
-            String Codigo = generarCodigo();
-            String Nombre = txtNombreUnidad.getText();
-            String Descripcion = txtDescripcionUnidad.getText();
-                        
-            unidadCurricularControlDao.getUnidadCurriculares().setIdUnidadCurricular(IdUnidad);
-            unidadCurricularControlDao.getUnidadCurriculares().setNombreUnidadCurricular(Nombre);
-            unidadCurricularControlDao.getUnidadCurriculares().setCodigoUnidadCurricular(Codigo);
-            unidadCurricularControlDao.getUnidadCurriculares().setDescripcionUnidadCurricular(Descripcion);
-            
-            unidadCurricularControlDao.getUnidadCurriculares().setMallaCurricularUnidadCurricular(UtilVista.obtenerMallaControl(cbxMalla));
-                        
-            if (unidadCurricularControlDao.Persist()) {
-                JOptionPane.showMessageDialog(null, "UNIDAD CURRICULAR GUARDADA EXISTOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
-                unidadCurricularControlDao.setUnidadCurriculares(null);
-            } 
-            else {
-                JOptionPane.showMessageDialog(null, "NO SE PUEDE REGISTRAR", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
+            // Datos de la unidad curricular
+            String nombre = txtNombreUnidad.getText();
+            String descripcion = txtDescripcionUnidad.getText();
+
+            MallaCurricular malla = UtilVista.obtenerMallaControl(cbxMalla);
+            UnidadCurricular nuevaUnidadCurricular = new UnidadCurricular();
+            nuevaUnidadCurricular.setNombreUnidadCurricular(nombre);
+            nuevaUnidadCurricular.setDescripcionUnidadCurricular(descripcion);
+            nuevaUnidadCurricular.setMallaCurricularUnidadCurricular(malla);
+
+            if (unidadCurricularExiste(nuevaUnidadCurricular)) {
+                JOptionPane.showMessageDialog(null, "La unidad curricular ya existe", "UNIDAD CURRICULAR EXISTENTE", JOptionPane.INFORMATION_MESSAGE);
+                return;
             }
-            Limpiar();
+
+            try {
+                String codigo = generarCodigo();
+                nuevaUnidadCurricular.setCodigoUnidadCurricular(codigo);
+
+                unidadCurricularControlDao.setUnidadCurriculares(nuevaUnidadCurricular);
+                if (unidadCurricularControlDao.Persist()) {
+                    JOptionPane.showMessageDialog(null, "UNIDAD CURRICULAR GUARDADA EXITOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
+                    unidadCurricularControlDao.setUnidadCurriculares(null);
+                } 
+                else {
+                    JOptionPane.showMessageDialog(null, "NO SE PUEDE REGISTRAR", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
+                }
+                Limpiar();
+            } 
+            catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
     
@@ -462,13 +487,13 @@ public class VistaGestionUnidadCurricular extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         
         if (txtNombreUnidad.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar nombre", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta llenar nombre", "Error", JOptionPane.WARNING_MESSAGE);
         } 
         else if (txtDescripcionUnidad.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar descripcion", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta llenar descripcion", "Error", JOptionPane.WARNING_MESSAGE);
         } 
         else if (cbxMalla.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(null, "Falta seleccionar el ciclo", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta seleccionar el ciclo", "Error", JOptionPane.WARNING_MESSAGE);
         }
         else {
             try {
@@ -497,13 +522,13 @@ public class VistaGestionUnidadCurricular extends javax.swing.JFrame {
         } 
         else {
             if (txtNombreUnidad.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar nombre", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar nombre", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (txtDescripcionUnidad.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar descripcion", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar descripcion", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (cbxMalla.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar el ciclo", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta seleccionar el ciclo", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else {
                 Integer IdUnidad = unidadCurricularControlDao.getUnidadCurriculares().getIdUnidadCurricular();
@@ -572,7 +597,7 @@ public class VistaGestionUnidadCurricular extends javax.swing.JFrame {
                     case "Nombre":
                         TipoCampo = "NombreUnidadCurricular";
                         break;
-                    case "Descipcion":
+                    case "Descripcion":
                         TipoCampo = "DescripcionUnidadCurricular";
                         break;
                     case "Malla":
@@ -598,13 +623,7 @@ public class VistaGestionUnidadCurricular extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         
         try {
-            if (cbxTipoOrden.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "No ha seleccionado el campo", "FALTA SELCCIONAR", JOptionPane.WARNING_MESSAGE);
-            } 
-            else if (cbxOrden.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "No ha seleccionado el orden", "FALTA SELCCIONAR", JOptionPane.WARNING_MESSAGE);
-            } 
-            else {
+            
             ListaDinamica<UnidadCurricular> lista = unidadCurricularControlDao.all();
 
             String Campo = txtBuscar.getText();
@@ -617,7 +636,7 @@ public class VistaGestionUnidadCurricular extends javax.swing.JFrame {
                 case "Nombre":
                     TipoCampo = "NombreUnidadCurricular";
                     break;
-                case "Descipcion":
+                case "Descripcion":
                     TipoCampo = "DescripcionUnidadCurricular";
                     break;
                 case "Malla":
@@ -630,7 +649,6 @@ public class VistaGestionUnidadCurricular extends javax.swing.JFrame {
 
             mtu.setUnidadCurricularTabla(ResultadoBusqueda);
             mtu.fireTableDataChanged();
-            }
 
         }
         catch (Exception e) {

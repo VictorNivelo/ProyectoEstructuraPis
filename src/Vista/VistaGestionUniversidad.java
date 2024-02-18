@@ -74,50 +74,111 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
         }
     }
     
+    private boolean universidadExiste(Universidad nuevaUniversidad) {
+        ListaDinamica<Universidad> universidades = universidadControlDao.all();
+        for (Universidad u : universidades.toArray()) {
+            if (u.getNombreUniversidad().equals(nuevaUniversidad.getNombreUniversidad())
+                    && u.getDireccionUniversidad().equals(nuevaUniversidad.getDireccionUniversidad())
+                    && u.getNumeroTelefono().equals(nuevaUniversidad.getNumeroTelefono())
+                    && u.getCorreoUniversidad().equals(nuevaUniversidad.getCorreoUniversidad())
+                    && u.getFechaFundacion().equals(nuevaUniversidad.getFechaFundacion())) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
     private void Guardar() throws ListaVacia {
-
+        
         if (txtNombreU.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar el nombre de la universidad", "Error", JOptionPane.ERROR_MESSAGE);
-        } 
+            JOptionPane.showMessageDialog(null, "Falta llenar el nombre de la universidad", "Error", JOptionPane.WARNING_MESSAGE);
+        }
         else if (txtDireccionU.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar la direccion", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta llenar la direccion", "Error", JOptionPane.WARNING_MESSAGE);
         } 
         else if (txtTelefono.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar el numero de telefono", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta llenar el numero de telefono", "Error", JOptionPane.WARNING_MESSAGE);
         } 
         else if (txtCorreo.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar el correo de la universidad", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta llenar el correo de la universidad", "Error", JOptionPane.WARNING_MESSAGE);
         } 
         else if (DateFundacion.getDate() == null) {
-            JOptionPane.showMessageDialog(null, "Falta llenar fecha de fundacion", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+            JOptionPane.showMessageDialog(null, "Falta llenar fecha de fundacion", "Error", JOptionPane.WARNING_MESSAGE);
+        } 
         else {
-            Integer idUniversidad = listaUniversidades.getLongitud() + 1;
-            
-            Date InicioD = DateFundacion.getDate();
-            String Fundacion = Formato.format(InicioD);
-            String Nombre = txtNombreU.getText();
-            String Direccion = txtDireccionU.getText();
-            String Telefono = txtTelefono.getText();
-            String Correo = txtCorreo.getText();
-            
-            universidadControlDao.getUniversidades().setIdUniversidad(idUniversidad);
-            universidadControlDao.getUniversidades().setNombreUniversidad(Nombre);
-            universidadControlDao.getUniversidades().setDireccionUniversidad(Direccion);
-            universidadControlDao.getUniversidades().setNumeroTelefono(Telefono);
-            universidadControlDao.getUniversidades().setCorreoUniversidad(Correo);
-            universidadControlDao.getUniversidades().setFechaFundacion(Fundacion);
+            String nombre = txtNombreU.getText();
+            String direccion = txtDireccionU.getText();
+            String telefono = txtTelefono.getText();
+            String correo = txtCorreo.getText();
+            String fechaFundacion = Formato.format(DateFundacion.getDate());
 
-            
+            Universidad nuevaUniversidad = new Universidad();
+            nuevaUniversidad.setNombreUniversidad(nombre);
+            nuevaUniversidad.setDireccionUniversidad(direccion);
+            nuevaUniversidad.setNumeroTelefono(telefono);
+            nuevaUniversidad.setCorreoUniversidad(correo);
+            nuevaUniversidad.setFechaFundacion(fechaFundacion);
+
+            if (universidadExiste(nuevaUniversidad)) {
+                JOptionPane.showMessageDialog(null, "La universidad ya existe", "UNIVERSIDAD EXISTENTE", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+
+            Integer idUniversidad = listaUniversidades.getLongitud() + 1;
+            nuevaUniversidad.setIdUniversidad(idUniversidad);
+
+            universidadControlDao.setUniversidades(nuevaUniversidad);
             if (universidadControlDao.Persist()) {
-                JOptionPane.showMessageDialog(null, "PERIODO GUARDADO EXISTOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "UNIVERSIDAD GUARDADADA EXITOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
                 universidadControlDao.setUniversidades(null);
-            } 
-            else {
+            } else {
                 JOptionPane.showMessageDialog(null, "NO SE PUEDE GUARDAR", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
             }
             Limpiar();
         }
+
+//        if (txtNombreU.getText().isEmpty()) {
+//            JOptionPane.showMessageDialog(null, "Falta llenar el nombre de la universidad", "Error", JOptionPane.ERROR_MESSAGE);
+//        } 
+//        else if (txtDireccionU.getText().isEmpty()) {
+//            JOptionPane.showMessageDialog(null, "Falta llenar la direccion", "Error", JOptionPane.ERROR_MESSAGE);
+//        } 
+//        else if (txtTelefono.getText().isEmpty()) {
+//            JOptionPane.showMessageDialog(null, "Falta llenar el numero de telefono", "Error", JOptionPane.ERROR_MESSAGE);
+//        } 
+//        else if (txtCorreo.getText().isEmpty()) {
+//            JOptionPane.showMessageDialog(null, "Falta llenar el correo de la universidad", "Error", JOptionPane.ERROR_MESSAGE);
+//        } 
+//        else if (DateFundacion.getDate() == null) {
+//            JOptionPane.showMessageDialog(null, "Falta llenar fecha de fundacion", "Error", JOptionPane.ERROR_MESSAGE);
+//        }
+//        else {
+//            Integer idUniversidad = listaUniversidades.getLongitud() + 1;
+//            
+//            Date InicioD = DateFundacion.getDate();
+//            String Fundacion = Formato.format(InicioD);
+//            String Nombre = txtNombreU.getText();
+//            String Direccion = txtDireccionU.getText();
+//            String Telefono = txtTelefono.getText();
+//            String Correo = txtCorreo.getText();
+//            
+//            universidadControlDao.getUniversidades().setIdUniversidad(idUniversidad);
+//            universidadControlDao.getUniversidades().setNombreUniversidad(Nombre);
+//            universidadControlDao.getUniversidades().setDireccionUniversidad(Direccion);
+//            universidadControlDao.getUniversidades().setNumeroTelefono(Telefono);
+//            universidadControlDao.getUniversidades().setCorreoUniversidad(Correo);
+//            universidadControlDao.getUniversidades().setFechaFundacion(Fundacion);
+//
+//            
+//            if (universidadControlDao.Persist()) {
+//                JOptionPane.showMessageDialog(null, "UNIVERSIDAD GUARDADADA EXISTOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
+//                universidadControlDao.setUniversidades(null);
+//            } 
+//            else {
+//                JOptionPane.showMessageDialog(null, "NO SE PUEDE GUARDAR", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
+//            }
+//            Limpiar();
+//        }
     }
     
     public  Integer OrdenSeleccionado(){
@@ -465,19 +526,19 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
         
         try {
             if (txtNombreU.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar el nombre de la universidad", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar el nombre de la universidad", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (txtDireccionU.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar la direccion", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar la direccion", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (txtTelefono.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar el numero de telefono", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar el numero de telefono", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (txtCorreo.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar el correo de la universidad", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar el correo de la universidad", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (DateFundacion.getDate() == null) {
-                JOptionPane.showMessageDialog(null, "Falta llenar fecha de fundacion", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar fecha de fundacion", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else {
                 Guardar();
@@ -497,19 +558,19 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
         } else {
 
             if (txtNombreU.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar el nombre de la universidad", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar el nombre de la universidad", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (txtDireccionU.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar la direccion", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar la direccion", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (txtTelefono.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar el numero de telefono", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar el numero de telefono", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (txtCorreo.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar el correo de la universidad", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar el correo de la universidad", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (DateFundacion.getDate() == null) {
-                JOptionPane.showMessageDialog(null, "Falta llenar fecha de fundacion", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar fecha de fundacion", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else {
                 Integer IdUniversidad = universidadControlDao.getUniversidades().getIdUniversidad();

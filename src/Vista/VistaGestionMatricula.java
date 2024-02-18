@@ -9,6 +9,7 @@ import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Controlador.Utiles.UtilesControlador;
 import Modelo.Alumno;
 import Modelo.Matricula;
+import Modelo.PeriodoAcademico;
 import Vista.ModeloTabla.ModeloTablaMatriculas;
 import Vista.Utiles.UtilVista;
 import java.io.File;
@@ -120,47 +121,67 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
         return "M-" + String.format("%04d", ultimoId);
     }
             
+    private boolean matriculaExiste(Matricula nuevaMatricula) {
+        ListaDinamica<Matricula> matriculas = MatriculaControlDao.all();
+        for (Matricula m : matriculas.toArray()) {
+            if (m.getAlumnoMatricula().getIdAlumno().equals(nuevaMatricula.getAlumnoMatricula().getIdAlumno())
+                    && m.getPeriodoAcademicoMatricula().getIdPeriodoAcademino().equals(nuevaMatricula.getPeriodoAcademicoMatricula().getIdPeriodoAcademino())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void Guardar() throws ListaVacia {
-
         if (cbxEstadoMatricula.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(null, "Falta seleccionar el estado", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+            JOptionPane.showMessageDialog(null, "Falta seleccionar el estado", "Error", JOptionPane.WARNING_MESSAGE);
+        } 
         else if (cbxPeriodo.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(null, "Falta seleccionar el periodo", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+            JOptionPane.showMessageDialog(null, "Falta seleccionar el periodo", "Error", JOptionPane.WARNING_MESSAGE);
+        } 
         else if (cbxAlumno.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(null, "Falta seleccionar el alumno", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+            JOptionPane.showMessageDialog(null, "Falta seleccionar el alumno", "Error", JOptionPane.WARNING_MESSAGE);
+        } 
         else {
-            //Datos de matricula
-            Integer IdMatricula = listaMatricula.getLongitud() + 1;
-            String Codigo = generarCodigo();
-            LocalDate fechaActual = LocalDate.now();
+            // Obtener datos de matrícula
+            String estado = cbxEstadoMatricula.getSelectedItem().toString();
+            PeriodoAcademico periodo = UtilVista.obtenerPeriodoControl(cbxPeriodo);
+            Alumno alumno = UtilVista.obtenerAlumnosControl(cbxAlumno);
 
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MMMM/yyyy");
-            String FechaMatricula = fechaActual.format(formatter);
-//            String FechaMatricula = Formato.format(fechaActual);
-            String Estado = cbxEstadoMatricula.getSelectedItem().toString();
-            
-            MatriculaControlDao.getMatricula().setIdMatricula(IdMatricula);
-            MatriculaControlDao.getMatricula().setCodigoMatricula(Codigo);
-            MatriculaControlDao.getMatricula().setFechaMatricula(FechaMatricula);
-            MatriculaControlDao.getMatricula().setEstadoMatricula(Estado);
-            MatriculaControlDao.getMatricula().setPeriodoAcademicoMatricula(UtilVista.obtenerPeriodoControl(cbxPeriodo));
-            MatriculaControlDao.getMatricula().setAlumnoMatricula(UtilVista.obtenerAlumnosControl(cbxAlumno));
-            
-            if (MatriculaControlDao.persist()) {
-                JOptionPane.showMessageDialog(null, "MATRICULA GUARDADA EXISTOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
-                MatriculaControlDao.setMatricula(null);
+            Matricula nuevaMatricula = new Matricula();
+            nuevaMatricula.setEstadoMatricula(estado);
+            nuevaMatricula.setPeriodoAcademicoMatricula(periodo);
+            nuevaMatricula.setAlumnoMatricula(alumno);
+
+            if (matriculaExiste(nuevaMatricula)) {
+                JOptionPane.showMessageDialog(null, "La matrícula ya existe para este alumno", "Error", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+
+            Integer idMatricula = listaMatricula.getLongitud() + 1;
+            String codigo = generarCodigo();
+
+            nuevaMatricula.setIdMatricula(idMatricula);
+            nuevaMatricula.setCodigoMatricula(codigo);
+
+            MatriculaControlDao.setMatricula(nuevaMatricula);
+            try {
+                if (MatriculaControlDao.persist()) {
+                    JOptionPane.showMessageDialog(null, "Matrícula guardada exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE);
+                    MatriculaControlDao.setMatricula(null);
+                } 
+                else {
+                    JOptionPane.showMessageDialog(null, "No se pudo guardar la matrícula", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             } 
-            else {
-                JOptionPane.showMessageDialog(null, "NO SE PUEDE GUARDAR", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
+            catch (Exception e) {
+                e.printStackTrace();
             }
             Limpiar();
         }
     }
     
-    public  Integer OrdenSeleccionado(){
+    public Integer OrdenSeleccionado(){
         String OrdenO = cbxOrden.getSelectedItem().toString();
 
         if ("Asendente".equals(OrdenO)) {
@@ -525,13 +546,13 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
         
         try {
             if (cbxEstadoMatricula.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar el estado", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta seleccionar el estado", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (cbxPeriodo.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar el periodo", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta seleccionar el periodo", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (cbxAlumno.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar el alumno", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta seleccionar el alumno", "Error", JOptionPane.WARNING_MESSAGE);
             }
             else {
                 Guardar();
@@ -609,13 +630,13 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
         } 
         else {
             if (cbxEstadoMatricula.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar el estado", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta seleccionar el estado", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (cbxPeriodo.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar el periodo", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta seleccionar el periodo", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (cbxAlumno.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar el alumno", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta seleccionar el alumno", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else {
 
@@ -664,27 +685,29 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
         try {
-            alumnoDao PD = new alumnoDao();
-            ListaDinamica<Alumno> lista = PD.all();
+            if (txtBusquedaAlumno.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Ingrese el alumno a buscar", "FALTA LLENAR", JOptionPane.WARNING_MESSAGE);
+            } 
+            else {
+                alumnoDao PD = new alumnoDao();
+                ListaDinamica<Alumno> lista = PD.all();
 
-            String Campo = txtBusquedaAlumno.getText();
-            
-            ListaDinamica<Alumno> ResultadoBusqueda = new ListaDinamica<>();
+                String Campo = txtBusquedaAlumno.getText();
 
-            ListaDinamica<Alumno> ResultadoN = UtilesControlador.BusquedaLineal(lista, Campo, "DatosAlumno.NumeroCedula");
-            ResultadoBusqueda.concatenar(ResultadoN);
-            
-            ListaDinamica<Alumno> ResultadoNO = UtilesControlador.BusquedaLineal(lista, Campo, "DatosAlumno.Nombre");
-            ResultadoBusqueda.concatenar(ResultadoNO);
+                ListaDinamica<Alumno> ResultadoBusqueda = new ListaDinamica<>();
 
-            cbxAlumno.removeAllItems();
+                ListaDinamica<Alumno> ResultadoN = UtilesControlador.BusquedaLineal(lista, Campo, "DatosAlumno.NumeroCedula");
+                ResultadoBusqueda.concatenar(ResultadoN);
 
-            for (Alumno pb : ResultadoBusqueda.toArray()) {
-//                if (pb.getRolPersona().getNombreRol().equals("Estudiante")) {
+                ListaDinamica<Alumno> ResultadoNO = UtilesControlador.BusquedaLineal(lista, Campo, "DatosAlumno.Nombre");
+                ResultadoBusqueda.concatenar(ResultadoNO);
+
+                cbxAlumno.removeAllItems();
+
+                for (Alumno pb : ResultadoBusqueda.toArray()) {
                     cbxAlumno.addItem(pb);
-//                }
+                }
             }
-
         } 
         catch (Exception e) {
 

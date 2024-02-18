@@ -7,6 +7,7 @@ import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Controlador.Utiles.UtilesControlador;
 import Modelo.Horario;
+import Modelo.Materia;
 import Vista.ModeloTabla.ModeloTablaHorario;
 import Vista.Utiles.UtilVista;
 import java.awt.event.KeyEvent;
@@ -105,41 +106,68 @@ public class VistaGestionHorario extends javax.swing.JFrame {
         return "H-" + String.format("%04d", ultimoId);
     }
     
-    private void Guardar() throws ListaVacia {
+    private boolean horarioExiste(Horario nuevoHorario) {
+        ListaDinamica<Horario> horarios = horarioControlDao.getListaHorario();
+        for (Horario h : horarios.toArray()) {
+            if (h.getDiaSemana().equals(nuevoHorario.getDiaSemana())
+                    && h.getHoraIncio().equals(nuevoHorario.getHoraIncio())
+                    && h.getHoraFin().equals(nuevoHorario.getHoraFin())
+                    && h.getMateriaHorario().getIdMateria().equals(nuevoHorario.getMateriaHorario().getIdMateria())) {
+                return true;
+            }
+        }
+        return false;
+    }
 
+    private void Guardar() throws ListaVacia {
         if (DateHorario.getDate() == null) {
-            JOptionPane.showMessageDialog(null, "Falta seleccionar el dia", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+            JOptionPane.showMessageDialog(null, "Falta seleccionar el día", "Error", JOptionPane.WARNING_MESSAGE);
+        } 
         else if (txtHoraInicio.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar hora inicio", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+            JOptionPane.showMessageDialog(null, "Falta llenar la hora de inicio", "Error", JOptionPane.WARNING_MESSAGE);
+        } 
         else if (txtHoraFin.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar hora fin", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+            JOptionPane.showMessageDialog(null, "Falta llenar la hora de fin", "Error", JOptionPane.WARNING_MESSAGE);
+        } 
         else if (cbxMateria.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(null, "Falta seleccionar materia", "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta seleccionar la materia", "Error", JOptionPane.WARNING_MESSAGE);
         } 
         else {
-            Integer IdHorario = listaHorarios.getLongitud() + 1;
-            Date Dia = DateHorario.getDate();
-            String FechaHorario = Formato.format(Dia);
-            String Codigo = generarCodigo();
-            String Inicio = txtHoraInicio.getText();
-            String Fin = txtHoraFin.getText();
-            
-            horarioControlDao.getHorarios().setIdHorario(IdHorario);
-            horarioControlDao.getHorarios().setDiaSemana(FechaHorario);
-            horarioControlDao.getHorarios().setCodigoHorario(Codigo);
-            horarioControlDao.getHorarios().setHoraIncio(Inicio);
-            horarioControlDao.getHorarios().setHoraFin(Fin);
-            horarioControlDao.getHorarios().setMateriaHorario(UtilVista.obtenerComboMateria(cbxMateria));
-                                    
-            if (horarioControlDao.Persist()) {
-                JOptionPane.showMessageDialog(null, "HORARIO GUARDADA EXISTOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
-                horarioControlDao.setHorarios(null);
+            // Obtener datos del horario
+            Date dia = DateHorario.getDate();
+            String fechaHorario = Formato.format(dia);
+            String horaInicio = txtHoraInicio.getText();
+            String horaFin = txtHoraFin.getText();
+            Materia materia = UtilVista.obtenerComboMateria(cbxMateria);
+            Horario nuevoHorario = new Horario();
+            nuevoHorario.setDiaSemana(fechaHorario);
+            nuevoHorario.setHoraIncio(horaInicio);
+            nuevoHorario.setHoraFin(horaFin);
+            nuevoHorario.setMateriaHorario(materia);
+
+            if (horarioExiste(nuevoHorario)) {
+                JOptionPane.showMessageDialog(null, "El horario ya existe para esta materia en este día y horario", "Error", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+
+            Integer idHorario = listaHorarios.getLongitud() + 1;
+            String codigo = generarCodigo();
+
+            nuevoHorario.setIdHorario(idHorario);
+            nuevoHorario.setCodigoHorario(codigo);
+
+            horarioControlDao.setHorarios(nuevoHorario);
+            try {
+                if (horarioControlDao.Persist()) {
+                    JOptionPane.showMessageDialog(null, "Horario guardado exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE);
+                    horarioControlDao.setHorarios(null);
+                } 
+                else {
+                    JOptionPane.showMessageDialog(null, "No se pudo guardar el horario", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             } 
-            else {
-                JOptionPane.showMessageDialog(null, "NO SE PUEDE REGISTRAR", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
+            catch (Exception e) {
+                e.printStackTrace();
             }
             Limpiar();
         }
@@ -497,16 +525,16 @@ public class VistaGestionHorario extends javax.swing.JFrame {
         
         try {
             if (DateHorario.getDate() == null) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar el dia", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta seleccionar el dia", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (txtHoraInicio.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar hora inicio", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar hora inicio", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (txtHoraFin.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar hora fin", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar hora fin", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (cbxMateria.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar asistencia", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta seleccionar asistencia", "Error", JOptionPane.WARNING_MESSAGE);
             }
             else {
                 Guardar();
@@ -534,16 +562,16 @@ public class VistaGestionHorario extends javax.swing.JFrame {
         } 
         else {
             if (DateHorario.getDate() == null) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar el dia", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta seleccionar el dia", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (txtHoraInicio.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar hora inicio", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar hora inicio", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (txtHoraFin.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar hora fin", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar hora fin", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (cbxMateria.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar asistencia", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta seleccionar asistencia", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else {
                 Integer IdHorario = horarioControlDao.getHorarios().getIdHorario();

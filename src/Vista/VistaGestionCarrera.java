@@ -7,6 +7,7 @@ import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Controlador.Utiles.UtilesControlador;
 import Vista.ModeloTabla.ModeloTablaCarrera;
 import Modelo.Carrera;
+import Modelo.Facultad;
 import Vista.Utiles.UtilVista;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
@@ -53,68 +54,90 @@ public class VistaGestionCarrera extends javax.swing.JFrame {
         carreraControlDao.setCarreras(null);
         CargarTabla();
     }
-    
-    private void Seleccionar(){
+
+    private void Seleccionar() {
         int fila = tblCarreras.getSelectedRow();
-        if(fila < 0){
+        if (fila < 0) {
             JOptionPane.showMessageDialog(null, "Escoga un registro");
-        }
-        else{
+        } 
+        else {
             try {
                 carreraControlDao.setCarreras(mtc.getCarreraTabla().getInfo(fila));
-                
+
                 txtNombreCarrera.setText(carreraControlDao.getCarreras().getNombreCarrera());
                 txtDuracionCarrera.setText(carreraControlDao.getCarreras().getDuracion().toString());
                 txtNumeroCiclos.setText(carreraControlDao.getCarreras().getNumeroCiclos().toString());
-                cbxFacultad.setSelectedIndex(carreraControlDao.getCarreras().getFacutadCarrera().getIdFacultad() -1);
-//                cbxMalla.setSelectedIndex(carreraControlDao.getCarreras().getCarreraMalla().getIdMallaCurricular() -1);
+                cbxFacultad.setSelectedIndex(carreraControlDao.getCarreras().getFacutadCarrera().getIdFacultad() - 1);
 
             } 
             catch (Exception e) {
-                
+
             }
         }
     }
-    
-    private void Guardar() throws ListaVacia {
 
-        if (cbxFacultad.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(null, "Falta seleccionar la facultad", "Error", JOptionPane.ERROR_MESSAGE);
+    private boolean carreraExiste(Carrera nuevaCarrera) {
+        ListaDinamica<Carrera> carreras = carreraControlDao.getListaCarreras();
+        for (Carrera c : carreras.toArray()) {
+            if (c.getNombreCarrera().equals(nuevaCarrera.getNombreCarrera())
+                    && c.getDuracion().equals(nuevaCarrera.getDuracion())
+                    && c.getNumeroCiclos().equals(nuevaCarrera.getNumeroCiclos())
+                    && c.getFacutadCarrera().getIdFacultad().equals(nuevaCarrera.getFacutadCarrera().getIdFacultad())) {
+                return true;
+            }
         }
+        return false;
+    }
+
+    private void Guardar() throws ListaVacia {
+        if (cbxFacultad.getSelectedIndex() == -1) {
+            JOptionPane.showMessageDialog(null, "Falta seleccionar la facultad", "Error", JOptionPane.WARNING_MESSAGE);
+        } 
         else if (txtNombreCarrera.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar nombre de la carrera", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta llenar nombre de la carrera", "Error", JOptionPane.WARNING_MESSAGE);
         } 
         else if (txtDuracionCarrera.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar duracion", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+            JOptionPane.showMessageDialog(null, "Falta llenar duracion", "Error", JOptionPane.WARNING_MESSAGE);
+        } 
         else if (txtNumeroCiclos.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar el numero de ciclos", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-//        else if (cbxMalla.getSelectedIndex() == -1) {
-//            JOptionPane.showMessageDialog(null, "Falta seleccionar la malla", "Error", JOptionPane.ERROR_MESSAGE);
-//        }
+            JOptionPane.showMessageDialog(null, "Falta llenar el numero de ciclos", "Error", JOptionPane.WARNING_MESSAGE);
+        } 
         else {
             //Datos de carrera
-            Integer IdCarrera = listaCarreras.getLongitud() + 1;
-            String Nombre = txtNombreCarrera.getText();
-            Integer Duracion = Integer.valueOf(txtDuracionCarrera.getText());
-            Integer Nc = Integer.valueOf(txtNumeroCiclos.getText());
-            
-            carreraControlDao.getCarreras().setIdCarrera(IdCarrera);
-            carreraControlDao.getCarreras().setNombreCarrera(Nombre);
-            carreraControlDao.getCarreras().setDuracion(Duracion);
-            carreraControlDao.getCarreras().setNumeroCiclos(Nc);
-            carreraControlDao.getCarreras().setFacutadCarrera(UtilVista.obtenerFacultadControl(cbxFacultad));
-//            carreraControlDao.getCarreras().setCarreraMalla(UtilVista.obtenerMallaControl(cbxMalla));
-            
-            if (carreraControlDao.Persist()) {
-                JOptionPane.showMessageDialog(null, "CARRERA GUARDADA EXISTOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
-                carreraControlDao.setCarreras(null);
-            } 
-            else {
-                JOptionPane.showMessageDialog(null, "NO SE PUEDE REGISTRAR", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
+            String nombre = txtNombreCarrera.getText();
+            Integer duracion = Integer.valueOf(txtDuracionCarrera.getText());
+            Integer numeroCiclos = Integer.valueOf(txtNumeroCiclos.getText());
+
+            Facultad facultadCarrera = UtilVista.obtenerFacultadControl(cbxFacultad);
+
+            Carrera nuevaCarrera = new Carrera();
+            nuevaCarrera.setNombreCarrera(nombre);
+            nuevaCarrera.setDuracion(duracion);
+            nuevaCarrera.setNumeroCiclos(numeroCiclos);
+            nuevaCarrera.setFacutadCarrera(facultadCarrera);
+
+            if (carreraExiste(nuevaCarrera)) {
+                JOptionPane.showMessageDialog(null, "La carrera ya existe", "CARRERA EXISTENTE", JOptionPane.INFORMATION_MESSAGE);
+                return;
             }
-            Limpiar();
+
+            Integer idCarrera = listaCarreras.getLongitud() + 1;
+            nuevaCarrera.setIdCarrera(idCarrera);
+
+            try {
+                carreraControlDao.setCarreras(nuevaCarrera);
+                if (carreraControlDao.Persist()) {
+                    JOptionPane.showMessageDialog(null, "CARRERA GUARDADA EXITOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
+                    carreraControlDao.setCarreras(null);
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "NO SE PUEDE REGISTRAR", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
+                }
+                Limpiar();
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
     
@@ -472,16 +495,16 @@ public class VistaGestionCarrera extends javax.swing.JFrame {
         
         try {
             if (cbxFacultad.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar la facultad", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta seleccionar la facultad", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (txtNombreCarrera.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar nombre de la carrera", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar nombre de la carrera", "Error", JOptionPane.WARNING_MESSAGE);
             }
             else if (txtDuracionCarrera.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar duracion", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar duracion", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (txtNumeroCiclos.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar el numero de ciclos", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar el numero de ciclos", "Error", JOptionPane.WARNING_MESSAGE);
             } 
 //            else if (cbxMalla.getSelectedIndex() == -1) {
 //                JOptionPane.showMessageDialog(null, "Falta seleccionar la malla", "Error", JOptionPane.ERROR_MESSAGE);
@@ -504,16 +527,16 @@ public class VistaGestionCarrera extends javax.swing.JFrame {
         } 
         else {
             if (cbxFacultad.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar la facultad", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta seleccionar la facultad", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (txtNombreCarrera.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar nombre de la carrera", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar nombre de la carrera", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (txtDuracionCarrera.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar duracion", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar duracion", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (txtNumeroCiclos.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar el numero de ciclos", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar el numero de ciclos", "Error", JOptionPane.WARNING_MESSAGE);
             } 
 //            else if (cbxMalla.getSelectedIndex() == -1) {
 //                JOptionPane.showMessageDialog(null, "Falta seleccionar la malla", "Error", JOptionPane.ERROR_MESSAGE);

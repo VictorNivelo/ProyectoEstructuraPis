@@ -71,40 +71,61 @@ public class VistaGestionPeriodoAcademico extends javax.swing.JFrame {
         }
     }
     
-    private void Guardar() throws ListaVacia {
+    private boolean periodoExiste(PeriodoAcademico nuevoPeriodo) {
+        ListaDinamica<PeriodoAcademico> periodos = periodoControlDao.all();
+        for (PeriodoAcademico p : periodos.toArray()) {
+            if (p.getFechaInicio().equals(nuevoPeriodo.getFechaInicio())
+                    && p.getFechaFin().equals(nuevoPeriodo.getFechaFin())) {
+                return true;
+            }
+        }
+        return false;
+    }
 
+    private void Guardar() throws ListaVacia {
         if (DateInicio.getDate() == null) {
-            JOptionPane.showMessageDialog(null, "Falta llenar decha de inicio", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta llenar la fecha de inicio", "Error", JOptionPane.WARNING_MESSAGE);
         } 
         else if (DateFin.getDate() == null) {
-            JOptionPane.showMessageDialog(null, "Falta llenar fecha fin", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-        else if(cbxEstadoPeriodo.getSelectedIndex() == -1){
-            JOptionPane.showMessageDialog(null, "Falta seleccionar el periodo", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+            JOptionPane.showMessageDialog(null, "Falta llenar la fecha de fin", "Error", JOptionPane.WARNING_MESSAGE);
+        } 
+        else if (cbxEstadoPeriodo.getSelectedIndex() == -1) {
+            JOptionPane.showMessageDialog(null, "Falta seleccionar el estado del período", "Error", JOptionPane.WARNING_MESSAGE);
+        } 
         else {
-            Integer IdPeriodo = listaPeriodos.getLongitud() + 1;
-            
-            Date InicioD = DateInicio.getDate();
-            Date FinD = DateFin.getDate();
-            String Inicio = Formato.format(InicioD);
-            String Fin = Formato.format(FinD);
-            String Estado = cbxEstadoPeriodo.getSelectedItem().toString();
-            
-            periodoControlDao.getPeriodo().setIdPeriodoAcademino(IdPeriodo);
-            periodoControlDao.getPeriodo().setFechaInicio(Inicio);
-            periodoControlDao.getPeriodo().setFechaFin(Fin);
-            periodoControlDao.getPeriodo().setEstadoPeriodoAcedemico(Estado);
-            
-            if (periodoControlDao.persist()) {
-                JOptionPane.showMessageDialog(null, "PERIODO GUARDADO EXISTOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
-                periodoControlDao.setPeriodo(null);
+            Date fechaInicio = DateInicio.getDate();
+            Date fechaFin = DateFin.getDate();
+            String estado = cbxEstadoPeriodo.getSelectedItem().toString();
+
+            PeriodoAcademico nuevoPeriodo = new PeriodoAcademico();
+            nuevoPeriodo.setFechaInicio(Formato.format(fechaInicio));
+            nuevoPeriodo.setFechaFin(Formato.format(fechaFin));
+            nuevoPeriodo.setEstadoPeriodoAcedemico(estado);
+
+            if (periodoExiste(nuevoPeriodo)) {
+                JOptionPane.showMessageDialog(null, "El período ya existe", "Error", JOptionPane.ERROR_MESSAGE);
             } 
             else {
-                JOptionPane.showMessageDialog(null, "NO SE PUEDE GUARDAR", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
+                Integer idPeriodo = listaPeriodos.getLongitud() + 1;
+                nuevoPeriodo.setIdPeriodoAcademino(idPeriodo);
+
+                periodoControlDao.setPeriodo(nuevoPeriodo);
+
+                try {
+                    if (periodoControlDao.persist()) {
+                        JOptionPane.showMessageDialog(null, "Período guardado exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE);
+                        periodoControlDao.setPeriodo(null);
+                    } 
+                    else {
+                        JOptionPane.showMessageDialog(null, "No se pudo guardar el período", "Información", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                } 
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+                cbxEstadoPeriodo.setEnabled(false);
+                Limpiar();
             }
-            cbxEstadoPeriodo.setEnabled(false);
-            Limpiar();
         }
     }
     
@@ -470,13 +491,13 @@ public class VistaGestionPeriodoAcademico extends javax.swing.JFrame {
         } else {
 
             if (DateInicio.getDate() == null) {
-                JOptionPane.showMessageDialog(null, "Falta llenar decha de inicio", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar decha de inicio", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (DateFin.getDate() == null) {
-                JOptionPane.showMessageDialog(null, "Falta llenar fecha fin", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar fecha fin", "Error", JOptionPane.WARNING_MESSAGE);
             }
             else if (cbxEstadoPeriodo.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar el periodo", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta seleccionar el periodo", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else {
                 Integer IdPeriodo = periodoControlDao.getPeriodo().getIdPeriodoAcademino();
@@ -531,13 +552,13 @@ public class VistaGestionPeriodoAcademico extends javax.swing.JFrame {
         
         try {
             if (DateInicio.getDate() == null) {
-                JOptionPane.showMessageDialog(null, "Falta llenar decha de inicio", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar decha de inicio", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (DateFin.getDate() == null) {
-                JOptionPane.showMessageDialog(null, "Falta llenar fecha fin", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar fecha fin", "Error", JOptionPane.WARNING_MESSAGE);
             }
             else if (cbxEstadoPeriodo.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar el periodo", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta seleccionar el periodo", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else {
                 Guardar();
