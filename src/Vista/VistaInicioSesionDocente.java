@@ -137,6 +137,7 @@ public class VistaInicioSesionDocente extends javax.swing.JFrame {
 
         if (credencialesCorrectas && esDocente) {
             ControlAccesoDocente.setDocenteLogeado(docenteLogeado);
+            ControlAccesoDocente.setNombreDocenteLogeado(nombreUsuario);
             procesarDocente();
             dispose();
             lblNombreUsuarioIngresado.setText(nombreUsuario);        } 
@@ -156,6 +157,8 @@ public class VistaInicioSesionDocente extends javax.swing.JFrame {
         try {
             VistaDocentes abrirAsistencia = new VistaDocentes();
             abrirAsistencia.setVisible(true);
+            String nombreDocente = ControlAccesoDocente.getNombreDocenteLogeado();
+            abrirAsistencia.lblNombreUsuarioIngresado.setText(nombreDocente);
         } 
         catch (Exception e) {
 

@@ -36,6 +36,8 @@ public class VistaDocentes extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
         
+        mostrarNombreDocente();
+        
         timer = new Timer(3000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -49,6 +51,11 @@ public class VistaDocentes extends javax.swing.JFrame {
         indiceImagenActual = (indiceImagenActual + 1) % imagenes.length;
         panelPrincipal.repaint();
     }
+    
+    private void mostrarNombreDocente() {
+    String nombreDocente = ControlAccesoDocente.getNombreDocenteLogeado();
+    lblNombreUsuarioIngresado.setText(nombreDocente);
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
