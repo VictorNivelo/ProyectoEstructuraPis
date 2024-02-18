@@ -28,30 +28,34 @@ public class ModeloTablaMatriculas extends AbstractTableModel{
 
     @Override
     public int getColumnCount() {
-        return 6;
+        return 8;
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         try {
-            Matricula matricula = matriculas.getInfo(rowIndex);
+            Matricula m = matriculas.getInfo(rowIndex);
             switch (columnIndex) {
                 case 0:
-                    return (matricula != null)? matricula.getFechaMatricula() : "";
+                    return (m != null) ? m.getIdMatricula() : "";
                 case 1:
-                     return (matricula != null)? matricula.getCodigoMatricula(): "";
+                    return (m != null) ? m.getCodigoMatricula() : "";
                 case 2:
-                     return (matricula != null)? matricula.getEstadoMatricula(): "";
+                    return (m != null) ? m.getFechaMatricula() : "";
                 case 3:
-                     return (matricula != null)? matricula.getPeriodoAcademicoMatricula().getFechaInicio(): "";
+                    return (m != null) ? m.getEstadoMatricula() : "";
                 case 4:
-                     return (matricula != null)? matricula.getPeriodoAcademicoMatricula().getFechaFin(): "";
+                    return (m != null) ? m.getPeriodoAcademicoMatricula().getFechaInicio() : "";
                 case 5:
-                    return (matricula != null)? matricula.getAlumnoMatricula().getDatosAlumno().getNumeroCedula(): "";
+                    return (m != null) ? m.getPeriodoAcademicoMatricula().getFechaFin() : "";
+                case 6:
+                    return (m != null) ? m.getAlumnoMatricula().getDatosAlumno().getNumeroCedula() : "";
+                case 7:
+                    return (m != null) ? m.getAlumnoMatricula().getDatosAlumno().getNombre() + " "+m.getAlumnoMatricula().getDatosAlumno().getApellido(): "";
                 default:
                     return null;
             }
-        } 
+        }
         catch (ListaVacia ex) {
             return null;
         }   
@@ -61,17 +65,21 @@ public class ModeloTablaMatriculas extends AbstractTableModel{
     public String getColumnName(int column){
         switch (column) {
             case 0:
-                return "Fecha Matricula";
+                return "#";
             case 1:
                 return "Codigo";
             case 2:
-                return "Estado";
+                return "Fecha";
             case 3:
-                return "Periodo inicio";
+                return "Estado";
             case 4:
-                return "Periodo fin";
+                return "Inicio";
             case 5:
-                return "Alumno";
+                return "Fin";
+            case 6:
+                return "DNI Alumno";
+            case 7:
+                return "Nombre";
             default:
                 return null;
         }

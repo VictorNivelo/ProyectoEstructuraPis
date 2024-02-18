@@ -7,24 +7,21 @@ package Modelo;
  */
 public class Asistencia {
     private Integer IdAsistencia;
-    private EstadoAsistencia EstadoAsistencia;
     private String Observacion;
     
+    private String EstadoAsistencia;
+    private Integer EstadoAsistenciaID;
+    
     private Horario horarioAsistencia;
+    private Integer HorarioID;
     
     private Tematica AsistenciaTematica;
+    private Integer AsistenciaID;
     
     public Asistencia() {
         
     }
 
-//    public Asistencia(Integer IdAsistencia, EstadoAsistencia EstadoAsistencia, String Observacion, Tematica AsistenciaTematica) {
-//        this.IdAsistencia = IdAsistencia;
-//        this.EstadoAsistencia = EstadoAsistencia;
-//        this.Observacion = Observacion;
-//        this.AsistenciaTematica = AsistenciaTematica;
-//    }
-    
     public Integer getIdAsistencia() {
         return IdAsistencia;
     }
@@ -33,11 +30,11 @@ public class Asistencia {
         this.IdAsistencia = IdAsistencia;
     }
 
-    public EstadoAsistencia getEstadoAsistencia() {
+    public String getEstadoAsistencia() {
         return EstadoAsistencia;
     }
 
-    public void setEstadoAsistencia(EstadoAsistencia EstadoAsistencia) {
+    public void setEstadoAsistencia(String EstadoAsistencia) {
         this.EstadoAsistencia = EstadoAsistencia;
     }
 
@@ -63,6 +60,30 @@ public class Asistencia {
 
     public void setHorarioAsistencia(Horario horarioAsistencia) {
         this.horarioAsistencia = horarioAsistencia;
+    }
+
+    public Integer getEstadoAsistenciaID() {
+        return EstadoAsistenciaID;
+    }
+
+    public void setEstadoAsistenciaID(Integer EstadoAsistenciaID) {
+        this.EstadoAsistenciaID = EstadoAsistenciaID;
+    }
+
+    public Integer getHorarioID() {
+        return HorarioID;
+    }
+
+    public void setHorarioID(Integer HorarioID) {
+        this.HorarioID = HorarioID;
+    }
+
+    public Integer getAsistenciaID() {
+        return AsistenciaID;
+    }
+
+    public void setAsistenciaID(Integer AsistenciaID) {
+        this.AsistenciaID = AsistenciaID;
     }
 
     @Override

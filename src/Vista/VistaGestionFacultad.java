@@ -6,10 +6,10 @@ import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Controlador.Utiles.UtilesControlador;
 import Modelo.Facultad;
+import Modelo.Universidad;
 import Vista.ModeloTabla.ModeloTablaFacultad;
 import Vista.Utiles.UtilVista;
 import java.awt.event.KeyEvent;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.ImageIcon;
@@ -22,7 +22,6 @@ import javax.swing.JOptionPane;
  */
 public class VistaGestionFacultad extends javax.swing.JFrame {
     facultadDao facultadControlDao = new facultadDao();
-    ListaDinamica<Facultad> listaFacultades = new ListaDinamica<>();
     ModeloTablaFacultad mtf = new ModeloTablaFacultad();
     SimpleDateFormat Formato = new SimpleDateFormat("dd/MMMM/yyyy");
 
@@ -75,40 +74,82 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
         }
     }
     
-    private void Guardar() throws ListaVacia, ParseException {
-
-        if (txtNombre.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar nombre", "Error", JOptionPane.INFORMATION_MESSAGE);
-        }
-        else if (DateFechaC.getDate() == null) {
-            JOptionPane.showMessageDialog(null, "Falta llenar fecha", "Error", JOptionPane.INFORMATION_MESSAGE);
-        }
-        else if(cbxUniversidad.getSelectedIndex() == -1){
-            JOptionPane.showMessageDialog(null, "Falta seleccionar universidad", "Error", JOptionPane.INFORMATION_MESSAGE);
-        }
-        else {
-            Integer IdDocente =  listaFacultades.getLongitud()+1;
-            String Nombre = txtNombre.getText();
-            Date FechaCreacion = DateFechaC.getDate();
-            String Fs = Formato.format(FechaCreacion);
-
-            facultadControlDao.getFacultades().setIdFacultad(IdDocente);
-            facultadControlDao.getFacultades().setNombreFacultad(Nombre);
-            facultadControlDao.getFacultades().setFechaCreacion(Fs);
-            facultadControlDao.getFacultades().setUniversidadFacultad(UtilVista.obtenerUniversidadControl(cbxUniversidad));
-//            Universidad U = new Universidad(1, "Universidad Nacional de Loja", "Argelia", "(07) 254-7252", "comunicacion@unl.edu.ec", "31 de diciembre de 1859");
-//            
-//            facultadControlDao.getFacultades().setFacultadUniversidad(U);
-            
-            if (facultadControlDao.Persist()) {
-                JOptionPane.showMessageDialog(null, "FACULTAD GUARDADA EXISTOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
-                facultadControlDao.setFacultades(null);
-            } 
-            else {
-                JOptionPane.showMessageDialog(null, "NO SE PUEDE REGISTRAR", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
+    private boolean facultadExiste(Facultad nuevaFacultad) {
+        ListaDinamica<Facultad> facultades = facultadControlDao.getListaFacultad();
+        for (Facultad f : facultades.toArray()) {
+            if (f.getNombreFacultad().equals(nuevaFacultad.getNombreFacultad())
+                    && f.getFechaCreacion().equals(nuevaFacultad.getFechaCreacion())
+                    && f.getUniversidadFacultad().getIdUniversidad().equals(nuevaFacultad.getUniversidadFacultad().getIdUniversidad())) {
+                return true;
             }
-            Limpiar();
         }
+        return false;
+    }
+
+    private void Guardar() throws ListaVacia {
+        
+        Date fechaNacimiento = DateFechaC.getDate();
+        if (txtNombre.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Falta llenar nombre", "Error", JOptionPane.WARNING_MESSAGE);
+        } 
+        else if (DateFechaC.getDate() == null) {
+            JOptionPane.showMessageDialog(null, "Falta llenar fecha", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+        else if (!validarFechaNoFutura(fechaNacimiento)) {
+            JOptionPane.showMessageDialog(null, "La fecha de la creacion de la facultad no puede ser futura", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+        else if (cbxUniversidad.getSelectedIndex() == -1) {
+            JOptionPane.showMessageDialog(null, "Falta seleccionar universidad", "Error", JOptionPane.WARNING_MESSAGE);
+        } 
+        else {
+                        
+            String nombre = txtNombre.getText();
+            Date fechaCreacion = DateFechaC.getDate();
+            String fechaCreacionStr = Formato.format(fechaCreacion);
+            Universidad universidadFacultad = UtilVista.obtenerUniversidadControl(cbxUniversidad);
+
+            Facultad nuevaFacultad = new Facultad();
+            nuevaFacultad.setNombreFacultad(nombre);
+            nuevaFacultad.setFechaCreacion(fechaCreacionStr);
+            nuevaFacultad.setUniversidadFacultad(universidadFacultad);
+
+            if (facultadExiste(nuevaFacultad)) {
+                JOptionPane.showMessageDialog(null, "La facultad ya existe", "FACULTAD EXISTENTE", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+
+            try {
+                facultadControlDao.setFacultades(nuevaFacultad);
+                if (facultadControlDao.Persist()) {
+                    JOptionPane.showMessageDialog(null, "FACULTAD GUARDADA EXITOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
+                    facultadControlDao.setFacultades(null);
+                } 
+                else {
+                    JOptionPane.showMessageDialog(null, "NO SE PUEDE REGISTRAR", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
+                }
+                Limpiar();
+            } 
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    private boolean validarFechaNoFutura(Date date) {
+        Date hoy = new Date();
+        return !date.after(hoy);
+    }
+
+    public  Integer OrdenSeleccionado(){
+        String OrdenO = cbxOrden.getSelectedItem().toString();
+
+        if ("Asendente".equals(OrdenO)) {
+            return 1;
+        }
+        if("Desendente".equals(OrdenO)){
+            return 0;
+        }
+        return null;
     }
 
     /**
@@ -142,6 +183,10 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         cbxUniversidad = new javax.swing.JComboBox<>();
+        jLabel11 = new javax.swing.JLabel();
+        cbxOrden = new javax.swing.JComboBox<>();
+        btnOrdenar = new javax.swing.JButton();
+        cbxTipoOrden = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SISTEMA DE GESTION DE FACULTADES");
@@ -219,7 +264,7 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
         jLabel8.setText("Buscar por");
         jLabel8.setToolTipText("");
 
-        cbxTipoBusqueda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "Fecha de creacion", "Carrera" }));
+        cbxTipoBusqueda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "Fecha de creacion", "Universidad" }));
         cbxTipoBusqueda.setSelectedIndex(-1);
 
         jButton3.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
@@ -278,6 +323,23 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Nombre");
 
+        jLabel11.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel11.setText("Ordenar");
+
+        cbxOrden.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Asendente", "Desendente" }));
+        cbxOrden.setSelectedIndex(-1);
+
+        btnOrdenar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Ordenar.png"))); // NOI18N
+        btnOrdenar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOrdenarActionPerformed(evt);
+            }
+        });
+
+        cbxTipoOrden.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "Fecha de creacion", "Universidad" }));
+        cbxTipoOrden.setSelectedIndex(-1);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -324,7 +386,15 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
                             .addComponent(cbxUniversidad, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 873, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbxTipoOrden, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbxOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnOrdenar)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -332,10 +402,18 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel3)
+                        .addComponent(jLabel7))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(cbxOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cbxTipoOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel11))
+                            .addComponent(btnOrdenar))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3)
                     .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -347,7 +425,7 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(2, 2, 2)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -384,18 +462,22 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         
         int fila = tblDocentes.getSelectedRow();
+        Date fechaNacimiento = DateFechaC.getDate();
         if (fila < 0) {
             JOptionPane.showMessageDialog(null, "Escoga un registro");
         } 
         else {
             if (txtNombre.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar nombre", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar nombre", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (DateFechaC.getDate() == null) {
-                JOptionPane.showMessageDialog(null, "Falta llenar fecha", "Error", JOptionPane.INFORMATION_MESSAGE);
-            } 
+                JOptionPane.showMessageDialog(null, "Falta llenar fecha", "Error", JOptionPane.WARNING_MESSAGE);
+            }
+            else if (!validarFechaNoFutura(fechaNacimiento)) {
+                JOptionPane.showMessageDialog(null, "La fecha de la creacion de la facultad no puede ser futura", "Error", JOptionPane.WARNING_MESSAGE);
+            }
             else if (cbxUniversidad.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar universidad", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta seleccionar universidad", "Error", JOptionPane.WARNING_MESSAGE);
             }
             else {
                 
@@ -411,6 +493,7 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
                 facultadModificada.setNombreFacultad(Nombre);
                 facultadModificada.setFechaCreacion(FechaFormateada);
                 facultadModificada.setUniversidadFacultad(UtilVista.obtenerUniversidadControl(cbxUniversidad));
+                facultadModificada.setIdFacultad(UtilVista.obtenerUniversidadControl(cbxUniversidad).getIdUniversidad());
                 
                 facultadControlDao.Merge(facultadModificada, IdFacultad - 1);
                 
@@ -451,14 +534,18 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         
         try {
+            Date fechaNacimiento = DateFechaC.getDate();
             if (txtNombre.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar nombre", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar nombre", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (DateFechaC.getDate() == null) {
-                JOptionPane.showMessageDialog(null, "Falta llenar fecha", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar fecha", "Error", JOptionPane.WARNING_MESSAGE);
+            } 
+            else if (!validarFechaNoFutura(fechaNacimiento)) {
+                JOptionPane.showMessageDialog(null, "La fecha de la creacion de la facultad no puede ser futura", "Error", JOptionPane.WARNING_MESSAGE);
             }
             else if (cbxUniversidad.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar universidad", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta seleccionar universidad", "Error", JOptionPane.WARNING_MESSAGE);
             }
             else {
                 Guardar();
@@ -479,35 +566,39 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         
         try {
-            ListaDinamica<Facultad> lista = facultadControlDao.all();
-            
-            String Campo = txtBuscar.getText();
-            String TipoCampo = cbxTipoBusqueda.getSelectedItem().toString();
+            if (cbxTipoBusqueda.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Porfavor seleccione donde quiere buscar", "Error", JOptionPane.WARNING_MESSAGE);
+            } 
+            else {
+                ListaDinamica<Facultad> lista = facultadControlDao.all();
 
-            
-            switch (TipoCampo) {
-                case "Nombre":
-                    TipoCampo = "NombreFacultad";
-                    break;
-                case "Fecha de creacion":
-                    TipoCampo = "FechaCreacion";
-                    break;
-                case "Carrera":
-                    TipoCampo = "FacultadCarrera.NombreCarrera";
-                    break;
-                default:
-                    throw new AssertionError();
+                String Campo = txtBuscar.getText();
+                String TipoCampo = cbxTipoBusqueda.getSelectedItem().toString();
+
+                switch (TipoCampo) {
+                    case "Nombre":
+                        TipoCampo = "NombreFacultad";
+                        break;
+                    case "Fecha de creacion":
+                        TipoCampo = "FechaCreacion";
+                        break;
+                    case "Universidad":
+                        TipoCampo = "universidadFacultad";
+                        break;
+                    default:
+                        throw new AssertionError();
+                }
+
+                ListaDinamica<Facultad> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
+
+                mtf.setFacultadTabla(ResultadoBusqueda);
+                mtf.fireTableDataChanged();
             }
-            
-            ListaDinamica<Facultad> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
-                        
-            mtf.setFacultadTabla(ResultadoBusqueda);
-            mtf.fireTableDataChanged();
-            
         } 
         catch (Exception e) {
-            
+
         }
+        
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
@@ -523,6 +614,46 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_txtNombreKeyTyped
+
+    private void btnOrdenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdenarActionPerformed
+
+        try {
+            if(cbxTipoOrden.getSelectedIndex() == -1){
+                JOptionPane.showMessageDialog(null, "No ha seleccionado el campo", "FALTA SELCCIONAR", JOptionPane.WARNING_MESSAGE);
+            }
+            else if(cbxOrden.getSelectedIndex() == -1){
+                JOptionPane.showMessageDialog(null, "No ha seleccionado el orden", "FALTA SELCCIONAR", JOptionPane.WARNING_MESSAGE);
+            }
+            else {
+                ListaDinamica<Facultad> lista = facultadControlDao.all();
+                String TipoCampo = cbxTipoOrden.getSelectedItem().toString();
+
+                switch (TipoCampo) {
+                    case "Nombre":
+                        TipoCampo = "NombreFacultad";
+                        break;
+                    case "Fecha de creacion":
+                        TipoCampo = "FechaCreacion";
+                        break;
+                    case "Universidad":
+                        TipoCampo = "universidadFacultad";
+                        break;
+                    default:
+                        throw new AssertionError();
+                }
+
+                Integer orden = OrdenSeleccionado();
+
+                ListaDinamica<Facultad> resultadoOrdenado = UtilesControlador.QuickSort(lista, orden, TipoCampo);
+
+                mtf.setFacultadTabla(resultadoOrdenado);
+                mtf.fireTableDataChanged();
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnOrdenarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -567,7 +698,10 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser DateFechaC;
+    private javax.swing.JButton btnOrdenar;
+    private javax.swing.JComboBox<String> cbxOrden;
     private javax.swing.JComboBox<String> cbxTipoBusqueda;
+    private javax.swing.JComboBox<String> cbxTipoOrden;
     private javax.swing.JComboBox<String> cbxUniversidad;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -576,6 +710,7 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;

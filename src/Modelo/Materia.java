@@ -1,7 +1,6 @@
 
 package Modelo;
 
-import Controlador.TDA.ListaDinamica.ListaDinamica;
 
 /**
  *
@@ -14,26 +13,14 @@ public class Materia {
     private String NumeroHoras;
     
     private Ciclo cicloMateria;
+    private Integer CicloID;
+    
     private Cursa cursoMateria;
-    
-    //datos poco uasdos
-    private ListaDinamica<Ciclo> listaCicloMateria;
-    
-    private Horario horarioMateria;
-    private ListaDinamica<Horario> listaHorarioMateria;
+    private Integer CursaID;
     
     public Materia() {
         
     }
-
-//    public Materia(Integer IdMateria, String NombreMateria, String DescipcionMateria, String NumeroHoras, Horario horarioMateria, Ciclo cicloMateria) {
-//        this.IdMateria = IdMateria;
-//        this.NombreMateria = NombreMateria;
-//        this.DescipcionMateria = DescipcionMateria;
-//        this.NumeroHoras = NumeroHoras;
-//        this.horarioMateria = horarioMateria;
-//        this.cicloMateria = cicloMateria;
-//    }
 
     public Integer getIdMateria() {
         return IdMateria;
@@ -67,36 +54,12 @@ public class Materia {
         this.NumeroHoras = NumeroHoras;
     }
 
-    public Horario getHorarioMateria() {
-        return horarioMateria;
-    }
-
-    public void setHorarioMateria(Horario horarioMateria) {
-        this.horarioMateria = horarioMateria;
-    }
-
-    public ListaDinamica<Horario> getListaHorarioMateria() {
-        return listaHorarioMateria;
-    }
-
-    public void setListaHorarioMateria(ListaDinamica<Horario> listaHorarioMateria) {
-        this.listaHorarioMateria = listaHorarioMateria;
-    }
-
     public Ciclo getCicloMateria() {
         return cicloMateria;
     }
 
     public void setCicloMateria(Ciclo cicloMateria) {
         this.cicloMateria = cicloMateria;
-    }
-
-    public ListaDinamica<Ciclo> getListaCicloMateria() {
-        return listaCicloMateria;
-    }
-
-    public void setListaCicloMateria(ListaDinamica<Ciclo> listaCicloMateria) {
-        this.listaCicloMateria = listaCicloMateria;
     }
 
     public Cursa getCursoMateria() {
@@ -107,6 +70,22 @@ public class Materia {
         this.cursoMateria = cursoMateria;
     }
 
+    public Integer getCicloID() {
+        return CicloID;
+    }
+
+    public void setCicloID(Integer CicloID) {
+        this.CicloID = CicloID;
+    }
+
+    public Integer getCursaID() {
+        return CursaID;
+    }
+
+    public void setCursaID(Integer CursaID) {
+        this.CursaID = CursaID;
+    }
+    
     @Override
     public String toString() {
         return NombreMateria+"\n";

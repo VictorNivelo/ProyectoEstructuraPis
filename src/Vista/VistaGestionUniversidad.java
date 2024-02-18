@@ -7,6 +7,7 @@ import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Controlador.Utiles.UtilesControlador;
 import Modelo.Universidad;
 import Vista.ModeloTabla.ModeloTablaUniversidad;
+import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.ImageIcon;
@@ -18,7 +19,7 @@ import javax.swing.JOptionPane;
  */
 public class VistaGestionUniversidad extends javax.swing.JFrame {
     universidadDao universidadControlDao = new universidadDao();
-    ModeloTablaUniversidad mtp = new ModeloTablaUniversidad();
+    ModeloTablaUniversidad mtu = new ModeloTablaUniversidad();
     ListaDinamica<Universidad> listaUniversidades = new ListaDinamica<>();
     SimpleDateFormat Formato = new SimpleDateFormat("dd/MMMM/yyyy");
 
@@ -34,8 +35,8 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
     }
     
     private void CargarTabla(){
-        mtp.setUniversidadTabla(universidadControlDao.all());
-        tblUniversidades.setModel(mtp);
+        mtu.setUniversidadTabla(universidadControlDao.all());
+        tblUniversidades.setModel(mtu);
         tblUniversidades.updateUI();
         cbxTipoBusqueda.setSelectedIndex(-1);
     }
@@ -57,7 +58,7 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
         }
         else{
             try {
-                universidadControlDao.setUniversidades(mtp.getUniversidadTabla().getInfo(fila));
+                universidadControlDao.setUniversidades(mtu.getUniversidadTabla().getInfo(fila));
                 
                 Date Inicio = Formato.parse(universidadControlDao.getUniversidades().getFechaFundacion());
                 DateFundacion.setDate(Inicio);
@@ -73,50 +74,133 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
         }
     }
     
+    private boolean universidadExiste(Universidad nuevaUniversidad) {
+        ListaDinamica<Universidad> universidades = universidadControlDao.all();
+        for (Universidad u : universidades.toArray()) {
+            if (u.getNombreUniversidad().equals(nuevaUniversidad.getNombreUniversidad())
+                    && u.getDireccionUniversidad().equals(nuevaUniversidad.getDireccionUniversidad())
+                    && u.getNumeroTelefono().equals(nuevaUniversidad.getNumeroTelefono())
+                    && u.getCorreoUniversidad().equals(nuevaUniversidad.getCorreoUniversidad())
+                    && u.getFechaFundacion().equals(nuevaUniversidad.getFechaFundacion())) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
     private void Guardar() throws ListaVacia {
-
+        
+        Date fechaNacimiento = DateFundacion.getDate();
         if (txtNombreU.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar el nombre de la universidad", "Error", JOptionPane.ERROR_MESSAGE);
-        } 
+            JOptionPane.showMessageDialog(null, "Falta llenar el nombre de la universidad", "Error", JOptionPane.WARNING_MESSAGE);
+        }
         else if (txtDireccionU.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar la direccion", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta llenar la direccion", "Error", JOptionPane.WARNING_MESSAGE);
         } 
         else if (txtTelefono.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar el numero de telefono", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta llenar el numero de telefono", "Error", JOptionPane.WARNING_MESSAGE);
         } 
         else if (txtCorreo.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar el correo de la universidad", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta llenar el correo de la universidad", "Error", JOptionPane.WARNING_MESSAGE);
         } 
         else if (DateFundacion.getDate() == null) {
-            JOptionPane.showMessageDialog(null, "Falta llenar fecha de fundacion", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta llenar fecha de fundacion", "Error", JOptionPane.WARNING_MESSAGE);
+        } 
+        else if (!validarFechaNoFutura(fechaNacimiento)) {
+            JOptionPane.showMessageDialog(null, "La fecha de fundacion no puede ser futura", "Error", JOptionPane.WARNING_MESSAGE);
         }
         else {
-            Integer idUniversidad = listaUniversidades.getLongitud() + 1;
             
-            Date InicioD = DateFundacion.getDate();
-            String Fundacion = Formato.format(InicioD);
-            String Nombre = txtNombreU.getText();
-            String Direccion = txtDireccionU.getText();
-            String Telefono = txtTelefono.getText();
-            String Correo = txtCorreo.getText();
-            
-            universidadControlDao.getUniversidades().setIdUniversidad(idUniversidad);
-            universidadControlDao.getUniversidades().setNombreUniversidad(Nombre);
-            universidadControlDao.getUniversidades().setDireccionUniversidad(Direccion);
-            universidadControlDao.getUniversidades().setNumeroTelefono(Telefono);
-            universidadControlDao.getUniversidades().setCorreoUniversidad(Correo);
-            universidadControlDao.getUniversidades().setFechaFundacion(Fundacion);
+            String nombre = txtNombreU.getText();
+            String direccion = txtDireccionU.getText();
+            String telefono = txtTelefono.getText();
+            String correo = txtCorreo.getText();
+            String fechaFundacion = Formato.format(DateFundacion.getDate());
 
-            
+            Universidad nuevaUniversidad = new Universidad();
+            nuevaUniversidad.setNombreUniversidad(nombre);
+            nuevaUniversidad.setDireccionUniversidad(direccion);
+            nuevaUniversidad.setNumeroTelefono(telefono);
+            nuevaUniversidad.setCorreoUniversidad(correo);
+            nuevaUniversidad.setFechaFundacion(fechaFundacion);
+
+            if (universidadExiste(nuevaUniversidad)) {
+                JOptionPane.showMessageDialog(null, "La universidad ya existe", "UNIVERSIDAD EXISTENTE", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+
+            Integer idUniversidad = listaUniversidades.getLongitud() + 1;
+            nuevaUniversidad.setIdUniversidad(idUniversidad);
+
+            universidadControlDao.setUniversidades(nuevaUniversidad);
             if (universidadControlDao.Persist()) {
-                JOptionPane.showMessageDialog(null, "PERIODO GUARDADO EXISTOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "UNIVERSIDAD GUARDADADA EXITOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
                 universidadControlDao.setUniversidades(null);
-            } 
-            else {
+            } else {
                 JOptionPane.showMessageDialog(null, "NO SE PUEDE GUARDAR", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
             }
             Limpiar();
         }
+
+//        if (txtNombreU.getText().isEmpty()) {
+//            JOptionPane.showMessageDialog(null, "Falta llenar el nombre de la universidad", "Error", JOptionPane.ERROR_MESSAGE);
+//        } 
+//        else if (txtDireccionU.getText().isEmpty()) {
+//            JOptionPane.showMessageDialog(null, "Falta llenar la direccion", "Error", JOptionPane.ERROR_MESSAGE);
+//        } 
+//        else if (txtTelefono.getText().isEmpty()) {
+//            JOptionPane.showMessageDialog(null, "Falta llenar el numero de telefono", "Error", JOptionPane.ERROR_MESSAGE);
+//        } 
+//        else if (txtCorreo.getText().isEmpty()) {
+//            JOptionPane.showMessageDialog(null, "Falta llenar el correo de la universidad", "Error", JOptionPane.ERROR_MESSAGE);
+//        } 
+//        else if (DateFundacion.getDate() == null) {
+//            JOptionPane.showMessageDialog(null, "Falta llenar fecha de fundacion", "Error", JOptionPane.ERROR_MESSAGE);
+//        }
+//        else {
+//            Integer idUniversidad = listaUniversidades.getLongitud() + 1;
+//            
+//            Date InicioD = DateFundacion.getDate();
+//            String Fundacion = Formato.format(InicioD);
+//            String Nombre = txtNombreU.getText();
+//            String Direccion = txtDireccionU.getText();
+//            String Telefono = txtTelefono.getText();
+//            String Correo = txtCorreo.getText();
+//            
+//            universidadControlDao.getUniversidades().setIdUniversidad(idUniversidad);
+//            universidadControlDao.getUniversidades().setNombreUniversidad(Nombre);
+//            universidadControlDao.getUniversidades().setDireccionUniversidad(Direccion);
+//            universidadControlDao.getUniversidades().setNumeroTelefono(Telefono);
+//            universidadControlDao.getUniversidades().setCorreoUniversidad(Correo);
+//            universidadControlDao.getUniversidades().setFechaFundacion(Fundacion);
+//
+//            
+//            if (universidadControlDao.Persist()) {
+//                JOptionPane.showMessageDialog(null, "UNIVERSIDAD GUARDADADA EXISTOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
+//                universidadControlDao.setUniversidades(null);
+//            } 
+//            else {
+//                JOptionPane.showMessageDialog(null, "NO SE PUEDE GUARDAR", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
+//            }
+//            Limpiar();
+//        }
+    }
+    
+    private boolean validarFechaNoFutura(Date date) {
+        Date hoy = new Date();
+        return !date.after(hoy);
+    }
+    
+    public  Integer OrdenSeleccionado(){
+        String OrdenO = cbxOrden.getSelectedItem().toString();
+
+        if ("Asendente".equals(OrdenO)) {
+            return 1;
+        }
+        if("Desendente".equals(OrdenO)){
+            return 0;
+        }
+        return null;
     }
 
     /**
@@ -155,6 +239,10 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
         DateFundacion = new com.toedter.calendar.JDateChooser();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblUniversidades = new javax.swing.JTable();
+        jLabel12 = new javax.swing.JLabel();
+        cbxOrden = new javax.swing.JComboBox<>();
+        btnOrdenar = new javax.swing.JButton();
+        cbxTipoOrden = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SISTEMA DE GESTION DE UNIVERSIDADES");
@@ -270,6 +358,12 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
             }
         });
 
+        txtTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTelefonoKeyTyped(evt);
+            }
+        });
+
         tblUniversidades.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -286,6 +380,23 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(tblUniversidades);
+
+        jLabel12.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel12.setText("Ordenar");
+
+        cbxOrden.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Asendente", "Desendente" }));
+        cbxOrden.setSelectedIndex(-1);
+
+        btnOrdenar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Ordenar.png"))); // NOI18N
+        btnOrdenar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOrdenarActionPerformed(evt);
+            }
+        });
+
+        cbxTipoOrden.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "Direccion", "Telefono", "Correo", "Fecha de fundacion" }));
+        cbxTipoOrden.setSelectedIndex(-1);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -317,7 +428,6 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
                             .addComponent(DateFundacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -333,7 +443,17 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
                         .addComponent(jButton5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton4))
-                    .addComponent(jScrollPane1))
+                    .addComponent(jScrollPane1)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel12)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbxTipoOrden, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbxOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnOrdenar)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -341,10 +461,18 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel9))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel3)
+                        .addComponent(jLabel9))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(cbxOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cbxTipoOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel12))
+                            .addComponent(btnOrdenar))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jLabel10)
@@ -372,7 +500,7 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
                             .addComponent(DateFundacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 440, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3)
@@ -407,21 +535,25 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         
         try {
+            Date fechaNacimiento = DateFundacion.getDate();
             if (txtNombreU.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar el nombre de la universidad", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar el nombre de la universidad", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (txtDireccionU.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar la direccion", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar la direccion", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (txtTelefono.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar el numero de telefono", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar el numero de telefono", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (txtCorreo.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar el correo de la universidad", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar el correo de la universidad", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (DateFundacion.getDate() == null) {
-                JOptionPane.showMessageDialog(null, "Falta llenar fecha de fundacion", "Error", JOptionPane.ERROR_MESSAGE);
-            } 
+                JOptionPane.showMessageDialog(null, "Falta llenar fecha de fundacion", "Error", JOptionPane.WARNING_MESSAGE);
+            }
+            else if (!validarFechaNoFutura(fechaNacimiento)) {
+                JOptionPane.showMessageDialog(null, "La fecha de fundacion no puede ser futura", "Error", JOptionPane.WARNING_MESSAGE);
+            }
             else {
                 Guardar();
             }
@@ -435,26 +567,31 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         
         int fila = tblUniversidades.getSelectedRow();
+        Date fechaNacimiento = DateFundacion.getDate();
         if (fila < 0) {
             JOptionPane.showMessageDialog(null, "Escoga un registro");
         } else {
 
             if (txtNombreU.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar el nombre de la universidad", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar el nombre de la universidad", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (txtDireccionU.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar la direccion", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar la direccion", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (txtTelefono.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar el numero de telefono", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar el numero de telefono", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (txtCorreo.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar el correo de la universidad", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar el correo de la universidad", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (DateFundacion.getDate() == null) {
-                JOptionPane.showMessageDialog(null, "Falta llenar fecha de fundacion", "Error", JOptionPane.ERROR_MESSAGE);
-            } 
+                JOptionPane.showMessageDialog(null, "Falta llenar fecha de fundacion", "Error", JOptionPane.WARNING_MESSAGE);
+            }
+            else if (!validarFechaNoFutura(fechaNacimiento)) {
+                JOptionPane.showMessageDialog(null, "La fecha de fundacion no puede ser futura", "Error", JOptionPane.WARNING_MESSAGE);
+            }
             else {
+                                
                 Integer IdUniversidad = universidadControlDao.getUniversidades().getIdUniversidad();
                 String Nombre = txtNombreU.getText();
                 String Direccion = txtDireccionU.getText();
@@ -501,38 +638,42 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
-         try {
-            ListaDinamica<Universidad> lista = universidadControlDao.all();
+        try {
+            if (cbxTipoBusqueda.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Porfavor seleccione donde quiere buscar", "Error", JOptionPane.WARNING_MESSAGE);
+            } 
+            else {
+                ListaDinamica<Universidad> lista = universidadControlDao.all();
 
-            String Campo = txtBuscar.getText();
-            String TipoCampo = cbxTipoBusqueda.getSelectedItem().toString();
-            
-            switch (TipoCampo) {
-                case "Nombre":
-                    TipoCampo = "NombreUniversidad";
-                    break;
-                case "Direccion":
-                    TipoCampo = "DireccionUniversidad";
-                    break;
-                case "Telefono":
-                    TipoCampo = "NumeroTelefono";
-                    break;
-                case "Correo":
-                    TipoCampo = "CorreoUniversidad";
-                    break;
-                case "Fecha de fundacion":
-                    TipoCampo = "FechaFundacion";
-                    break;
-                default:
-                    throw new AssertionError();
+                String Campo = txtBuscar.getText();
+                String TipoCampo = cbxTipoBusqueda.getSelectedItem().toString();
+
+                switch (TipoCampo) {
+                    case "Nombre":
+                        TipoCampo = "NombreUniversidad";
+                        break;
+                    case "Direccion":
+                        TipoCampo = "DireccionUniversidad";
+                        break;
+                    case "Telefono":
+                        TipoCampo = "NumeroTelefono";
+                        break;
+                    case "Correo":
+                        TipoCampo = "CorreoUniversidad";
+                        break;
+                    case "Fecha de fundacion":
+                        TipoCampo = "FechaFundacion";
+                        break;
+                    default:
+                        throw new AssertionError();
+                }
+
+                ListaDinamica<Universidad> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
+
+                mtu.setUniversidadTabla(ResultadoBusqueda);
+                mtu.fireTableDataChanged();
             }
-
-            ListaDinamica<Universidad> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
-
-            mtp.setUniversidadTabla(ResultadoBusqueda);
-            mtp.fireTableDataChanged();
-
-        }
+        } 
         catch (Exception e) {
 
         }
@@ -544,6 +685,67 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
         Seleccionar();
         
     }//GEN-LAST:event_tblUniversidadesMouseClicked
+
+    private void btnOrdenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdenarActionPerformed
+
+        try {
+            if (cbxTipoOrden.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "No ha seleccionado el campo", "FALTA SELCCIONAR", JOptionPane.WARNING_MESSAGE);
+            } 
+            else if (cbxOrden.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "No ha seleccionado el orden", "FALTA SELCCIONAR", JOptionPane.WARNING_MESSAGE);
+            } 
+            else {
+                ListaDinamica<Universidad> lista = universidadControlDao.all();
+                String TipoCampo = cbxTipoOrden.getSelectedItem().toString();
+
+                switch (TipoCampo) {
+                    case "Nombre":
+                        TipoCampo = "NombreUniversidad";
+                        break;
+                    case "Direccion":
+                        TipoCampo = "DireccionUniversidad";
+                        break;
+                    case "Telefono":
+                        TipoCampo = "NumeroTelefono";
+                        break;
+                    case "Correo":
+                        TipoCampo = "CorreoUniversidad";
+                        break;
+                    case "Fecha de fundacion":
+                        TipoCampo = "FechaFundacion";
+                        break;
+                    default:
+                        throw new AssertionError();
+                }
+
+                Integer orden = OrdenSeleccionado();
+
+                ListaDinamica<Universidad> resultadoOrdenado = UtilesControlador.QuickSort(lista, orden, TipoCampo);
+
+                mtu.setUniversidadTabla(resultadoOrdenado);
+                mtu.fireTableDataChanged();
+            }
+        } 
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+    }//GEN-LAST:event_btnOrdenarActionPerformed
+
+    private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyTyped
+        
+        Character c = evt.getKeyChar();
+
+        if (!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE) {
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Solo ingreso de numeros", "CARACTER NO VALIDO", JOptionPane.WARNING_MESSAGE);
+        }
+        if (txtTelefono.getText().length() >= 10 && c != KeyEvent.VK_BACK_SPACE) {
+            evt.consume();
+        }
+        
+    }//GEN-LAST:event_txtTelefonoKeyTyped
 
     /**
      * @param args the command line arguments
@@ -582,7 +784,10 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser DateFundacion;
+    private javax.swing.JButton btnOrdenar;
+    private javax.swing.JComboBox<String> cbxOrden;
     private javax.swing.JComboBox<String> cbxTipoBusqueda;
+    private javax.swing.JComboBox<String> cbxTipoOrden;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -591,6 +796,7 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

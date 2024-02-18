@@ -32,6 +32,7 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
         UtilVista.cargarcomboPersonaDocentes(cbxDocente);
+        cbxDocente.setMaximumRowCount(cbxDocente.getItemCount());
         CargarTabla();
     }
     
@@ -74,41 +75,75 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
         }
     }
     
-    private void Guardar() throws ListaVacia {
+    private boolean docenteExiste(Docente nuevoDocente) {
+        ListaDinamica<Docente> docentes = docenteControlDao.getListaDocentes();
+        for (Docente d : docentes.toArray()) {
+            if (d.getIdDocente().equals(nuevoDocente.getIdDocente())) {
+                return true;
+            }
+        }
+        return false;
+    }
 
+    private void Guardar() throws ListaVacia {
         if (cbxDocente.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(null, "Falta seleccionar docente", "Error", JOptionPane.INFORMATION_MESSAGE);
-        }
+            JOptionPane.showMessageDialog(null, "Falta seleccionar un docente", "Error", JOptionPane.WARNING_MESSAGE);
+        } 
         else if (txtEspecialidad.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar especialidad", "Error", JOptionPane.INFORMATION_MESSAGE);
-        }
+            JOptionPane.showMessageDialog(null, "Falta llenar la especialidad", "Error", JOptionPane.WARNING_MESSAGE);
+        } 
         else if (txtTitulacion.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar titulacion", "Error", JOptionPane.INFORMATION_MESSAGE);
-        }
+            JOptionPane.showMessageDialog(null, "Falta llenar la titulación", "Error", JOptionPane.WARNING_MESSAGE);
+        } 
         else if (txtAniosExperiencia.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar años de experiencia", "Error", JOptionPane.INFORMATION_MESSAGE);
-        }
+            JOptionPane.showMessageDialog(null, "Falta llenar los años de experiencia", "Error", JOptionPane.WARNING_MESSAGE);
+        } 
         else {
-            Integer IdDocente =  listaDocentes.getLongitud()+1;
-            String Especialidad = txtEspecialidad.getText();
-            String Titulacion = txtTitulacion.getText();
-            String A = txtAniosExperiencia.getText();
-                                    
-            docenteControlDao.getDocentes().setIdDocente(IdDocente);
-            docenteControlDao.getDocentes().setEspecialidad(Especialidad);
-            docenteControlDao.getDocentes().setTitulacion(Titulacion);
-            docenteControlDao.getDocentes().setAniosExperiencia(A);
-            docenteControlDao.getDocentes().setDatosDocente(UtilVista.obtenerPersonaDocentesControl(cbxDocente));
-            
-            if (docenteControlDao.Persist()) {
-                JOptionPane.showMessageDialog(null, "DOCENTE GUARDADA EXISTOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
-                docenteControlDao.setDocentes(null);
+            Integer idDocente = listaDocentes.getLongitud() + 1;
+            String especialidad = txtEspecialidad.getText();
+            String titulacion = txtTitulacion.getText();
+            String aniosExperiencia = txtAniosExperiencia.getText();
+            Persona datosDocente = UtilVista.obtenerPersonaDocentesControl(cbxDocente);
+
+            Docente nuevoDocente = new Docente();
+            nuevoDocente.setIdDocente(idDocente);
+            nuevoDocente.setEspecialidad(especialidad);
+            nuevoDocente.setTitulacion(titulacion);
+            nuevoDocente.setAniosExperiencia(aniosExperiencia);
+            nuevoDocente.setDatosDocente(datosDocente);
+
+            if (docenteExiste(nuevoDocente)) {
+                JOptionPane.showMessageDialog(null, "El docente ya existe", "Error", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+
+            docenteControlDao.setDocentes(nuevoDocente);
+            try {
+                if (docenteControlDao.Persist()) {
+                    JOptionPane.showMessageDialog(null, "Docente guardado exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE);
+                    docenteControlDao.setDocentes(null);
+                } 
+                else {
+                    JOptionPane.showMessageDialog(null, "No se pudo guardar el docente", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             } 
-            else {
-                JOptionPane.showMessageDialog(null, "NO SE PUEDE REGISTRAR", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
+            catch (Exception e) {
+                e.printStackTrace();
             }
             Limpiar();
         }
+    }
+    
+    public  Integer OrdenSeleccionado(){
+        String OrdenO = cbxOrden.getSelectedItem().toString();
+
+        if ("Asendente".equals(OrdenO)) {
+            return 1;
+        }
+        if("Desendente".equals(OrdenO)){
+            return 0;
+        }
+        return null;
     }
 
     /**
@@ -148,6 +183,10 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         txtDocenteBusqueda = new javax.swing.JTextField();
         btnBuscarDocente = new javax.swing.JButton();
+        btnOrdenar = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
+        cbxOrden = new javax.swing.JComboBox<>();
+        cbxTipoOrden = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("GESTION DE DOCENTES");
@@ -251,7 +290,7 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
         jLabel11.setForeground(new java.awt.Color(0, 0, 0));
         jLabel11.setText("Buscar por");
 
-        cbxTipoBusqueda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Numero de cedula", "Nombre", "Apellido", "Genero", "Especialidad", "Titulacion", "Materia", "Paralelo" }));
+        cbxTipoBusqueda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Numero de cedula", "Nombre", "Apellido", "Genero", "Especialidad", "Titulacion", "Experiencia" }));
         cbxTipoBusqueda.setSelectedIndex(-1);
 
         jLabel12.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
@@ -317,6 +356,23 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
             }
         });
 
+        btnOrdenar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Ordenar.png"))); // NOI18N
+        btnOrdenar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOrdenarActionPerformed(evt);
+            }
+        });
+
+        jLabel9.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel9.setText("Ordenar");
+
+        cbxOrden.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Asendente", "Desendente" }));
+        cbxOrden.setSelectedIndex(-1);
+
+        cbxTipoOrden.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Numero de cedula", "Nombre", "Apellido", "Genero", "Especialidad", "Titulacion", "Experiencia" }));
+        cbxTipoOrden.setSelectedIndex(-1);
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -325,11 +381,13 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel8)
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton2))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtDocenteBusqueda)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnBuscarDocente))
+                        .addComponent(txtAniosExperiencia))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -342,19 +400,23 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbxDocente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
+                        .addComponent(cbxDocente, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtAniosExperiencia, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE))
+                        .addComponent(txtDocenteBusqueda)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnBuscarDocente))
+                    .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(0, 633, Short.MAX_VALUE)
+                        .addComponent(jButton5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton4))
+                    .addComponent(jScrollPane1)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cbxTipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -364,13 +426,16 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
                         .addComponent(txtBuscar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton3))
-                    .addComponent(jScrollPane1)
-                    .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton5)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(162, 162, 162)
+                        .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4)))
+                        .addComponent(cbxTipoOrden, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbxOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnOrdenar)))
                 .addContainerGap())
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -379,24 +444,33 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10)
-                    .addComponent(jLabel13))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnBuscarDocente)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel10)
+                        .addComponent(jLabel13))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(cbxOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cbxTipoOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel9))
+                            .addComponent(btnOrdenar))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel11)
                         .addComponent(cbxTipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel12)
                         .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jButton3))
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel8)
-                        .addComponent(txtDocenteBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(btnBuscarDocente)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addComponent(txtDocenteBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
@@ -443,16 +517,16 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
         
         try {
             if (cbxDocente.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar docente", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta seleccionar docente", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (txtEspecialidad.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar especialidad", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar especialidad", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (txtTitulacion.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar titulacion", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar titulacion", "Error", JOptionPane.WARNING_MESSAGE);
             }
             else if (txtAniosExperiencia.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar años de experiencia", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar años de experiencia", "Error", JOptionPane.WARNING_MESSAGE);
             }
             else {
                 Guardar();
@@ -486,16 +560,16 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
         } 
         else {
             if (cbxDocente.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar docente", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta seleccionar docente", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (txtEspecialidad.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar especialidad", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar especialidad", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (txtTitulacion.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar titulacion", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar titulacion", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (txtAniosExperiencia.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar años de experiencia", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar años de experiencia", "Error", JOptionPane.WARNING_MESSAGE);
             }
             else {
 
@@ -548,51 +622,52 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         
         try {
-            ListaDinamica<Docente> lista = docenteControlDao.all();
-            
-            String Campo = txtBuscar.getText();
-            String TipoCampo = cbxTipoBusqueda.getSelectedItem().toString();
-            
-            switch (TipoCampo) {
-                case "Numero cedula":
-                    TipoCampo = "DatosDocente.NumeroCedula";
-                    break;
-                case "Nombre":
-                    TipoCampo = "DatosDocente.Nombre";
-                    break;
-                case "Apellido":
-                    TipoCampo = "DatosDocente.Apellido";
-                    break;
-                case "Genero":
-                    TipoCampo = "DatosDocente.Genero";
-                    break;
-                case "Especialidad":
-                    TipoCampo = "Especialidad";
-                    break;
-                case "Titulacion":
-                    TipoCampo = "Titulacion";
-                    break;
-                case "Años ecperiencia":
-                    TipoCampo = "AniosExperiencia";
-                    break;
-                case "Materia":
-                    TipoCampo = "cursoDocente.MateriaCurso.NombreMateria";
-                    break;
-                case "Paralelo":
-                    TipoCampo = "cursoDocente.Paralelo";
-                    break;
-                default:
-                    throw new AssertionError();
+            if (cbxTipoBusqueda.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Porfavor seleccione donde quiere buscar", "Error", JOptionPane.WARNING_MESSAGE);
+            } 
+            else {
+                ListaDinamica<Docente> lista = docenteControlDao.all();
+
+                String Campo = txtBuscar.getText();
+                String TipoCampo = cbxTipoBusqueda.getSelectedItem().toString();
+
+                switch (TipoCampo) {
+                    case "Numero de cedula":
+                        TipoCampo = "DatosDocente.NumeroCedula";
+                        break;
+                    case "Nombre":
+                        TipoCampo = "DatosDocente.Nombre";
+                        break;
+                    case "Apellido":
+                        TipoCampo = "DatosDocente.Apellido";
+                        break;
+                    case "Genero":
+                        TipoCampo = "DatosDocente.Genero";
+                        break;
+                    case "Especialidad":
+                        TipoCampo = "Especialidad";
+                        break;
+                    case "Titulacion":
+                        TipoCampo = "Titulacion";
+                        break;
+                    case "Años ecperiencia":
+                        TipoCampo = "AniosExperiencia";
+                        break;
+                    case "Experiencia":
+                        TipoCampo = "AniosExperiencia";
+                        break;
+                    default:
+                        throw new AssertionError();
+                }
+
+                ListaDinamica<Docente> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
+
+                mtd.setDocenteTabla(ResultadoBusqueda);
+                mtd.fireTableDataChanged();
             }
-            
-            ListaDinamica<Docente> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
-                        
-            mtd.setDocenteTabla(ResultadoBusqueda);
-            mtd.fireTableDataChanged();
-            
         } 
         catch (Exception e) {
-            
+
         }
         
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -639,22 +714,33 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
     private void btnBuscarDocenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarDocenteActionPerformed
 
         try {
-            personaDao PD = new personaDao();
-            ListaDinamica<Persona> lista = PD.all();
+            if (txtDocenteBusqueda.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Ingrese el docente a buscar", "FALTA LLENAR", JOptionPane.WARNING_MESSAGE);
+            } 
+            else {
+                personaDao PD = new personaDao();
+                ListaDinamica<Persona> lista = PD.all();
 
-            String Campo = txtDocenteBusqueda.getText();
+                String Campo = txtDocenteBusqueda.getText();
 
-            ListaDinamica<Persona> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, "NumeroCedula");
+                ListaDinamica<Persona> ResultadoBusqueda = new ListaDinamica<>();
 
-            cbxDocente.removeAllItems();
+                ListaDinamica<Persona> ResultadoCe = UtilesControlador.BusquedaLineal(lista, Campo, "NumeroCedula");
+                ResultadoBusqueda.concatenar(ResultadoCe);
 
-            for (Persona pb : ResultadoBusqueda.toArray()) {
-                if (pb.getRolPersona().getNombreRol().equals("Docente")) {
-                    cbxDocente.addItem(pb);
+                ListaDinamica<Persona> ResultadoN = UtilesControlador.BusquedaLineal(lista, Campo, "Nombre");
+                ResultadoBusqueda.concatenar(ResultadoN);
+
+                cbxDocente.removeAllItems();
+
+                for (Persona pb : ResultadoBusqueda.toArray()) {
+                    if (pb.getRolPersona().getNombreRol().equals("Docente")) {
+                        cbxDocente.addItem(pb);
+                    }
                 }
             }
 
-        } 
+        }
         catch (Exception e) {
 
         }
@@ -663,17 +749,73 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
 
     private void txtDocenteBusquedaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDocenteBusquedaKeyTyped
         
-        Character c = evt.getKeyChar();
-
-        if (!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE) {
-            evt.consume();
-            JOptionPane.showMessageDialog(null, "Solo ingreso de numeros", "CARACTER NO VALIDO", JOptionPane.WARNING_MESSAGE);
-        }
-        if (txtDocenteBusqueda.getText().length() >= 10 && c != KeyEvent.VK_BACK_SPACE) {
-            evt.consume();
-        }
+//        Character c = evt.getKeyChar();
+//
+//        if (!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE) {
+//            evt.consume();
+//            JOptionPane.showMessageDialog(null, "Solo ingreso de numeros", "CARACTER NO VALIDO", JOptionPane.WARNING_MESSAGE);
+//        }
+//        if (txtDocenteBusqueda.getText().length() >= 10 && c != KeyEvent.VK_BACK_SPACE) {
+//            evt.consume();
+//        }
         
     }//GEN-LAST:event_txtDocenteBusquedaKeyTyped
+
+    private void btnOrdenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdenarActionPerformed
+
+        try {
+            if (cbxTipoOrden.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "No ha seleccionado el campo", "FALTA SELCCIONAR", JOptionPane.WARNING_MESSAGE);
+            } 
+            else if (cbxOrden.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "No ha seleccionado el orden", "FALTA SELCCIONAR", JOptionPane.WARNING_MESSAGE);
+            }
+            else {
+                ListaDinamica<Docente> lista = docenteControlDao.all();
+                String TipoCampo = cbxTipoOrden.getSelectedItem().toString();
+
+                switch (TipoCampo) {
+                    case "Numero de cedula":
+                        TipoCampo = "DatosDocente.NumeroCedula";
+                        break;
+                    case "Nombre":
+                        TipoCampo = "DatosDocente.Nombre";
+                        break;
+                    case "Apellido":
+                        TipoCampo = "DatosDocente.Apellido";
+                        break;
+                    case "Genero":
+                        TipoCampo = "DatosDocente.Genero";
+                        break;
+                    case "Especialidad":
+                        TipoCampo = "Especialidad";
+                        break;
+                    case "Titulacion":
+                        TipoCampo = "Titulacion";
+                        break;
+                    case "Años ecperiencia":
+                        TipoCampo = "AniosExperiencia";
+                        break;
+                    case "Experiencia":
+                        TipoCampo = "AniosExperiencia";
+                        break;
+                    default:
+                        throw new AssertionError();
+                }
+
+                Integer orden = OrdenSeleccionado();
+
+                ListaDinamica<Docente> resultadoOrdenado = UtilesControlador.QuickSort(lista, orden, TipoCampo);
+
+                mtd.setDocenteTabla(resultadoOrdenado);
+                mtd.fireTableDataChanged();
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+    }//GEN-LAST:event_btnOrdenarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -717,8 +859,11 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscarDocente;
+    private javax.swing.JButton btnOrdenar;
     private javax.swing.JComboBox<Persona> cbxDocente;
+    private javax.swing.JComboBox<String> cbxOrden;
     private javax.swing.JComboBox<String> cbxTipoBusqueda;
+    private javax.swing.JComboBox<String> cbxTipoOrden;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -736,6 +881,7 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;

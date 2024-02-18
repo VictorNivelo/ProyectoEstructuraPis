@@ -1,8 +1,6 @@
 
 package Modelo;
 
-import Controlador.TDA.ListaDinamica.ListaDinamica;
-
 /**
  *
  * @author Victor
@@ -14,22 +12,11 @@ public class Docente {
     private String AniosExperiencia;
     
     private Persona DatosDocente;
-    
-    private Cursa cursoDocente;
-    private ListaDinamica<Cursa> listaCursoDocente;
+    private Integer PersonaDocenteID;
     
     public Docente() {
         
     }
-
-//    public Docente(Integer IdDocente, String Especialidad, String Titulacion, String AniosExperiencia, Persona DatosDocente, Cursa cursoDocente) {
-//        this.IdDocente = IdDocente;
-//        this.Especialidad = Especialidad;
-//        this.Titulacion = Titulacion;
-//        this.AniosExperiencia = AniosExperiencia;
-//        this.DatosDocente = DatosDocente;
-//        this.cursoDocente = cursoDocente;
-//    }
 
     public Integer getIdDocente() {
         return IdDocente;
@@ -71,25 +58,17 @@ public class Docente {
         this.DatosDocente = DatosDocente;
     }
 
-    public Cursa getCursoDocente() {
-        return cursoDocente;
+    public Integer getPersonaDocenteID() {
+        return PersonaDocenteID;
     }
 
-    public void setCursoDocente(Cursa cursoDocente) {
-        this.cursoDocente = cursoDocente;
-    }
-
-    public ListaDinamica<Cursa> getListaCursoDocente() {
-        return listaCursoDocente;
-    }
-
-    public void setListaCursoDocente(ListaDinamica<Cursa> listaCursoDocente) {
-        this.listaCursoDocente = listaCursoDocente;
+    public void setPersonaDocenteID(Integer PersonaDocenteID) {
+        this.PersonaDocenteID = PersonaDocenteID;
     }
     
     @Override
     public String toString() {
-        return "Dni:" + DatosDocente.getNumeroCedula()+ " Nombres:"+ DatosDocente.getNombre() +" "+ DatosDocente.getApellido() + "\n";
+        return DatosDocente.getNumeroCedula()+ " "+ DatosDocente.getNombre() +" "+ DatosDocente.getApellido() + "\n";
     }
 
 }

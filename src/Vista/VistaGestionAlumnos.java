@@ -10,7 +10,6 @@ import Modelo.Alumno;
 import Modelo.Persona;
 import Vista.ModeloTabla.ModeloTablaAlumnos;
 import Vista.Utiles.UtilVista;
-import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -31,8 +30,9 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
-        UtilVista.cargarcomboPersonaAlumnos(cbxAlumnos);
+        UtilVista.cargarcomboPersonaAlumnos(cbxAlumno);
         cbxEstado.setEnabled(false);
+        cbxAlumno.setMaximumRowCount(cbxAlumno.getItemCount());
         CargarTabla();
     }
     
@@ -40,13 +40,13 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
         mta.setAlumnosTabla(alumnoControlDao.getListaAlumnos());
         tblAlumnos.setModel(mta);
         tblAlumnos.updateUI();
-        cbxAlumnos.setSelectedIndex(-1);
+        cbxAlumno.setSelectedIndex(-1);
         cbxEstado.setSelectedIndex(0);
         cbxTipoBusqueda.setSelectedIndex(-1);
     }
     
     private void Limpiar() throws ListaVacia {
-        cbxAlumnos.setSelectedIndex(-1);
+        cbxAlumno.setSelectedIndex(-1);
         cbxEstado.setSelectedIndex(-1);
         cbxTipoBusqueda.setSelectedIndex(-1);
         alumnoControlDao.setAlumnos(null);
@@ -63,7 +63,7 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
                 cbxEstado.setEnabled(true);
                 alumnoControlDao.setAlumnos(mta.getAlumnosTabla().getInfo(fila));
                 
-                cbxAlumnos.setSelectedIndex(alumnoControlDao.getAlumnos().getIdAlumno()-1);
+                cbxAlumno.setSelectedIndex(alumnoControlDao.getAlumnos().getIdAlumno()-1);
                 cbxEstado.setSelectedItem(alumnoControlDao.getAlumnos().getEstadoAlumno());
                 
             } 
@@ -73,35 +73,66 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
         }
     }
     
-    private void Guardar() throws ListaVacia {
+    private boolean alumnoExiste(Alumno nuevoAlumno) {
+        ListaDinamica<Alumno> alumnos = alumnoControlDao.getListaAlumnos();
+        for (Alumno a : alumnos.toArray()) {
+            if (a.getIdAlumno().equals(nuevoAlumno.getIdAlumno())) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-        if (cbxAlumnos.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(null, "Falta llenar nombre de la carrera", "Error", JOptionPane.INFORMATION_MESSAGE);
+    private void Guardar() throws ListaVacia {
+        if (cbxAlumno.getSelectedIndex() == -1) {
+            JOptionPane.showMessageDialog(null, "Falta seleccionar un alumno", "Error", JOptionPane.WARNING_MESSAGE);
         } 
         else if (cbxEstado.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(null, "Falta llenar nombre de la carrera", "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta seleccionar el estado del alumno", "Error", JOptionPane.WARNING_MESSAGE);
         } 
         else {
-            Integer IdAlumno = listaAlumnos.getLongitud() + 1;
-            String Estado = cbxEstado.getSelectedItem().toString();
-                                   
-            alumnoControlDao.getAlumnos().setIdAlumno(IdAlumno);
-            alumnoControlDao.getAlumnos().setDatosAlumno(UtilVista.obtenerPersonaAlumnosControl(cbxAlumnos));
-            alumnoControlDao.getAlumnos().setEstadoAlumno(Estado);
-            //Agregar la matricula al alumno
-//            Matricula matricula = UtilVista.obtenerMatriculaControl(cbxMatricula);
-//            alumnoControlDao.getAlumnos().getListaMatriculaAlumno().Agregar(matricula);
-            
-            if (alumnoControlDao.Persist()) {
-                JOptionPane.showMessageDialog(null, "ALUMNO GUARDADA EXISTOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
-                alumnoControlDao.setAlumnos(null);
+            Integer idAlumno = listaAlumnos.getLongitud() + 1;
+            String estado = cbxEstado.getSelectedItem().toString();
+            Persona datosAlumno = UtilVista.obtenerPersonaAlumnosControl(cbxAlumno);
+
+            Alumno nuevoAlumno = new Alumno();
+            nuevoAlumno.setIdAlumno(idAlumno);
+            nuevoAlumno.setDatosAlumno(datosAlumno);
+            nuevoAlumno.setEstadoAlumno(estado);
+
+            if (alumnoExiste(nuevoAlumno)) {
+                JOptionPane.showMessageDialog(null, "El alumno ya existe", "Error", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+
+            alumnoControlDao.setAlumnos(nuevoAlumno);
+            try {
+                if (alumnoControlDao.Persist()) {
+                    JOptionPane.showMessageDialog(null, "Alumno guardado exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE);
+                    alumnoControlDao.setAlumnos(null);
+                } 
+                else {
+                    JOptionPane.showMessageDialog(null, "No se pudo guardar el alumno", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             } 
-            else {
-                JOptionPane.showMessageDialog(null, "NO SE PUEDE REGISTRAR", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
+            catch (Exception e) {
+                e.printStackTrace();
             }
             Limpiar();
             cbxEstado.setEnabled(false);
         }
+    }
+
+    public  Integer OrdenSeleccionado(){
+        String OrdenO = cbxOrden.getSelectedItem().toString();
+
+        if ("Asendente".equals(OrdenO)) {
+            return 1;
+        }
+        if("Desendente".equals(OrdenO)){
+            return 0;
+        }
+        return null;
     }
     
     /**
@@ -120,7 +151,7 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        cbxAlumnos = new javax.swing.JComboBox<>();
+        cbxAlumno = new javax.swing.JComboBox<>();
         jButton2 = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -136,6 +167,10 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         txtAlumnoBusqueda = new javax.swing.JTextField();
         jButton6 = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        cbxOrden = new javax.swing.JComboBox<>();
+        btnOrdenar = new javax.swing.JButton();
+        cbxTipoOrden = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("GESTION DE ALUMNOS");
@@ -280,6 +315,23 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
             }
         });
 
+        jLabel5.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel5.setText("Ordenar");
+
+        cbxOrden.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Asendente", "Desendente" }));
+        cbxOrden.setSelectedIndex(-1);
+
+        btnOrdenar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Ordenar.png"))); // NOI18N
+        btnOrdenar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOrdenarActionPerformed(evt);
+            }
+        });
+
+        cbxTipoOrden.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Numero de cedula", "Nombre", "Apellido", "Genero", "Estado", "Telefono", "Correo", "Codido matricula" }));
+        cbxTipoOrden.setSelectedIndex(-1);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -292,40 +344,51 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
                         .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton2))
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtAlumnoBusqueda)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton6))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cbxAlumnos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cbxEstado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbxTipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtBuscar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3))
-                    .addComponent(jScrollPane1)
+                            .addComponent(cbxEstado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbxAlumno, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtAlumnoBusqueda)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton6))
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4)))
+                        .addComponent(jButton4))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cbxTipoOrden, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cbxOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cbxTipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel10)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtBuscar)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnOrdenar, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -333,26 +396,39 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel8))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(cbxTipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3)
-                    .addComponent(jLabel10)
-                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel11)
-                    .addComponent(txtAlumnoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton6))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel3)
+                                .addComponent(jLabel8))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(cbxOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cbxTipoOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel5)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton6, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel9)
+                                .addComponent(cbxTipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel10)
+                                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel11)
+                                .addComponent(txtAlumnoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnOrdenar)
+                        .addGap(34, 34, 34))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButton3)
+                        .addGap(1, 1, 1)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
-                            .addComponent(cbxAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cbxAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
@@ -392,48 +468,52 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         
         try {
-            ListaDinamica<Alumno> lista = alumnoControlDao.all();
-            
-            String Campo = txtBuscar.getText();
-            String TipoCampo = cbxTipoBusqueda.getSelectedItem().toString();
-            
-            switch (TipoCampo) {
-                case "Numero cedula":
-                    TipoCampo = "DatosAlumno.NumeroCedula";
-                    break;
-                case "Nombre":
-                    TipoCampo = "DatosAlumno.Nombre";
-                    break;
-                case "Apellido":
-                    TipoCampo = "DatosAlumno.Apellido";
-                    break;
-                case "Genero":
-                    TipoCampo = "DatosAlumno.Genero";
-                    break;
-                case "Telefono":
-                    TipoCampo = "DatosAlumno.Telefono";
-                    break;
-                case "Estado":
-                    TipoCampo = "EstadoAlumno";
-                    break;
-                case "Correo":
-                    TipoCampo = "DatosAlumno.cuentaPersona.Correo";
-                    break;
-                case "Codigo de matricula":
-                    TipoCampo = "matriculaAlumno.CodigoMatricula";
-                    break;
-                default:
-                    throw new AssertionError();
+            if (cbxTipoBusqueda.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Porfavor seleccione donde quiere buscar", "Error", JOptionPane.WARNING_MESSAGE);
+            } 
+            else {
+                ListaDinamica<Alumno> lista = alumnoControlDao.all();
+
+                String Campo = txtBuscar.getText();
+                String TipoCampo = cbxTipoBusqueda.getSelectedItem().toString();
+
+                switch (TipoCampo) {
+                    case "Numero de cedula":
+                        TipoCampo = "DatosAlumno.NumeroCedula";
+                        break;
+                    case "Nombre":
+                        TipoCampo = "DatosAlumno.Nombre";
+                        break;
+                    case "Apellido":
+                        TipoCampo = "DatosAlumno.Apellido";
+                        break;
+                    case "Genero":
+                        TipoCampo = "DatosAlumno.Genero";
+                        break;
+                    case "Telefono":
+                        TipoCampo = "DatosAlumno.Telefono";
+                        break;
+                    case "Estado":
+                        TipoCampo = "EstadoAlumno";
+                        break;
+                    case "Correo":
+                        TipoCampo = "DatosAlumno.cuentaPersona.Correo";
+                        break;
+                    case "Codigo de matricula":
+                        TipoCampo = "matriculaAlumno.CodigoMatricula";
+                        break;
+                    default:
+                        throw new AssertionError();
+                }
+
+                ListaDinamica<Alumno> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
+
+                mta.setAlumnosTabla(ResultadoBusqueda);
+                mta.fireTableDataChanged();
             }
-            
-            ListaDinamica<Alumno> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
-                        
-            mta.setAlumnosTabla(ResultadoBusqueda);
-            mta.fireTableDataChanged();
-            
         } 
         catch (Exception e) {
-            
+
         }
         
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -447,11 +527,11 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         
         try {
-            if (cbxAlumnos.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta llenar nombre de la carrera", "Error", JOptionPane.INFORMATION_MESSAGE);
+            if (cbxAlumno.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Falta seleccionar alumno", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (cbxEstado.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta llenar nombre de la carrera", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta seleccionar estado", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else {
                 Guardar();
@@ -470,11 +550,11 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Escoga un registro","REGISTRO NO SELECCIONADO",JOptionPane.WARNING_MESSAGE);
         } 
         else {
-            if (cbxAlumnos.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar alumno", "Error", JOptionPane.INFORMATION_MESSAGE);
+            if (cbxAlumno.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Falta seleccionar alumno", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (cbxEstado.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar estado", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta seleccionar estado", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else {
                 Integer IdAlumno = alumnoControlDao.getAlumnos().getIdAlumno();
@@ -482,13 +562,8 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
                 
                 Alumno alumnoModificado = new Alumno();
                 alumnoModificado.setIdAlumno(IdAlumno);
-                alumnoModificado.setDatosAlumno(UtilVista.obtenerPersonaAlumnosControl(cbxAlumnos));
+                alumnoModificado.setDatosAlumno(UtilVista.obtenerPersonaAlumnosControl(cbxAlumno));
                 alumnoModificado.setEstadoAlumno(Estado);
-//                IdAlumno, UtilVista.obtenerAlumnosControl(cbxAlumnos),Estado, UtilVista.obtenerMatriculaControl(cbxMatricula));
-
-//                Matricula matricula = UtilVista.obtenerMatriculaControl(cbxMatricula);
-//                alumnoModificado.getListaMatriculaAlumno().Limpiar();
-//                alumnoModificado.getListaMatriculaAlumno().Agregar(matricula);
                 
                 alumnoControlDao.Merge(alumnoModificado, IdAlumno-1);
 
@@ -504,26 +579,6 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
                 }
             }
         }
-        /*
-                Cuenta c = new Cuenta(alumnoControlDao.getAlumnos().getCuentaPersona().getIdCuenta(), alumnoControlDao.getAlumnos().getCuentaPersona().getCorreo(), alumnoControlDao.getAlumnos().getCuentaPersona().getContrasena(), alumnoControlDao.getAlumnos().getCuentaPersona().getEstadoCuenta());
-                
-                Rol r = new Rol(alumnoControlDao.getAlumnos().getRolPersona().getIdRol(), alumnoControlDao.getAlumnos().getRolPersona().getNombreRol(), alumnoControlDao.getAlumnos().getRolPersona().getDescripcionRol());
-
-                Alumno personaModiPersona = new Alumno(
-                        IdAlumno, 
-                        Estado, 
-                        UtilVista.obtenerMatriculaControl(cbxMatricula),
-                        alumnoControlDao.getAlumnos().getIdPersona(),
-                        alumnoControlDao.getAlumnos().getNumeroCedula(),
-                        alumnoControlDao.getAlumnos().getNombre(),
-                        alumnoControlDao.getAlumnos().getApellido(),
-                        alumnoControlDao.getAlumnos().getGenero(),
-                        alumnoControlDao.getAlumnos().getFechaNacimineto(),
-                        alumnoControlDao.getAlumnos().getDireccion(),
-                        alumnoControlDao.getAlumnos().getTelefono(),
-                        r,
-                        c);
-                */
         
     }//GEN-LAST:event_jButton4ActionPerformed
 
@@ -543,21 +598,31 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         
         try {
-            personaDao PD = new personaDao();
-            ListaDinamica<Persona> lista = PD.all();
+            if (txtAlumnoBusqueda.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Ingrese el alumno a buscar", "FALTA LLENAR", JOptionPane.WARNING_MESSAGE);
+            } 
+            else {
+                personaDao PD = new personaDao();
+                ListaDinamica<Persona> lista = PD.all();
 
-            String Campo = txtAlumnoBusqueda.getText();
+                String Campo = txtAlumnoBusqueda.getText();
 
-            ListaDinamica<Persona> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, "NumeroCedula");
+                ListaDinamica<Persona> ResultadoBusqueda = new ListaDinamica<>();
 
-            cbxAlumnos.removeAllItems();
+                ListaDinamica<Persona> ResultadoCe = UtilesControlador.BusquedaLineal(lista, Campo, "NumeroCedula");
+                ResultadoBusqueda.concatenar(ResultadoCe);
 
-            for (Persona pb : ResultadoBusqueda.toArray()) {
-                if (pb.getRolPersona().getNombreRol().equals("Estudiante")) {
-                    cbxAlumnos.addItem(pb);
+                ListaDinamica<Persona> ResultadoN = UtilesControlador.BusquedaLineal(lista, Campo, "Nombre");
+                ResultadoBusqueda.concatenar(ResultadoN);
+
+                cbxAlumno.removeAllItems();
+
+                for (Persona pb : ResultadoBusqueda.toArray()) {
+                    if (pb.getRolPersona().getNombreRol().equals("Estudiante")) {
+                        cbxAlumno.addItem(pb);
+                    }
                 }
             }
-
         } 
         catch (Exception e) {
 
@@ -567,17 +632,73 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
 
     private void txtAlumnoBusquedaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAlumnoBusquedaKeyTyped
         
-        Character c = evt.getKeyChar();
-
-        if (!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE) {
-            evt.consume();
-            JOptionPane.showMessageDialog(null, "Solo ingreso de numeros", "CARACTER NO VALIDO", JOptionPane.WARNING_MESSAGE);
-        }
-        if (txtAlumnoBusqueda.getText().length() >= 10 && c != KeyEvent.VK_BACK_SPACE) {
-            evt.consume();
-        }
+//        Character c = evt.getKeyChar();
+//
+//        if (!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE) {
+//            evt.consume();
+//            JOptionPane.showMessageDialog(null, "Solo ingreso de numeros", "CARACTER NO VALIDO", JOptionPane.WARNING_MESSAGE);
+//        }
+//        if (txtAlumnoBusqueda.getText().length() >= 10 && c != KeyEvent.VK_BACK_SPACE) {
+//            evt.consume();
+//        }
         
     }//GEN-LAST:event_txtAlumnoBusquedaKeyTyped
+
+    private void btnOrdenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdenarActionPerformed
+        
+        try {
+            if (cbxTipoOrden.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "No ha seleccionado el campo", "FALTA SELCCIONAR", JOptionPane.WARNING_MESSAGE);
+            } 
+            else if (cbxOrden.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "No ha seleccionado el orden", "FALTA SELCCIONAR", JOptionPane.WARNING_MESSAGE);
+            } 
+            else {
+                ListaDinamica<Alumno> lista = alumnoControlDao.all();
+                String TipoCampo = cbxTipoOrden.getSelectedItem().toString();
+
+                switch (TipoCampo) {
+                    case "Numero de cedula":
+                        TipoCampo = "DatosAlumno.NumeroCedula";
+                        break;
+                    case "Nombre":
+                        TipoCampo = "DatosAlumno.Nombre";
+                        break;
+                    case "Apellido":
+                        TipoCampo = "DatosAlumno.Apellido";
+                        break;
+                    case "Genero":
+                        TipoCampo = "DatosAlumno.Genero";
+                        break;
+                    case "Telefono":
+                        TipoCampo = "DatosAlumno.Telefono";
+                        break;
+                    case "Estado":
+                        TipoCampo = "EstadoAlumno";
+                        break;
+                    case "Correo":
+                        TipoCampo = "DatosAlumno.cuentaPersona.Correo";
+                        break;
+                    case "Codigo de matricula":
+                        TipoCampo = "matriculaAlumno.CodigoMatricula";
+                        break;
+                    default:
+
+                }
+
+                Integer orden = OrdenSeleccionado();
+
+                ListaDinamica<Alumno> resultadoOrdenado = UtilesControlador.QuickSort(lista, orden, TipoCampo);
+
+                mta.setAlumnosTabla(resultadoOrdenado);
+                mta.fireTableDataChanged();
+            }
+        } 
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }//GEN-LAST:event_btnOrdenarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -620,9 +741,12 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<Object> cbxAlumnos;
+    private javax.swing.JButton btnOrdenar;
+    private javax.swing.JComboBox<Object> cbxAlumno;
     private javax.swing.JComboBox<String> cbxEstado;
+    private javax.swing.JComboBox<String> cbxOrden;
     private javax.swing.JComboBox<String> cbxTipoBusqueda;
+    private javax.swing.JComboBox<String> cbxTipoOrden;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -635,6 +759,7 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;

@@ -1,8 +1,6 @@
 
 package Modelo;
 
-import Controlador.TDA.ListaDinamica.ListaDinamica;
-
 /**
  *
  * @author Victor
@@ -14,26 +12,14 @@ public class Matricula {
     private String EstadoMatricula;
     
     private Alumno alumnoMatricula;
-    private ListaDinamica<Alumno> listaAlumnos;
-    
-    private Cursa cursoMatricula;
-    private ListaDinamica<Cursa> listaCursoMatricula;
+    private Integer AlumnoID;
     
     private PeriodoAcademico periodoAcademicoMatricula;
-    private ListaDinamica<PeriodoAcademico> listaPeriodoMatricula;
+    private Integer PeriodoID;
     
     public Matricula() {
         
     }
-
-//    public Matricula(Integer IdMatricula, String CodigoMatricula, String FechaMatricula, String EstadoMatricula, Cursa cursoMatricula, PeriodoAcademico periodoAcademicoMatricula) {
-//        this.IdMatricula = IdMatricula;
-//        this.CodigoMatricula = CodigoMatricula;
-//        this.FechaMatricula = FechaMatricula;
-//        this.EstadoMatricula = EstadoMatricula;
-//        this.cursoMatricula = cursoMatricula;
-//        this.periodoAcademicoMatricula = periodoAcademicoMatricula;
-//    }
 
     public Integer getIdMatricula() {
         return IdMatricula;
@@ -67,36 +53,12 @@ public class Matricula {
         this.EstadoMatricula = EstadoMatricula;
     }
 
-    public Cursa getCursoMatricula() {
-        return cursoMatricula;
-    }
-
-    public void setCursoMatricula(Cursa cursoMatricula) {
-        this.cursoMatricula = cursoMatricula;
-    }
-
     public PeriodoAcademico getPeriodoAcademicoMatricula() {
         return periodoAcademicoMatricula;
     }
 
     public void setPeriodoAcademicoMatricula(PeriodoAcademico periodoAcademicoMatricula) {
         this.periodoAcademicoMatricula = periodoAcademicoMatricula;
-    }
-
-    public ListaDinamica<Cursa> getListaCursoMatricula() {
-        return listaCursoMatricula;
-    }
-
-    public void setListaCursoMatricula(ListaDinamica<Cursa> listaCursoMatricula) {
-        this.listaCursoMatricula = listaCursoMatricula;
-    }
-
-    public ListaDinamica<PeriodoAcademico> getListaPeriodoMatricula() {
-        return listaPeriodoMatricula;
-    }
-
-    public void setListaPeriodoMatricula(ListaDinamica<PeriodoAcademico> listaPeriodoMatricula) {
-        this.listaPeriodoMatricula = listaPeriodoMatricula;
     }
 
     public Alumno getAlumnoMatricula() {
@@ -107,17 +69,25 @@ public class Matricula {
         this.alumnoMatricula = alumnoMatricula;
     }
 
-    public ListaDinamica<Alumno> getListaAlumnos() {
-        return listaAlumnos;
+    public Integer getAlumnoID() {
+        return AlumnoID;
     }
 
-    public void setListaAlumnos(ListaDinamica<Alumno> listaAlumnos) {
-        this.listaAlumnos = listaAlumnos;
+    public void setAlumnoID(Integer AlumnoID) {
+        this.AlumnoID = AlumnoID;
+    }
+
+    public Integer getPeriodoID() {
+        return PeriodoID;
+    }
+
+    public void setPeriodoID(Integer PeriodoID) {
+        this.PeriodoID = PeriodoID;
     }
 
     @Override
     public String toString() {
-        return "Codigo:" + CodigoMatricula +  ", Estado:" + EstadoMatricula +"\n";
+        return CodigoMatricula +  " " + alumnoMatricula.getDatosAlumno().getNumeroCedula() +  " "+ alumnoMatricula.getDatosAlumno().getNombre() +" "+ alumnoMatricula.getDatosAlumno().getApellido()+"\n";
     }
     
 }

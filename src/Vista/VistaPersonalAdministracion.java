@@ -10,6 +10,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -133,7 +134,6 @@ public class VistaPersonalAdministracion extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
         MenuAsistencia = new javax.swing.JMenu();
         jMenuItem14 = new javax.swing.JMenuItem();
-        jMenuItem15 = new javax.swing.JMenuItem();
         MenuInterfaz = new javax.swing.JMenu();
         jMenuItem16 = new javax.swing.JMenuItem();
 
@@ -144,8 +144,8 @@ public class VistaPersonalAdministracion extends javax.swing.JFrame {
         panelPrincipal.setToolTipText("");
 
         jButton5.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Regresar.png"))); // NOI18N
-        jButton5.setText("REGRESAR");
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/CerraSesion.png"))); // NOI18N
+        jButton5.setText("CERRAR SESION");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
@@ -347,15 +347,6 @@ public class VistaPersonalAdministracion extends javax.swing.JFrame {
         });
         MenuAsistencia.add(jMenuItem14);
 
-        jMenuItem15.setFont(new java.awt.Font("SansSerif", 0, 13)); // NOI18N
-        jMenuItem15.setText("Gestion asistencia");
-        jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem15ActionPerformed(evt);
-            }
-        });
-        MenuAsistencia.add(jMenuItem15);
-
         MenuHerramientas.add(MenuAsistencia);
 
         MenuInterfaz.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/MenuBar/Interfaz.png"))); // NOI18N
@@ -390,9 +381,18 @@ public class VistaPersonalAdministracion extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
 
-        VistaInicioSesionEstudiante abrirLogin = new VistaInicioSesionEstudiante();
-        abrirLogin.setVisible(true);
-        this.setVisible(false);
+        try {
+            int result = JOptionPane.showConfirmDialog(null, "Estas seguro que quieres cerrar sesion?", "CONFIRMAR CIERRE DE SESION", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+            if (result == JOptionPane.YES_OPTION) {
+                VistaPrincipalSistema abrirLogin = new VistaPrincipalSistema();
+                abrirLogin.setVisible(true);
+                this.setVisible(false);
+            }
+        } 
+        catch (Exception e) {
+            
+        }
 
     }//GEN-LAST:event_jButton5ActionPerformed
 
@@ -433,7 +433,7 @@ public class VistaPersonalAdministracion extends javax.swing.JFrame {
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
 
         try {
-            VistaGestionMalla abrirLogin = new VistaGestionMalla();
+            VistaGestionMallaCurricular abrirLogin = new VistaGestionMallaCurricular();
             abrirLogin.setVisible(true);
             this.setVisible(false);
         }
@@ -573,19 +573,6 @@ public class VistaPersonalAdministracion extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jMenuItem14ActionPerformed
 
-    private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
-
-        try {
-            VistaGestionAsistencia abrirAsistencia;
-            abrirAsistencia = new VistaGestionAsistencia();
-            abrirAsistencia.setVisible(true);
-            this.setVisible(false);
-        }
-        catch (ListaVacia ex) {
-
-        }
-    }//GEN-LAST:event_jMenuItem15ActionPerformed
-
     private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
 
         VistaGestionInterfazPrincipal vip = new VistaGestionInterfazPrincipal();
@@ -645,7 +632,6 @@ public class VistaPersonalAdministracion extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
-    private javax.swing.JMenuItem jMenuItem15;
     private javax.swing.JMenuItem jMenuItem16;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;

@@ -12,14 +12,8 @@ public class UnidadCurricular {
     private String DescripcionUnidadCurricular;
     
     private MallaCurricular mallaCurricularUnidadCurricular;
-
-//    public UnidadCurricular(Integer IdUnidadCurricular, String CodigoUnidadCurricular, String NombreUnidadCurricular, String DescripcionUnidadCurricular, MallaCurricular mallaCurricularUnidadCurricular) {
-//        this.IdUnidadCurricular = IdUnidadCurricular;
-//        this.CodigoUnidadCurricular = CodigoUnidadCurricular;
-//        this.NombreUnidadCurricular = NombreUnidadCurricular;
-//        this.DescripcionUnidadCurricular = DescripcionUnidadCurricular;
-//        this.mallaCurricularUnidadCurricular = mallaCurricularUnidadCurricular;
-//    }
+    private Integer MallaCurricularID;
+    
 
     public Integer getIdUnidadCurricular() {
         return IdUnidadCurricular;
@@ -61,9 +55,17 @@ public class UnidadCurricular {
         this.mallaCurricularUnidadCurricular = mallaCurricularUnidadCurricular;
     }
 
+    public Integer getMallaCurricularID() {
+        return MallaCurricularID;
+    }
+
+    public void setMallaCurricularID(Integer MallaCurricularID) {
+        this.MallaCurricularID = MallaCurricularID;
+    }
+
     @Override
     public String toString() {
-        return "Codigo:" + CodigoUnidadCurricular + ", Nombre:" + NombreUnidadCurricular + "\n";
+        return CodigoUnidadCurricular + " " +NombreUnidadCurricular + "\n";
     }
     
 }

@@ -41,5 +41,5 @@ public class cursoDao extends DaoImplement<Cursa>{
         cursos.setIdCurso(all().getLongitud()+1);
         return Persist(cursos);
     }
-    
+
 }

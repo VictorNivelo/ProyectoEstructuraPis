@@ -1,8 +1,6 @@
 
 package Modelo;
 
-import Controlador.TDA.ListaDinamica.ListaDinamica;
-
 /**
  *
  * @author Victor
@@ -19,26 +17,14 @@ public class Persona {
     private String Telefono;
     
     private Rol rolPersona;
+    private Integer RolID;
+    
     private Cuenta cuentaPersona;
-    private ListaDinamica<Rol> listaRolPersona;
-
+    private Integer CuendaID;
+    
     public Persona() {
         
     }
-
-//    public Persona(Integer IdPersona, String TipoDni, String NumeroCedula, String Nombre, String Apellido, String Genero, String FechaNacimineto, String Direccion, String Telefono, Rol rolPersona, Cuenta cuentaPersona) {
-//        this.IdPersona = IdPersona;
-//        this.TipoDni = TipoDni;
-//        this.NumeroCedula = NumeroCedula;
-//        this.Nombre = Nombre;
-//        this.Apellido = Apellido;
-//        this.Genero = Genero;
-//        this.FechaNacimineto = FechaNacimineto;
-//        this.Direccion = Direccion;
-//        this.Telefono = Telefono;
-//        this.rolPersona = rolPersona;
-//        this.cuentaPersona = cuentaPersona;
-//    }
 
     public Integer getIdPersona() {
         return IdPersona;
@@ -128,17 +114,25 @@ public class Persona {
         this.cuentaPersona = cuentaPersona;
     }
 
-    public ListaDinamica<Rol> getListaRolPersona() {
-        return listaRolPersona;
+    public Integer getRolID() {
+        return RolID;
     }
 
-    public void setListaRolPersona(ListaDinamica<Rol> listaRolPersona) {
-        this.listaRolPersona = listaRolPersona;
+    public void setRolID(Integer RolID) {
+        this.RolID = RolID;
+    }
+
+    public Integer getCuendaID() {
+        return CuendaID;
+    }
+
+    public void setCuendaID(Integer CuendaID) {
+        this.CuendaID = CuendaID;
     }
 
     @Override
     public String toString() {
-        return "DNI:" + NumeroCedula + ", Nombres:" + Nombre  +" "+ Apellido +  "\n";
+        return NumeroCedula + " " + Nombre  +" "+ Apellido +  "\n";
     }
 
 }

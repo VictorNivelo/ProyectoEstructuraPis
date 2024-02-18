@@ -14,12 +14,6 @@ public class Rol {
         
     }
 
-//    public Rol(Integer IdRol, String NombreRol, String DescripcionRol) {
-//        this.IdRol = IdRol;
-//        this.NombreRol = NombreRol;
-//        this.DescripcionRol = DescripcionRol;
-//    }
-
     public Integer getIdRol() {
         return IdRol;
     }
