@@ -155,7 +155,7 @@ public class VistaAlumnoCalendario extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        VistaAlumnoEva fe = new VistaAlumnoEva(null, true);
+        VistaAlumnoEva fe = new VistaAlumnoEva(null, true, "");
         dispose();
         fe.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
