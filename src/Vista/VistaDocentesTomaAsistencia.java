@@ -2,6 +2,8 @@ package Vista;
 
 import Controlador.Dao.Modelo.alumnoDao;
 import Controlador.Dao.Modelo.asistenciaDao;
+import Controlador.Dao.Modelo.cursoDao;
+import Controlador.Dao.Modelo.horarioDao;
 import Controlador.Dao.Modelo.materiaDao;
 import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
@@ -15,6 +17,7 @@ import Modelo.Alumno;
 import Modelo.Asistencia;
 import Modelo.ControlAccesoDocente;
 import Modelo.Cursa;
+import Modelo.Horario;
 import Modelo.Materia;
 import Modelo.Persona;
 import Vista.Utiles.UtilVista;
@@ -30,7 +33,8 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
 
     DefaultTableModel dtm = new DefaultTableModel();
     alumnoDao alumnoControlDao = new alumnoDao();
-    materiaDao materiaControlDao = new materiaDao();
+    cursoDao cursaControlDao = new cursoDao();
+    horarioDao horarioControlDao = new horarioDao();
     asistenciaDao asistenciaControlDao = new asistenciaDao();
     ListaDinamica<Asistencia> listaAsistencia = new ListaDinamica<>();
 
@@ -42,7 +46,10 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
     public VistaDocentesTomaAsistencia() throws ListaVacia {
         initComponents();
         this.setLocationRelativeTo(null);
-        UtilVista.cargarcomboHorario(cbxHorario);
+        cargarHorarioDocente();
+        cargarMateriasDocente();
+        
+//        UtilVista.cargarcomboHorario(cbxHorario);
         setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
         DateFechaActual.setDateFormatString("dd/MMMM/yyyy");
         dtm.setColumnIdentifiers(new String[]{"#", "Nombre", "Apellido", "Asistencia"});
@@ -50,30 +57,44 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
         tblt.setModel(dtm);
         AgregarCheckbox(3, tblt);
         cbxHorario.setSelectedIndex(-1);
-        cargarMateriasDocente();
+        
         cbxMateria.setSelectedIndex(-1);
     }
 
     private void cargarMateriasDocente() {
         int idDocenteLogeado = ControlAccesoDocente.getIdDocenteLogeado();
         cbxMateria.removeAllItems();
-        ListaDinamica<Materia> listaMaterias = materiaControlDao.all();
-        for (Materia materia : listaMaterias.toArray()) {
-            int idDocenteMateria = materia.getCursoMateria().getDocenteCursa().getIdDocente();
+        ListaDinamica<Cursa> listaMaterias = cursaControlDao.all();
+        for (Cursa curso : listaMaterias.toArray()) {
+            int idDocenteMateria = curso.getDocenteCursa().getIdDocente();
 
             if (idDocenteLogeado == idDocenteMateria) {
-                cbxMateria.addItem(materia.getNombreMateria());
+                cbxMateria.addItem(curso.getMateriaCursa());
+            }
+        }
+    }
+    
+    private void cargarHorarioDocente() {
+        int idDocenteL = ControlAccesoDocente.getIdDocenteLogeado();
+        
+        cbxHorario.removeAllItems();
+        ListaDinamica<Horario> listaHorarios = horarioControlDao.all();
+        for (Horario horario : listaHorarios.toArray()) {
+            int idDocenteHorario = horario.getMateriaHorario().getIdMateria();
+
+            if (idDocenteL == idDocenteHorario) {
+                cbxHorario.addItem(horario.getDiaSemana());
             }
         }
     }
 
     private void CargarTabla() {
         try {
-            Object[] datosLista = alumnoControlDao.getListaAlumnos().toArray();
+            Object[] datosLista = cursaControlDao.getListaCursa().toArray();
             for (Object dato : datosLista) {
                 if (dato instanceof Persona) {
                     Persona persona = (Persona) dato;
-                    dtm.addRow(new Object[]{persona.getIdPersona(), persona.getNombre(), persona.getApellido(), false});
+                    dtm.addRow(new Object[]{persona.getIdPersona(), persona.getNombre(), persona.getApellido(), true});
                 }
             }
         } 
@@ -84,29 +105,40 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
 
     private void CargarTablas() {
         try {
-            ListaDinamica<Materia> listaMaterias = materiaControlDao.all();
-            dtm.setRowCount(0);
-            
-            for (Materia materia : listaMaterias.toArray()) {
-                Cursa cursoMateria = materia.getCursoMateria();
-                Matricula matricula = cursoMateria.getMatriculaCursa();
-                
-                if (matricula.getEstadoMatricula().equals("Activa")) {
-                    Alumno alumno = matricula.getAlumnoMatricula();
+            if (DateFechaActual.getDate() == null) {
+                JOptionPane.showMessageDialog(null, "Falta llenar la fecha", "Error", JOptionPane.WARNING_MESSAGE);
+            } 
+            else if (cbxMateria.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Falta seleccionar la materia", "Error", JOptionPane.WARNING_MESSAGE);
+            } 
+            else if (cbxHorario.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Falta seleccionar  el horario", "Error", JOptionPane.WARNING_MESSAGE);
+            } 
+            else {
+                ListaDinamica<Cursa> listaMaterias = cursaControlDao.all();
+                dtm.setRowCount(0);
 
-                    Persona datosAlumno = alumno.getDatosAlumno();
-                    dtm.addRow(new Object[]{
-                        alumno.getIdAlumno(),
-                        datosAlumno.getNombre(),
-                        datosAlumno.getApellido()
-                    });
+                for (Cursa materia : listaMaterias.toArray()) {
+                    Cursa cursoMateria = materia;
+                    Matricula matricula = cursoMateria.getMatriculaCursa();
+
+                    if (matricula.getEstadoMatricula().equals("Activa")) {
+                        Alumno alumno = matricula.getAlumnoMatricula();
+
+                        Persona datosAlumno = alumno.getDatosAlumno();
+                        dtm.addRow(new Object[]{
+                            alumno.getIdAlumno(),
+                            datosAlumno.getNombre(),
+                            datosAlumno.getApellido()
+                        });
+                    }
                 }
             }
         } 
         catch (Exception e) {
             e.printStackTrace();
         }
-    }    
+    }
     
     public void AgregarCheckbox(int columna, JTable tabla) {
         TableColumn columnaTabla = tabla.getColumnModel().getColumn(columna);
@@ -140,7 +172,7 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Falta seleccionar la materia", "Error", JOptionPane.WARNING_MESSAGE);
         }
         else if (txtTematica.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar duracion", "Error", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta llenar tematica de la clase", "Error", JOptionPane.WARNING_MESSAGE);
         } 
         else if (txtObservacion.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Falta llenar duracion", "Error", JOptionPane.WARNING_MESSAGE);
@@ -458,27 +490,24 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
                                 .addComponent(jLabel8))
                             .addComponent(btnOrdenar))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(cbxTipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6)
+                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1)
+                    .addComponent(jLabel13)
+                    .addComponent(cbxMateria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(cbxTipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6)
-                            .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1)
-                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(DateFechaActual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel13)
-                            .addComponent(cbxMateria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel11)
                             .addComponent(cbxHorario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(DateFechaActual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -487,7 +516,8 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
                         .addComponent(jLabel12)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtObservacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
@@ -666,10 +696,10 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Falta seleccionar la materia", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (txtTematica.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar duracion", "Error", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar tematica de la clase", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (txtObservacion.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar duracion", "Error", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar la observacion", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else {
                 Guardar();
@@ -725,8 +755,8 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser DateFechaActual;
     private javax.swing.JButton btnOrdenar;
-    private javax.swing.JComboBox<String> cbxHorario;
-    private javax.swing.JComboBox<String> cbxMateria;
+    private javax.swing.JComboBox<Object> cbxHorario;
+    private javax.swing.JComboBox<Object> cbxMateria;
     private javax.swing.JComboBox<String> cbxOrden;
     private javax.swing.JComboBox<String> cbxTipoBusqueda;
     private javax.swing.JComboBox<String> cbxTipoOrden;

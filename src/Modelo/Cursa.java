@@ -15,6 +15,9 @@ public class Cursa {
     private Matricula matriculaCursa;
     private Integer MatriculaID;
     
+    private Materia MateriaCursa;
+    private Integer MateriaID;
+    
     private Docente docenteCursa;
     private Integer DocenteID;
     
@@ -85,6 +88,24 @@ public class Cursa {
     public void setParaleloID(Integer ParaleloID) {
         this.ParaleloID = ParaleloID;
     }
+
+    public Materia getMateriaCursa() {
+        return MateriaCursa;
+    }
+
+    public void setMateriaCursa(Materia MateriaCursa) {
+        this.MateriaCursa = MateriaCursa;
+    }
+
+    public Integer getMateriaID() {
+        return MateriaID;
+    }
+
+    public void setMateriaID(Integer MateriaID) {
+        this.MateriaID = MateriaID;
+    }
+    
+    
     
     @Override
     public String toString() {

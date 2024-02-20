@@ -50,7 +50,7 @@ public class VistaGestionParalelo extends javax.swing.JFrame {
     private void Seleccionar(){
         int fila = tblParalelo.getSelectedRow();
         if(fila < 0){
-            JOptionPane.showMessageDialog(null, "Escoga un registro");
+            JOptionPane.showMessageDialog(null, "Escoga un registro", "Error", JOptionPane.WARNING_MESSAGE);
         }
         else{
             try {
@@ -90,8 +90,7 @@ public class VistaGestionParalelo extends javax.swing.JFrame {
     private boolean paraleloExiste(Paralelo nuevoParalelo) {
         ListaDinamica<Paralelo> paralelos = paraleloControlDao.getListaParalelo();
         for (Paralelo p : paralelos.toArray()) {
-            if (p.getCodigoParalelo().equals(nuevoParalelo.getCodigoParalelo())
-                    && p.getNombre().equals(nuevoParalelo.getNombre())) {
+            if (p.getNombre().equals(nuevoParalelo.getNombre())) {
                 return true;
             }
         }
@@ -110,7 +109,7 @@ public class VistaGestionParalelo extends javax.swing.JFrame {
             nuevoParalelo.setNombre(nombreParalelo);
 
             if (paraleloExiste(nuevoParalelo)) {
-                JOptionPane.showMessageDialog(null, "El paralelo ya existe", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "El paralelo ya existe", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else {
                 Integer idParalelo = listaParalelo.getLongitud() + 1;
@@ -440,7 +439,7 @@ public class VistaGestionParalelo extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         
         if (txtNombreParalelo.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta seleccionar el paralelo", "Error", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta llenar el nombre del paralelo", "Error", JOptionPane.WARNING_MESSAGE);
         } 
         else {
             try {
@@ -460,9 +459,8 @@ public class VistaGestionParalelo extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Escoga un registro");
         } 
         else {
-
             if (txtNombreParalelo.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar el paralelo", "Error", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar el nombre del paralelo", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else {
                 //Datos de paralelo

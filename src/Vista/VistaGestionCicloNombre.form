@@ -286,9 +286,8 @@
         <Component class="javax.swing.JComboBox" name="cbxTipoBusqueda">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="2">
-                <StringItem index="0" value="Codigo"/>
-                <StringItem index="1" value="Nombre"/>
+              <StringArray count="1">
+                <StringItem index="0" value="Nombre"/>
               </StringArray>
             </Property>
             <Property name="selectedIndex" type="int" value="-1"/>
@@ -400,9 +399,8 @@
         <Component class="javax.swing.JComboBox" name="cbxTipoOrden">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="2">
-                <StringItem index="0" value="Codigo"/>
-                <StringItem index="1" value="Nombre"/>
+              <StringArray count="1">
+                <StringItem index="0" value="Nombre"/>
               </StringArray>
             </Property>
             <Property name="selectedIndex" type="int" value="-1"/>

@@ -4,6 +4,7 @@ package Vista;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Modelo.Ciclo;
 import Controlador.Dao.Modelo.cicloDao;
+import Controlador.Dao.Modelo.paraleloDao;
 import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.Utiles.UtilesControlador;
 import Vista.ModeloTabla.ModeloTablaCiclos;
@@ -54,7 +55,7 @@ public class VistaGestionCiclo extends javax.swing.JFrame {
     private void Seleccionar(){
         int fila = tblCIclos.getSelectedRow();
         if(fila < 0){
-            JOptionPane.showMessageDialog(null, "Escoga un registro");
+            JOptionPane.showMessageDialog(null, "Escoga un registro", "Error", JOptionPane.WARNING_MESSAGE);
         }
         else{
             try {
@@ -70,73 +71,73 @@ public class VistaGestionCiclo extends javax.swing.JFrame {
         }
     }
     
-    public Integer ObtenerNombreCiclo(String NombreCiclo) {
-        Integer ciclo = 0;
-        String NombreCiclos = cbxNombreCiclo.getSelectedItem().toString();
-        switch (NombreCiclos) {
-            case "Primer ciclo":
-                ciclo = 1;
-                break;
-            case "Segundo ciclo":
-                ciclo = 2;
-                break;
-            case "Tercer ciclo":
-                ciclo = 3;
-                break;
-            case "Cuarto ciclo":
-                ciclo = 4;
-                break;
-            case "Quinto ciclo":
-                ciclo = 5;
-                break;
-            case "Sexto ciclo":
-                ciclo = 6;
-                break;
-            case "Septimo ciclo":
-                ciclo = 7;
-                break;
-            case "Octavo ciclo":
-                ciclo = 8;
-                break;
-            case "Noveno ciclo":
-                ciclo = 9;
-                break;
-            case "Decimo ciclo":
-                ciclo = 10;
-                break;
-            default:
-                ciclo = cicloControlDao.getListaCiclos().getLongitud()+1;
-                break;
+    private boolean cicloExiste(Ciclo nuevoParalelo) {
+        ListaDinamica<Ciclo> paralelos = cicloControlDao.getListaCiclos();
+        for (Ciclo p : paralelos.toArray()) {
+            if (p.getNombreCiclo().getNombreCiclo().equals(nuevoParalelo.getNombreCiclo().getNombreCiclo())) {
+                return true;
+            }
         }
-        return ciclo;
+        return false;
     }
-    
+        
     private void Guardar() throws ListaVacia {
-
+        
         if (cbxNombreCiclo.getSelectedIndex() == -1) {
             JOptionPane.showMessageDialog(null, "Falta seleccionar el ciclo", "Error", JOptionPane.WARNING_MESSAGE);
-        }
+        } 
         else if (cbxUnidad.getSelectedIndex() == -1) {
             JOptionPane.showMessageDialog(null, "Falta seleccionar materia", "Error", JOptionPane.WARNING_MESSAGE);
         } 
         else {
             Integer idCiclo = listaCiclos.getLongitud()+1;
-            String NumeroCiclo = cbxNombreCiclo.getSelectedItem().toString();
-            
-            cicloControlDao.getCiclos().setIdCiclo(idCiclo);
-            cicloControlDao.getCiclos().setNombreCiclo(UtilVista.obtenerCodigoCursoControl(cbxNombreCiclo));
-            cicloControlDao.getCiclos().setNumeroCiclo(ObtenerNombreCiclo(NumeroCiclo));
-            cicloControlDao.getCiclos().setUnidadCurricularCiclo(UtilVista.obtenerUnidadControl(cbxUnidad));
-            
-            if (cicloControlDao.Persist()) {
-                JOptionPane.showMessageDialog(null, "CICLO GUARDADA EXISTOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
-                cicloControlDao.setCiclos(null);
+            Ciclo nuevoCiclo = new Ciclo();
+            nuevoCiclo.setIdCiclo(idCiclo);
+            nuevoCiclo.setNombreCiclo(UtilVista.obtenerCodigoCursoControl(cbxNombreCiclo));
+            nuevoCiclo.setNumeroCiclo(cicloControlDao.getListaCiclos().getLongitud()+1);
+            nuevoCiclo.setUnidadCurricularCiclo(UtilVista.obtenerUnidadControl(cbxUnidad));
+
+            if (cicloExiste(nuevoCiclo)) {
+                JOptionPane.showMessageDialog(null, "El ciclo ya existe", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else {
-                JOptionPane.showMessageDialog(null, "NO SE PUEDE REGISTRAR", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
+                cicloControlDao.setCiclos(nuevoCiclo);
+                if (cicloControlDao.Persist()) {
+                    JOptionPane.showMessageDialog(null, "Ciclo guardado exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE);
+                    cicloControlDao.setCiclos(null);
+                } 
+                else {
+                    JOptionPane.showMessageDialog(null, "No se pudo registrar el ciclo", "Información", JOptionPane.INFORMATION_MESSAGE);
+                }
             }
             Limpiar();
         }
+
+//        if (cbxNombreCiclo.getSelectedIndex() == -1) {
+//            JOptionPane.showMessageDialog(null, "Falta seleccionar el ciclo", "Error", JOptionPane.WARNING_MESSAGE);
+//        }
+//        else if (cbxUnidad.getSelectedIndex() == -1) {
+//            JOptionPane.showMessageDialog(null, "Falta seleccionar materia", "Error", JOptionPane.WARNING_MESSAGE);
+//        } 
+//        else {
+//            
+//            
+//            Integer idCiclo = listaCiclos.getLongitud()+1;
+//            
+//            cicloControlDao.getCiclos().setIdCiclo(idCiclo);
+//            cicloControlDao.getCiclos().setNombreCiclo(UtilVista.obtenerCodigoCursoControl(cbxNombreCiclo));
+//            cicloControlDao.getCiclos().setNumeroCiclo(cicloControlDao.getListaCiclos().getLongitud()+1);
+//            cicloControlDao.getCiclos().setUnidadCurricularCiclo(UtilVista.obtenerUnidadControl(cbxUnidad));
+//            
+//            if (cicloControlDao.Persist()) {
+//                JOptionPane.showMessageDialog(null, "CICLO GUARDADA EXISTOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
+//                cicloControlDao.setCiclos(null);
+//            } 
+//            else {
+//                JOptionPane.showMessageDialog(null, "NO SE PUEDE REGISTRAR", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
+//            }
+//            Limpiar();
+//        }
     }
     
     public  Integer OrdenSeleccionado(){
@@ -544,7 +545,7 @@ public class VistaGestionCiclo extends javax.swing.JFrame {
                 Ciclo cicloModificado = new Ciclo();
                 cicloModificado.setIdCiclo(IdCiclo);
                 cicloModificado.setNombreCiclo(UtilVista.obtenerCodigoCursoControl(cbxNombreCiclo));
-                cicloModificado.setNumeroCiclo(ObtenerNombreCiclo(NombreCiclo));
+                cicloModificado.setNumeroCiclo(IdCiclo);
                 cicloModificado.setUnidadCurricularCiclo(UtilVista.obtenerUnidadControl(cbxUnidad));
                 
                 cicloControlDao.Merge(cicloModificado, IdCiclo - 1);

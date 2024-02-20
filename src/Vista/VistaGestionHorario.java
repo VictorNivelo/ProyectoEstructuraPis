@@ -724,7 +724,7 @@ public class VistaGestionHorario extends javax.swing.JFrame {
             evt.consume();
             JOptionPane.showMessageDialog(null, "Solo ingreso de números y ':'", "CARACTER NO VALIDO", JOptionPane.WARNING_MESSAGE);
         }
-        if (txtHoraInicio.getText().length() >= 5 && c != KeyEvent.VK_BACK_SPACE) {
+        if (txtHoraInicio.getText().length() > 5 && c != KeyEvent.VK_BACK_SPACE) {
             evt.consume();
         }
         
@@ -738,7 +738,7 @@ public class VistaGestionHorario extends javax.swing.JFrame {
             evt.consume();
             JOptionPane.showMessageDialog(null, "Solo ingreso de números y ':'", "CARACTER NO VALIDO", JOptionPane.WARNING_MESSAGE);
         }
-        if (txtHoraInicio.getText().length() >= 5 && c != KeyEvent.VK_BACK_SPACE) {
+        if (txtHoraInicio.getText().length() > 5 && c != KeyEvent.VK_BACK_SPACE) {
             evt.consume();
         }
         

@@ -1,10 +1,12 @@
 
 package Vista;
 
+import Controlador.Dao.Modelo.cursoDao;
 import Controlador.Dao.Modelo.materiaDao;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Modelo.ControlAccesoDocente;
 import Modelo.Cuenta;
+import Modelo.Cursa;
 import Modelo.Docente;
 import Modelo.Materia;
 import Modelo.Persona;
@@ -22,7 +24,7 @@ import javax.swing.JOptionPane;
  * @author Victor
  */
 public class VistaInicioSesionDocente extends javax.swing.JFrame {
-    materiaDao materiaControlDao = new materiaDao();
+    cursoDao materiaControlDao = new cursoDao();
 
     /**
      * Creates new form VistaInicioSeccion
@@ -105,7 +107,7 @@ public class VistaInicioSesionDocente extends javax.swing.JFrame {
   
     private void VerificarUsuario() {
         
-        ListaDinamica<Materia> listaMateria = materiaControlDao.all();
+        ListaDinamica<Cursa> listaMateria = materiaControlDao.all();
         
         String usuarioIngresado = txtCorreo.getText();
         char[] c = txtContrasenia.getPassword();
@@ -116,15 +118,15 @@ public class VistaInicioSesionDocente extends javax.swing.JFrame {
         String nombreUsuario = "";
         Docente docenteLogeado = null;
         
-        for(Materia materia : listaMateria.toArray()){
-            Cuenta cuenta = materia.getCursoMateria().getDocenteCursa().getDatosDocente().getCuentaPersona();
+        for(Cursa materia : listaMateria.toArray()){
+            Cuenta cuenta = materia.getDocenteCursa().getDatosDocente().getCuentaPersona();
             if(cuenta != null && cuenta.getCorreo().equals(usuarioIngresado) && cuenta.getContrasena().equals(contrasenaIngresada)){
                 credencialesCorrectas = true;
-                if(materia.getCursoMateria().getDocenteCursa().getDatosDocente().getRolPersona() != null && materia.getCursoMateria().getDocenteCursa().getDatosDocente().getRolPersona().getNombreRol().equals("Docente")){
+                if(materia.getDocenteCursa().getDatosDocente().getRolPersona() != null && materia.getDocenteCursa().getDatosDocente().getRolPersona().getNombreRol().equals("Docente")){
                     esDocente = true;
-                    docenteLogeado = materia.getCursoMateria().getDocenteCursa();
-                    String nombre = materia.getCursoMateria().getDocenteCursa().getDatosDocente().getNombre();
-                    String apellido = materia.getCursoMateria().getDocenteCursa().getDatosDocente().getApellido();
+                    docenteLogeado = materia.getDocenteCursa();
+                    String nombre = materia.getDocenteCursa().getDatosDocente().getNombre();
+                    String apellido = materia.getDocenteCursa().getDatosDocente().getApellido();
                     nombreUsuario = nombre + " " + apellido;
                     break;
                 }

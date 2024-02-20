@@ -29,7 +29,7 @@ public class ModeloTablaCurso extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 8;
+        return 10;
     }
     
 //    private String EstadoCuenta(int i) throws ListaVacia {
@@ -68,6 +68,10 @@ public class ModeloTablaCurso extends AbstractTableModel {
                     return (p != null) ? p.getDocenteCursa().getDatosDocente().getNumeroCedula(): "";
                 case 7:
                     return (p != null) ? p.getDocenteCursa().getDatosDocente().getNombre()+" "+ p.getDocenteCursa().getDatosDocente().getApellido(): "";
+                case 8:
+                    return (p != null) ? p.getMateriaCursa().getNombreMateria(): "";
+                case 9:
+                    return (p != null) ? p.getMateriaCursa().getCicloMateria().getNombreCiclo(): "";
                 default:
                     return null;
             }
@@ -147,6 +151,10 @@ public class ModeloTablaCurso extends AbstractTableModel {
                 return "DNI docente";
             case 7:
                 return "Nombres docente";
+            case 8:
+                return "Materia";
+            case 9:
+                return "Ciclo";
 
             default:
                 return null;
