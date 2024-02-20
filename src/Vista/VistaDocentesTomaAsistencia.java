@@ -23,6 +23,7 @@ import Modelo.Persona;
 import Vista.Utiles.UtilVista;
 import java.awt.event.KeyEvent;
 import java.util.Date;
+import java.util.Objects;
 import javax.swing.JOptionPane;
 
 /**
@@ -46,8 +47,9 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
     public VistaDocentesTomaAsistencia() throws ListaVacia {
         initComponents();
         this.setLocationRelativeTo(null);
-        cargarHorarioDocente();
-        cargarMateriasDocente();
+        cargarMateriasYHorariosDocente();
+//        cargarHorarioDocente();
+//        cargarMateriasDocente();
         
 //        UtilVista.cargarcomboHorario(cbxHorario);
         setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
@@ -59,6 +61,29 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
         cbxHorario.setSelectedIndex(-1);
         
         cbxMateria.setSelectedIndex(-1);
+    }
+    
+    private void cargarMateriasYHorariosDocente() {
+        int idDocenteLogeado = ControlAccesoDocente.getIdDocenteLogeado();
+        cbxMateria.removeAllItems();
+        cbxHorario.removeAllItems();
+
+        ListaDinamica<Cursa> listaMaterias = cursaControlDao.all();
+        ListaDinamica<Horario> listaHorarios = horarioControlDao.all();
+
+        for (Cursa curso : listaMaterias.toArray()) {
+            int idDocenteMateria = curso.getDocenteCursa().getIdDocente();
+
+            if (idDocenteLogeado == idDocenteMateria) {
+                cbxMateria.addItem(curso.getMateriaCursa());
+
+                for (Horario horario : listaHorarios.toArray()) {
+                    if (Objects.equals(horario.getMateriaHorario().getIdMateria(), curso.getMateriaCursa().getIdMateria())) {
+                        cbxHorario.addItem(horario.getDiaSemana());
+                    }
+                }
+            }
+        }
     }
 
     private void cargarMateriasDocente() {

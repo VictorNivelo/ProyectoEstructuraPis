@@ -246,30 +246,30 @@ public class VistaDocentes extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAsistenciasActionPerformed
 
     private void btnCalendarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalendarioActionPerformed
-
+        
         try {
             VistaCalendarioDocente c = new VistaCalendarioDocente();
             horarioDao HD = new horarioDao();
-
+            
             int idDocenteLogeado = ControlAccesoDocente.getIdDocenteLogeado();
-
+            
             ListaDinamica<Horario> listaH = HD.all();
-
+            
             for (int i = 0; i < listaH.getLongitud(); i++) {
                 Horario horario = listaH.getInfo(i);
-
-//                if (horario.getMateriaHorario().getCursoMateria().getDocenteCursa().getIdDocente() == idDocenteLogeado) {
-//                    String Fecha = horario.getDiaSemana();
-//                    String Mensaje = horario.getMateriaHorario().getNombreMateria() + " "
-//                            + horario.getMateriaHorario().getCicloMateria().getNombreCiclo().getNombreCiclo() + " "
-//                            + horario.getMateriaHorario().getCursoMateria().getParaleloCursa() + " "
-//                            + horario.getHoraIncio() + " - " + horario.getHoraFin();
-//                    c.AgregarEvento(Fecha, Mensaje);
-//                }
+                
+                if (horario.getMateriaHorario().getIdMateria() == idDocenteLogeado) {
+                    String Fecha = horario.getDiaSemana();
+                    String Mensaje = horario.getMateriaHorario().getNombreMateria() + " "
+                            + horario.getMateriaHorario().getCicloMateria().getNombreCiclo().getNombreCiclo() + " "
+                            //                            + horario.getMateriaHorario().getCursoMateria().getParaleloCursa() + " "
+                            + horario.getHoraIncio() + " - " + horario.getHoraFin();
+                    c.AgregarEvento(Fecha, Mensaje);
+                }
             }
-
+            
             c.setVisible(true);
-            this.dispose();
+            this.setVisible(false);
         } 
         catch (Exception e) {
             
