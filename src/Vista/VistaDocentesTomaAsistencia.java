@@ -112,6 +112,32 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
             }
         }
     }
+    
+    private void CargarAlumnoTabla(Materia materiaSeleccionada) {
+        try {
+            dtm.setRowCount(0);
+
+            ListaDinamica<Alumno> listaAlumnos = obtenerAlumnosDeMateria(materiaSeleccionada);
+
+            for (Alumno alumno : listaAlumnos.toArray()) {
+                dtm.addRow(new Object[]{alumno.getDatosAlumno().getIdPersona(), alumno.getDatosAlumno().getNombre(), alumno.getDatosAlumno().getApellido(), true});
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private ListaDinamica<Alumno> obtenerAlumnosDeMateria(Materia materiaSeleccionada) {
+        ListaDinamica<Alumno> listaAlumnos = new ListaDinamica<>();
+        ListaDinamica<Cursa> listaCursas = cursaControlDao.all();
+
+        for (Cursa cursa : listaCursas.toArray()) {
+            if (Objects.equals(cursa.getMateriaCursa().getIdMateria(), materiaSeleccionada.getIdMateria())) {
+                listaAlumnos.Agregar(cursa.getMatriculaCursa().getAlumnoMatricula());
+            }
+        }
+        return listaAlumnos;
+    }
 
     private void CargarTabla() {
         try {
@@ -128,7 +154,7 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
         }
     }
 
-    private void CargarTablas() {
+    private void CargarAlumnoEnTablaPrimer() {
         try {
             if (DateFechaActual.getDate() == null) {
                 JOptionPane.showMessageDialog(null, "Falta llenar la fecha", "Error", JOptionPane.WARNING_MESSAGE);
@@ -629,7 +655,8 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         
-        CargarTablas();
+        Materia materiaSeleccionada = (Materia) cbxMateria.getSelectedItem();
+        CargarAlumnoTabla(materiaSeleccionada);
             
     }//GEN-LAST:event_jButton5ActionPerformed
 
