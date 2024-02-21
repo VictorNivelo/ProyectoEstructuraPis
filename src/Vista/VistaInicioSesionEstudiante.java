@@ -98,7 +98,7 @@ public class VistaInicioSesionEstudiante extends javax.swing.JFrame {
                     procesarAdministrador();
                     break;
                 case "Estudiante":
-                    procesarEstudiante();
+                    procesarEstudiante(persona.getNombre());
                     break;
                 default:
                     break;
@@ -140,6 +140,7 @@ public class VistaInicioSesionEstudiante extends javax.swing.JFrame {
             ControlAccesoAlumno.setAlumnoLogeado(alumnoLogeado);
             ControlAccesoAlumno.setNombreAlumnoLogeado(nombreUsuario);
             procesarAlumno();
+
             dispose();
             lblNombreAlumnoIngresado.setText(nombreUsuario);
         } else {
@@ -160,7 +161,7 @@ public class VistaInicioSesionEstudiante extends javax.swing.JFrame {
         }
     }
 
-    private static void procesarEstudiante() {
+    private static void procesarEstudiante(String nombreAlumno) {
         try {
             VistaAlumnoPrincipal abrirAsistencia = new VistaAlumnoPrincipal();
             abrirAsistencia.setVisible(true);
