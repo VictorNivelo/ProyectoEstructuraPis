@@ -76,8 +76,8 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
                 
                 txtObservacion.setText(AsistenciaControl.getAsistencias().getObservacion());
                 cbxEstadoAsistencia.setSelectedItem(AsistenciaControl.getAsistencias().getEstadoAsistencia().toString());
-                txtTematica.setText(AsistenciaControl.getAsistencias().getAsistenciaTematica().getNombreTematica());
-                Date Fecha = Formato.parse(AsistenciaControl.getAsistencias().getAsistenciaTematica().getFechaTematica());
+                txtTematica.setText(AsistenciaControl.getAsistencias().getTematicaAsistencia().getNombreTematica());
+                Date Fecha = Formato.parse(AsistenciaControl.getAsistencias().getTematicaAsistencia().getFechaTematica());
                 DateFechaTematica.setDate(Fecha);
                 cbxHorario.setSelectedIndex(AsistenciaControl.getAsistencias().getHorarioAsistencia().getIdHorario() -1);
 
@@ -132,7 +132,7 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
             AsistenciaControl.getAsistencias().setHorarioAsistencia(UtilVista.obtenerHorarioControl(cbxHorario));
 //            AsistenciaControl.getAsistencias().setEstadoAsistencia(estadoSeleccionado);
             AsistenciaControl.getAsistencias().setObservacion(Observacion);
-            AsistenciaControl.getAsistencias().setAsistenciaTematica(t);
+            AsistenciaControl.getAsistencias().setTematicaAsistencia(t);
                         
             if (AsistenciaControl.Persist()) {
                 JOptionPane.showMessageDialog(null, "ASISTENCIA GUARDADA EXISTOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
@@ -626,7 +626,7 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
                 asistenciaModificada.setIdAsistencia(IdAsistencia);
 //                asistenciaModificada.setEstadoAsistencia(estadoSeleccionado);
                 asistenciaModificada.setObservacion(Observacion);
-                asistenciaModificada.setAsistenciaTematica(t);
+                asistenciaModificada.setTematicaAsistencia(t);
                 asistenciaModificada.setHorarioAsistencia(UtilVista.obtenerHorarioControl(cbxHorario));
 //                IdAsistencia, estadoSeleccionado, Observacion, t);
 

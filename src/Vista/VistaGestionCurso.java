@@ -4,12 +4,14 @@ package Vista;
 import Controlador.Dao.Bridge;
 import Controlador.Dao.Modelo.cursoDao;
 import Controlador.Dao.Modelo.docenteDao;
+import Controlador.Dao.Modelo.materiaDao;
 import Controlador.Dao.Modelo.matriculaDao;
 import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Controlador.Utiles.UtilesControlador;
 import Modelo.Cursa;
 import Modelo.Docente;
+import Modelo.Materia;
 import Modelo.Matricula;
 import Vista.Utiles.UtilVista;
 import Vista.ModeloTabla.ModeloTablaCurso;
@@ -39,6 +41,7 @@ public class VistaGestionCurso extends javax.swing.JFrame {
         UtilVista.cargarcomboMatricula(cbxMatricula);
         UtilVista.cargarcomboParalelo(cbxParalelo); 
         UtilVista.cargarcomboDocente(cbxDocente); 
+        UtilVista.CargarComboMateria(cbxMateria);
         cbxDocente.setMaximumRowCount(cbxDocente.getItemCount());
         cbxMatricula.setMaximumRowCount(cbxMatricula.getItemCount());
         CargarTabla();
@@ -51,6 +54,7 @@ public class VistaGestionCurso extends javax.swing.JFrame {
         cbxMatricula.setSelectedIndex(-1);
         cbxParalelo.setSelectedIndex(-1);
         cbxDocente.setSelectedIndex(-1);
+        cbxMateria.setSelectedIndex(-1);
         cbxTipoOrden.setSelectedIndex(-1);
     }
     
@@ -61,6 +65,7 @@ public class VistaGestionCurso extends javax.swing.JFrame {
         cbxParalelo.setSelectedIndex(-1);
         cbxMatricula.setSelectedIndex(-1);
         cbxDocente.setSelectedIndex(-1);
+        cbxMateria.setSelectedIndex(-1);
         cursoControlDao.setCursos(null);
         CargarTabla();
     }
@@ -78,6 +83,7 @@ public class VistaGestionCurso extends javax.swing.JFrame {
                 cbxMatricula.setSelectedIndex(cursoControlDao.getCursos().getMatriculaCursa().getIdMatricula() -1);
                 txtCodigoCursa.setText(cursoControlDao.getCursos().getCodigoCursa());
                 cbxDocente.setSelectedIndex(cursoControlDao.getCursos().getDocenteCursa().getIdDocente() -1);
+                cbxMateria.setSelectedIndex(cursoControlDao.getCursos().getMateriaCursa().getIdMateria() -1);
 
             } 
             catch (Exception e) {
@@ -176,6 +182,9 @@ public class VistaGestionCurso extends javax.swing.JFrame {
         else if (cbxDocente.getSelectedIndex() == -1) {
             JOptionPane.showMessageDialog(null, "Falta seleccionar el docebte", "Error", JOptionPane.WARNING_MESSAGE);
         }
+        else if (cbxMateria.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Falta seleccionar la materia", "Error", JOptionPane.WARNING_MESSAGE);
+        }
         else {
             Integer idCiclo = listaCursos.getLongitud() + 1;
             String cc = generarCodigo();
@@ -185,6 +194,7 @@ public class VistaGestionCurso extends javax.swing.JFrame {
             cursoControlDao.getCursos().setParaleloCursa(UtilVista.obtenerControlParalelo(cbxParalelo));
             cursoControlDao.getCursos().setMatriculaCursa(UtilVista.obtenerMatriculaControl(cbxMatricula));
             cursoControlDao.getCursos().setDocenteCursa(UtilVista.obtenerDocenteControl(cbxDocente));
+            cursoControlDao.getCursos().setMateriaCursa(UtilVista.obtenerComboMateria(cbxMateria));
 
             if (cursoControlDao.Persist()) {
                 JOptionPane.showMessageDialog(null, "CICLO GUARDADA EXISTOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
@@ -344,6 +354,11 @@ public class VistaGestionCurso extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         txtCodigoCursa = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        txtMateriaBusqueda = new javax.swing.JTextField();
+        cbxMateria = new javax.swing.JComboBox<>();
+        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("GESTION DE CURSOS");
@@ -524,6 +539,21 @@ public class VistaGestionCurso extends javax.swing.JFrame {
 
         txtCodigoCursa.setEditable(false);
 
+        jLabel6.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel6.setText("Materia");
+
+        jLabel15.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel15.setText("Materia");
+
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Buscar.png"))); // NOI18N
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -568,7 +598,18 @@ public class VistaGestionCurso extends javax.swing.JFrame {
                                 .addComponent(txtDocenteBusqueda)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton5))
-                            .addComponent(cbxDocente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(cbxDocente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel15, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(txtMateriaBusqueda)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton4))
+                            .addComponent(cbxMateria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -658,6 +699,16 @@ public class VistaGestionCurso extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel14)
                             .addComponent(cbxDocente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel6)
+                                .addComponent(txtMateriaBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jButton4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel15)
+                            .addComponent(cbxMateria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 459, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -694,6 +745,9 @@ public class VistaGestionCurso extends javax.swing.JFrame {
             }
             else if (cbxDocente.getSelectedIndex() == -1) {
                 JOptionPane.showMessageDialog(null, "Falta seleccionar el docebte", "Error", JOptionPane.WARNING_MESSAGE);
+            }
+            else if (cbxMateria.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Falta seleccionar la materia", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else {
                 Guardar();
@@ -734,6 +788,9 @@ public class VistaGestionCurso extends javax.swing.JFrame {
             else if (cbxDocente.getSelectedIndex() == -1) {
                 JOptionPane.showMessageDialog(null, "Falta seleccionar el docebte", "Error", JOptionPane.WARNING_MESSAGE);
             } 
+            else if (cbxMateria.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Falta seleccionar la materia", "Error", JOptionPane.WARNING_MESSAGE);
+            } 
             else {
                 Integer IdCurso = cursoControlDao.getCursos().getIdCurso();
                 String cc = txtCodigoCursa.getText();
@@ -744,6 +801,7 @@ public class VistaGestionCurso extends javax.swing.JFrame {
                 cursoModificado.setMatriculaCursa(UtilVista.obtenerMatriculaControl(cbxMatricula));
                 cursoModificado.setCodigoCursa(cc);
                 cursoModificado.setDocenteCursa(UtilVista.obtenerDocenteControl(cbxDocente));
+                cursoModificado.setMateriaCursa(UtilVista.obtenerComboMateria(cbxMateria));
 
 //                cursoModificado.setMateriaCurso(UtilVista.obtenerComboMateria(cbxMatricula));
                 
@@ -945,6 +1003,30 @@ public class VistaGestionCurso extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        
+        try {
+                materiaDao PD = new materiaDao();
+                ListaDinamica<Materia> lista = PD.all();
+
+                String Campo = txtMateriaBusqueda.getText();
+
+
+                ListaDinamica<Materia> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, "NombreMateria");
+
+
+                cbxMateria.removeAllItems();
+
+                for (Materia pb : ResultadoBusqueda.toArray()) {
+                    cbxMateria.addItem(pb);
+                }
+        } 
+        catch (Exception e) {
+
+        }
+        
+    }//GEN-LAST:event_jButton4ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -997,6 +1079,7 @@ public class VistaGestionCurso extends javax.swing.JFrame {
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnOrdenar;
     private javax.swing.JComboBox<Object> cbxDocente;
+    private javax.swing.JComboBox<Object> cbxMateria;
     private javax.swing.JComboBox<Object> cbxMatricula;
     private javax.swing.JComboBox<String> cbxOrden;
     private javax.swing.JComboBox<String> cbxParalelo;
@@ -1005,6 +1088,7 @@ public class VistaGestionCurso extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
@@ -1013,10 +1097,12 @@ public class VistaGestionCurso extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -1027,6 +1113,7 @@ public class VistaGestionCurso extends javax.swing.JFrame {
     private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtCodigoCursa;
     private javax.swing.JTextField txtDocenteBusqueda;
+    private javax.swing.JTextField txtMateriaBusqueda;
     private javax.swing.JTextField txtMatriculaBusqueda;
     // End of variables declaration//GEN-END:variables
 }

@@ -6,7 +6,7 @@ import Controlador.Dao.Modelo.unidadCurricularDao;
 import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Controlador.Utiles.UtilesControlador;
-import Modelo.MallaCurricular;
+import Modelo.MallaC;
 import Modelo.UnidadCurricular;
 import Vista.ModeloTabla.ModeloTablaUnidadCurricular;
 import Vista.Utiles.UtilVista;
@@ -126,7 +126,7 @@ public class VistaGestionUnidadCurricular extends javax.swing.JFrame {
             String nombre = txtNombreUnidad.getText();
             String descripcion = txtDescripcionUnidad.getText();
 
-            MallaCurricular malla = UtilVista.obtenerMallaControl(cbxMalla);
+            MallaC malla = UtilVista.obtenerMallaControl(cbxMalla);
             UnidadCurricular nuevaUnidadCurricular = new UnidadCurricular();
             nuevaUnidadCurricular.setNombreUnidadCurricular(nombre);
             nuevaUnidadCurricular.setDescripcionUnidadCurricular(descripcion);

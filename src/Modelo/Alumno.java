@@ -7,7 +7,7 @@ package Modelo;
  */
 public class Alumno {
     private Integer IdAlumno;
-    private String EstadoAlumno;
+    private String EstadoA;
     
     private Persona DatosAlumno;
     private Integer PersonaAlumnoID;
@@ -25,11 +25,11 @@ public class Alumno {
     }
 
     public String getEstadoAlumno() {
-        return EstadoAlumno;
+        return EstadoA;
     }
 
     public void setEstadoAlumno(String EstadoAlumno) {
-        this.EstadoAlumno = EstadoAlumno;
+        this.EstadoA = EstadoAlumno;
     }
 
     public Persona getDatosAlumno() {

@@ -3,38 +3,38 @@ package Controlador.Dao.Modelo;
 
 import Controlador.Dao.DaoImplement;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
-import Modelo.MallaCurricular;
+import Modelo.MallaC;
 
 /**
  *
  * @author Victor
  */
-public class mallaCurricularDao extends DaoImplement<MallaCurricular> {
+public class mallaCurricularDao extends DaoImplement<MallaC> {
 
-    private ListaDinamica<MallaCurricular> ListaMalla = new ListaDinamica<>();
-    private MallaCurricular mallaCurricular;
+    private ListaDinamica<MallaC> ListaMalla = new ListaDinamica<>();
+    private MallaC mallaCurricular;
     
     public mallaCurricularDao() {
-        super(MallaCurricular.class);
+        super(MallaC.class);
     }
 
-    public ListaDinamica<MallaCurricular> getListaMalla() {
+    public ListaDinamica<MallaC> getListaMalla() {
         ListaMalla = all();
         return ListaMalla;
     }
 
-    public void setListaMalla(ListaDinamica<MallaCurricular> ListaCarreras) {
+    public void setListaMalla(ListaDinamica<MallaC> ListaCarreras) {
         this.ListaMalla = ListaCarreras;
     }
 
-    public MallaCurricular getMallaCurricular() {
+    public MallaC getMallaCurricular() {
         if(mallaCurricular == null){
-            mallaCurricular = new MallaCurricular();
+            mallaCurricular = new MallaC();
         }
         return mallaCurricular;
     }
 
-    public void setMallaCurricular(MallaCurricular mallaCurricular) {
+    public void setMallaCurricular(MallaC mallaCurricular) {
         this.mallaCurricular = mallaCurricular;
     }
     

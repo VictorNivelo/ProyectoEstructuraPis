@@ -6,52 +6,45 @@ package Modelo;
  * @author Victor
  */
 public class Asistencia {
-    private Integer IdAsistencia;
-    private String Observacion;
-    
-    private String EstadoAsistencia;
-    private Integer EstadoAsistenciaID;
+    private Integer IdAs;
+    private String ObservacionA;
+    private String EstadoA;
     
     private Horario horarioAsistencia;
-    private Integer HorarioID;
+    private Integer IdH;
     
-    private Tematica AsistenciaTematica;
-    private Integer AsistenciaID;
+    private Alumno alumnoAsistencia;
+    private Integer AlumnoID;
+    
+    private Tematica TematicaAsistencia;
+    private Integer TematicaID;
     
     public Asistencia() {
         
     }
 
     public Integer getIdAsistencia() {
-        return IdAsistencia;
+        return IdAs;
     }
 
     public void setIdAsistencia(Integer IdAsistencia) {
-        this.IdAsistencia = IdAsistencia;
-    }
-
-    public String getEstadoAsistencia() {
-        return EstadoAsistencia;
-    }
-
-    public void setEstadoAsistencia(String EstadoAsistencia) {
-        this.EstadoAsistencia = EstadoAsistencia;
+        this.IdAs = IdAsistencia;
     }
 
     public String getObservacion() {
-        return Observacion;
+        return ObservacionA;
     }
 
     public void setObservacion(String Observacion) {
-        this.Observacion = Observacion;
+        this.ObservacionA = Observacion;
     }
 
-    public Tematica getAsistenciaTematica() {
-        return AsistenciaTematica;
+    public String getEstadoAsistencia() {
+        return EstadoA;
     }
 
-    public void setAsistenciaTematica(Tematica AsistenciaTematica) {
-        this.AsistenciaTematica = AsistenciaTematica;
+    public void setEstadoAsistencia(String EstadoAsistencia) {
+        this.EstadoA = EstadoAsistencia;
     }
 
     public Horario getHorarioAsistencia() {
@@ -62,33 +55,49 @@ public class Asistencia {
         this.horarioAsistencia = horarioAsistencia;
     }
 
-    public Integer getEstadoAsistenciaID() {
-        return EstadoAsistenciaID;
-    }
-
-    public void setEstadoAsistenciaID(Integer EstadoAsistenciaID) {
-        this.EstadoAsistenciaID = EstadoAsistenciaID;
-    }
-
     public Integer getHorarioID() {
-        return HorarioID;
+        return IdH;
     }
 
     public void setHorarioID(Integer HorarioID) {
-        this.HorarioID = HorarioID;
+        this.IdH = HorarioID;
     }
 
-    public Integer getAsistenciaID() {
-        return AsistenciaID;
+    public Tematica getTematicaAsistencia() {
+        return TematicaAsistencia;
     }
 
-    public void setAsistenciaID(Integer AsistenciaID) {
-        this.AsistenciaID = AsistenciaID;
+    public void setTematicaAsistencia(Tematica TematicaAsistencia) {
+        this.TematicaAsistencia = TematicaAsistencia;
     }
 
+    public Integer getTematicaID() {
+        return TematicaID;
+    }
+
+    public void setTematicaID(Integer TematicaID) {
+        this.TematicaID = TematicaID;
+    }
+
+    public Alumno getAlumnoAsistencia() {
+        return alumnoAsistencia;
+    }
+
+    public void setAlumnoAsistencia(Alumno alumnoAsistencia) {
+        this.alumnoAsistencia = alumnoAsistencia;
+    }
+
+    public Integer getAlumnoID() {
+        return AlumnoID;
+    }
+
+    public void setAlumnoID(Integer AlumnoID) {
+        this.AlumnoID = AlumnoID;
+    }
+    
     @Override
     public String toString() {
-        return "Estado: "+EstadoAsistencia+"Observacion:" + Observacion + "\n";
+        return "Estado: "+EstadoA+"Observacion:" + ObservacionA + "\n";
     }
                 
 }

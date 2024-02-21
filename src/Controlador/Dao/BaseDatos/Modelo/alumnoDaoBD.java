@@ -18,7 +18,6 @@ public class alumnoDaoBD extends AdaptadorDaoBD<Alumno> {
 
     public alumnoDaoBD() {
         super(Alumno.class);
-        this.ListaAlumno = new ListaDinamica<>();
     }
 
     public ListaDinamica<Alumno> getListaAlumno() {

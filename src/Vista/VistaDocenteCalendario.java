@@ -1,6 +1,7 @@
 
 package Vista;
 
+import Controlador.Dao.Modelo.cursoDao;
 import Controlador.Dao.Modelo.horarioDao;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Modelo.Horario;
@@ -124,7 +125,7 @@ public class VistaDocenteCalendario extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         
-        VistaDocentes vd = new VistaDocentes();
+        VistaDocentePrincipal vd = new VistaDocentePrincipal();
         vd.setVisible(true);
         this.setVisible(false);
         
@@ -134,13 +135,14 @@ public class VistaDocenteCalendario extends javax.swing.JFrame {
         
         try {
             VistaCalendarioDocente c = new VistaCalendarioDocente();
+//            cursoDao HD = new cursoDao();
             horarioDao HD = new horarioDao();
             ListaDinamica<Horario> listaH = HD.all();
             for (int i = 0; i < listaH.getLongitud(); i++) {
                 String Fecha = listaH.getInfo(i).getDiaSemana();
                 String Mensaje = listaH.getInfo(i).getMateriaHorario().getNombreMateria() + " "+
                         listaH.getInfo(i).getMateriaHorario().getCicloMateria().getNombreCiclo()+ " " +
-                        listaH.getInfo(i).getMateriaHorario().getCursoMateria().getParaleloCursa()+ " "+
+//                        listaH.getInfo(i).getMateriaHorario().getCursoMateria().getParaleloCursa()+ " "+
                         listaH.getInfo(i).getHoraIncio() + " - " + listaH.getInfo(i).getHoraFin();
 //                System.out.println(listaH.getInfo(i).getDiaSemana());
                 c.AgregarEvento(Fecha, Mensaje);

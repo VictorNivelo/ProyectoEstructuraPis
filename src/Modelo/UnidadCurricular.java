@@ -6,52 +6,52 @@ package Modelo;
  * @author Victor
  */
 public class UnidadCurricular {
-    private Integer IdUnidadCurricular;
-    private String CodigoUnidadCurricular;
-    private String NombreUnidadCurricular;
-    private String DescripcionUnidadCurricular;
+    private Integer IdUC;
+    private String CodigoUC;
+    private String NombreUC;
+    private String DescripcionUC;
     
-    private MallaCurricular mallaCurricularUnidadCurricular;
+    private MallaC mallaCurricularUnidadCurricular;
     private Integer MallaCurricularID;
     
 
     public Integer getIdUnidadCurricular() {
-        return IdUnidadCurricular;
+        return IdUC;
     }
 
     public void setIdUnidadCurricular(Integer IdUnidadCurricular) {
-        this.IdUnidadCurricular = IdUnidadCurricular;
+        this.IdUC = IdUnidadCurricular;
     }
 
     public String getCodigoUnidadCurricular() {
-        return CodigoUnidadCurricular;
+        return CodigoUC;
     }
 
     public void setCodigoUnidadCurricular(String CodigoUnidadCurricular) {
-        this.CodigoUnidadCurricular = CodigoUnidadCurricular;
+        this.CodigoUC = CodigoUnidadCurricular;
     }
 
     public String getNombreUnidadCurricular() {
-        return NombreUnidadCurricular;
+        return NombreUC;
     }
 
     public void setNombreUnidadCurricular(String NombreUnidadCurricular) {
-        this.NombreUnidadCurricular = NombreUnidadCurricular;
+        this.NombreUC = NombreUnidadCurricular;
     }
 
     public String getDescripcionUnidadCurricular() {
-        return DescripcionUnidadCurricular;
+        return DescripcionUC;
     }
 
     public void setDescripcionUnidadCurricular(String DescripcionUnidadCurricular) {
-        this.DescripcionUnidadCurricular = DescripcionUnidadCurricular;
+        this.DescripcionUC = DescripcionUnidadCurricular;
     }
 
-    public MallaCurricular getMallaCurricularUnidadCurricular() {
+    public MallaC getMallaCurricularUnidadCurricular() {
         return mallaCurricularUnidadCurricular;
     }
 
-    public void setMallaCurricularUnidadCurricular(MallaCurricular mallaCurricularUnidadCurricular) {
+    public void setMallaCurricularUnidadCurricular(MallaC mallaCurricularUnidadCurricular) {
         this.mallaCurricularUnidadCurricular = mallaCurricularUnidadCurricular;
     }
 
@@ -65,7 +65,7 @@ public class UnidadCurricular {
 
     @Override
     public String toString() {
-        return CodigoUnidadCurricular + " " +NombreUnidadCurricular + "\n";
+        return CodigoUC + " " +NombreUC + "\n";
     }
     
 }

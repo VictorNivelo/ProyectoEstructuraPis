@@ -67,7 +67,7 @@ public class ModeloTablaTomaAsistencia extends AbstractTableModel {
                 case 0:
                     return (periodo != null) ? periodo.getIdAsistencia(): "";
                 case 1:
-                    return (periodo != null) ? periodo.getAsistenciaTematica().getFechaTematica(): "";
+                    return (periodo != null) ? periodo.getTematicaAsistencia().getFechaTematica(): "";
                 case 2:
                     return (periodo != null) ? null: null; 
 //                            EstadoCuenta(rowIndex) : Boolean.FALSE;

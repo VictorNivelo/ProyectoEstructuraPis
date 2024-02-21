@@ -7,13 +7,16 @@ package Modelo;
  */
 public class Cursa {
     private Integer IdCurso;
-    private String CodigoCursa;
+    private String CodigoC;
     
     private Paralelo ParaleloCursa;
     private Integer ParaleloID;
     
     private Matricula matriculaCursa;
     private Integer MatriculaID;
+    
+    private Materia MateriaCursa;
+    private Integer MateriaID;
     
     private Docente docenteCursa;
     private Integer DocenteID;
@@ -55,11 +58,11 @@ public class Cursa {
     }
 
     public String getCodigoCursa() {
-        return CodigoCursa;
+        return CodigoC;
     }
 
     public void setCodigoCursa(String CodigoCursa) {
-        this.CodigoCursa = CodigoCursa;
+        this.CodigoC = CodigoCursa;
     }
 
     public Integer getMatriculaID() {
@@ -85,6 +88,24 @@ public class Cursa {
     public void setParaleloID(Integer ParaleloID) {
         this.ParaleloID = ParaleloID;
     }
+
+    public Materia getMateriaCursa() {
+        return MateriaCursa;
+    }
+
+    public void setMateriaCursa(Materia MateriaCursa) {
+        this.MateriaCursa = MateriaCursa;
+    }
+
+    public Integer getMateriaID() {
+        return MateriaID;
+    }
+
+    public void setMateriaID(Integer MateriaID) {
+        this.MateriaID = MateriaID;
+    }
+    
+    
     
     @Override
     public String toString() {

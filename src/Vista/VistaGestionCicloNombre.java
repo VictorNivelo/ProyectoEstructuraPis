@@ -225,7 +225,7 @@ public class VistaGestionCicloNombre extends javax.swing.JFrame {
         jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("Buscar");
 
-        cbxTipoBusqueda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Codigo", "Nombre" }));
+        cbxTipoBusqueda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre" }));
         cbxTipoBusqueda.setSelectedIndex(-1);
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Buscar.png"))); // NOI18N
@@ -282,7 +282,7 @@ public class VistaGestionCicloNombre extends javax.swing.JFrame {
             }
         });
 
-        cbxTipoOrden.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Codigo", "Nombre" }));
+        cbxTipoOrden.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre" }));
         cbxTipoOrden.setSelectedIndex(-1);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -471,7 +471,7 @@ public class VistaGestionCicloNombre extends javax.swing.JFrame {
                         TipoCampo = "CodigoParalelo";
                         break;
                     case "Nombre":
-                        TipoCampo = "Nombre";
+                        TipoCampo = "NombreCiclo";
                         break;
                     default:
                         throw new AssertionError();
@@ -534,7 +534,7 @@ public class VistaGestionCicloNombre extends javax.swing.JFrame {
                         TipoCampo = "CodigoParalelo";
                         break;
                     case "Nombre":
-                        TipoCampo = "Nombre";
+                        TipoCampo = "NombreCiclo";
                         break;
                     default:
                         throw new AssertionError();

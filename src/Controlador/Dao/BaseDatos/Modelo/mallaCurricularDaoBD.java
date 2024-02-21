@@ -3,40 +3,40 @@ package Controlador.Dao.BaseDatos.Modelo;
 
 import Controlador.Dao.BaseDatos.AdaptadorDaoBD;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
-import Modelo.MallaCurricular;
+import Modelo.MallaC;
 import java.io.IOException;
 
 /**
  *
  * @author Victor
  */
-public class mallaCurricularDaoBD extends AdaptadorDaoBD<MallaCurricular> {
+public class mallaCurricularDaoBD extends AdaptadorDaoBD<MallaC> {
 
-    private ListaDinamica<MallaCurricular> ListaAsistencias;
-    private MallaCurricular asistencias = new MallaCurricular();
+    private ListaDinamica<MallaC> ListaAsistencias;
+    private MallaC asistencias = new MallaC();
     private Integer Indice = -1;
 
     public mallaCurricularDaoBD() {
-        super(MallaCurricular.class);
+        super(MallaC.class);
         this.ListaAsistencias = new ListaDinamica<>();
     }
 
-    public ListaDinamica<MallaCurricular> getListaAlumno() {
+    public ListaDinamica<MallaC> getListaAlumno() {
         if (ListaAsistencias.EstaVacio()) {
             ListaAsistencias = this.listar();
         }
         return ListaAsistencias;
     }
 
-    public void setListaAlumno(ListaDinamica<MallaCurricular> ListaAlumno) {
+    public void setListaAlumno(ListaDinamica<MallaC> ListaAlumno) {
         this.ListaAsistencias = ListaAlumno;
     }
 
-    public MallaCurricular getAlumno() {
+    public MallaC getAlumno() {
         return asistencias;
     }
 
-    public void setAlumno(MallaCurricular alumno) {
+    public void setAlumno(MallaC alumno) {
         this.asistencias = alumno;
     }
 

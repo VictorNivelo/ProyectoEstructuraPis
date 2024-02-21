@@ -7,9 +7,9 @@ package Modelo;
  */
 public class Carrera {
     private Integer IdCarrera;
-    private String NombreCarrera;
-    private Integer NumeroCiclos;
-    private Integer Duracion;
+    private String NombreC;
+    private Integer DuracionC;
+    private Integer NroCicloC;
     
     private Facultad facutadCarrera;
     private Integer FacultadID;
@@ -27,27 +27,27 @@ public class Carrera {
     }
 
     public String getNombreCarrera() {
-        return NombreCarrera;
+        return NombreC;
     }
 
     public void setNombreCarrera(String NombreCarrera) {
-        this.NombreCarrera = NombreCarrera;
+        this.NombreC = NombreCarrera;
     }
 
     public Integer getNumeroCiclos() {
-        return NumeroCiclos;
+        return NroCicloC;
     }
 
     public void setNumeroCiclos(Integer NumeroCiclos) {
-        this.NumeroCiclos = NumeroCiclos;
+        this.NroCicloC = NumeroCiclos;
     }
 
     public Integer getDuracion() {
-        return Duracion;
+        return DuracionC;
     }
 
     public void setDuracion(Integer Duracion) {
-        this.Duracion = Duracion;
+        this.DuracionC = Duracion;
     }
 
     public Facultad getFacutadCarrera() {
@@ -68,7 +68,7 @@ public class Carrera {
 
     @Override
     public String toString() {
-        return NombreCarrera + "\n";
+        return NombreC + "\n";
     }
     
 }

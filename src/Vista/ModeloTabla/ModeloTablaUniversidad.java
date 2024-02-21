@@ -40,17 +40,17 @@ public class ModeloTablaUniversidad extends AbstractTableModel {
 
             switch (Columna) {
                 case 0:
-                    return (u != null) ? u.getIdUniversidad(): "";
+                    return (u != null) ? u.getIdU(): "";
                 case 1:
-                    return (u != null) ? u.getNombreUniversidad() : "";
+                    return (u != null) ? u.getNombreU() : "";
                 case 2:
-                    return (u != null) ? u.getDireccionUniversidad(): "";
+                    return (u != null) ? u.getDireccionU(): "";
                 case 3:
-                    return (u != null) ? u.getNumeroTelefono(): "";
+                    return (u != null) ? u.getTelefonoU(): "";
                 case 4:
-                    return (u != null) ? u.getCorreoUniversidad(): "";
+                    return (u != null) ? u.getCorreoU(): "";
                 case 5:
-                    return (u != null) ? u.getFechaFundacion(): "";
+                    return (u != null) ? u.getFechaFU(): "";
                 
                 default:
                     return null;

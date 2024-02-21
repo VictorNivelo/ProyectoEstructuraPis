@@ -7,8 +7,8 @@ package Modelo;
  */
 public class Rol {
     private Integer IdRol;
-    private String NombreRol;
-    private String DescripcionRol;
+    private String NombreR;
+    private String DescripcionR;
 
     public Rol() {
         
@@ -23,24 +23,24 @@ public class Rol {
     }
 
     public String getNombreRol() {
-        return NombreRol;
+        return NombreR;
     }
 
     public void setNombreRol(String NombreRol) {
-        this.NombreRol = NombreRol;
+        this.NombreR = NombreRol;
     }
 
     public String getDescripcionRol() {
-        return DescripcionRol;
+        return DescripcionR;
     }
 
     public void setDescripcionRol(String DescripcionRol) {
-        this.DescripcionRol = DescripcionRol;
+        this.DescripcionR = DescripcionRol;
     }
 
     @Override
     public String toString() {
-        return NombreRol;
+        return NombreR;
     }
     
 }

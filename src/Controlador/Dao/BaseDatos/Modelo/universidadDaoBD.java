@@ -12,32 +12,35 @@ import java.io.IOException;
  */
 public class universidadDaoBD extends AdaptadorDaoBD<Universidad> {
 
-    private ListaDinamica<Universidad> ListaAsistencias;
-    private Universidad asistencias = new Universidad();
+    private ListaDinamica<Universidad> ListaUniversidad;
+    private Universidad universidad = new Universidad();
     private Integer Indice = -1;
 
     public universidadDaoBD() {
         super(Universidad.class);
-        this.ListaAsistencias = new ListaDinamica<>();
+        this.ListaUniversidad = new ListaDinamica<>();
     }
 
-    public ListaDinamica<Universidad> getListaAlumno() {
-        if (ListaAsistencias.EstaVacio()) {
-            ListaAsistencias = this.listar();
+    public ListaDinamica<Universidad> getListaUniversidad() {
+        if (ListaUniversidad.EstaVacio()) {
+            ListaUniversidad = this.listar();
         }
-        return ListaAsistencias;
+        return ListaUniversidad;
     }
 
-    public void setListaAlumno(ListaDinamica<Universidad> ListaAlumno) {
-        this.ListaAsistencias = ListaAlumno;
+    public void setListaUniversidad(ListaDinamica<Universidad> ListaUniversidad) {
+        this.ListaUniversidad = ListaUniversidad;
     }
 
-    public Universidad getAlumno() {
-        return asistencias;
+    public Universidad getUniversidad() {
+        if(universidad == null){
+            universidad = new Universidad();
+        }
+        return universidad;
     }
 
-    public void setAlumno(Universidad alumno) {
-        this.asistencias = alumno;
+    public void setUniversidad(Universidad universidad) {
+        this.universidad = universidad;
     }
 
     public Integer getIndice() {
@@ -49,12 +52,12 @@ public class universidadDaoBD extends AdaptadorDaoBD<Universidad> {
     }
 
     public Boolean GuardarBD() throws Exception {
-        return super.saveB(this.asistencias);
+        return super.saveB(this.universidad);
     }
 
     public Boolean Modificar() throws IOException {
         try {
-            modificar(this.asistencias);
+            modificar(this.universidad);
             return true;
         } 
         catch (Exception e) {

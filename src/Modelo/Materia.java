@@ -8,15 +8,12 @@ package Modelo;
  */
 public class Materia {
     private Integer IdMateria;
-    private String NombreMateria;
-    private String DescipcionMateria;
-    private String NumeroHoras;
+    private String NombreM;
+    private String DescripcionM;
+    private String NumeroHM;
     
     private Ciclo cicloMateria;
     private Integer CicloID;
-    
-    private Cursa cursoMateria;
-    private Integer CursaID;
     
     public Materia() {
         
@@ -31,27 +28,27 @@ public class Materia {
     }
 
     public String getNombreMateria() {
-        return NombreMateria;
+        return NombreM;
     }
 
     public void setNombreMateria(String NombreMateria) {
-        this.NombreMateria = NombreMateria;
+        this.NombreM = NombreMateria;
     }
 
     public String getDescipcionMateria() {
-        return DescipcionMateria;
+        return DescripcionM;
     }
 
     public void setDescipcionMateria(String DescipcionMateria) {
-        this.DescipcionMateria = DescipcionMateria;
+        this.DescripcionM = DescipcionMateria;
     }
 
     public String getNumeroHoras() {
-        return NumeroHoras;
+        return NumeroHM;
     }
 
     public void setNumeroHoras(String NumeroHoras) {
-        this.NumeroHoras = NumeroHoras;
+        this.NumeroHM = NumeroHoras;
     }
 
     public Ciclo getCicloMateria() {
@@ -62,14 +59,6 @@ public class Materia {
         this.cicloMateria = cicloMateria;
     }
 
-    public Cursa getCursoMateria() {
-        return cursoMateria;
-    }
-
-    public void setCursoMateria(Cursa cursoMateria) {
-        this.cursoMateria = cursoMateria;
-    }
-
     public Integer getCicloID() {
         return CicloID;
     }
@@ -77,18 +66,10 @@ public class Materia {
     public void setCicloID(Integer CicloID) {
         this.CicloID = CicloID;
     }
-
-    public Integer getCursaID() {
-        return CursaID;
-    }
-
-    public void setCursaID(Integer CursaID) {
-        this.CursaID = CursaID;
-    }
     
     @Override
     public String toString() {
-        return NombreMateria+"\n";
+        return NombreM+"\n";
     }
     
 }

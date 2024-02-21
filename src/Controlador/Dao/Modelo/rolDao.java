@@ -41,5 +41,24 @@ public class rolDao extends DaoImplement<Rol>{
         rol.setIdRol(all().getLongitud()+1);
         return Persist(rol);
     }
+//    
+//    public static void main(String[] args) {
+//        rolDao rc = new rolDao();
+//        rc.getRol().setDescripcionRol("Es un Administrativo");
+//        rc.getRol().setNombreRol("Personal Administrativo");
+//        rc.Persist();
+//        rc.setRol(null);
+//        
+//        rc.getRol().setDescripcionRol("Es un Docente");
+//        rc.getRol().setNombreRol("Docente");
+//        rc.Persist();
+//        rc.setRol(null);
+//        
+//        rc.getRol().setDescripcionRol("Es un Estudiante");
+//        rc.getRol().setNombreRol("Estudiante");
+//        rc.Persist();
+//        rc.setRol(null);
+//
+//    }
 
 }

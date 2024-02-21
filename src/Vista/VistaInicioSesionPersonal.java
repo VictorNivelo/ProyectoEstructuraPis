@@ -101,7 +101,7 @@ public class VistaInicioSesionPersonal extends javax.swing.JFrame {
 
                 Rol rolPersona = persona.getRolPersona();
                 if (rolPersona != null) {
-                    if (rolPersona.getNombreRol().equals("Personal administrativo")) {
+                    if (rolPersona.getNombreRol().equals("Personal Administrativo")) {
                         procesarPersonalAdministrativo();
                         dispose();
                     } 

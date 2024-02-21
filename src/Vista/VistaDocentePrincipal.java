@@ -1,9 +1,11 @@
 
 package Vista;
 
+import Controlador.Dao.Modelo.cursoDao;
 import Controlador.Dao.Modelo.horarioDao;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Modelo.ControlAccesoDocente;
+import Modelo.Cursa;
 import Modelo.Horario;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
@@ -16,7 +18,7 @@ import javax.swing.Timer;
  *
  * @author romer
  */
-public class VistaDocentes extends javax.swing.JFrame {
+public class VistaDocentePrincipal extends javax.swing.JFrame {
     
     private final String[] imagenes = {
         "/Vista/RecursosGraficos/Fondos/Fondo1.jpg",
@@ -31,7 +33,7 @@ public class VistaDocentes extends javax.swing.JFrame {
     /**
      * Creates new form VistaDocentes
      */
-    public VistaDocentes() {
+    public VistaDocentePrincipal() {
         initComponents();
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
@@ -51,11 +53,11 @@ public class VistaDocentes extends javax.swing.JFrame {
         indiceImagenActual = (indiceImagenActual + 1) % imagenes.length;
         panelPrincipal.repaint();
     }
-    
+ 
     private void mostrarNombreDocente() {
-    String nombreDocente = ControlAccesoDocente.getNombreDocenteLogeado();
-    lblNombreUsuarioIngresado.setText(nombreDocente);
-}
+        String nombreDocente = ControlAccesoDocente.getNombreDocenteLogeado();
+        lblNombreUsuarioIngresado.setText(nombreDocente);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -92,18 +94,18 @@ public class VistaDocentes extends javax.swing.JFrame {
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/LojoUNL.png"))); // NOI18N
 
-        PanelPresentacion.setBackground(new java.awt.Color(0, 0, 0,0));
+        PanelPresentacion.setBackground(new java.awt.Color(0, 0, 0, 10));
         PanelPresentacion.setRoundBottomLeft(40);
         PanelPresentacion.setRoundBottomRight(40);
         PanelPresentacion.setRoundTopLeft(40);
         PanelPresentacion.setRoundTopRight(40);
 
-        jLabel1.setFont(new java.awt.Font("Segoe Script", 1, 32)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe Script", 1, 34)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Bienvenido");
 
-        lblNombreUsuarioIngresado.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        lblNombreUsuarioIngresado.setFont(new java.awt.Font("Segoe UI", 0, 22)); // NOI18N
         lblNombreUsuarioIngresado.setForeground(new java.awt.Color(255, 255, 255));
         lblNombreUsuarioIngresado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblNombreUsuarioIngresado.setText(" ");
@@ -116,17 +118,16 @@ public class VistaDocentes extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(PanelPresentacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblNombreUsuarioIngresado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 761, Short.MAX_VALUE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 608, Short.MAX_VALUE))
                 .addContainerGap())
         );
         PanelPresentacionLayout.setVerticalGroup(
             PanelPresentacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelPresentacionLayout.createSequentialGroup()
-                .addGap(21, 21, 21)
+                .addContainerGap(9, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addGap(21, 21, 21)
-                .addComponent(lblNombreUsuarioIngresado)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblNombreUsuarioIngresado))
         );
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -136,17 +137,19 @@ public class VistaDocentes extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(75, 75, 75)
                 .addComponent(jLabel3)
-                .addGap(25, 25, 25)
+                .addGap(36, 36, 36)
                 .addComponent(PanelPresentacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(PanelPresentacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jLabel3)
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(PanelPresentacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         btnRegresar.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
@@ -246,54 +249,46 @@ public class VistaDocentes extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAsistenciasActionPerformed
 
     private void btnCalendarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalendarioActionPerformed
-
+        
         try {
             VistaCalendarioDocente c = new VistaCalendarioDocente();
             horarioDao HD = new horarioDao();
+            cursoDao cursaControlDao = new cursoDao();
 
             int idDocenteLogeado = ControlAccesoDocente.getIdDocenteLogeado();
 
-            ListaDinamica<Horario> listaH = HD.all();
+            ListaDinamica<Horario> listaHorarios = HD.all();
+            ListaDinamica<Cursa> listaCursas = cursaControlDao.all();
 
-            for (int i = 0; i < listaH.getLongitud(); i++) {
-                Horario horario = listaH.getInfo(i);
+            for (int i = 0; i < listaHorarios.getLongitud(); i++) {
+                Horario horario = listaHorarios.getInfo(i);
+                int idMateriaHorario = horario.getMateriaHorario().getIdMateria();
 
-                if (horario.getMateriaHorario().getCursoMateria().getDocenteCursa().getIdDocente() == idDocenteLogeado) {
-                    String Fecha = horario.getDiaSemana();
-                    String Mensaje = horario.getMateriaHorario().getNombreMateria() + " "
-                            + horario.getMateriaHorario().getCicloMateria().getNombreCiclo().getNombreCiclo() + " "
-                            + horario.getMateriaHorario().getCursoMateria().getParaleloCursa() + " "
-                            + horario.getHoraIncio() + " - " + horario.getHoraFin();
-                    c.AgregarEvento(Fecha, Mensaje);
+                for (int j = 0; j < listaCursas.getLongitud(); j++) {
+                    Cursa cursa = listaCursas.getInfo(j);
+                    int idDocenteMateria = cursa.getDocenteCursa().getIdDocente();
+
+                    if (idDocenteMateria == idDocenteLogeado && idMateriaHorario == cursa.getMateriaCursa().getIdMateria()) {
+                        String diaSemana = horario.getDiaSemana();
+
+                        String nombreMateria = cursa.getMateriaCursa().getNombreMateria();
+                        String cicloMateria = cursa.getMateriaCursa().getCicloMateria().getNombreCiclo().getNombreCiclo();
+                        String paraleloMateria = cursa.getParaleloCursa().getNombre();
+                        String horaInicio = horario.getHoraIncio();
+                        String horaFin = horario.getHoraFin();
+                        String mensaje = nombreMateria + " " + cicloMateria + " "+ paraleloMateria + " "+ horaInicio + " - " + horaFin;
+
+                        c.AgregarEvento(diaSemana, mensaje);
+                    }
                 }
             }
-
             c.setVisible(true);
-            this.dispose();
+            this.setVisible(false);
         } 
         catch (Exception e) {
-            
+            e.printStackTrace();
         }
         
-//        try {
-//            VistaCalendarioDocente c = new VistaCalendarioDocente();
-//            horarioDao HD = new horarioDao();
-//            ListaDinamica<Horario> listaH = HD.all();
-//            for (int i = 0; i < listaH.getLongitud(); i++) {
-//                String Fecha = listaH.getInfo(i).getDiaSemana();
-//                String Mensaje = listaH.getInfo(i).getMateriaHorario().getNombreMateria() + " "+
-//                        listaH.getInfo(i).getMateriaHorario().getCicloMateria().getNombreCiclo().getNombreCiclo()+ " " +
-//                        listaH.getInfo(i).getMateriaHorario().getCursoMateria().getParaleloCursa()+ " "+
-//                        listaH.getInfo(i).getHoraIncio() + " - " + listaH.getInfo(i).getHoraFin();
-//                c.AgregarEvento(Fecha, Mensaje);
-//            }
-//            
-//            c.setVisible(true);
-//            this.dispose();
-//        } 
-//        catch (Exception e) {
-//            
-//        }
         
     }//GEN-LAST:event_btnCalendarioActionPerformed
 
@@ -314,20 +309,21 @@ public class VistaDocentes extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VistaDocentes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaDocentePrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VistaDocentes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaDocentePrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VistaDocentes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaDocentePrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VistaDocentes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaDocentePrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VistaDocentes().setVisible(true);
+                new VistaDocentePrincipal().setVisible(true);
             }
         });
     }

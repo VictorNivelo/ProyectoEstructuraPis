@@ -2,7 +2,8 @@ package Vista;
 
 import Controlador.Dao.Modelo.alumnoDao;
 import Controlador.Dao.Modelo.asistenciaDao;
-import Controlador.Dao.Modelo.materiaDao;
+import Controlador.Dao.Modelo.cursoDao;
+import Controlador.Dao.Modelo.horarioDao;
 import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Controlador.Utiles.UtilesControlador;
@@ -10,16 +11,20 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.ImageIcon;
 import javax.swing.JTable;
-import Modelo.Matricula;
 import Modelo.Alumno;
 import Modelo.Asistencia;
 import Modelo.ControlAccesoDocente;
 import Modelo.Cursa;
+import Modelo.Horario;
 import Modelo.Materia;
 import Modelo.Persona;
+import Modelo.Tematica;
 import Vista.Utiles.UtilVista;
-import java.awt.event.KeyEvent;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 import javax.swing.JOptionPane;
 
 /**
@@ -30,9 +35,12 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
 
     DefaultTableModel dtm = new DefaultTableModel();
     alumnoDao alumnoControlDao = new alumnoDao();
-    materiaDao materiaControlDao = new materiaDao();
+    cursoDao cursaControlDao = new cursoDao();
+    horarioDao horarioControlDao = new horarioDao();
     asistenciaDao asistenciaControlDao = new asistenciaDao();
     ListaDinamica<Asistencia> listaAsistencia = new ListaDinamica<>();
+    private Materia materiaSeleccionada;
+    private ListaDinamica<Horario> listaHorarios;
 
     /**
      * Creates new form VistaTomaAsistencia
@@ -42,71 +50,78 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
     public VistaDocentesTomaAsistencia() throws ListaVacia {
         initComponents();
         this.setLocationRelativeTo(null);
-        UtilVista.cargarcomboHorario(cbxHorario);
+        cargarMateriasYHorariosDocente();
         setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
         DateFechaActual.setDateFormatString("dd/MMMM/yyyy");
-        dtm.setColumnIdentifiers(new String[]{"#", "Nombre", "Apellido", "Asistencia"});
-        CargarTabla();
+        dtm.setColumnIdentifiers(new String[]{"#", "DNI", "Nombre", "Apellido", "Asistencia"});
         tblt.setModel(dtm);
-        AgregarCheckbox(3, tblt);
+        AgregarCheckbox(4, tblt);
         cbxHorario.setSelectedIndex(-1);
-        cargarMateriasDocente();
         cbxMateria.setSelectedIndex(-1);
     }
 
-    private void cargarMateriasDocente() {
+    private void cargarMateriasYHorariosDocente() {
         int idDocenteLogeado = ControlAccesoDocente.getIdDocenteLogeado();
         cbxMateria.removeAllItems();
-        ListaDinamica<Materia> listaMaterias = materiaControlDao.all();
-        for (Materia materia : listaMaterias.toArray()) {
-            int idDocenteMateria = materia.getCursoMateria().getDocenteCursa().getIdDocente();
+        cbxHorario.removeAllItems();
+
+        ListaDinamica<Cursa> listaMaterias = cursaControlDao.all();
+        listaHorarios = horarioControlDao.all();
+        materiaSeleccionada = null;
+
+        for (Cursa curso : listaMaterias.toArray()) {
+            int idDocenteMateria = curso.getDocenteCursa().getIdDocente();
 
             if (idDocenteLogeado == idDocenteMateria) {
-                cbxMateria.addItem(materia.getNombreMateria());
-            }
-        }
-    }
-
-    private void CargarTabla() {
-        try {
-            Object[] datosLista = alumnoControlDao.getListaAlumnos().toArray();
-            for (Object dato : datosLista) {
-                if (dato instanceof Persona) {
-                    Persona persona = (Persona) dato;
-                    dtm.addRow(new Object[]{persona.getIdPersona(), persona.getNombre(), persona.getApellido(), false});
+                Materia materia = curso.getMateriaCursa();
+                boolean materiaYaAgregada = false;
+                for (int i = 0; i < cbxMateria.getItemCount(); i++) {
+                    Materia materiaEnCombo = (Materia) cbxMateria.getItemAt(i);
+                    if (materiaEnCombo.getNombreMateria().equals(materia.getNombreMateria())) {
+                        materiaYaAgregada = true;
+                        break;
+                    }
+                }
+                if (!materiaYaAgregada) {
+                    cbxMateria.addItem(materia);
+                }
+                if (curso.getMateriaCursa().equals(materiaSeleccionada)) {
+                    for (Horario horario : listaHorarios.toArray()) {
+                        if (Objects.equals(horario.getMateriaHorario().getIdMateria(), materiaSeleccionada.getIdMateria())) {
+                            cbxHorario.addItem(horario);
+                        }
+                    }
                 }
             }
-        } 
-        catch (Exception e) {
-            e.printStackTrace();
         }
     }
-
-    private void CargarTablas() {
+    
+    private void CargarAlumnoTabla(Materia materiaSeleccionada) {
         try {
-            ListaDinamica<Materia> listaMaterias = materiaControlDao.all();
             dtm.setRowCount(0);
-            
-            for (Materia materia : listaMaterias.toArray()) {
-                Cursa cursoMateria = materia.getCursoMateria();
-                Matricula matricula = cursoMateria.getMatriculaCursa();
-                
-                if (matricula.getEstadoMatricula().equals("Activa")) {
-                    Alumno alumno = matricula.getAlumnoMatricula();
 
-                    Persona datosAlumno = alumno.getDatosAlumno();
-                    dtm.addRow(new Object[]{
-                        alumno.getIdAlumno(),
-                        datosAlumno.getNombre(),
-                        datosAlumno.getApellido()
-                    });
-                }
+            ListaDinamica<Alumno> listaAlumnos = obtenerAlumnosDeMateria(materiaSeleccionada);
+
+            for (Alumno alumno : listaAlumnos.toArray()) {
+                dtm.addRow(new Object[]{alumno.getDatosAlumno().getIdPersona(), alumno.getDatosAlumno().getNumeroCedula(), alumno.getDatosAlumno().getNombre(), alumno.getDatosAlumno().getApellido(), true});
             }
         } 
         catch (Exception e) {
             e.printStackTrace();
         }
-    }    
+    }
+
+    private ListaDinamica<Alumno> obtenerAlumnosDeMateria(Materia materiaSeleccionada) {
+        ListaDinamica<Alumno> listaAlumnos = new ListaDinamica<>();
+        ListaDinamica<Cursa> listaCursas = cursaControlDao.all();
+
+        for (Cursa cursa : listaCursas.toArray()) {
+            if (Objects.equals(cursa.getMateriaCursa().getIdMateria(), materiaSeleccionada.getIdMateria())) {
+                listaAlumnos.Agregar(cursa.getMatriculaCursa().getAlumnoMatricula());
+            }
+        }
+        return listaAlumnos;
+    }
     
     public void AgregarCheckbox(int columna, JTable tabla) {
         TableColumn columnaTabla = tabla.getColumnModel().getColumn(columna);
@@ -125,55 +140,78 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
         txtTematica.setText("");
         txtObservacion.setText("");
         asistenciaControlDao.setAsistencias(null);
-        CargarTabla();
+        dtm.setRowCount(0);
+        CargarTablaAlumnos();
     }
     
     private void Guardar() throws ListaVacia {
-        Date fechaNacimiento = DateFechaActual.getDate();
+        Date fechaIngresada = DateFechaActual.getDate();
         if (DateFechaActual.getDate() == null) {
             JOptionPane.showMessageDialog(null, "Falta seleccionar la fecha", "Error", JOptionPane.WARNING_MESSAGE);
         } 
-        else if (!validarFechaNoFutura(fechaNacimiento)) {
+        else if (!validarFechaNoFutura(fechaIngresada)) {
             JOptionPane.showMessageDialog(null, "La fecha de la asistencia no puede ser futura", "Error", JOptionPane.WARNING_MESSAGE);
-        }
+        } 
         else if (cbxMateria.getSelectedIndex() == -1) {
             JOptionPane.showMessageDialog(null, "Falta seleccionar la materia", "Error", JOptionPane.WARNING_MESSAGE);
-        }
+        } 
         else if (txtTematica.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar duracion", "Error", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta llenar tematica de la clase", "Error", JOptionPane.WARNING_MESSAGE);
         } 
         else if (txtObservacion.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Falta llenar duracion", "Error", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falta llenar la observacion", "Error", JOptionPane.WARNING_MESSAGE);
         } 
         else {
+            boolean asistenciaGuardadaExitosamente = false;
+            try {
+                for (int i = 0; i < tblt.getRowCount(); i++) {
+                    boolean estaPresente = (boolean) tblt.getValueAt(i, 4);
+                    String estadoAsistencia = estaPresente ? "Presente" : "Ausente";
 
-            for (int i = 0; i < tblt.getRowCount(); i++) {
-                boolean estaPresente = (boolean) tblt.getValueAt(i, 3);
-                String estadoAsistencia = estaPresente ? "Presente" : "Ausente";
+                    Alumno alumno = obtenerAlumnoDesdeTabla(i);
 
-                Integer idAsistencia = listaAsistencia.getLongitud() + 1;
+                    if (alumno != null) {
+                        Integer idAsistencia = listaAsistencia.getLongitud() + 1;
 
-                Asistencia nuevaAsistencia = new Asistencia();
-                nuevaAsistencia.setIdAsistencia(idAsistencia);
-                nuevaAsistencia.setEstadoAsistencia(estadoAsistencia);
-                nuevaAsistencia.setObservacion(txtObservacion.getText());
-                nuevaAsistencia.setHorarioAsistencia(UtilVista.obtenerHorarioControl(cbxHorario));
+                        Asistencia nuevaAsistencia = new Asistencia();
+                        nuevaAsistencia.setIdAsistencia(idAsistencia);
+                        nuevaAsistencia.setEstadoAsistencia(estadoAsistencia);
+                        nuevaAsistencia.setObservacion(txtObservacion.getText());
+                        nuevaAsistencia.setHorarioAsistencia(UtilVista.obtenerHorarioControl(cbxHorario));
 
-                asistenciaControlDao.setAsistencias(nuevaAsistencia);
-                try {
-                    if (asistenciaControlDao.Persist()) {
-                        JOptionPane.showMessageDialog(null, "Asistencia guardada exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE);
-                        asistenciaControlDao.setAsistencias(null);
-                    } 
-                    else {
-                        JOptionPane.showMessageDialog(null, "No se pudo guardar la asistencia", "Error", JOptionPane.ERROR_MESSAGE);
+                        String fechaTematica = formatearFecha(fechaIngresada);
+
+                        Tematica nuevaTematica = new Tematica();
+                        nuevaTematica.setIdTematica(idAsistencia);
+                        nuevaTematica.setNombreTematica(txtTematica.getText());
+                        nuevaTematica.setFechaTematica(fechaTematica);
+                        nuevaAsistencia.setTematicaAsistencia(nuevaTematica);
+
+                        nuevaAsistencia.setAlumnoAsistencia(alumno);
+
+                        asistenciaControlDao.setAsistencias(nuevaAsistencia);
+                        try {
+                            if (asistenciaControlDao.Persist()) {
+                                asistenciaGuardadaExitosamente = true;
+                            } 
+                            else {
+                                JOptionPane.showMessageDialog(null, "No se pudo guardar la asistencia", "Error", JOptionPane.ERROR_MESSAGE);
+                            }
+                        } 
+                        catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
-                } 
-                catch (Exception e) {
-                    e.printStackTrace();
                 }
+                if (asistenciaGuardadaExitosamente) {
+                    JOptionPane.showMessageDialog(null, "Asistencia guardada exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE);
+                    asistenciaControlDao.setAsistencias(null);
+                }
+                Limpiar();
+            } 
+            catch (ListaVacia e) {
+                e.printStackTrace();
             }
-            Limpiar();
         }
     }
     
@@ -181,6 +219,38 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
         Date hoy = new Date();
         return !date.after(hoy);
     }
+    
+    private Alumno obtenerAlumnoDesdeTabla(int rowIndex) {
+        Integer idPersona = (Integer) tblt.getValueAt(rowIndex, 0);
+        ListaDinamica<Alumno> listaAlumnos = obtenerAlumnosDeMateria(materiaSeleccionada);
+        for (Alumno alumno : listaAlumnos.toArray()) {
+            if (alumno.getDatosAlumno().getIdPersona().equals(idPersona)) {
+                return alumno;
+            }
+        }
+    return null;
+    }
+
+    private void CargarTablaAlumnos() {
+        try {
+            Object[] datosLista = cursaControlDao.getListaCursa().toArray();
+            for (Object dato : datosLista) {
+                if (dato instanceof Persona) {
+                    Persona persona = (Persona) dato;
+                    dtm.addRow(new Object[]{persona.getIdPersona(), persona.getNumeroCedula(), persona.getNombre(), persona.getApellido(), true});
+                }
+            }
+        } 
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static String formatearFecha(Date fecha) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MMMM/yyyy");
+        return sdf.format(fecha);
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -203,8 +273,6 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
@@ -222,6 +290,7 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
         cbxOrden = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
         cbxTipoOrden = new javax.swing.JComboBox<>();
+        jButton7 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("REGISTRO DE ASISTENCIA");
@@ -294,19 +363,6 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Modificar.png"))); // NOI18N
-        jButton2.setText("MODIFICAR");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
-        jButton3.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Eliminar.png"))); // NOI18N
-        jButton3.setText("ELIMINAR");
-
         jButton4.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Regresar.png"))); // NOI18N
         jButton4.setText("REGRESAR");
@@ -329,12 +385,6 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Tematica");
 
-        txtTematica.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtTematicaKeyTyped(evt);
-            }
-        });
-
         jLabel10.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(0, 0, 0));
         jLabel10.setText("Fecha");
@@ -342,6 +392,12 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
         jLabel11.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(0, 0, 0));
         jLabel11.setText("Horario");
+
+        cbxHorario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxHorarioActionPerformed(evt);
+            }
+        });
 
         jLabel12.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(0, 0, 0));
@@ -351,6 +407,12 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
         jLabel13.setForeground(new java.awt.Color(0, 0, 0));
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel13.setText("Materia");
+
+        cbxMateria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxMateriaActionPerformed(evt);
+            }
+        });
 
         jButton6.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Guardar.png"))); // NOI18N
@@ -377,6 +439,16 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
 
         cbxTipoOrden.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "Apellido" }));
         cbxTipoOrden.setSelectedIndex(-1);
+
+        jButton7.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/RegistroAsistencias.png"))); // NOI18N
+        jButton7.setText("REGISTRO DE ASISTENCIAS");
+        jButton7.setToolTipText("");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -405,10 +477,8 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(DateFechaActual, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -424,9 +494,7 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 894, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)
+                        .addComponent(jButton7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton6))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -458,27 +526,24 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
                                 .addComponent(jLabel8))
                             .addComponent(btnOrdenar))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(cbxTipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6)
+                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1)
+                    .addComponent(jLabel13)
+                    .addComponent(cbxMateria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(cbxTipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6)
-                            .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1)
-                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(DateFechaActual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel13)
-                            .addComponent(cbxMateria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel11)
                             .addComponent(cbxHorario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(DateFechaActual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -487,14 +552,14 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
                         .addComponent(jLabel12)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtObservacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3)
                     .addComponent(jButton4)
                     .addComponent(jButton5)
-                    .addComponent(jButton6))
+                    .addComponent(jButton6)
+                    .addComponent(jButton7))
                 .addContainerGap())
         );
 
@@ -552,10 +617,8 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
                 DefaultTableModel modeloTabla = new DefaultTableModel(datos, columnas);
 
                 tblt.setModel(modeloTabla);
-                AgregarCheckbox(3, tblt);
-//                        AgregarCheckbox(3, tblt);
-//            dtm.setPersonasTabla(ResultadoBusqueda);
-//            mtp.fireTableDataChanged();
+                AgregarCheckbox(4, tblt);
+
             }
         } 
         catch (Exception e) {
@@ -566,7 +629,7 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         
-        VistaDocentes abrirLogin = new VistaDocentes();
+        VistaDocentePrincipal abrirLogin = new VistaDocentePrincipal();
         abrirLogin.setVisible(true);
         this.setVisible(false);
         
@@ -574,28 +637,18 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         
-        CargarTablas();
+        if(cbxMateria.getSelectedIndex() == -1){
+            JOptionPane.showMessageDialog(null, "Porfavor seleccione la materia", "Error", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else if(cbxHorario.getSelectedIndex() == -1){
+            JOptionPane.showMessageDialog(null, "Porfavor seleccione el horario", "Error", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else{
+            Materia materiaSeleccionada = (Materia) cbxMateria.getSelectedItem();
+            CargarAlumnoTabla(materiaSeleccionada);
+        }
             
     }//GEN-LAST:event_jButton5ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        
-        
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void txtTematicaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTematicaKeyTyped
-        
-        char c = evt.getKeyChar();
-
-        if (!Character.isLetter(c) && c != KeyEvent.VK_BACK_SPACE && c != ' ') {
-            evt.consume();
-            JOptionPane.showMessageDialog(null, "Solo ingreso de letras", "CARACTER NO VALIDO", JOptionPane.WARNING_MESSAGE);
-        }
-        if (c != KeyEvent.VK_BACK_SPACE) {
-
-        }
-        
-    }//GEN-LAST:event_txtTematicaKeyTyped
 
     private void btnOrdenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdenarActionPerformed
 
@@ -643,7 +696,7 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
                 DefaultTableModel modeloTabla = new DefaultTableModel(datos, columnas);
 
                 tblt.setModel(modeloTabla);
-                AgregarCheckbox(3, tblt);
+                AgregarCheckbox(4, tblt);
             }
         } 
         catch (Exception e) {
@@ -666,10 +719,10 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Falta seleccionar la materia", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (txtTematica.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar duracion", "Error", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar tematica de la clase", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else if (txtObservacion.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Falta llenar duracion", "Error", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta llenar la observacion", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else {
                 Guardar();
@@ -680,6 +733,57 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void cbxMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxMateriaActionPerformed
+
+        materiaSeleccionada = (Materia) cbxMateria.getSelectedItem();
+        cbxHorario.removeAllItems();
+
+        if (materiaSeleccionada != null) {
+            for (Horario horario : listaHorarios.toArray()) {
+                if (Objects.equals(horario.getMateriaHorario().getIdMateria(), materiaSeleccionada.getIdMateria())) {
+                    cbxHorario.addItem(horario);
+                }
+            }
+        }
+
+    }//GEN-LAST:event_cbxMateriaActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        
+        try {
+            VistaGestionRegistroAsistencias vra = new VistaGestionRegistroAsistencias();
+            vra.setVisible(true);
+            this.setVisible(false);
+        } 
+        catch (Exception e) {
+            
+        }
+        
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void cbxHorarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxHorarioActionPerformed
+        
+        cbxHorario.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Horario horarioSeleccionado = (Horario) cbxHorario.getSelectedItem();
+
+            if (horarioSeleccionado != null) {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MMMM/yyyy");
+                try {
+                    Date fechaHorario = dateFormat.parse(horarioSeleccionado.getDiaSemana());
+                    DateFechaActual.setDate(fechaHorario);
+                } 
+                catch (Exception ex) {
+                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(null, "Error al obtener la fecha del horario", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
+    });
+        
+    }//GEN-LAST:event_cbxHorarioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -725,17 +829,16 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser DateFechaActual;
     private javax.swing.JButton btnOrdenar;
-    private javax.swing.JComboBox<String> cbxHorario;
-    private javax.swing.JComboBox<String> cbxMateria;
+    private javax.swing.JComboBox<Object> cbxHorario;
+    private javax.swing.JComboBox<Object> cbxMateria;
     private javax.swing.JComboBox<String> cbxOrden;
     private javax.swing.JComboBox<String> cbxTipoBusqueda;
     private javax.swing.JComboBox<String> cbxTipoOrden;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

@@ -6,7 +6,7 @@ import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class VistaCalendarioDocente extends JFrame {
+public class VistaCalendarioAlumno extends JFrame {
 
     private JLabel EtiquetaMes;
     private JPanel PanelCalendario;
@@ -15,8 +15,8 @@ public class VistaCalendarioDocente extends JFrame {
     private Map<String, ArrayList<String>> MapaRecordatorios;
     SimpleDateFormat Formato = new SimpleDateFormat("dd/MMMM/yyyy");
 
-    public VistaCalendarioDocente() {
-        setTitle("CALENDARIO DOCENTE");
+    public VistaCalendarioAlumno() {
+        setTitle("CALENDARIO ALUMNO");
         setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
         setSize(1225, 725);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -87,7 +87,7 @@ public class VistaCalendarioDocente extends JFrame {
         JButton botonRegresar = new JButton("REGRESAR");
         botonRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Regresar.png")));
         botonRegresar.addActionListener(e -> {
-            VistaDocentePrincipal otraInterfaz = new VistaDocentePrincipal();
+            VistaAlumnoPrincipal otraInterfaz = new VistaAlumnoPrincipal();
             otraInterfaz.setLocationRelativeTo(this);
             otraInterfaz.setVisible(true);
             dispose();
@@ -260,6 +260,6 @@ public class VistaCalendarioDocente extends JFrame {
             java.util.logging.Logger.getLogger(VistaDocenteCalendario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
 
-        SwingUtilities.invokeLater(() -> new VistaCalendarioDocente());
+        SwingUtilities.invokeLater(() -> new VistaCalendarioAlumno());
     }
 }

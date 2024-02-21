@@ -3,7 +3,7 @@ package Vista.ModeloTabla;
 
 import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
-import Modelo.MallaCurricular;
+import Modelo.MallaC;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -12,13 +12,13 @@ import javax.swing.table.AbstractTableModel;
  */
 public class ModeloTablaMallaCurricular extends AbstractTableModel {
 
-    private ListaDinamica<MallaCurricular> mallaTabla;
+    private ListaDinamica<MallaC> mallaTabla;
 
-    public ListaDinamica<MallaCurricular> getMallaTabla() {
+    public ListaDinamica<MallaC> getMallaTabla() {
         return mallaTabla;
     }
 
-    public void setMallaTabla(ListaDinamica<MallaCurricular> mallaTabla) {
+    public void setMallaTabla(ListaDinamica<MallaC> mallaTabla) {
         this.mallaTabla = mallaTabla;
     }
     
@@ -36,7 +36,7 @@ public class ModeloTablaMallaCurricular extends AbstractTableModel {
     public Object getValueAt(int Fila, int Columna) {
 
         try {
-            MallaCurricular p = mallaTabla.getInfo(Fila);
+            MallaC p = mallaTabla.getInfo(Fila);
 
             switch (Columna) {
                 case 0:

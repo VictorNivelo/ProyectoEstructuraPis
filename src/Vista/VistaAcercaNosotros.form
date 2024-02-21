@@ -324,7 +324,7 @@
           <Properties>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Vista/RecursosGraficos/Fondos/20087de4-57e1-4c56-b94e-6a15b19a3b5f.jpg"/>
+              <Image iconType="3" name="/Vista/RecursosGraficos/Fondos/86fdd166-8b70-4a00-85e7-787a4fa8aa17.jpg"/>
             </Property>
           </Properties>
         </Component>
@@ -332,7 +332,7 @@
           <Properties>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Vista/RecursosGraficos/Fondos/59f54d54-17e1-4a2c-9af6-9e91c5d1ee74.jpg"/>
+              <Image iconType="3" name="/Vista/RecursosGraficos/Fondos/5bcd1d9e-0780-4628-91b8-39df84d6f569.jpg"/>
             </Property>
           </Properties>
         </Component>

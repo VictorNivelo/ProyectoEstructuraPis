@@ -7,49 +7,49 @@ package Modelo;
  * @author Victor
  */
 public class Horario {
-    private Integer IdHorario;
-    private String CodigoHorario;
-    private String DiaSemana;
-    private String HoraIncio;
-    private String HoraFin;
+    private Integer IdH;
+    private String CodigoH;
+    private String DiaH;
+    private String HoraInicioH;
+    private String HoraFinH;
     
     private Materia materiaHorario;
-    private Integer MateriaID;
+    private Integer idMateria;
 
     public Horario() {
         
     }
 
     public Integer getIdHorario() {
-        return IdHorario;
+        return IdH;
     }
 
     public void setIdHorario(Integer IdHorario) {
-        this.IdHorario = IdHorario;
+        this.IdH = IdHorario;
     }
 
     public String getDiaSemana() {
-        return DiaSemana;
+        return DiaH;
     }
 
     public void setDiaSemana(String DiaSemana) {
-        this.DiaSemana = DiaSemana;
+        this.DiaH = DiaSemana;
     }
 
     public String getHoraIncio() {
-        return HoraIncio;
+        return HoraInicioH;
     }
 
     public void setHoraIncio(String HoraIncio) {
-        this.HoraIncio = HoraIncio;
+        this.HoraInicioH = HoraIncio;
     }
 
     public String getHoraFin() {
-        return HoraFin;
+        return HoraFinH;
     }
 
     public void setHoraFin(String HoraFin) {
-        this.HoraFin = HoraFin;
+        this.HoraFinH = HoraFin;
     }
 
     public Materia getMateriaHorario() {
@@ -61,24 +61,24 @@ public class Horario {
     }
 
     public String getCodigoHorario() {
-        return CodigoHorario;
+        return CodigoH;
     }
 
     public void setCodigoHorario(String CodigoHorario) {
-        this.CodigoHorario = CodigoHorario;
+        this.CodigoH = CodigoHorario;
     }
 
     public Integer getMateriaID() {
-        return MateriaID;
+        return idMateria;
     }
 
     public void setMateriaID(Integer MateriaID) {
-        this.MateriaID = MateriaID;
+        this.idMateria = MateriaID;
     }
     
     @Override
     public String toString() {
-        return DiaSemana  + "  H "+ HoraIncio + " - " + HoraFin + "\n";
+        return DiaH  + "  H "+ HoraInicioH + " - " + HoraFinH + "\n";
     }
     
 }

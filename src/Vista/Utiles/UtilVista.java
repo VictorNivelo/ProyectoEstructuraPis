@@ -29,7 +29,7 @@ import Modelo.Cursa;
 import Modelo.Docente;
 import Modelo.Facultad;
 import Modelo.Horario;
-import Modelo.MallaCurricular;
+import Modelo.MallaC;
 import Modelo.Materia;
 import Modelo.Matricula;
 import Modelo.Paralelo;
@@ -178,7 +178,7 @@ public class UtilVista {
         }
         else{
            for (int i = 0; i < MCc.getListaMalla().getLongitud(); i++) {
-               MallaCurricular mallaCurriculaP = MCc.getListaMalla().getInfo(i);
+               MallaC mallaCurriculaP = MCc.getListaMalla().getInfo(i);
                if (mallaCurriculaP.getEstadoMallaCurricular()!= null && mallaCurriculaP.getEstadoMallaCurricular().equalsIgnoreCase("Activa")) {
                     cbx.addItem(mallaCurriculaP);
                 }
@@ -187,8 +187,8 @@ public class UtilVista {
     }
     
     @SuppressWarnings("rawtypes")
-    public static MallaCurricular obtenerMallaControl(JComboBox cbx){
-        return (MallaCurricular) cbx.getSelectedItem();
+    public static MallaC obtenerMallaControl(JComboBox cbx){
+        return (MallaC) cbx.getSelectedItem();
     }
     
     @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -319,12 +319,12 @@ public class UtilVista {
         universidadDao Uc = new universidadDao();
         cbx.removeAllItems();
         
-        if(Uc.getListaUniversidades().EstaVacio()){
+        if(Uc.getListaUniversid().EstaVacio()){
             throw new ListaVacia("No hay universidades que mostrar");
         }
         else{
-           for (int i = 0; i < Uc.getListaUniversidades().getLongitud(); i++) {
-            cbx.addItem(Uc.getListaUniversidades().getInfo(i));
+           for (int i = 0; i < Uc.getListaUniversid().getLongitud(); i++) {
+            cbx.addItem(Uc.getListaUniversid().getInfo(i));
            }
         }
     }

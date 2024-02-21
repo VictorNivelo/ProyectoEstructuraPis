@@ -6,7 +6,6 @@ import Controlador.Dao.Modelo.materiaDao;
 import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.Utiles.UtilesControlador;
 import Modelo.Ciclo;
-import Modelo.Cursa;
 import Modelo.Materia;
 import Vista.Utiles.UtilVista;
 import Vista.ModeloTabla.ModeloTablaMateria;
@@ -31,7 +30,6 @@ public class VistaGestionMateria extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
-        UtilVista.cargarcomboCurso(cbxCurso);
         UtilVista.cargarComboCiclo(cbxCiclo);
         
         cbxCiclo.setMaximumRowCount(cbxCiclo.getItemCount());
@@ -44,7 +42,6 @@ public class VistaGestionMateria extends javax.swing.JFrame {
         tblMaterias.setModel(mtm);
         tblMaterias.updateUI();
         cbxCiclo.setSelectedIndex(-1);
-        cbxCurso.setSelectedIndex(-1);
         cbxTipoBusqueda.setSelectedIndex(-1);
     }
     
@@ -53,7 +50,6 @@ public class VistaGestionMateria extends javax.swing.JFrame {
         txtNombreDescripcion.setText("");
         txtNumeroHoras.setText("");
         cbxTipoBusqueda.setSelectedIndex(-1);
-        cbxCurso.setSelectedIndex(-1);
         cbxCiclo.setSelectedIndex(-1);
         materiaControlDao.setMateria(null);
         CargarTabla();
@@ -71,7 +67,6 @@ public class VistaGestionMateria extends javax.swing.JFrame {
                 txtNombreMateria.setText(materiaControlDao.getMateria().getNombreMateria());
                 txtNombreDescripcion.setText(materiaControlDao.getMateria().getDescipcionMateria());
                 txtNumeroHoras.setText(materiaControlDao.getMateria().getNumeroHoras());
-                cbxCurso.setSelectedIndex(materiaControlDao.getMateria().getCursoMateria().getIdCurso() -1);
                 cbxCiclo.setSelectedIndex(materiaControlDao.getMateria().getCicloMateria().getIdCiclo() -1);
             } 
             catch (Exception e) {
@@ -86,7 +81,6 @@ public class VistaGestionMateria extends javax.swing.JFrame {
             if (m.getNombreMateria().equals(nuevaMateria.getNombreMateria())
                     && m.getDescipcionMateria().equals(nuevaMateria.getDescipcionMateria())
                     && m.getNumeroHoras().equals(nuevaMateria.getNumeroHoras())
-                    && m.getCursoMateria().getIdCurso().equals(nuevaMateria.getCursoMateria().getIdCurso())
                     && m.getCicloMateria().getIdCiclo().equals(nuevaMateria.getCicloMateria().getIdCiclo())) {
                 return true;
             }
@@ -104,9 +98,6 @@ public class VistaGestionMateria extends javax.swing.JFrame {
         else if (txtNumeroHoras.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Falta llenar el número de horas de la materia", "Error", JOptionPane.WARNING_MESSAGE);
         } 
-        else if (cbxCurso.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(null, "Falta seleccionar el curso de la materia", "Error", JOptionPane.WARNING_MESSAGE);
-        } 
         else if (cbxCiclo.getSelectedIndex() == -1) {
             JOptionPane.showMessageDialog(null, "Falta seleccionar el ciclo de la materia", "Error", JOptionPane.WARNING_MESSAGE);
         } 
@@ -114,14 +105,12 @@ public class VistaGestionMateria extends javax.swing.JFrame {
             String nombreMateria = txtNombreMateria.getText();
             String descripcion = txtNombreDescripcion.getText();
             String numeroHoras = txtNumeroHoras.getText();
-            Cursa curso = UtilVista.obtenerCursoControl(cbxCurso);
             Ciclo ciclo = UtilVista.obtenerCicloControl(cbxCiclo);
 
             Materia nuevaMateria = new Materia();
             nuevaMateria.setNombreMateria(nombreMateria);
             nuevaMateria.setDescipcionMateria(descripcion);
             nuevaMateria.setNumeroHoras(numeroHoras);
-            nuevaMateria.setCursoMateria(curso);
             nuevaMateria.setCicloMateria(ciclo);
 
             if (materiaExiste(nuevaMateria)) {
@@ -188,8 +177,6 @@ public class VistaGestionMateria extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         txtBuscar = new javax.swing.JTextField();
-        jLabel10 = new javax.swing.JLabel();
-        cbxCurso = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         txtNumeroHoras = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
@@ -317,7 +304,7 @@ public class VistaGestionMateria extends javax.swing.JFrame {
         jLabel8.setForeground(new java.awt.Color(0, 0, 0));
         jLabel8.setText("Buscar por");
 
-        cbxTipoBusqueda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "Descripcion", "Numero de horas", "Ciclo", "Paralelo" }));
+        cbxTipoBusqueda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "Descripcion", "Numero de horas", "Ciclo" }));
         cbxTipoBusqueda.setSelectedIndex(-1);
 
         jLabel9.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
@@ -331,10 +318,6 @@ public class VistaGestionMateria extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-
-        jLabel10.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel10.setText("Paralelo");
 
         jLabel3.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
@@ -364,7 +347,7 @@ public class VistaGestionMateria extends javax.swing.JFrame {
             }
         });
 
-        cbxTipoOrden.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "Descripcion", "Numero de horas", "Ciclo", "Paralelo" }));
+        cbxTipoOrden.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "Descripcion", "Numero de horas", "Ciclo" }));
         cbxTipoOrden.setSelectedIndex(-1);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -382,15 +365,13 @@ public class VistaGestionMateria extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtNombreDescripcion)
                             .addComponent(txtNumeroHoras)
-                            .addComponent(cbxCiclo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cbxCurso, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(cbxCiclo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnRegresar)
@@ -476,10 +457,6 @@ public class VistaGestionMateria extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel11)
                             .addComponent(cbxCiclo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel10)
-                            .addComponent(cbxCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -509,9 +486,6 @@ public class VistaGestionMateria extends javax.swing.JFrame {
         else if(txtNumeroHoras.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "Falta llenar numero de horas", "Error", JOptionPane.WARNING_MESSAGE);
         }
-        else if (cbxCurso.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(null, "Falta seleccionar horario", "Error", JOptionPane.WARNING_MESSAGE);
-        } 
         else{
             try {
                 Guardar();
@@ -540,9 +514,6 @@ public class VistaGestionMateria extends javax.swing.JFrame {
             else if (txtNumeroHoras.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Falta llenar numero de horas", "Error", JOptionPane.WARNING_MESSAGE);
             }
-            else if (cbxCurso.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar horario", "Error", JOptionPane.WARNING_MESSAGE);
-            } 
             else {
                 //Datos de materia
                 Integer IdMateria = materiaControlDao.getMateria().getIdMateria();
@@ -556,7 +527,6 @@ public class VistaGestionMateria extends javax.swing.JFrame {
                 materiaModificada.setDescipcionMateria(DescipcionMateria);
                 materiaModificada.setNumeroHoras(NumeroHoras);
                 materiaModificada.setCicloMateria(UtilVista.obtenerCicloControl(cbxCiclo));
-                materiaModificada.setCursoMateria(UtilVista.obtenerCursoControl(cbxCurso));
 
                 materiaControlDao.Merge(materiaModificada, IdMateria - 1);
 
@@ -605,7 +575,7 @@ public class VistaGestionMateria extends javax.swing.JFrame {
                         TipoCampo = "NumeroHoras";
                         break;
                     case "Ciclo":
-                        TipoCampo = "cicloMateria.NombreCiclo";
+                        TipoCampo = "cicloMateria.NombreCiclo.NombreCiclo";
                         break;
                     case "Paralelo":
                         TipoCampo = "cursoMateria.Paralelo";
@@ -708,7 +678,7 @@ public class VistaGestionMateria extends javax.swing.JFrame {
                         TipoCampo = "NumeroHoras";
                         break;
                     case "Ciclo":
-                        TipoCampo = "cicloMateria.NombreCiclo";
+                        TipoCampo = "cicloMateria.NombreCiclo.NombreCiclo";
                         break;
                     case "Paralelo":
                         TipoCampo = "cursoMateria.Paralelo";
@@ -779,13 +749,11 @@ public class VistaGestionMateria extends javax.swing.JFrame {
     private javax.swing.JButton btnOrdenar;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JComboBox<String> cbxCiclo;
-    private javax.swing.JComboBox<String> cbxCurso;
     private javax.swing.JComboBox<String> cbxOrden;
     private javax.swing.JComboBox<String> cbxTipoBusqueda;
     private javax.swing.JComboBox<String> cbxTipoOrden;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;

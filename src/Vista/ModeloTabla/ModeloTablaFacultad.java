@@ -46,7 +46,7 @@ public class ModeloTablaFacultad extends AbstractTableModel {
                 case 2:
                     return (f != null) ? f.getFechaCreacion(): "";
                 case 3:
-                    return (f != null) ? f.getUniversidadFacultad().getNombreUniversidad(): "";
+                    return (f != null) ? f.getUniversidadFacultad().getNombreU(): "";
                 default:
                     return null;
             }

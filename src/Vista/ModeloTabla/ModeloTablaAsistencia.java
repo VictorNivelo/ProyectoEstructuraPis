@@ -43,9 +43,9 @@ public class ModeloTablaAsistencia extends AbstractTableModel {
                 case 0:
                     return (p != null) ? p.getIdAsistencia() : "";
                 case 1:
-                    return (p != null) ? p.getAsistenciaTematica().getNombreTematica() : "";
+                    return (p != null) ? p.getTematicaAsistencia().getNombreTematica() : "";
                 case 2:
-                    return (p != null) ? p.getAsistenciaTematica().getFechaTematica() : "";
+                    return (p != null) ? p.getTematicaAsistencia().getFechaTematica() : "";
                 case 3:
                     return (p != null) ? p.getEstadoAsistencia(): "";
                 case 4:

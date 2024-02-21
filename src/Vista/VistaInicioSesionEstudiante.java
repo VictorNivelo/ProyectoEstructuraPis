@@ -1,13 +1,17 @@
 
 package Vista;
 
-import Controlador.Dao.Modelo.alumnoDao;
-import Controlador.Dao.Modelo.personaDao;
+import Controlador.Dao.Modelo.cursoDao;
+import Controlador.Dao.Modelo.matriculaDao;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Modelo.Alumno;
+import Modelo.ControlAccesoAlumno;
 import Modelo.Cuenta;
+import Modelo.Cursa;
+import Modelo.Matricula;
 import Modelo.Persona;
 import Modelo.Rol;
+import static Vista.VistaAlumnoPrincipal.lblNombreAlumnoIngresado;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.FocusAdapter;
@@ -20,7 +24,8 @@ import javax.swing.JOptionPane;
  * @author Victor
  */
 public class VistaInicioSesionEstudiante extends javax.swing.JFrame {
-    personaDao personaControlDao = new personaDao();
+    cursoDao cursaControlDao = new cursoDao();
+    matriculaDao matriculaControlDao = new matriculaDao();
 
     /**
      * Creates new form VistaInicioSeccion
@@ -101,57 +106,73 @@ public class VistaInicioSesionEstudiante extends javax.swing.JFrame {
         }
     }
 
-    private void VerificarUsuario() {
-        ListaDinamica<Persona> listaPersonas = personaControlDao.all();
+    private void VerificarAccesoAlumno() {
+        ListaDinamica<Cursa> listaMatriculas = cursaControlDao.all();
 
         String usuarioIngresado = txtCorreo.getText();
         char[] c = txtContrasenia.getPassword();
         String contrasenaIngresada = new String(c);
 
         boolean credencialesCorrectas = false;
-        boolean esEstudiante = false;
+        boolean esAlumno = false;
+        String nombreUsuario = "";
+        Alumno alumnoLogeado = null;
 
-        for (Persona persona : listaPersonas.toArray()) {
-            Cuenta cuenta = persona.getCuentaPersona();
+        for (Cursa matricula : listaMatriculas.toArray()) {
+            Cuenta cuenta = matricula.getMatriculaCursa().getAlumnoMatricula().getDatosAlumno().getCuentaPersona();
             if (cuenta != null && cuenta.getCorreo().equals(usuarioIngresado) && cuenta.getContrasena().equals(contrasenaIngresada)) {
                 credencialesCorrectas = true;
-                if (persona.getRolPersona() != null && persona.getRolPersona().getNombreRol().equals("Estudiante")) {
-                    esEstudiante = true;
+                if (matricula.getMatriculaCursa().getAlumnoMatricula().getDatosAlumno().getRolPersona() != null && matricula.getMatriculaCursa().getAlumnoMatricula().getDatosAlumno().getRolPersona().getNombreRol().equals("Estudiante")) {
+                    esAlumno = true;
+                    alumnoLogeado = matricula.getMatriculaCursa().getAlumnoMatricula();
+                    String nombre = matricula.getMatriculaCursa().getAlumnoMatricula().getDatosAlumno().getNombre();
+                    String apellido = matricula.getMatriculaCursa().getAlumnoMatricula().getDatosAlumno().getApellido();
+                    nombreUsuario = nombre + " " + apellido;
                     break;
-                }
-                else {
-                    JOptionPane.showMessageDialog(null, "Solo los estudiantes pueden acceder ", "ACCESO DENEGADO", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Solo los alumnos pueden acceder ", "ACCESO DENEGADO", JOptionPane.WARNING_MESSAGE);
                     return;
                 }
             }
         }
 
-        if (credencialesCorrectas && esEstudiante) {
-            alumnoDao alumnoDao = new alumnoDao();
-            Alumno alumno = alumnoDao.obtenerAlumnoPorUsuario(usuarioIngresado);
-        String nombreAlumno = (alumno != null) ? alumno.getDatosAlumno().getNombre(): "";
-            procesarEstudiante(nombreAlumno);
+        if (credencialesCorrectas && esAlumno) {
+            ControlAccesoAlumno.setAlumnoLogeado(alumnoLogeado);
+            ControlAccesoAlumno.setNombreAlumnoLogeado(nombreUsuario);
+            procesarAlumno();
+
             dispose();
-        }
-        else {
+            lblNombreAlumnoIngresado.setText(nombreUsuario);
+        } else {
             JOptionPane.showMessageDialog(null, "Inicio de sesión fallido. Verifique sus credenciales.", "CREDENCIALES INCORRECTAS", JOptionPane.WARNING_MESSAGE);
             txtCorreo.setText("");
             txtContrasenia.setText("");
         }
     }
 
-    private static void procesarAdministrador() {
-        System.out.println("Es un administrador");
+    private static void procesarAlumno() {
+        try {
+            VistaAlumnoPrincipal abrirCalendario = new VistaAlumnoPrincipal();
+            abrirCalendario.setVisible(true);
+            String nombreAlumno = ControlAccesoAlumno.getNombreAlumnoLogeado();
+            abrirCalendario.lblNombreAlumnoIngresado.setText(nombreAlumno);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private static void procesarEstudiante(String nombreAlumno) {
         try {
-            VistaAlumnoEva abrirAsistencia = new VistaAlumnoEva(null, false,nombreAlumno);
+            VistaAlumnoPrincipal abrirAsistencia = new VistaAlumnoPrincipal();
             abrirAsistencia.setVisible(true);
         } 
         catch (Exception e) {
 
         }
+    }
+    
+    private static void procesarAdministrador() {
+        System.out.println("Es un administrador");
     }
 
     /**
@@ -335,7 +356,7 @@ public class VistaInicioSesionEstudiante extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Por favor, ingrese su contraseña.", "CONTRESEÑA VACIA", JOptionPane.INFORMATION_MESSAGE);
         } 
         else {
-            VerificarUsuario();
+            VerificarAccesoAlumno();
         }
         
     }//GEN-LAST:event_btnIniciarSeccionActionPerformed
