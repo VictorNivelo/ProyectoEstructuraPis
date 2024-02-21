@@ -49,24 +49,28 @@ public class AdaptadorDaoBD<T> implements InterfazDaoBD<T> {
      * incementable)
      * @throws Exception Cuando no se puede guardar en la base de datos
      */
-    @Override
-    public Integer guardar(T obj) throws Exception {
-        //INSERT INTO <TABLA> (..) value (...)
+    public Integer guardar(T obj, String sequenceName) throws Exception {
         String query = queryInsert(obj);
         Integer idGenerado = -1;
-        PreparedStatement statement= conexion.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-        statement.executeUpdate();
-        ResultSet generatedKeys = statement.getGeneratedKeys();
-        if (generatedKeys.next()) {
-            idGenerado = generatedKeys.getInt(1);
-        }
 
-        conexion.getConnection().close();
-        conexion.setConnection(null);
+        try (PreparedStatement statement = conexion.getConnection().prepareStatement(query)) {
+            statement.executeUpdate();
+
+            // Recupera el valor de la secuencia después de la inserción
+            try (Statement seqStatement = conexion.getConnection().createStatement()) {
+                ResultSet resultSet = seqStatement.executeQuery("SELECT " + sequenceName + ".CURRVAL FROM dual");
+                if (resultSet.next()) {
+                    idGenerado = resultSet.getInt(1);
+                }
+            }
+        } finally {
+            conexion.getConnection().close();
+            conexion.setConnection(null);
+        }
         return idGenerado;
     }
     
-    public Boolean saveB(T obj) throws Exception {
+    public Boolean guardarb(T obj) throws Exception {
         String query = queryInsert(obj);
         Boolean band = false;
 
@@ -113,8 +117,7 @@ public class AdaptadorDaoBD<T> implements InterfazDaoBD<T> {
             while (rs.next()) {
                 lista.Agregar(llenarObjeto(rs));
             }
-        } 
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e);
         }
         return lista;
@@ -136,11 +139,21 @@ public class AdaptadorDaoBD<T> implements InterfazDaoBD<T> {
             while (rs.next()) {
                 data = llenarObjeto(rs);
             }
-        } 
-        catch (Exception e) {
-            
+        } catch (Exception e) {
         }
         return data;
+    }
+    
+    @Override
+    public Boolean eliminar(Integer id) {
+        try {
+            Statement stmt = conexion.getConnection().createStatement();
+            String query = "DELETE FROM " + clazz.getSimpleName().toLowerCase() + " WHERE id = " + id;
+            stmt.executeUpdate(query);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     //--------------ESTO ES DEL CRUD NO MODIFICAR AL MENOS QUE LO AMERITE------
@@ -294,6 +307,7 @@ public class AdaptadorDaoBD<T> implements InterfazDaoBD<T> {
         query += " WHERE id = " + id;
         return query;
     }
+
     
 }
 

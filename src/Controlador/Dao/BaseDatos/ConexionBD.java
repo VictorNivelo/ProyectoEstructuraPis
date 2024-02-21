@@ -13,38 +13,13 @@ public class ConexionBD {
     
     private Connection connection;
     
-    //Intento de conexion con oracle xe 21 y sql developer
     public String driver = "oracle.jdbc.OracleDriver";
     public String database = "XE";
     public String hostname = "localhost";
     public String port = "1521";
     public String url = "jdbc:oracle:thin:@" + hostname + ":" + port + ":" + database;
 
-    
-    //Conexion con mysql
-    
-    /*//https://www.codejava.net/java-se/jdbc/connect-to-oracle-database-via-jdbc
-    
-    // Librería de MySQL
-    public String driver = "com.mysql.cj.jdbc.Driver";//oracle.jdbc.driver.OracleDriver
-
-    // Nombre de la base de datos
-    public String database = "pelidb";
-
-    // Host
-    public String hostname = "localhost";
-
-    // Puerto
-    public String port = "3306";//1521
-
-    // Ruta de nuestra base de datos (desactivamos el uso de SSL con "?useSSL=false")
-    //String aux = "jdbc:oracle:thin:@"+hostname+":"+port+":"+database;
-    public String url = "jdbc:mysql://" + hostname + ":" + port + "/" + database + "?useSSL=false";//"jdbc:oracle:thin:@"+hostname+":"+port+":"+database;*/
-
-    // Nombre de usuario
     public String username = "desarrollo";
-
-    // Clave de usuario
     public String password = "desarrollo";
 
     private Connection conectar() throws SQLException {
@@ -77,24 +52,4 @@ public class ConexionBD {
         this.connection = connection;
     }
 
-//    public static void main(String[] args) {
-//        new Conexion().conectar();
-//    }
-
-    /*private XStream xstream;
-    public static String URL = "data/";
-    private void conectar() {         
-        xstream = new XStream(new JettisonMappedXmlDriver());        
-         xstream.setMode(XStream.NO_REFERENCES);
-         xstream.addPermission(AnyTypePermission.ANY);
-    }
-    public XStream getXstream() {
-        if(xstream == null)
-            conectar();
-        return xstream;
-    }
-    public void setXstream(XStream xstream) {
-        this.xstream = xstream;
-    }*/
-    
 }

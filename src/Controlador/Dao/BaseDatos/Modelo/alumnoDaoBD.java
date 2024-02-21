@@ -48,7 +48,7 @@ public class alumnoDaoBD extends AdaptadorDaoBD<Alumno> {
     }
 
     public Boolean GuardarBD() throws Exception {
-        return super.saveB(this.alumno);
+        return super.guardarb(this.alumno);
     }
 
     public Boolean Modificar() throws IOException {

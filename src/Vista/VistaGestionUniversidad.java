@@ -91,7 +91,7 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
         return false;
     }
     
-    private void Guardar() throws ListaVacia {
+    private void Guardar() throws ListaVacia, Exception {
         
         Date fechaNacimiento = DateFundacion.getDate();
         if (txtNombreU.getText().isEmpty()) {
@@ -136,7 +136,7 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
             nuevaUniversidad.setIdU(idUniversidad);
 
             universidadControlDao.setUniversidad(nuevaUniversidad);
-            if (universidadControlDao.GuardarBD()) {
+            if (universidadControlDao.save() > 0) {
                 JOptionPane.showMessageDialog(null, "UNIVERSIDAD GUARDADADA EXITOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
                 universidadControlDao.setUniversidad(null);
             } else {
@@ -611,7 +611,13 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
                 universidadModificada.setCorreoU(Correo);
                 universidadModificada.setFechaFU(Fundacion);
 
-                universidadControlDao.Modificar(universidadModificada, IdUniversidad - 1);
+                try {
+                    universidadControlDao.Modificar();
+                } 
+                catch (Exception e) {
+                    
+                }
+//        (universidadModificada, IdUniversidad - 1);
 
 
 //                Universidad universidadModificado = new Universidad(IdMateria, Nombre, Direccion, Telefono, Correo, Fundacion);
@@ -628,14 +634,14 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         
-        int fila = tblUniversidades.getSelectedRow();
-        if (fila < 0) {
-            JOptionPane.showMessageDialog(null, "Escoga un registro");
-        }
-        else {
-            universidadControlDao.Eliminar(fila);
-            CargarTabla();
-        }
+//        int fila = tblUniversidades.getSelectedRow();
+//        if (fila < 0) {
+//            JOptionPane.showMessageDialog(null, "Escoga un registro");
+//        }
+//        else {
+//            universidadControlDao.Eliminar(fila);
+//            CargarTabla();
+//        }
         
     }//GEN-LAST:event_jButton5ActionPerformed
 
@@ -646,7 +652,7 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Porfavor seleccione donde quiere buscar", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else {
-                ListaDinamica<Universidad> lista = universidadControlDao.all();
+                ListaDinamica<Universidad> lista = universidadControlDao.listar();
 
                 String Campo = txtBuscar.getText();
                 String TipoCampo = cbxTipoBusqueda.getSelectedItem().toString();
@@ -699,7 +705,7 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "No ha seleccionado el orden", "FALTA SELCCIONAR", JOptionPane.WARNING_MESSAGE);
             } 
             else {
-                ListaDinamica<Universidad> lista = universidadControlDao.all();
+                ListaDinamica<Universidad> lista = universidadControlDao.listar();
                 String TipoCampo = cbxTipoOrden.getSelectedItem().toString();
 
                 switch (TipoCampo) {

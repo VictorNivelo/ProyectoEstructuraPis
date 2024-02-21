@@ -49,7 +49,7 @@ public class cursoDaoBD extends AdaptadorDaoBD<Cursa> {
     }
 
     public Boolean GuardarBD() throws Exception {
-        return super.saveB(this.asistencias);
+        return super.guardarb(this.asistencias);
     }
 
     public Boolean Modificar() throws IOException {

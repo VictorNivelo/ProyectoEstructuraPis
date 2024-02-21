@@ -49,7 +49,7 @@ public class mallaCurricularDaoBD extends AdaptadorDaoBD<MallaC> {
     }
 
     public Boolean GuardarBD() throws Exception {
-        return super.saveB(this.asistencias);
+        return super.guardarb(this.asistencias);
     }
 
     public Boolean Modificar() throws IOException {
