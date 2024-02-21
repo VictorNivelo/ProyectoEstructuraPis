@@ -84,6 +84,7 @@ public class AdaptadorDaoBD<T> implements InterfazDaoBD<T> {
         return band;
     }
 
+
     /**
      * Metodo que permite modificar un registro en la base de datos, para
      * modificar se debe primero consultar el Objeto haciendo uso del metodo

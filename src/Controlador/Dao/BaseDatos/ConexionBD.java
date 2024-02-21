@@ -19,8 +19,8 @@ public class ConexionBD {
     public String port = "1521";
     public String url = "jdbc:oracle:thin:@" + hostname + ":" + port + ":" + database;
 
-    public String username = "desarrollo";
-    public String password = "desarrollo";
+    public String username = "PIS";
+    public String password = "PIS";
 
     private Connection conectar() throws SQLException {
         Connection conn = null;

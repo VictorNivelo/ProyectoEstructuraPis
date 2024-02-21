@@ -8,7 +8,6 @@ import Modelo.Alumno;
 import Modelo.ControlAccesoAlumno;
 import Modelo.Cuenta;
 import Modelo.Cursa;
-import Modelo.Matricula;
 import Modelo.Persona;
 import Modelo.Rol;
 import static Vista.VistaAlumnoPrincipal.lblNombreAlumnoIngresado;
@@ -25,7 +24,6 @@ import javax.swing.JOptionPane;
  */
 public class VistaInicioSesionEstudiante extends javax.swing.JFrame {
     cursoDao cursaControlDao = new cursoDao();
-    matriculaDao matriculaControlDao = new matriculaDao();
 
     /**
      * Creates new form VistaInicioSeccion

@@ -51,13 +51,13 @@ public class universidadDaoBD extends AdaptadorDaoBD<Universidad> {
         this.Indice = Indice;
     }
 
-//    public Boolean GuardarBD() throws Exception {
-//        return super.guardarb(this.universidad);
-//    }
-    
-    public Integer save() throws Exception {
-        return super.guardar(this.universidad, "SQC_UNIVERSIDAD");
+    public Boolean GuardarBD() throws Exception {
+        return super.guardarb(this.universidad);
     }
+    
+//    public Integer save() throws Exception {
+//        return super.guardar(this.universidad, "SQC_UNIVERSIDAD");
+//    }
 
     public Boolean Modificar() throws IOException {
         try {
