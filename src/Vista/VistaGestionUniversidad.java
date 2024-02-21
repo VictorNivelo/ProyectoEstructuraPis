@@ -136,7 +136,7 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
             nuevaUniversidad.setIdU(idUniversidad);
 
             universidadControlDao.setUniversidad(nuevaUniversidad);
-            if (universidadControlDao.GuardarBD()) {
+            if (universidadControlDao.save() > 0) {
                 JOptionPane.showMessageDialog(null, "UNIVERSIDAD GUARDADADA EXITOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
                 universidadControlDao.setUniversidad(null);
             } else {

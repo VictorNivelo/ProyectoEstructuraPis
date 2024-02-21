@@ -17,7 +17,7 @@ public interface InterfazDaoBD<T> {
      * @return El id generado producto del guardado
      * @throws java.lang.Exception
      */
-    public Integer guardar(T obj) throws Exception;
+    public Integer guardar(T objb, String sequenceName) throws Exception;
 
     /**
      * Permite modificar los datos en un repositorio de datos
@@ -35,5 +35,7 @@ public interface InterfazDaoBD<T> {
     public ListaDinamica<T> listar();
 
     public T obtener(Integer id);
+    
+    public Boolean eliminar(Integer id);
     
 }
