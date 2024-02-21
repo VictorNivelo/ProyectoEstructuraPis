@@ -7,7 +7,7 @@ package Modelo;
  */
 public class Cursa {
     private Integer IdCurso;
-    private String CodigoCursa;
+    private String CodigoC;
     
     private Paralelo ParaleloCursa;
     private Integer ParaleloID;
@@ -58,11 +58,11 @@ public class Cursa {
     }
 
     public String getCodigoCursa() {
-        return CodigoCursa;
+        return CodigoC;
     }
 
     public void setCodigoCursa(String CodigoCursa) {
-        this.CodigoCursa = CodigoCursa;
+        this.CodigoC = CodigoCursa;
     }
 
     public Integer getMatriculaID() {

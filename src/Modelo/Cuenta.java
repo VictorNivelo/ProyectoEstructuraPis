@@ -7,9 +7,9 @@ package Modelo;
  */
 public class Cuenta {
     private Integer IdCuenta;
-    private String Correo;
-    private String Contrasena;
-    private String EstadoCuenta;
+    private String CorreoC;
+    private String ContraseniaC;
+    private String EstadoC;
 
     public Cuenta() {
         
@@ -24,32 +24,32 @@ public class Cuenta {
     }
 
     public String getCorreo() {
-        return Correo;
+        return CorreoC;
     }
 
     public void setCorreo(String Correo) {
-        this.Correo = Correo;
+        this.CorreoC = Correo;
     }
 
     public String getContrasena() {
-        return Contrasena;
+        return ContraseniaC;
     }
 
     public void setContrasena(String Contrasena) {
-        this.Contrasena = Contrasena;
+        this.ContraseniaC = Contrasena;
     }
 
     public String getEstadoCuenta() {
-        return EstadoCuenta;
+        return EstadoC;
     }
 
     public void setEstadoCuenta(String EstadoCuenta) {
-        this.EstadoCuenta = EstadoCuenta;
+        this.EstadoC = EstadoCuenta;
     }
     
     @Override
     public String toString() {
-        return "idCuenta=" + IdCuenta + ", Correo=" + Correo + ", Contrasena=" + Contrasena + ", EstadoCuenta=" + EstadoCuenta;
+        return "idCuenta=" + IdCuenta + ", Correo=" + CorreoC + ", Contrasena=" + ContraseniaC + ", EstadoCuenta=" + EstadoC;
     }
     
 }

@@ -151,10 +151,10 @@ public class VistaAcercaNosotros extends javax.swing.JFrame {
         jLabel3.setText("VISION");
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Fondos/20087de4-57e1-4c56-b94e-6a15b19a3b5f.jpg"))); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Fondos/86fdd166-8b70-4a00-85e7-787a4fa8aa17.jpg"))); // NOI18N
 
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Fondos/59f54d54-17e1-4a2c-9af6-9e91c5d1ee74.jpg"))); // NOI18N
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Fondos/5bcd1d9e-0780-4628-91b8-39df84d6f569.jpg"))); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);

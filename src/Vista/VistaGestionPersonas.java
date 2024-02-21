@@ -113,6 +113,7 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
 
         Date fechaNacimiento = DateFechaNacimiento.getDate();
         String numeroCedula = txtNumeroCedula.getText();
+        
         boolean numeroCedulaExistente = false;
         for (Persona persona : personaControlDao.getListaPersonas().toArray()) {
             if (persona.getNumeroCedula().equals(numeroCedula)) {
@@ -250,14 +251,14 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
         Date fechaLimite = new Date(1900 - 1900, 0, 1);
         return !date.before(fechaLimite);
     }
-    
-    public boolean validarNumeroTelefonoEcuatoriano(String telefono) {
-    if (telefono.length() != 10 || !telefono.startsWith("09"))
-        return false;
 
-    String numeros = telefono.substring(2);
-    return numeros.matches("\\d+");
-}
+    public boolean validarNumeroTelefonoEcuatoriano(String telefono) {
+        if (telefono.length() != 10 || !telefono.startsWith("09")) {
+            return false;
+        }
+        String numeros = telefono.substring(2);
+        return numeros.matches("\\d+");
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.

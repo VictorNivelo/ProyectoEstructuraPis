@@ -65,7 +65,7 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
                 txtNombre.setText(facultadControlDao.getFacultades().getNombreFacultad());
                 Date FechaNacimiento = Formato.parse(facultadControlDao.getFacultades().getFechaCreacion());
                 DateFechaC.setDate(FechaNacimiento);
-                cbxUniversidad.setSelectedIndex(facultadControlDao.getFacultades().getUniversidadFacultad().getIdUniversidad()-1);
+                cbxUniversidad.setSelectedIndex(facultadControlDao.getFacultades().getUniversidadFacultad().getIdU()-1);
 
             } 
             catch (Exception e) {
@@ -79,7 +79,7 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
         for (Facultad f : facultades.toArray()) {
             if (f.getNombreFacultad().equals(nuevaFacultad.getNombreFacultad())
                     && f.getFechaCreacion().equals(nuevaFacultad.getFechaCreacion())
-                    && f.getUniversidadFacultad().getIdUniversidad().equals(nuevaFacultad.getUniversidadFacultad().getIdUniversidad())) {
+                    && f.getUniversidadFacultad().getIdU().equals(nuevaFacultad.getUniversidadFacultad().getIdU())) {
                 return true;
             }
         }
@@ -493,7 +493,7 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
                 facultadModificada.setNombreFacultad(Nombre);
                 facultadModificada.setFechaCreacion(FechaFormateada);
                 facultadModificada.setUniversidadFacultad(UtilVista.obtenerUniversidadControl(cbxUniversidad));
-                facultadModificada.setIdFacultad(UtilVista.obtenerUniversidadControl(cbxUniversidad).getIdUniversidad());
+                facultadModificada.setIdFacultad(UtilVista.obtenerUniversidadControl(cbxUniversidad).getIdU());
                 
                 facultadControlDao.Merge(facultadModificada, IdFacultad - 1);
                 

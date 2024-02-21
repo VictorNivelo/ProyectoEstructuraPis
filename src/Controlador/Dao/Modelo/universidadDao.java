@@ -10,36 +10,36 @@ import Modelo.Universidad;
  * @author Victor
  */
 public class universidadDao extends DaoImplement<Universidad>{
-    private ListaDinamica<Universidad> ListaUniversidades = new ListaDinamica<>();
-    private Universidad universidades;
+    private ListaDinamica<Universidad> ListaUniversidad = new ListaDinamica<>();
+    private Universidad universidad;
     
     public universidadDao(){
         super (Universidad.class);
     }
 
-    public ListaDinamica<Universidad> getListaUniversidades() {
-        ListaUniversidades = all();
-        return ListaUniversidades;
+    public ListaDinamica<Universidad> getListaUniversid() {
+        ListaUniversidad = all();
+        return ListaUniversidad;
     }
 
-    public void setListaUniversidades(ListaDinamica<Universidad> ListaUniversidades) {
-        this.ListaUniversidades = ListaUniversidades;
+    public void setListaUniversid(ListaDinamica<Universidad> ListaUniversidades) {
+        this.ListaUniversidad = ListaUniversidades;
     }
 
-    public Universidad getUniversidades() {
-        if(universidades == null){
-            universidades = new Universidad();
+    public Universidad getUniversidad() {
+        if(universidad == null){
+            universidad = new Universidad();
         }
-        return universidades;
+        return universidad;
     }
 
-    public void setUniversidades(Universidad universidades) {
-        this.universidades = universidades;
+    public void setUniversidad(Universidad universidades) {
+        this.universidad = universidades;
     }
     
     public Boolean Persist(){
-        universidades.setIdUniversidad(all().getLongitud()+1);
-        return Persist(universidades);
+        universidad.setIdU(all().getLongitud()+1);
+        return Persist(universidad);
     }
     
 }

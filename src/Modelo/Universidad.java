@@ -6,68 +6,68 @@ package Modelo;
  * @author Victor
  */
 public class Universidad {
-    private Integer IdUniversidad;
-    private String NombreUniversidad;
-    private String DireccionUniversidad;
-    private String NumeroTelefono;
-    private String CorreoUniversidad;
-    private String FechaFundacion;
+    private Integer IdU;
+    private String NombreU;
+    private String DireccionU;
+    private String TelefonoU;
+    private String CorreoU;
+    private String FechaFU;
 
     public Universidad() {
         
     } 
 
-    public Integer getIdUniversidad() {
-        return IdUniversidad;
+    public Integer getIdU() {
+        return IdU;
     }
 
-    public void setIdUniversidad(Integer IdUniversidad) {
-        this.IdUniversidad = IdUniversidad;
+    public void setIdU(Integer IdU) {
+        this.IdU = IdU;
     }
 
-    public String getNombreUniversidad() {
-        return NombreUniversidad;
+    public String getNombreU() {
+        return NombreU;
     }
 
-    public void setNombreUniversidad(String NombreUniversidad) {
-        this.NombreUniversidad = NombreUniversidad;
+    public void setNombreU(String NombreU) {
+        this.NombreU = NombreU;
     }
 
-    public String getDireccionUniversidad() {
-        return DireccionUniversidad;
+    public String getDireccionU() {
+        return DireccionU;
     }
 
-    public void setDireccionUniversidad(String DireccionUniversidad) {
-        this.DireccionUniversidad = DireccionUniversidad;
+    public void setDireccionU(String DireccionU) {
+        this.DireccionU = DireccionU;
     }
 
-    public String getNumeroTelefono() {
-        return NumeroTelefono;
+    public String getTelefonoU() {
+        return TelefonoU;
     }
 
-    public void setNumeroTelefono(String NumeroTelefono) {
-        this.NumeroTelefono = NumeroTelefono;
+    public void setTelefonoU(String TelefonoU) {
+        this.TelefonoU = TelefonoU;
     }
 
-    public String getCorreoUniversidad() {
-        return CorreoUniversidad;
+    public String getCorreoU() {
+        return CorreoU;
     }
 
-    public void setCorreoUniversidad(String CorreoUniversidad) {
-        this.CorreoUniversidad = CorreoUniversidad;
+    public void setCorreoU(String CorreoU) {
+        this.CorreoU = CorreoU;
     }
 
-    public String getFechaFundacion() {
-        return FechaFundacion;
+    public String getFechaFU() {
+        return FechaFU;
     }
 
-    public void setFechaFundacion(String FechaFundacion) {
-        this.FechaFundacion = FechaFundacion;
+    public void setFechaFU(String FechaFU) {
+        this.FechaFU = FechaFU;
     }
 
     @Override
     public String toString() {
-        return NombreUniversidad + "\n";
+        return NombreU + "\n";
     }
         
 }

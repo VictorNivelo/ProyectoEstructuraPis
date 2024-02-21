@@ -6,50 +6,50 @@ package Modelo;
  * @author Victor
  */
 public class PeriodoAcademico {
-    private Integer IdPeriodoAcademino;
-    private String FechaInicio;
-    private String FechaFin;
-    private String EstadoPeriodoAcedemico;
+    private Integer IdPA;
+    private String FechaInicioPA;
+    private String FechaFinPA;
+    private String EstadoP;
 
     public PeriodoAcademico() {
         
     }
 
     public Integer getIdPeriodoAcademino() {
-        return IdPeriodoAcademino;
+        return IdPA;
     }
 
     public void setIdPeriodoAcademino(Integer IdPeriodoAcademino) {
-        this.IdPeriodoAcademino = IdPeriodoAcademino;
+        this.IdPA = IdPeriodoAcademino;
     }
 
     public String getFechaInicio() {
-        return FechaInicio;
+        return FechaInicioPA;
     }
 
     public void setFechaInicio(String FechaInicio) {
-        this.FechaInicio = FechaInicio;
+        this.FechaInicioPA = FechaInicio;
     }
 
     public String getFechaFin() {
-        return FechaFin;
+        return FechaFinPA;
     }
 
     public void setFechaFin(String FechaFin) {
-        this.FechaFin = FechaFin;
+        this.FechaFinPA = FechaFin;
     }
 
     public String getEstadoPeriodoAcedemico() {
-        return EstadoPeriodoAcedemico;
+        return EstadoP;
     }
 
     public void setEstadoPeriodoAcedemico(String EstadoPeriodoAcedemico) {
-        this.EstadoPeriodoAcedemico = EstadoPeriodoAcedemico;
+        this.EstadoP = EstadoPeriodoAcedemico;
     }
     
     @Override
     public String toString() {
-        return  FechaInicio + " - " + FechaFin + "\n";
+        return  FechaInicioPA + " - " + FechaFinPA + "\n";
     }
     
 }

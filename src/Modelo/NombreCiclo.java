@@ -6,7 +6,7 @@ package Modelo;
  * @author Victor
  */
 public class NombreCiclo {
-    private Integer IdNombreCiclo;
+    private Integer IdNombreC;
     private String NombreCiclo;
 
     public NombreCiclo() {
@@ -14,11 +14,11 @@ public class NombreCiclo {
     }
 
     public Integer getIdNombreCiclo() {
-        return IdNombreCiclo;
+        return IdNombreC;
     }
 
     public void setIdNombreCiclo(Integer IdNombreCiclo) {
-        this.IdNombreCiclo = IdNombreCiclo;
+        this.IdNombreC = IdNombreCiclo;
     }
 
     public String getNombreCiclo() {

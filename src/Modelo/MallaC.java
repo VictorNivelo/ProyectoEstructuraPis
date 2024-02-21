@@ -5,49 +5,49 @@ package Modelo;
  *
  * @author Victor
  */
-public class MallaCurricular {
-    private Integer IdMallaCurricular;
-    private String NombreMallaCurricular;
-    private Integer DuracionMallaCurricular;
-    private String EstadoMallaCurricular;
+public class MallaC {
+    private Integer IdMallaC;
+    private String NombreMC;
+    private Integer DMC;
+    private String EstadoMallaC;
     
     private Carrera carreraMallaCurricula;
     private Integer CarreraID;
     
-    public MallaCurricular() {
+    public MallaC() {
         
     }
 
     public Integer getIdMallaCurricular() {
-        return IdMallaCurricular;
+        return IdMallaC;
     }
 
     public void setIdMallaCurricular(Integer IdMallaCurricular) {
-        this.IdMallaCurricular = IdMallaCurricular;
+        this.IdMallaC = IdMallaCurricular;
     }
 
     public String getNombreMallaCurricular() {
-        return NombreMallaCurricular;
+        return NombreMC;
     }
 
     public void setNombreMallaCurricular(String NombreMallaCurricular) {
-        this.NombreMallaCurricular = NombreMallaCurricular;
+        this.NombreMC = NombreMallaCurricular;
     }
 
     public Integer getDuracionMallaCurricular() {
-        return DuracionMallaCurricular;
+        return DMC;
     }
 
     public void setDuracionMallaCurricular(Integer DuracionMallaCurricular) {
-        this.DuracionMallaCurricular = DuracionMallaCurricular;
+        this.DMC = DuracionMallaCurricular;
     }
 
     public String getEstadoMallaCurricular() {
-        return EstadoMallaCurricular;
+        return EstadoMallaC;
     }
 
     public void setEstadoMallaCurricular(String EstadoMallaCurricular) {
-        this.EstadoMallaCurricular = EstadoMallaCurricular;
+        this.EstadoMallaC = EstadoMallaCurricular;
     }
 
     public Carrera getCarreraMallaCurricula() {
@@ -68,7 +68,7 @@ public class MallaCurricular {
     
     @Override
     public String toString() {
-        return NombreMallaCurricular +  "\n";
+        return NombreMC +  "\n";
     }
     
 }

@@ -6,7 +6,7 @@ import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Controlador.Utiles.UtilesControlador;
 import Modelo.Carrera;
-import Modelo.MallaCurricular;
+import Modelo.MallaC;
 import Vista.ModeloTabla.ModeloTablaMallaCurricular;
 import Vista.Utiles.UtilVista;
 import java.awt.event.KeyEvent;
@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
  */
 public class VistaGestionMallaCurricular extends javax.swing.JFrame {
     mallaCurricularDao mallaControlDao = new mallaCurricularDao();
-    ListaDinamica<MallaCurricular> listaMalla = new ListaDinamica<>();
+    ListaDinamica<MallaC> listaMalla = new ListaDinamica<>();
     ModeloTablaMallaCurricular mtm = new ModeloTablaMallaCurricular();
 
     /**
@@ -75,9 +75,9 @@ public class VistaGestionMallaCurricular extends javax.swing.JFrame {
         }
     }
     
-    private boolean mallaExiste(MallaCurricular nuevaMalla) {
-        ListaDinamica<MallaCurricular> mallas = mallaControlDao.getListaMalla();
-        for (MallaCurricular m : mallas.toArray()) {
+    private boolean mallaExiste(MallaC nuevaMalla) {
+        ListaDinamica<MallaC> mallas = mallaControlDao.getListaMalla();
+        for (MallaC m : mallas.toArray()) {
             if (m.getNombreMallaCurricular().equals(nuevaMalla.getNombreMallaCurricular())
                     && m.getDuracionMallaCurricular().equals(nuevaMalla.getDuracionMallaCurricular())
                     && m.getEstadoMallaCurricular().equals(nuevaMalla.getEstadoMallaCurricular())
@@ -109,7 +109,7 @@ public class VistaGestionMallaCurricular extends javax.swing.JFrame {
 
             Carrera carreraMalla = UtilVista.obtenerCarreraControl(cbxCarrera);
 
-            MallaCurricular nuevaMalla = new MallaCurricular();
+            MallaC nuevaMalla = new MallaC();
             nuevaMalla.setNombreMallaCurricular(nombre);
             nuevaMalla.setDuracionMallaCurricular(duracion);
             nuevaMalla.setEstadoMallaCurricular(estadoMalla);
@@ -550,7 +550,7 @@ public class VistaGestionMallaCurricular extends javax.swing.JFrame {
                 Integer Duracion = Integer.parseInt(txtDuracionMalla.getText());
                 String EstadoMalla = cbxEstadoMalla.getSelectedItem().toString();
 
-                MallaCurricular mallaModificada = new MallaCurricular();
+                MallaC mallaModificada = new MallaC();
                 mallaModificada.setIdMallaCurricular(IdMalla);
                 mallaModificada.setNombreMallaCurricular(Nombre);
                 mallaModificada.setDuracionMallaCurricular(Duracion);
@@ -594,7 +594,7 @@ public class VistaGestionMallaCurricular extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Porfavor seleccione donde quiere buscar", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else {
-                ListaDinamica<MallaCurricular> lista = mallaControlDao.all();
+                ListaDinamica<MallaC> lista = mallaControlDao.all();
 
                 String Campo = txtBuscar.getText();
                 String TipoCampo = cbxTipoBusqueda.getSelectedItem().toString();
@@ -616,7 +616,7 @@ public class VistaGestionMallaCurricular extends javax.swing.JFrame {
                         throw new AssertionError();
                 }
 
-                ListaDinamica<MallaCurricular> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
+                ListaDinamica<MallaC> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
 
                 mtm.setMallaTabla(ResultadoBusqueda);
                 mtm.fireTableDataChanged();
@@ -669,7 +669,7 @@ public class VistaGestionMallaCurricular extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "No ha seleccionado el orden", "FALTA SELCCIONAR", JOptionPane.WARNING_MESSAGE);
             } 
             else {
-                ListaDinamica<MallaCurricular> lista = mallaControlDao.all();
+                ListaDinamica<MallaC> lista = mallaControlDao.all();
                 String TipoCampo = cbxTipoOrden.getSelectedItem().toString();
 
                 switch (TipoCampo) {
@@ -691,7 +691,7 @@ public class VistaGestionMallaCurricular extends javax.swing.JFrame {
 
                 Integer orden = OrdenSeleccionado();
 
-                ListaDinamica<MallaCurricular> resultadoOrdenado = UtilesControlador.QuickSort(lista, orden, TipoCampo);
+                ListaDinamica<MallaC> resultadoOrdenado = UtilesControlador.QuickSort(lista, orden, TipoCampo);
 
                 mtm.setMallaTabla(resultadoOrdenado);
                 mtm.fireTableDataChanged();

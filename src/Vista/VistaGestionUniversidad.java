@@ -1,6 +1,7 @@
 
 package Vista;
 
+import Controlador.Dao.BaseDatos.Modelo.universidadDaoBD;
 import Controlador.Dao.Modelo.universidadDao;
 import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
@@ -18,10 +19,12 @@ import javax.swing.JOptionPane;
  * @author Victor
  */
 public class VistaGestionUniversidad extends javax.swing.JFrame {
-    universidadDao universidadControlDao = new universidadDao();
+//    universidadDao universidadControlDao = new universidadDao();
     ModeloTablaUniversidad mtu = new ModeloTablaUniversidad();
     ListaDinamica<Universidad> listaUniversidades = new ListaDinamica<>();
     SimpleDateFormat Formato = new SimpleDateFormat("dd/MMMM/yyyy");
+    
+    universidadDaoBD universidadControlDao = new universidadDaoBD();
 
     /**
      * Creates new form VistaGestionUniversidad
@@ -35,7 +38,7 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
     }
     
     private void CargarTabla(){
-        mtu.setUniversidadTabla(universidadControlDao.all());
+        mtu.setUniversidadTabla(universidadControlDao.listar());
         tblUniversidades.setModel(mtu);
         tblUniversidades.updateUI();
         cbxTipoBusqueda.setSelectedIndex(-1);
@@ -47,7 +50,7 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
         txtNombreU.setText("");
         txtTelefono.setText("");
         DateFundacion.setDate(null);
-        universidadControlDao.setUniversidades(null);
+        universidadControlDao.setUniversidad(null);
         CargarTabla();
     }
     
@@ -58,14 +61,14 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
         }
         else{
             try {
-                universidadControlDao.setUniversidades(mtu.getUniversidadTabla().getInfo(fila));
+                universidadControlDao.setUniversidad(mtu.getUniversidadTabla().getInfo(fila));
                 
-                Date Inicio = Formato.parse(universidadControlDao.getUniversidades().getFechaFundacion());
+                Date Inicio = Formato.parse(universidadControlDao.getUniversidad().getFechaFU());
                 DateFundacion.setDate(Inicio);
-                txtNombreU.setText(universidadControlDao.getUniversidades().getNombreUniversidad());
-                txtDireccionU.setText(universidadControlDao.getUniversidades().getDireccionUniversidad());
-                txtTelefono.setText(universidadControlDao.getUniversidades().getNumeroTelefono());
-                txtCorreo.setText(universidadControlDao.getUniversidades().getCorreoUniversidad());
+                txtNombreU.setText(universidadControlDao.getUniversidad().getNombreU());
+                txtDireccionU.setText(universidadControlDao.getUniversidad().getDireccionU());
+                txtTelefono.setText(universidadControlDao.getUniversidad().getTelefonoU());
+                txtCorreo.setText(universidadControlDao.getUniversidad().getCorreoU());
                 
             } 
             catch (Exception e) {
@@ -75,13 +78,13 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
     }
     
     private boolean universidadExiste(Universidad nuevaUniversidad) {
-        ListaDinamica<Universidad> universidades = universidadControlDao.all();
+        ListaDinamica<Universidad> universidades = universidadControlDao.listar();
         for (Universidad u : universidades.toArray()) {
-            if (u.getNombreUniversidad().equals(nuevaUniversidad.getNombreUniversidad())
-                    && u.getDireccionUniversidad().equals(nuevaUniversidad.getDireccionUniversidad())
-                    && u.getNumeroTelefono().equals(nuevaUniversidad.getNumeroTelefono())
-                    && u.getCorreoUniversidad().equals(nuevaUniversidad.getCorreoUniversidad())
-                    && u.getFechaFundacion().equals(nuevaUniversidad.getFechaFundacion())) {
+            if (u.getNombreU().equals(nuevaUniversidad.getNombreU())
+                    && u.getDireccionU().equals(nuevaUniversidad.getDireccionU())
+                    && u.getTelefonoU().equals(nuevaUniversidad.getTelefonoU())
+                    && u.getCorreoU().equals(nuevaUniversidad.getCorreoU())
+                    && u.getFechaFU().equals(nuevaUniversidad.getFechaFU())) {
                 return true;
             }
         }
@@ -118,11 +121,11 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
             String fechaFundacion = Formato.format(DateFundacion.getDate());
 
             Universidad nuevaUniversidad = new Universidad();
-            nuevaUniversidad.setNombreUniversidad(nombre);
-            nuevaUniversidad.setDireccionUniversidad(direccion);
-            nuevaUniversidad.setNumeroTelefono(telefono);
-            nuevaUniversidad.setCorreoUniversidad(correo);
-            nuevaUniversidad.setFechaFundacion(fechaFundacion);
+            nuevaUniversidad.setNombreU(nombre);
+            nuevaUniversidad.setDireccionU(direccion);
+            nuevaUniversidad.setTelefonoU(telefono);
+            nuevaUniversidad.setCorreoU(correo);
+            nuevaUniversidad.setFechaFU(fechaFundacion);
 
             if (universidadExiste(nuevaUniversidad)) {
                 JOptionPane.showMessageDialog(null, "La universidad ya existe", "UNIVERSIDAD EXISTENTE", JOptionPane.INFORMATION_MESSAGE);
@@ -130,12 +133,12 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
             }
 
             Integer idUniversidad = listaUniversidades.getLongitud() + 1;
-            nuevaUniversidad.setIdUniversidad(idUniversidad);
+            nuevaUniversidad.setIdU(idUniversidad);
 
-            universidadControlDao.setUniversidades(nuevaUniversidad);
-            if (universidadControlDao.Persist()) {
+            universidadControlDao.setUniversidad(nuevaUniversidad);
+            if (universidadControlDao.GuardarBD()) {
                 JOptionPane.showMessageDialog(null, "UNIVERSIDAD GUARDADADA EXITOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
-                universidadControlDao.setUniversidades(null);
+                universidadControlDao.setUniversidad(null);
             } else {
                 JOptionPane.showMessageDialog(null, "NO SE PUEDE GUARDAR", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
             }
@@ -592,7 +595,7 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
             }
             else {
                                 
-                Integer IdUniversidad = universidadControlDao.getUniversidades().getIdUniversidad();
+                Integer IdUniversidad = universidadControlDao.getUniversidad().getIdU();
                 String Nombre = txtNombreU.getText();
                 String Direccion = txtDireccionU.getText();
                 String Telefono = txtTelefono.getText();
@@ -601,14 +604,14 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
                 String Fundacion = Formato.format(InicioD);
                 
                 Universidad universidadModificada = new Universidad();
-                universidadModificada.setIdUniversidad(IdUniversidad);
-                universidadModificada.setNombreUniversidad(Nombre);
-                universidadModificada.setDireccionUniversidad(Direccion);
-                universidadModificada.setNumeroTelefono(Telefono);
-                universidadModificada.setCorreoUniversidad(Correo);
-                universidadModificada.setFechaFundacion(Fundacion);
+                universidadModificada.setIdU(IdUniversidad);
+                universidadModificada.setNombreU(Nombre);
+                universidadModificada.setDireccionU(Direccion);
+                universidadModificada.setTelefonoU(Telefono);
+                universidadModificada.setCorreoU(Correo);
+                universidadModificada.setFechaFU(Fundacion);
 
-                universidadControlDao.Merge(universidadModificada, IdUniversidad - 1);
+                universidadControlDao.Modificar(universidadModificada, IdUniversidad - 1);
 
 
 //                Universidad universidadModificado = new Universidad(IdMateria, Nombre, Direccion, Telefono, Correo, Fundacion);
