@@ -4,7 +4,6 @@ package Vista;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Modelo.Ciclo;
 import Controlador.Dao.Modelo.cicloDao;
-import Controlador.Dao.Modelo.paraleloDao;
 import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.Utiles.UtilesControlador;
 import Vista.ModeloTabla.ModeloTablaCiclos;
@@ -63,7 +62,6 @@ public class VistaGestionCiclo extends javax.swing.JFrame {
                 
                 cbxNombreCiclo.setSelectedIndex(cicloControlDao.getCiclos().getNombreCiclo().getIdNombreCiclo()-1);
                 cbxUnidad.setSelectedIndex(cicloControlDao.getCiclos().getUnidadCurricularCiclo().getIdUnidadCurricular() -1);
-                
             } 
             catch (Exception e) {
                 
@@ -72,8 +70,11 @@ public class VistaGestionCiclo extends javax.swing.JFrame {
     }
     
     private boolean cicloExiste(Ciclo nuevoParalelo) {
-        ListaDinamica<Ciclo> paralelos = cicloControlDao.getListaCiclos();
-        for (Ciclo p : paralelos.toArray()) {
+        ListaDinamica<Ciclo> ciclos = cicloControlDao.getListaCiclos();
+        if (ciclos.EstaVacio()) {
+            return false;
+        }
+        for (Ciclo p : ciclos.toArray()) {
             if (p.getNombreCiclo().getNombreCiclo().equals(nuevoParalelo.getNombreCiclo().getNombreCiclo())) {
                 return true;
             }
@@ -540,7 +541,6 @@ public class VistaGestionCiclo extends javax.swing.JFrame {
             } 
             else {
                 Integer IdCiclo = cicloControlDao.getCiclos().getIdCiclo();
-                String NombreCiclo = cbxNombreCiclo.getSelectedItem().toString();
                 
                 Ciclo cicloModificado = new Ciclo();
                 cicloModificado.setIdCiclo(IdCiclo);

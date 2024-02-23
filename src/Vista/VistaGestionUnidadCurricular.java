@@ -101,6 +101,9 @@ public class VistaGestionUnidadCurricular extends javax.swing.JFrame {
  
     private boolean unidadCurricularExiste(UnidadCurricular nuevaUnidadCurricular) {
         ListaDinamica<UnidadCurricular> unidades = unidadCurricularControlDao.getListaUnidadCurricular();
+        if (unidades.EstaVacio()) {
+            return false;
+        }
         for (UnidadCurricular unidad : unidades.toArray()) {
             if (unidad.getNombreUnidadCurricular().equals(nuevaUnidadCurricular.getNombreUnidadCurricular())
                     && unidad.getDescripcionUnidadCurricular().equals(nuevaUnidadCurricular.getDescripcionUnidadCurricular())

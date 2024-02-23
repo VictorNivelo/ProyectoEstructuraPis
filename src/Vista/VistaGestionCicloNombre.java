@@ -61,8 +61,11 @@ public class VistaGestionCicloNombre extends javax.swing.JFrame {
     }
     
     private boolean nombreCicloExiste(NombreCiclo nuevoNombreCiclo) {
-        ListaDinamica<NombreCiclo> nombres = codigoCursoControlDao.getListaNombreCiclo();
-        for (NombreCiclo nombre : nombres.toArray()) {
+        ListaDinamica<NombreCiclo> nombresCiclos = codigoCursoControlDao.getListaNombreCiclo();
+        if (nombresCiclos.EstaVacio()) {
+            return false;
+        }
+        for (NombreCiclo nombre : nombresCiclos.toArray()) {
             if (nombre.getNombreCiclo().equals(nuevoNombreCiclo.getNombreCiclo())) {
                 return true;
             }

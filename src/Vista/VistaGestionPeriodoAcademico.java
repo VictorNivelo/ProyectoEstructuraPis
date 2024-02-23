@@ -73,6 +73,9 @@ public class VistaGestionPeriodoAcademico extends javax.swing.JFrame {
     
     private boolean periodoExiste(PeriodoAcademico nuevoPeriodo) {
         ListaDinamica<PeriodoAcademico> periodos = periodoControlDao.all();
+        if (periodos.EstaVacio()) {
+            return false;
+        }
         for (PeriodoAcademico p : periodos.toArray()) {
             if (p.getFechaInicio().equals(nuevoPeriodo.getFechaInicio())
                     && p.getFechaFin().equals(nuevoPeriodo.getFechaFin())) {
@@ -83,29 +86,37 @@ public class VistaGestionPeriodoAcademico extends javax.swing.JFrame {
     }
 
     private void Guardar() throws ListaVacia {
-        if (DateInicio.getDate() == null) {
+        Date fechaInicio = DateInicio.getDate();
+        Date fechaFin = DateFin.getDate();
+
+        if (fechaInicio == null) {
             JOptionPane.showMessageDialog(null, "Falta llenar la fecha de inicio", "Error", JOptionPane.WARNING_MESSAGE);
         } 
-        else if (DateFin.getDate() == null) {
+        else if (fechaFin == null) {
             JOptionPane.showMessageDialog(null, "Falta llenar la fecha de fin", "Error", JOptionPane.WARNING_MESSAGE);
         } 
+        else if (fechaInicio.compareTo(fechaFin) >= 0) {
+            JOptionPane.showMessageDialog(null, "La fecha de inicio no puede ser igual a la fecha de fin", "Error", JOptionPane.WARNING_MESSAGE);
+        } 
+        else if (fechaFin.before(fechaInicio)) {
+            JOptionPane.showMessageDialog(null, "La fecha de fin no puede ser antes de la fecha de inicio", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+        else if (fechaInicio.after(fechaFin)) {
+            JOptionPane.showMessageDialog(null, "La fecha de inicio no puede ser después de la fecha de fin", "Error", JOptionPane.WARNING_MESSAGE);
+        }
         else if (cbxEstadoPeriodo.getSelectedIndex() == -1) {
             JOptionPane.showMessageDialog(null, "Falta seleccionar el estado del período", "Error", JOptionPane.WARNING_MESSAGE);
         } 
         else {
-            Date fechaInicio = DateInicio.getDate();
-            Date fechaFin = DateFin.getDate();
             String estado = cbxEstadoPeriodo.getSelectedItem().toString();
-
             PeriodoAcademico nuevoPeriodo = new PeriodoAcademico();
             nuevoPeriodo.setFechaInicio(Formato.format(fechaInicio));
             nuevoPeriodo.setFechaFin(Formato.format(fechaFin));
             nuevoPeriodo.setEstadoPeriodoAcedemico(estado);
 
             if (periodoExiste(nuevoPeriodo)) {
-                JOptionPane.showMessageDialog(null, "El período ya existe", "Error", JOptionPane.ERROR_MESSAGE);
-            } 
-            else {
+                JOptionPane.showMessageDialog(null, "El período ya existe", "Error", JOptionPane.INFORMATION_MESSAGE);
+            } else {
                 Integer idPeriodo = listaPeriodos.getLongitud() + 1;
                 nuevoPeriodo.setIdPeriodoAcademino(idPeriodo);
 

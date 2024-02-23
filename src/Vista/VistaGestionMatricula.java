@@ -121,6 +121,9 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
             
     private boolean matriculaExiste(Matricula nuevaMatricula) {
         ListaDinamica<Matricula> matriculas = MatriculaControlDao.all();
+        if (matriculas.EstaVacio()) {
+            return false;
+        }
         for (Matricula m : matriculas.toArray()) {
             if (m.getAlumnoMatricula().getIdAlumno().equals(nuevaMatricula.getAlumnoMatricula().getIdAlumno())
                     && m.getPeriodoAcademicoMatricula().getIdPeriodoAcademino().equals(nuevaMatricula.getPeriodoAcademicoMatricula().getIdPeriodoAcademino())) {

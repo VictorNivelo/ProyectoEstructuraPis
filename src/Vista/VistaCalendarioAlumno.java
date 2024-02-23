@@ -41,6 +41,7 @@ public class VistaCalendarioAlumno extends JFrame {
         ActualizarCalendario();
     }
 
+    @SuppressWarnings("unused")
     private void imprimirFechaActual(String fecha) {
         System.out.println("Fecha: " + fecha);
     }
@@ -153,6 +154,7 @@ public class VistaCalendarioAlumno extends JFrame {
         Contenedor.add(PanelCalendario, BorderLayout.CENTER);
     }
 
+    @SuppressWarnings("unused")
     private void ActualizarCalendario() {
         EtiquetaMes.setText(new SimpleDateFormat("          MMMM          ").format(new GregorianCalendar(AnioActual, MesActual, 1).getTime()));
         PanelCalendario.removeAll();

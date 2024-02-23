@@ -75,6 +75,9 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
     
     private boolean alumnoExiste(Alumno nuevoAlumno) {
         ListaDinamica<Alumno> alumnos = alumnoControlDao.getListaAlumnos();
+        if (alumnos.EstaVacio()) {
+            return false;
+        }
         for (Alumno a : alumnos.toArray()) {
             if (a.getIdAlumno().equals(nuevoAlumno.getIdAlumno())) {
                 return true;

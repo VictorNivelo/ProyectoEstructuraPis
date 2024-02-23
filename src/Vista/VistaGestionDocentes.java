@@ -77,6 +77,9 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
     
     private boolean docenteExiste(Docente nuevoDocente) {
         ListaDinamica<Docente> docentes = docenteControlDao.getListaDocentes();
+        if (docentes.EstaVacio()) {
+            return false;
+        }
         for (Docente d : docentes.toArray()) {
             if (d.getIdDocente().equals(nuevoDocente.getIdDocente())) {
                 return true;

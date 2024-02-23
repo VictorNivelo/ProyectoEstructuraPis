@@ -1,7 +1,6 @@
 
 package Vista;
 
-import Controlador.Dao.Modelo.cursoDao;
 import Controlador.Dao.Modelo.horarioDao;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Modelo.Horario;

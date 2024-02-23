@@ -7,8 +7,8 @@ package Modelo;
  */
 public class Paralelo {
     private Integer IdParalelo;
-    private String CodigoP;
-    private String NombreP;
+    private String CodigoParalelo;
+    private String Nombre;
 
     public Paralelo() {
         
@@ -23,24 +23,24 @@ public class Paralelo {
     }
 
     public String getNombre() {
-        return NombreP;
+        return Nombre;
     }
 
     public void setNombre(String Nombre) {
-        this.NombreP = Nombre;
+        this.Nombre = Nombre;
     }
 
     public String getCodigoParalelo() {
-        return CodigoP;
+        return CodigoParalelo;
     }
 
     public void setCodigoParalelo(String CodigoParalelo) {
-        this.CodigoP = CodigoParalelo;
+        this.CodigoParalelo = CodigoParalelo;
     }
 
     @Override
     public String toString() {
-        return NombreP + "\n";
+        return Nombre + "\n";
     }
     
 }

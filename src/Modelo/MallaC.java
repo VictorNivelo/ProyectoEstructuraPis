@@ -6,10 +6,10 @@ package Modelo;
  * @author Victor
  */
 public class MallaC {
-    private Integer IdMallaC;
-    private String NombreMC;
-    private Integer DMC;
-    private String EstadoMallaC;
+    private Integer IdMallaCurricular;
+    private String NombreMallaCurricular;
+    private Integer DuracionMallaCurricular;
+    private String EstadoMallaCurricular;
     
     private Carrera carreraMallaCurricula;
     private Integer CarreraID;
@@ -19,35 +19,35 @@ public class MallaC {
     }
 
     public Integer getIdMallaCurricular() {
-        return IdMallaC;
+        return IdMallaCurricular;
     }
 
     public void setIdMallaCurricular(Integer IdMallaCurricular) {
-        this.IdMallaC = IdMallaCurricular;
+        this.IdMallaCurricular = IdMallaCurricular;
     }
 
     public String getNombreMallaCurricular() {
-        return NombreMC;
+        return NombreMallaCurricular;
     }
 
     public void setNombreMallaCurricular(String NombreMallaCurricular) {
-        this.NombreMC = NombreMallaCurricular;
+        this.NombreMallaCurricular = NombreMallaCurricular;
     }
 
     public Integer getDuracionMallaCurricular() {
-        return DMC;
+        return DuracionMallaCurricular;
     }
 
     public void setDuracionMallaCurricular(Integer DuracionMallaCurricular) {
-        this.DMC = DuracionMallaCurricular;
+        this.DuracionMallaCurricular = DuracionMallaCurricular;
     }
 
     public String getEstadoMallaCurricular() {
-        return EstadoMallaC;
+        return EstadoMallaCurricular;
     }
 
     public void setEstadoMallaCurricular(String EstadoMallaCurricular) {
-        this.EstadoMallaC = EstadoMallaCurricular;
+        this.EstadoMallaCurricular = EstadoMallaCurricular;
     }
 
     public Carrera getCarreraMallaCurricula() {
@@ -68,7 +68,7 @@ public class MallaC {
     
     @Override
     public String toString() {
-        return NombreMC +  "\n";
+        return NombreMallaCurricular +  "\n";
     }
     
 }

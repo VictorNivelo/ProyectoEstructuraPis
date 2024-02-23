@@ -78,6 +78,9 @@ public class VistaGestionCarrera extends javax.swing.JFrame {
 
     private boolean carreraExiste(Carrera nuevaCarrera) {
         ListaDinamica<Carrera> carreras = carreraControlDao.getListaCarreras();
+        if (carreras.EstaVacio()) {
+            return false;
+        }
         for (Carrera c : carreras.toArray()) {
             if (c.getNombreCarrera().equals(nuevaCarrera.getNombreCarrera())
                     && c.getDuracion().equals(nuevaCarrera.getDuracion())
@@ -537,10 +540,7 @@ public class VistaGestionCarrera extends javax.swing.JFrame {
             } 
             else if (txtNumeroCiclos.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Falta llenar el numero de ciclos", "Error", JOptionPane.WARNING_MESSAGE);
-            } 
-//            else if (cbxMalla.getSelectedIndex() == -1) {
-//                JOptionPane.showMessageDialog(null, "Falta seleccionar la malla", "Error", JOptionPane.ERROR_MESSAGE);
-//            } 
+            }
             else {
                 Integer IdCarrera = carreraControlDao.getCarreras().getIdCarrera();
                 String Nombre = txtNombreCarrera.getText();
@@ -583,10 +583,10 @@ public class VistaGestionCarrera extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        
+    
         try {
             if (cbxTipoBusqueda.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Porfavor seleccione donde quiere buscar", "Error", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Por favor seleccione donde quiere buscar", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else {
                 ListaDinamica<Carrera> lista = carreraControlDao.all();
@@ -610,15 +610,21 @@ public class VistaGestionCarrera extends javax.swing.JFrame {
                     default:
                         throw new AssertionError();
                 }
+                ListaDinamica<Carrera> ResultadoBusqueda;
 
-                ListaDinamica<Carrera> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
+                if (Campo.isEmpty()) {
+                    ResultadoBusqueda = lista;
+                } 
+                else {
+                    ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
+                }
 
                 mtc.setCarreraTabla(ResultadoBusqueda);
                 mtc.fireTableDataChanged();
             }
         } 
         catch (Exception e) {
-
+            e.printStackTrace();
         }
         
     }//GEN-LAST:event_jButton6ActionPerformed

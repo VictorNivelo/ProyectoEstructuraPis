@@ -108,6 +108,9 @@ public class VistaGestionHorario extends javax.swing.JFrame {
     
     private boolean horarioExiste(Horario nuevoHorario) {
         ListaDinamica<Horario> horarios = horarioControlDao.getListaHorario();
+        if (horarios.EstaVacio()) {
+            return false;
+        }
         for (Horario h : horarios.toArray()) {
             if (h.getDiaSemana().equals(nuevoHorario.getDiaSemana())
                     && h.getHoraIncio().equals(nuevoHorario.getHoraIncio())

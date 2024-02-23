@@ -7,9 +7,9 @@ package Modelo;
  */
 public class Docente {
     private Integer IdDocente;
-    private String EspecialidadD;
-    private String TitulacionD;
-    private String AniosExperienciaD;
+    private String Especialidad;
+    private String Titulacion;
+    private String AniosExperiencia;
     
     private Persona DatosDocente;
     private Integer PersonaDocenteID;
@@ -27,27 +27,27 @@ public class Docente {
     }
 
     public String getEspecialidad() {
-        return EspecialidadD;
+        return Especialidad;
     }
 
     public void setEspecialidad(String Especialidad) {
-        this.EspecialidadD = Especialidad;
+        this.Especialidad = Especialidad;
     }
 
     public String getTitulacion() {
-        return TitulacionD;
+        return Titulacion;
     }
 
     public void setTitulacion(String Titulacion) {
-        this.TitulacionD = Titulacion;
+        this.Titulacion = Titulacion;
     }
 
     public String getAniosExperiencia() {
-        return AniosExperienciaD;
+        return AniosExperiencia;
     }
 
     public void setAniosExperiencia(String AniosExperiencia) {
-        this.AniosExperienciaD = AniosExperiencia;
+        this.AniosExperiencia = AniosExperiencia;
     }
 
     public Persona getDatosDocente() {

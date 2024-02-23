@@ -1,1 +1,1 @@
-{"Controlador.TDA.ListaDinamica.ListaDinamica":{"cabezera":{"info":{"@class":"Modelo.PeriodoAcademico","IdPA":1,"FechaInicioPA":"01\/enero\/2023","FechaFinPA":"01\/enero\/2024","EstadoP":"Activo"}},"ultimo":{"@reference":"..\/cabezera"},"Longitud":1}}
+{"Controlador.TDA.ListaDinamica.ListaDinamica":{"cabezera":{"info":{"@class":"Modelo.PeriodoAcademico","IdPeriodoAcademino":1,"FechaInicio":"02\/febrero\/2023","FechaFin":"02\/febrero\/2024","EstadoPeriodoAcedemico":"Activo"}},"ultimo":{"@reference":"..\/cabezera"},"Longitud":1}}

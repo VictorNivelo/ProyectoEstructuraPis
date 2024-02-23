@@ -89,6 +89,9 @@ public class VistaGestionParalelo extends javax.swing.JFrame {
     
     private boolean paraleloExiste(Paralelo nuevoParalelo) {
         ListaDinamica<Paralelo> paralelos = paraleloControlDao.getListaParalelo();
+        if (paralelos.EstaVacio()) {
+            return false;
+        }
         for (Paralelo p : paralelos.toArray()) {
             if (p.getNombre().equals(nuevoParalelo.getNombre())) {
                 return true;

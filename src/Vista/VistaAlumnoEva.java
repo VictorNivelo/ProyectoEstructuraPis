@@ -23,7 +23,9 @@ public class VistaAlumnoEva extends javax.swing.JDialog {
      * @param modal
      */
     
+    @SuppressWarnings({ "unused" })
     private materiaDao materiadao = new materiaDao();
+    @SuppressWarnings("unused")
     private String nombreAlumno;
     materiaDao daoMateria = new materiaDao();
     

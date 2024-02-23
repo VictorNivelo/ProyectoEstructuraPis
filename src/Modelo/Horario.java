@@ -7,11 +7,11 @@ package Modelo;
  * @author Victor
  */
 public class Horario {
-    private Integer IdH;
-    private String CodigoH;
-    private String DiaH;
-    private String HoraInicioH;
-    private String HoraFinH;
+    private Integer IdHorario;
+    private String CodigoHorario;
+    private String DiaSemana;
+    private String HoraIncio;
+    private String HoraFin;
     
     private Materia materiaHorario;
     private Integer idMateria;
@@ -21,35 +21,35 @@ public class Horario {
     }
 
     public Integer getIdHorario() {
-        return IdH;
+        return IdHorario;
     }
 
     public void setIdHorario(Integer IdHorario) {
-        this.IdH = IdHorario;
+        this.IdHorario = IdHorario;
     }
 
     public String getDiaSemana() {
-        return DiaH;
+        return DiaSemana;
     }
 
     public void setDiaSemana(String DiaSemana) {
-        this.DiaH = DiaSemana;
+        this.DiaSemana = DiaSemana;
     }
 
     public String getHoraIncio() {
-        return HoraInicioH;
+        return HoraIncio;
     }
 
     public void setHoraIncio(String HoraIncio) {
-        this.HoraInicioH = HoraIncio;
+        this.HoraIncio = HoraIncio;
     }
 
     public String getHoraFin() {
-        return HoraFinH;
+        return HoraFin;
     }
 
     public void setHoraFin(String HoraFin) {
-        this.HoraFinH = HoraFin;
+        this.HoraFin = HoraFin;
     }
 
     public Materia getMateriaHorario() {
@@ -61,11 +61,11 @@ public class Horario {
     }
 
     public String getCodigoHorario() {
-        return CodigoH;
+        return CodigoHorario;
     }
 
     public void setCodigoHorario(String CodigoHorario) {
-        this.CodigoH = CodigoHorario;
+        this.CodigoHorario = CodigoHorario;
     }
 
     public Integer getMateriaID() {
@@ -78,7 +78,7 @@ public class Horario {
     
     @Override
     public String toString() {
-        return DiaH  + "  H "+ HoraInicioH + " - " + HoraFinH + "\n";
+        return DiaSemana  + "  H "+ HoraIncio + " - " + HoraFin + "\n";
     }
     
 }

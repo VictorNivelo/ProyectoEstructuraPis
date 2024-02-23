@@ -76,9 +76,11 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
     
     private boolean facultadExiste(Facultad nuevaFacultad) {
         ListaDinamica<Facultad> facultades = facultadControlDao.getListaFacultad();
+        if (facultades.EstaVacio()) {
+            return false;
+        }
         for (Facultad f : facultades.toArray()) {
-            if (f.getNombreFacultad().equals(nuevaFacultad.getNombreFacultad())
-                    && f.getFechaCreacion().equals(nuevaFacultad.getFechaCreacion())
+            if (f.getNombreFacultad().equals(nuevaFacultad.getNombreFacultad()) && f.getFechaCreacion().equals(nuevaFacultad.getFechaCreacion())
                     && f.getUniversidadFacultad().getIdU().equals(nuevaFacultad.getUniversidadFacultad().getIdU())) {
                 return true;
             }
@@ -567,7 +569,7 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
         
         try {
             if (cbxTipoBusqueda.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Porfavor seleccione donde quiere buscar", "Error", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Por favor seleccione donde quiere buscar", "Error", JOptionPane.WARNING_MESSAGE);
             } 
             else {
                 ListaDinamica<Facultad> lista = facultadControlDao.all();
@@ -589,14 +591,21 @@ public class VistaGestionFacultad extends javax.swing.JFrame {
                         throw new AssertionError();
                 }
 
-                ListaDinamica<Facultad> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
+                ListaDinamica<Facultad> ResultadoBusqueda;
+
+                if (Campo.isEmpty()) {
+                    ResultadoBusqueda = lista;
+                } 
+                else {
+                    ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
+                }
 
                 mtf.setFacultadTabla(ResultadoBusqueda);
                 mtf.fireTableDataChanged();
             }
         } 
         catch (Exception e) {
-
+            e.printStackTrace();
         }
         
     }//GEN-LAST:event_jButton3ActionPerformed

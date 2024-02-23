@@ -8,9 +8,9 @@ package Modelo;
  */
 public class Materia {
     private Integer IdMateria;
-    private String NombreM;
-    private String DescripcionM;
-    private String NumeroHM;
+    private String NombreMateria;
+    private String DescipcionMateria;
+    private String NumeroHoras;
     
     private Ciclo cicloMateria;
     private Integer CicloID;
@@ -28,27 +28,27 @@ public class Materia {
     }
 
     public String getNombreMateria() {
-        return NombreM;
+        return NombreMateria;
     }
 
     public void setNombreMateria(String NombreMateria) {
-        this.NombreM = NombreMateria;
+        this.NombreMateria = NombreMateria;
     }
 
     public String getDescipcionMateria() {
-        return DescripcionM;
+        return DescipcionMateria;
     }
 
     public void setDescipcionMateria(String DescipcionMateria) {
-        this.DescripcionM = DescipcionMateria;
+        this.DescipcionMateria = DescipcionMateria;
     }
 
     public String getNumeroHoras() {
-        return NumeroHM;
+        return NumeroHoras;
     }
 
     public void setNumeroHoras(String NumeroHoras) {
-        this.NumeroHM = NumeroHoras;
+        this.NumeroHoras = NumeroHoras;
     }
 
     public Ciclo getCicloMateria() {
@@ -69,7 +69,7 @@ public class Materia {
     
     @Override
     public String toString() {
-        return NombreM+"\n";
+        return NombreMateria+"\n";
     }
     
 }

@@ -1,7 +1,6 @@
 
 package Vista;
 
-import Controlador.Dao.BaseDatos.Modelo.universidadDaoBD;
 import Controlador.Dao.Modelo.universidadDao;
 import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
@@ -19,12 +18,12 @@ import javax.swing.JOptionPane;
  * @author Victor
  */
 public class VistaGestionUniversidad extends javax.swing.JFrame {
-//    universidadDao universidadControlDao = new universidadDao();
+    universidadDao universidadControlDao = new universidadDao();
     ModeloTablaUniversidad mtu = new ModeloTablaUniversidad();
     ListaDinamica<Universidad> listaUniversidades = new ListaDinamica<>();
     SimpleDateFormat Formato = new SimpleDateFormat("dd/MMMM/yyyy");
     
-    universidadDaoBD universidadControlDao = new universidadDaoBD();
+//    universidadDaoBD universidadControlDao = new universidadDaoBD();
 
     /**
      * Creates new form VistaGestionUniversidad
@@ -38,7 +37,7 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
     }
     
     private void CargarTabla(){
-        mtu.setUniversidadTabla(universidadControlDao.listar());
+        mtu.setUniversidadTabla(universidadControlDao.getListaUniversid());
         tblUniversidades.setModel(mtu);
         tblUniversidades.updateUI();
         cbxTipoBusqueda.setSelectedIndex(-1);
@@ -78,12 +77,13 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
     }
     
     private boolean universidadExiste(Universidad nuevaUniversidad) {
-        ListaDinamica<Universidad> universidades = universidadControlDao.listar();
+        ListaDinamica<Universidad> universidades = universidadControlDao.getListaUniversid();
+        if (universidades.EstaVacio()) {
+            return false;
+        }
         for (Universidad u : universidades.toArray()) {
-            if (u.getNombreU().equals(nuevaUniversidad.getNombreU())
-                    && u.getDireccionU().equals(nuevaUniversidad.getDireccionU())
-                    && u.getTelefonoU().equals(nuevaUniversidad.getTelefonoU())
-                    && u.getCorreoU().equals(nuevaUniversidad.getCorreoU())
+            if (u.getNombreU().equals(nuevaUniversidad.getNombreU()) && u.getDireccionU().equals(nuevaUniversidad.getDireccionU())
+                    && u.getTelefonoU().equals(nuevaUniversidad.getTelefonoU()) && u.getCorreoU().equals(nuevaUniversidad.getCorreoU())
                     && u.getFechaFU().equals(nuevaUniversidad.getFechaFU())) {
                 return true;
             }
@@ -136,57 +136,15 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
             nuevaUniversidad.setIdU(idUniversidad);
 
             universidadControlDao.setUniversidad(nuevaUniversidad);
-            if (universidadControlDao.guardarb(nuevaUniversidad)) {
+            if (universidadControlDao.Persist()) {
                 JOptionPane.showMessageDialog(null, "UNIVERSIDAD GUARDADADA EXITOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
                 universidadControlDao.setUniversidad(null);
-            } else {
+            } 
+            else {
                 JOptionPane.showMessageDialog(null, "NO SE PUEDE GUARDAR", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
             }
             Limpiar();
         }
-
-//        if (txtNombreU.getText().isEmpty()) {
-//            JOptionPane.showMessageDialog(null, "Falta llenar el nombre de la universidad", "Error", JOptionPane.ERROR_MESSAGE);
-//        } 
-//        else if (txtDireccionU.getText().isEmpty()) {
-//            JOptionPane.showMessageDialog(null, "Falta llenar la direccion", "Error", JOptionPane.ERROR_MESSAGE);
-//        } 
-//        else if (txtTelefono.getText().isEmpty()) {
-//            JOptionPane.showMessageDialog(null, "Falta llenar el numero de telefono", "Error", JOptionPane.ERROR_MESSAGE);
-//        } 
-//        else if (txtCorreo.getText().isEmpty()) {
-//            JOptionPane.showMessageDialog(null, "Falta llenar el correo de la universidad", "Error", JOptionPane.ERROR_MESSAGE);
-//        } 
-//        else if (DateFundacion.getDate() == null) {
-//            JOptionPane.showMessageDialog(null, "Falta llenar fecha de fundacion", "Error", JOptionPane.ERROR_MESSAGE);
-//        }
-//        else {
-//            Integer idUniversidad = listaUniversidades.getLongitud() + 1;
-//            
-//            Date InicioD = DateFundacion.getDate();
-//            String Fundacion = Formato.format(InicioD);
-//            String Nombre = txtNombreU.getText();
-//            String Direccion = txtDireccionU.getText();
-//            String Telefono = txtTelefono.getText();
-//            String Correo = txtCorreo.getText();
-//            
-//            universidadControlDao.getUniversidades().setIdUniversidad(idUniversidad);
-//            universidadControlDao.getUniversidades().setNombreUniversidad(Nombre);
-//            universidadControlDao.getUniversidades().setDireccionUniversidad(Direccion);
-//            universidadControlDao.getUniversidades().setNumeroTelefono(Telefono);
-//            universidadControlDao.getUniversidades().setCorreoUniversidad(Correo);
-//            universidadControlDao.getUniversidades().setFechaFundacion(Fundacion);
-//
-//            
-//            if (universidadControlDao.Persist()) {
-//                JOptionPane.showMessageDialog(null, "UNIVERSIDAD GUARDADADA EXISTOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
-//                universidadControlDao.setUniversidades(null);
-//            } 
-//            else {
-//                JOptionPane.showMessageDialog(null, "NO SE PUEDE GUARDAR", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
-//            }
-//            Limpiar();
-//        }
     }
     
     private boolean validarFechaNoFutura(Date date) {
@@ -611,12 +569,8 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
                 universidadModificada.setCorreoU(Correo);
                 universidadModificada.setFechaFU(Fundacion);
 
-                try {
-                    universidadControlDao.Modificar();
-                } 
-                catch (Exception e) {
-                    
-                }
+                universidadControlDao.Merge(universidadModificada, IdUniversidad -1);
+
 //        (universidadModificada, IdUniversidad - 1);
 
 
@@ -634,14 +588,14 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         
-//        int fila = tblUniversidades.getSelectedRow();
-//        if (fila < 0) {
-//            JOptionPane.showMessageDialog(null, "Escoga un registro");
-//        }
-//        else {
-//            universidadControlDao.Eliminar(fila);
-//            CargarTabla();
-//        }
+        int fila = tblUniversidades.getSelectedRow();
+        if (fila < 0) {
+            JOptionPane.showMessageDialog(null, "Escoga un registro");
+        }
+        else {
+            universidadControlDao.Eliminar(fila);
+            CargarTabla();
+        }
         
     }//GEN-LAST:event_jButton5ActionPerformed
 
@@ -650,9 +604,9 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
         try {
             if (cbxTipoBusqueda.getSelectedIndex() == -1) {
                 JOptionPane.showMessageDialog(null, "Porfavor seleccione donde quiere buscar", "Error", JOptionPane.WARNING_MESSAGE);
-            } 
+            }
             else {
-                ListaDinamica<Universidad> lista = universidadControlDao.listar();
+                ListaDinamica<Universidad> lista = universidadControlDao.getListaUniversid();
 
                 String Campo = txtBuscar.getText();
                 String TipoCampo = cbxTipoBusqueda.getSelectedItem().toString();
@@ -677,14 +631,20 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
                         throw new AssertionError();
                 }
 
-                ListaDinamica<Universidad> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
+                ListaDinamica<Universidad> ResultadoBusqueda;
+                if (Campo.isEmpty()) {
+                    ResultadoBusqueda = lista;
+                } 
+                else {
+                    ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, TipoCampo);
+                }
 
                 mtu.setUniversidadTabla(ResultadoBusqueda);
                 mtu.fireTableDataChanged();
             }
         } 
         catch (Exception e) {
-
+            e.printStackTrace();
         }
          
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -705,7 +665,7 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "No ha seleccionado el orden", "FALTA SELCCIONAR", JOptionPane.WARNING_MESSAGE);
             } 
             else {
-                ListaDinamica<Universidad> lista = universidadControlDao.listar();
+                ListaDinamica<Universidad> lista = universidadControlDao.getListaUniversid();
                 String TipoCampo = cbxTipoOrden.getSelectedItem().toString();
 
                 switch (TipoCampo) {
@@ -745,13 +705,17 @@ public class VistaGestionUniversidad extends javax.swing.JFrame {
     private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyTyped
         
         Character c = evt.getKeyChar();
+        String telefono = txtTelefono.getText();
 
-        if (!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE) {
+        if (!Character.isDigit(c) && c != '(' && c != ')' && c != '-' && c != KeyEvent.VK_BACK_SPACE) {
             evt.consume();
-            JOptionPane.showMessageDialog(null, "Solo ingreso de numeros", "CARACTER NO VALIDO", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Solo ingreso de números y caracteres especiales (, ), -", "CARACTER NO VALIDO", JOptionPane.WARNING_MESSAGE);
         }
-        if (txtTelefono.getText().length() >= 10 && c != KeyEvent.VK_BACK_SPACE) {
+        if (telefono.length() >= 14 && c != KeyEvent.VK_BACK_SPACE) {
             evt.consume();
+        }
+        if ((telefono.length() == 2 || telefono.length() == 6) && c != KeyEvent.VK_BACK_SPACE) {
+            txtTelefono.setText(telefono + "-");
         }
         
     }//GEN-LAST:event_txtTelefonoKeyTyped

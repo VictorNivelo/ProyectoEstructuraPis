@@ -77,6 +77,9 @@ public class VistaGestionMallaCurricular extends javax.swing.JFrame {
     
     private boolean mallaExiste(MallaC nuevaMalla) {
         ListaDinamica<MallaC> mallas = mallaControlDao.getListaMalla();
+        if (mallas.EstaVacio()) {
+            return false;
+        }
         for (MallaC m : mallas.toArray()) {
             if (m.getNombreMallaCurricular().equals(nuevaMalla.getNombreMallaCurricular())
                     && m.getDuracionMallaCurricular().equals(nuevaMalla.getDuracionMallaCurricular())

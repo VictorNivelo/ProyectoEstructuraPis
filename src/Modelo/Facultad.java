@@ -6,9 +6,9 @@ package Modelo;
  * @author Victor
  */
 public class Facultad {
-    private Integer IdF;
-    private String NombreF;
-    private String FechaCF;
+    private Integer IdFacultad;
+    private String NombreFacultad;
+    private String FechaCreacion;
     
     private Universidad universidadFacultad;
     private Integer UniversidadID;
@@ -18,27 +18,27 @@ public class Facultad {
     }
 
     public Integer getIdFacultad() {
-        return IdF;
+        return IdFacultad;
     }
 
     public void setIdFacultad(Integer IdFacultad) {
-        this.IdF = IdFacultad;
+        this.IdFacultad = IdFacultad;
     }
 
     public String getNombreFacultad() {
-        return NombreF;
+        return NombreFacultad;
     }
 
     public void setNombreFacultad(String NombreFacultad) {
-        this.NombreF = NombreFacultad;
+        this.NombreFacultad = NombreFacultad;
     }
 
     public String getFechaCreacion() {
-        return FechaCF;
+        return FechaCreacion;
     }
 
     public void setFechaCreacion(String FechaCreacion) {
-        this.FechaCF = FechaCreacion;
+        this.FechaCreacion = FechaCreacion;
     }
 
     public Universidad getUniversidadFacultad() {
@@ -59,7 +59,7 @@ public class Facultad {
         
     @Override
     public String toString() {
-        return NombreF +  "\n";
+        return NombreFacultad +  "\n";
     }
     
 }

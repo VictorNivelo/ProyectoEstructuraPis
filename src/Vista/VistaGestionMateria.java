@@ -77,6 +77,9 @@ public class VistaGestionMateria extends javax.swing.JFrame {
         
     private boolean materiaExiste(Materia nuevaMateria) {
         ListaDinamica<Materia> materias = materiaControlDao.getListaMateria();
+        if (materias.EstaVacio()) {
+            return false;
+        }
         for (Materia m : materias.toArray()) {
             if (m.getNombreMateria().equals(nuevaMateria.getNombreMateria())
                     && m.getDescipcionMateria().equals(nuevaMateria.getDescipcionMateria())

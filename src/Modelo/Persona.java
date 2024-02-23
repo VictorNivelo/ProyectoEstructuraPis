@@ -6,96 +6,96 @@ package Modelo;
  * @author Victor
  */
 public class Persona {
-    private Integer IdP;
-    private String TipoDNI;
-    private String NroDNIP;
-    private String NombreP;
-    private String ApellidoP;
-    private String GeneroP;
-    private String FechaNP;
-    private String DireP;
-    private String TelefonoP;
+    private Integer IdPersona;
+    private String TipoDni;
+    private String NumeroCedula;
+    private String Nombre;
+    private String Apellido;
+    private String Genero;
+    private String FechaNacimineto;
+    private String Direccion;
+    private String Telefono;
     
     private Rol rolPersona;
-    private Integer idRol;
+    private Integer RolID;
     
     private Cuenta cuentaPersona;
-    private Integer idCuenta;
+    private Integer CuendaID;
     
     public Persona() {
         
     }
 
     public Integer getIdPersona() {
-        return IdP;
+        return IdPersona;
     }
 
     public void setIdPersona(Integer IdPersona) {
-        this.IdP = IdPersona;
+        this.IdPersona = IdPersona;
     }
 
     public String getTipoDni() {
-        return TipoDNI;
+        return TipoDni;
     }
 
     public void setTipoDni(String TipoDni) {
-        this.TipoDNI = TipoDni;
+        this.TipoDni = TipoDni;
     }
 
     public String getNumeroCedula() {
-        return NroDNIP;
+        return NumeroCedula;
     }
 
     public void setNumeroCedula(String NumeroCedula) {
-        this.NroDNIP = NumeroCedula;
+        this.NumeroCedula = NumeroCedula;
     }
 
     public String getNombre() {
-        return NombreP;
+        return Nombre;
     }
 
     public void setNombre(String Nombre) {
-        this.NombreP = Nombre;
+        this.Nombre = Nombre;
     }
 
     public String getApellido() {
-        return ApellidoP;
+        return Apellido;
     }
 
     public void setApellido(String Apellido) {
-        this.ApellidoP = Apellido;
+        this.Apellido = Apellido;
     }
 
     public String getGenero() {
-        return GeneroP;
+        return Genero;
     }
 
     public void setGenero(String Genero) {
-        this.GeneroP = Genero;
+        this.Genero = Genero;
     }
 
     public String getFechaNacimineto() {
-        return FechaNP;
+        return FechaNacimineto;
     }
 
     public void setFechaNacimineto(String FechaNacimineto) {
-        this.FechaNP = FechaNacimineto;
+        this.FechaNacimineto = FechaNacimineto;
     }
 
     public String getDireccion() {
-        return DireP;
+        return Direccion;
     }
 
     public void setDireccion(String Direccion) {
-        this.DireP = Direccion;
+        this.Direccion = Direccion;
     }
 
     public String getTelefono() {
-        return TelefonoP;
+        return Telefono;
     }
 
     public void setTelefono(String Telefono) {
-        this.TelefonoP = Telefono;
+        this.Telefono = Telefono;
     }
 
     public Rol getRolPersona() {
@@ -115,24 +115,24 @@ public class Persona {
     }
 
     public Integer getRolID() {
-        return idRol;
+        return RolID;
     }
 
     public void setRolID(Integer RolID) {
-        this.idRol = RolID;
+        this.RolID = RolID;
     }
 
     public Integer getCuendaID() {
-        return idCuenta;
+        return CuendaID;
     }
 
     public void setCuendaID(Integer CuendaID) {
-        this.idCuenta = CuendaID;
+        this.CuendaID = CuendaID;
     }
 
     @Override
     public String toString() {
-        return NroDNIP + " " + NombreP  +" "+ ApellidoP +  "\n";
+        return NumeroCedula + " " + Nombre  +" "+ Apellido +  "\n";
     }
 
 }

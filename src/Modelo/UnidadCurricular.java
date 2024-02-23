@@ -6,45 +6,45 @@ package Modelo;
  * @author Victor
  */
 public class UnidadCurricular {
-    private Integer IdUC;
-    private String CodigoUC;
-    private String NombreUC;
-    private String DescripcionUC;
+    private Integer IdUnidadCurricular;
+    private String CodigoUnidadCurricular;
+    private String NombreUnidadCurricular;
+    private String DescripcionUnidadCurricular;
     
     private MallaC mallaCurricularUnidadCurricular;
     private Integer MallaCurricularID;
     
 
     public Integer getIdUnidadCurricular() {
-        return IdUC;
+        return IdUnidadCurricular;
     }
 
     public void setIdUnidadCurricular(Integer IdUnidadCurricular) {
-        this.IdUC = IdUnidadCurricular;
+        this.IdUnidadCurricular = IdUnidadCurricular;
     }
 
     public String getCodigoUnidadCurricular() {
-        return CodigoUC;
+        return CodigoUnidadCurricular;
     }
 
     public void setCodigoUnidadCurricular(String CodigoUnidadCurricular) {
-        this.CodigoUC = CodigoUnidadCurricular;
+        this.CodigoUnidadCurricular = CodigoUnidadCurricular;
     }
 
     public String getNombreUnidadCurricular() {
-        return NombreUC;
+        return NombreUnidadCurricular;
     }
 
     public void setNombreUnidadCurricular(String NombreUnidadCurricular) {
-        this.NombreUC = NombreUnidadCurricular;
+        this.NombreUnidadCurricular = NombreUnidadCurricular;
     }
 
     public String getDescripcionUnidadCurricular() {
-        return DescripcionUC;
+        return DescripcionUnidadCurricular;
     }
 
     public void setDescripcionUnidadCurricular(String DescripcionUnidadCurricular) {
-        this.DescripcionUC = DescripcionUnidadCurricular;
+        this.DescripcionUnidadCurricular = DescripcionUnidadCurricular;
     }
 
     public MallaC getMallaCurricularUnidadCurricular() {
@@ -65,7 +65,7 @@ public class UnidadCurricular {
 
     @Override
     public String toString() {
-        return CodigoUC + " " +NombreUC + "\n";
+        return CodigoUnidadCurricular + " " +NombreUnidadCurricular + "\n";
     }
     
 }

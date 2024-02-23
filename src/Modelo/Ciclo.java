@@ -8,7 +8,7 @@ package Modelo;
  */
 public class Ciclo {
     private Integer IdCiclo;
-    private Integer NroCiclo;
+    private Integer NumeroCiclo;
     
     private NombreCiclo NombreCiclo;
     private Integer NombreCicloID;
@@ -37,11 +37,11 @@ public class Ciclo {
     }
 
     public Integer getNumeroCiclo() {
-        return NroCiclo;
+        return NumeroCiclo;
     }
 
     public void setNumeroCiclo(Integer NumeroCiclo) {
-        this.NroCiclo = NumeroCiclo;
+        this.NumeroCiclo = NumeroCiclo;
     }
 
     public UnidadCurricular getUnidadCurricularCiclo() {

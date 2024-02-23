@@ -1,1 +1,1 @@
-{"Controlador.TDA.ListaDinamica.ListaDinamica":{"cabezera":{"info":{"@class":"Modelo.Paralelo","IdParalelo":1,"CodigoP":"P-0001","NombreP":"A"}},"ultimo":{"@reference":"..\/cabezera"},"Longitud":1}}
+{"Controlador.TDA.ListaDinamica.ListaDinamica":{"cabezera":{"info":{"@class":"Modelo.Paralelo","IdParalelo":1,"CodigoParalelo":"P-0001","Nombre":"A"}},"ultimo":{"@reference":"..\/cabezera"},"Longitud":1}}

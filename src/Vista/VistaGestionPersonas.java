@@ -115,10 +115,13 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
         String numeroCedula = txtNumeroCedula.getText();
         
         boolean numeroCedulaExistente = false;
-        for (Persona persona : personaControlDao.getListaPersonas().toArray()) {
-            if (persona.getNumeroCedula().equals(numeroCedula)) {
-                numeroCedulaExistente = true;
-                break;
+        ListaDinamica<Persona> personas = personaControlDao.getListaPersonas();
+        if (!personas.EstaVacio()) {
+            for (Persona persona : personas.toArray()) {
+                if (persona.getNumeroCedula().equals(numeroCedula)) {
+                    numeroCedulaExistente = true;
+                    break;
+                }
             }
         }
 
@@ -247,6 +250,7 @@ public class VistaGestionPersonas extends javax.swing.JFrame {
         return !date.after(hoy);
     }
 
+    @SuppressWarnings("deprecation")
     private boolean validarFechaNoMenor(Date date) {
         Date fechaLimite = new Date(1900 - 1900, 0, 1);
         return !date.before(fechaLimite);

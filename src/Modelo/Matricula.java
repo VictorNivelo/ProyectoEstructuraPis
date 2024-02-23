@@ -6,13 +6,13 @@ package Modelo;
  * @author Victor
  */
 public class Matricula {
-    private Integer IdMatri;
-    private String CodigoMatr;
-    private String FechaM;
-    private String EstadoM;
+    private Integer IdMatricula;
+    private String CodigoMatricula;
+    private String FechaMatricula;
+    private String EstadoMatricula;
     
     private Alumno alumnoMatricula;
-    private Integer IdAlumno;
+    private Integer AlumnoID;
     
     private PeriodoAcademico periodoAcademicoMatricula;
     private Integer PeriodoID;
@@ -22,35 +22,35 @@ public class Matricula {
     }
 
     public Integer getIdMatricula() {
-        return IdMatri;
+        return IdMatricula;
     }
 
     public void setIdMatricula(Integer IdMatricula) {
-        this.IdMatri = IdMatricula;
+        this.IdMatricula = IdMatricula;
     }
 
     public String getCodigoMatricula() {
-        return CodigoMatr;
+        return CodigoMatricula;
     }
 
     public void setCodigoMatricula(String CodigoMatricula) {
-        this.CodigoMatr = CodigoMatricula;
+        this.CodigoMatricula = CodigoMatricula;
     }
 
     public String getFechaMatricula() {
-        return FechaM;
+        return FechaMatricula;
     }
 
     public void setFechaMatricula(String FechaMatricula) {
-        this.FechaM = FechaMatricula;
+        this.FechaMatricula = FechaMatricula;
     }
 
     public String getEstadoMatricula() {
-        return EstadoM;
+        return EstadoMatricula;
     }
 
     public void setEstadoMatricula(String EstadoMatricula) {
-        this.EstadoM = EstadoMatricula;
+        this.EstadoMatricula = EstadoMatricula;
     }
 
     public PeriodoAcademico getPeriodoAcademicoMatricula() {
@@ -70,11 +70,11 @@ public class Matricula {
     }
 
     public Integer getAlumnoID() {
-        return IdAlumno;
+        return AlumnoID;
     }
 
     public void setAlumnoID(Integer AlumnoID) {
-        this.IdAlumno = AlumnoID;
+        this.AlumnoID = AlumnoID;
     }
 
     public Integer getPeriodoID() {
@@ -87,7 +87,7 @@ public class Matricula {
 
     @Override
     public String toString() {
-        return CodigoMatr +  " " + alumnoMatricula.getDatosAlumno().getNumeroCedula() +  " "+ alumnoMatricula.getDatosAlumno().getNombre() +" "+ alumnoMatricula.getDatosAlumno().getApellido()+"\n";
+        return CodigoMatricula +  " " + alumnoMatricula.getDatosAlumno().getNumeroCedula() +  " "+ alumnoMatricula.getDatosAlumno().getNombre() +" "+ alumnoMatricula.getDatosAlumno().getApellido()+"\n";
     }
     
 }

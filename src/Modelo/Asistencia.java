@@ -6,9 +6,9 @@ package Modelo;
  * @author Victor
  */
 public class Asistencia {
-    private Integer IdAs;
-    private String ObservacionA;
-    private String EstadoA;
+    private Integer IdAsistencia;
+    private String Observacion;
+    private String EstadoAsistencia;
     
     private Horario horarioAsistencia;
     private Integer IdH;
@@ -24,27 +24,27 @@ public class Asistencia {
     }
 
     public Integer getIdAsistencia() {
-        return IdAs;
+        return IdAsistencia;
     }
 
     public void setIdAsistencia(Integer IdAsistencia) {
-        this.IdAs = IdAsistencia;
+        this.IdAsistencia = IdAsistencia;
     }
 
     public String getObservacion() {
-        return ObservacionA;
+        return Observacion;
     }
 
     public void setObservacion(String Observacion) {
-        this.ObservacionA = Observacion;
+        this.Observacion = Observacion;
     }
 
     public String getEstadoAsistencia() {
-        return EstadoA;
+        return EstadoAsistencia;
     }
 
     public void setEstadoAsistencia(String EstadoAsistencia) {
-        this.EstadoA = EstadoAsistencia;
+        this.EstadoAsistencia = EstadoAsistencia;
     }
 
     public Horario getHorarioAsistencia() {
@@ -97,7 +97,7 @@ public class Asistencia {
     
     @Override
     public String toString() {
-        return "Estado: "+EstadoA+"Observacion:" + ObservacionA + "\n";
+        return "Estado: "+EstadoAsistencia+"Observacion:" + Observacion + "\n";
     }
                 
 }

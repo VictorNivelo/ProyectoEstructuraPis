@@ -2,7 +2,6 @@
 package Vista;
 
 import Controlador.Dao.Modelo.cursoDao;
-import Controlador.Dao.Modelo.matriculaDao;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Modelo.Alumno;
 import Modelo.ControlAccesoAlumno;
@@ -127,7 +126,8 @@ public class VistaInicioSesionEstudiante extends javax.swing.JFrame {
                     String apellido = matricula.getMatriculaCursa().getAlumnoMatricula().getDatosAlumno().getApellido();
                     nombreUsuario = nombre + " " + apellido;
                     break;
-                } else {
+                } 
+                else {
                     JOptionPane.showMessageDialog(null, "Solo los alumnos pueden acceder ", "ACCESO DENEGADO", JOptionPane.WARNING_MESSAGE);
                     return;
                 }
@@ -141,20 +141,23 @@ public class VistaInicioSesionEstudiante extends javax.swing.JFrame {
 
             dispose();
             lblNombreAlumnoIngresado.setText(nombreUsuario);
-        } else {
+        } 
+        else {
             JOptionPane.showMessageDialog(null, "Inicio de sesión fallido. Verifique sus credenciales.", "CREDENCIALES INCORRECTAS", JOptionPane.WARNING_MESSAGE);
             txtCorreo.setText("");
             txtContrasenia.setText("");
         }
     }
 
+    @SuppressWarnings("static-access")
     private static void procesarAlumno() {
         try {
             VistaAlumnoPrincipal abrirCalendario = new VistaAlumnoPrincipal();
             abrirCalendario.setVisible(true);
             String nombreAlumno = ControlAccesoAlumno.getNombreAlumnoLogeado();
             abrirCalendario.lblNombreAlumnoIngresado.setText(nombreAlumno);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
     }
