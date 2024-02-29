@@ -51,7 +51,6 @@ public class VistaDocentePrincipal extends javax.swing.JFrame {
             try {
                 String imagen = listaPresentacion.getInfo(i).getImagen();
                 imagenes.Agregar(imagen);
-                System.out.println(i);
             } 
             catch (ListaVacia ex) {
                 

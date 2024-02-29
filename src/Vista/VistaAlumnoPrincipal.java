@@ -3,6 +3,7 @@ package Vista;
 
 import Controlador.Dao.Modelo.cursoDao;
 import Controlador.Dao.Modelo.horarioDao;
+import Controlador.Dao.Modelo.periodoAcademicoDao;
 import Controlador.Dao.Modelo.presentacionDao;
 import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
@@ -10,10 +11,16 @@ import Modelo.ControlAccesoAlumno;
 import Modelo.Cursa;
 import Modelo.Horario;
 import Modelo.Materia;
+import Modelo.PeriodoAcademico;
 import Modelo.Presentacion;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
@@ -25,6 +32,7 @@ import javax.swing.Timer;
 public class VistaAlumnoPrincipal extends javax.swing.JFrame {
     horarioDao horarioControlDao = new horarioDao();;
     cursoDao cursaControlDao = new cursoDao();
+    periodoAcademicoDao periodoControlDao = new periodoAcademicoDao();
     presentacionDao presentacionControlDao = new presentacionDao();
     private ListaDinamica<Presentacion> listaPresentacion = presentacionControlDao.all();
     private ListaDinamica<String> imagenes = new ListaDinamica<>();
@@ -143,6 +151,69 @@ public class VistaAlumnoPrincipal extends javax.swing.JFrame {
         String nombreAlumno = ControlAccesoAlumno.getNombreAlumnoLogeado();
         lblNombreAlumnoIngresado.setText(nombreAlumno);
     }
+    
+    private boolean esDiaLaborable(String diaSemana, Date fechaInicioPeriodo, Date fechaFinPeriodo) {
+        Date fechaActual = new Date();
+        if (fechaActual.compareTo(fechaInicioPeriodo) >= 0 && fechaActual.compareTo(fechaFinPeriodo) <= 0) {
+            String[] diasLaborables = {"Lunes", "Martes", "Miercoles", "Jueves", "Viernes"};
+
+            for (String dia : diasLaborables) {
+                if (dia.equalsIgnoreCase(diaSemana)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private Date convertirStringADate(String fechaString) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            return sdf.parse(fechaString);
+        } 
+        catch (ParseException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+    
+    public static PeriodoAcademico obtenerPeriodoAcademicoActivo(ListaDinamica<PeriodoAcademico> periodos) {
+        Date fechaActual = new Date();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        String fechaActualString = sdf.format(fechaActual);
+
+        for (PeriodoAcademico periodo : periodos.toArray()) {
+            try {
+                Date fechaInicio = sdf.parse(periodo.getFechaInicio());
+                Date fechaFin = sdf.parse(periodo.getFechaFin());
+
+                if (fechaActual.after(fechaInicio) && fechaActual.before(fechaFin)) {
+                    return periodo;
+                }
+            } 
+            catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return null;
+    }
+
+    public static boolean fechaEnPeriodoAcademico(Date fecha, PeriodoAcademico periodo) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+        try {
+            Date fechaInicio = sdf.parse(periodo.getFechaInicio());
+            Date fechaFin = sdf.parse(periodo.getFechaFin());
+
+            return fecha.after(fechaInicio) && fecha.before(fechaFin);
+        } 
+        catch (ParseException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -159,10 +230,10 @@ public class VistaAlumnoPrincipal extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         lblNombreAlumnoIngresado = new javax.swing.JLabel();
         btnRegresar = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnMostrarCalendario = new javax.swing.JButton();
         cbxMateriaAlumno = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        btnVerMateria = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("VISTA GENERAL ALUMNO");
@@ -198,7 +269,7 @@ public class VistaAlumnoPrincipal extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(175, 175, 175)
                         .addComponent(lblNombreAlumnoIngresado, javax.swing.GroupLayout.PREFERRED_SIZE, 494, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(437, Short.MAX_VALUE))
+                .addContainerGap(318, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -222,12 +293,12 @@ public class VistaAlumnoPrincipal extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Calendario.png"))); // NOI18N
-        jButton1.setText("CALENDARIO");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnMostrarCalendario.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        btnMostrarCalendario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Calendario.png"))); // NOI18N
+        btnMostrarCalendario.setText("CALENDARIO");
+        btnMostrarCalendario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnMostrarCalendarioActionPerformed(evt);
             }
         });
 
@@ -236,12 +307,12 @@ public class VistaAlumnoPrincipal extends javax.swing.JFrame {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("MATERIA");
 
-        jButton3.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/PorcentajeAsistencia.png"))); // NOI18N
-        jButton3.setText("VER MATERIA");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnVerMateria.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        btnVerMateria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/PorcentajeAsistencia.png"))); // NOI18N
+        btnVerMateria.setText("VER MATERIA");
+        btnVerMateria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnVerMateriaActionPerformed(evt);
             }
         });
 
@@ -249,26 +320,25 @@ public class VistaAlumnoPrincipal extends javax.swing.JFrame {
         panelPrincipal.setLayout(panelPrincipalLayout);
         panelPrincipalLayout.setHorizontalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 1319, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 1200, Short.MAX_VALUE)
             .addGroup(panelPrincipalLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelPrincipalLayout.createSequentialGroup()
-                        .addGap(658, 658, 658)
-                        .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cbxMateriaAlumno, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(panelPrincipalLayout.createSequentialGroup()
                         .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelPrincipalLayout.createSequentialGroup()
                                 .addComponent(btnRegresar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton1))
+                                .addComponent(btnMostrarCalendario))
                             .addGroup(panelPrincipalLayout.createSequentialGroup()
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE)))
-                        .addContainerGap())))
+                        .addContainerGap())
+                    .addGroup(panelPrincipalLayout.createSequentialGroup()
+                        .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cbxMateriaAlumno, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnVerMateria, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         panelPrincipalLayout.setVerticalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -276,14 +346,14 @@ public class VistaAlumnoPrincipal extends javax.swing.JFrame {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
-                .addGap(155, 155, 155)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cbxMateriaAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 250, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnVerMateria)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 411, Short.MAX_VALUE)
                 .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRegresar)
-                    .addComponent(jButton1))
+                    .addComponent(btnMostrarCalendario))
                 .addContainerGap())
         );
 
@@ -318,7 +388,7 @@ public class VistaAlumnoPrincipal extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnRegresarActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnMostrarCalendarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarCalendarioActionPerformed
         
         try {
             VistaCalendarioAlumno vistaCalendarioAlumno = new VistaCalendarioAlumno();
@@ -339,8 +409,6 @@ public class VistaAlumnoPrincipal extends javax.swing.JFrame {
                         if (idAlumnoCursa == idAlumnoLogeado && idMateriaHorario == cursa.getMateriaCursa().getIdMateria()) {
                             String diaSemana = horario.getDiaSemana();
                             String nombreMateria = cursa.getMateriaCursa().getNombreMateria();
-//                            String cicloMateria = cursa.getMateriaCursa().getCicloMateria().getNombreCiclo().getNombreCiclo();
-//                            String paraleloMateria = cursa.getParaleloCursa().getNombre();
                             String horaInicio = horario.getHoraIncio();
                             String horaFin = horario.getHoraFin();
                             String mensaje = nombreMateria + " - " + horaInicio + " - " + horaFin;
@@ -349,6 +417,7 @@ public class VistaAlumnoPrincipal extends javax.swing.JFrame {
                         }
                     }
                 }
+
                 vistaCalendarioAlumno.setVisible(true);
                 this.setVisible(false);
             } 
@@ -359,16 +428,55 @@ public class VistaAlumnoPrincipal extends javax.swing.JFrame {
         catch (Exception e) {
             e.printStackTrace();
         }
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         
+//        try {
+//            VistaCalendarioAlumno vistaCalendarioAlumno = new VistaCalendarioAlumno();
+//
+//            Integer idAlumnoLogeado = ControlAccesoAlumno.getIdAlumnoLogeado();
+//            if (idAlumnoLogeado != null) {
+//                ListaDinamica<Horario> listaHorarios = horarioControlDao.all();
+//                ListaDinamica<Cursa> listaCursas = cursaControlDao.all();
+//
+//                for (int i = 0; i < listaHorarios.getLongitud(); i++) {
+//                    Horario horario = listaHorarios.getInfo(i);
+//                    int idMateriaHorario = horario.getMateriaHorario().getIdMateria();
+//
+//                    for (int j = 0; j < listaCursas.getLongitud(); j++) {
+//                        Cursa cursa = listaCursas.getInfo(j);
+//                        int idAlumnoCursa = cursa.getMatriculaCursa().getAlumnoMatricula().getIdAlumno();
+//
+//                        if (idAlumnoCursa == idAlumnoLogeado && idMateriaHorario == cursa.getMateriaCursa().getIdMateria()) {
+//                            String diaSemana = horario.getDiaSemana();
+//                            String nombreMateria = cursa.getMateriaCursa().getNombreMateria();
+//                            String horaInicio = horario.getHoraIncio();
+//                            String horaFin = horario.getHoraFin();
+//                            String mensaje = nombreMateria + " - " + horaInicio + " - " + horaFin;
+//
+//                            vistaCalendarioAlumno.AgregarEvento(diaSemana, mensaje);
+//                        }
+//                    }
+//                }
+//                vistaCalendarioAlumno.setVisible(true);
+//                this.setVisible(false);
+//            } 
+//            else {
+//                System.out.println("No hay alumno logeado en este momento.");
+//            }
+//        } 
+//        catch (Exception e) {
+//            e.printStackTrace();
+//        }
+        
+    }//GEN-LAST:event_btnMostrarCalendarioActionPerformed
+
+    private void btnVerMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerMateriaActionPerformed
+
         VistaAlumnoMaterias vm = new VistaAlumnoMaterias();
         vm.setVisible(true);
         this.setVisible(false);
-        
-    }//GEN-LAST:event_jButton3ActionPerformed
+
+    }//GEN-LAST:event_btnVerMateriaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -411,10 +519,10 @@ public class VistaAlumnoPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnMostrarCalendario;
     private javax.swing.JButton btnRegresar;
+    private javax.swing.JButton btnVerMateria;
     private javax.swing.JComboBox<Object> cbxMateriaAlumno;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

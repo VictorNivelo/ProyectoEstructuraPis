@@ -21,7 +21,10 @@ import Modelo.Persona;
 import Modelo.Tematica;
 import Vista.Utiles.UtilVista;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import javax.swing.JOptionPane;
 
@@ -36,9 +39,12 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
     cursoDao cursaControlDao = new cursoDao();
     horarioDao horarioControlDao = new horarioDao();
     asistenciaDao asistenciaControlDao = new asistenciaDao();
+    Materia materiaSeleccionada;
+    ListaDinamica<Horario> listaHorarios;
     ListaDinamica<Asistencia> listaAsistencia = new ListaDinamica<>();
-    private Materia materiaSeleccionada;
-    private ListaDinamica<Horario> listaHorarios;
+    int numeroSecuencia = 1;
+    SimpleDateFormat Formato = new SimpleDateFormat("dd/MMMM/yyyy");
+    Map<Integer, Integer> secuenciaAlumnoMap = new HashMap<>();
 
     /**
      * Creates new form VistaTomaAsistencia
@@ -93,15 +99,18 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
             }
         }
     }
-    
+
     private void CargarAlumnoTabla(Materia materiaSeleccionada) {
         try {
             dtm.setRowCount(0);
-
+            numeroSecuencia = 1;
+            secuenciaAlumnoMap.clear();
             ListaDinamica<Alumno> listaAlumnos = obtenerAlumnosDeMateria(materiaSeleccionada);
 
             for (Alumno alumno : listaAlumnos.toArray()) {
-                dtm.addRow(new Object[]{alumno.getDatosAlumno().getIdPersona(), alumno.getDatosAlumno().getNumeroCedula(), alumno.getDatosAlumno().getNombre(), alumno.getDatosAlumno().getApellido(), true});
+                dtm.addRow(new Object[]{numeroSecuencia, alumno.getDatosAlumno().getNumeroCedula(), alumno.getDatosAlumno().getNombre(), alumno.getDatosAlumno().getApellido(), true});
+                secuenciaAlumnoMap.put(numeroSecuencia, alumno.getDatosAlumno().getIdPersona());
+                numeroSecuencia++;
             }
         } 
         catch (Exception e) {
@@ -137,13 +146,34 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
         cbxHorario.setSelectedIndex(-1);
         txtTematica.setText("");
         txtObservacion.setText("");
-        asistenciaControlDao.setAsistencias(null);
+        asistenciaControlDao.setAsistencia(null);
         dtm.setRowCount(0);
         CargarTablaAlumnos();
     }
     
+    private boolean asistenciaExiste(Asistencia nuevaAsistencia) {
+        ListaDinamica<Asistencia> asistencias = asistenciaControlDao.all();
+        if (asistencias.EstaVacio()) {
+            return false;
+        }
+        for (Asistencia a : asistencias.toArray()) {
+            if (a.getAlumnoAsistencia().getIdAlumno().equals(nuevaAsistencia.getAlumnoAsistencia().getIdAlumno())
+                    && a.getFechaAsistencia().equals(nuevaAsistencia.getFechaAsistencia())
+                    && a.getHorarioAsistencia().getIdHorario().equals(nuevaAsistencia.getHorarioAsistencia().getIdHorario())) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
     private void Guardar() throws ListaVacia {
         Date fechaIngresada = DateFechaActual.getDate();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(DateFechaActual.getDate());
+        int diaSeleccionado = calendar.get(Calendar.DAY_OF_WEEK);
+        String diaHorario = UtilVista.obtenerHorarioControl(cbxHorario).getDiaSemana();
+        int diaHorarioNumerico = convertirDiaSemanaANumero(diaHorario);
+
         if (DateFechaActual.getDate() == null) {
             JOptionPane.showMessageDialog(null, "Falta seleccionar la fecha", "Error", JOptionPane.WARNING_MESSAGE);
         } 
@@ -159,58 +189,86 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
         else if (txtObservacion.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Falta llenar la observacion", "Error", JOptionPane.WARNING_MESSAGE);
         } 
+        else if (diaSeleccionado != diaHorarioNumerico) {
+            JOptionPane.showMessageDialog(null, "El día seleccionado no coincide con el día del horario", "Error", JOptionPane.WARNING_MESSAGE);
+        } 
         else {
-            boolean asistenciaGuardadaExitosamente = false;
-            try {
-                for (int i = 0; i < tblt.getRowCount(); i++) {
-                    boolean estaPresente = (boolean) tblt.getValueAt(i, 4);
-                    String estadoAsistencia = estaPresente ? "Presente" : "Ausente";
+            boolean asistenciaGuardada = false;
 
-                    Alumno alumno = obtenerAlumnoDesdeTabla(i);
+            for (int i = 0; i < tblt.getRowCount(); i++) {
+                boolean estaPresente = (boolean) tblt.getValueAt(i, 4);
+                String estadoAsistencia = estaPresente ? "Presente" : "Ausente";
 
-                    if (alumno != null) {
-                        Integer idAsistencia = listaAsistencia.getLongitud() + 1;
+                Alumno alumno = obtenerAlumnoDesdeTabla(i);
 
-                        Asistencia nuevaAsistencia = new Asistencia();
-                        nuevaAsistencia.setIdAsistencia(idAsistencia);
-                        nuevaAsistencia.setEstadoAsistencia(estadoAsistencia);
-                        nuevaAsistencia.setObservacion(txtObservacion.getText());
-                        nuevaAsistencia.setHorarioAsistencia(UtilVista.obtenerHorarioControl(cbxHorario));
+                if (alumno != null) {
+                    Integer idA = listaAsistencia.getLongitud()+1;
+                    Date fechaAsistencia = DateFechaActual.getDate();
+                    String Fecha = Formato.format(fechaAsistencia);
 
-                        String fechaTematica = formatearFecha(fechaIngresada);
-                        
-                        Integer IdTematica = listaAsistencia.getLongitud() + 1;
-                        Tematica nuevaTematica = new Tematica();
-                        nuevaTematica.setIdTematica(IdTematica);
-                        nuevaTematica.setNombreTematica(txtTematica.getText());
-                        nuevaTematica.setFechaTematica(fechaTematica);
-                        nuevaAsistencia.setTematicaAsistencia(nuevaTematica);
+                    Asistencia nuevaAsistencia = new Asistencia();
+                    nuevaAsistencia.setIdAsistencia(idA);
+                    nuevaAsistencia.setFechaAsistencia(Fecha);
+                    nuevaAsistencia.setEstadoAsistencia(estadoAsistencia);
+                    nuevaAsistencia.setObservacion(txtObservacion.getText());
+                    nuevaAsistencia.setHorarioAsistencia(UtilVista.obtenerHorarioControl(cbxHorario));
 
-                        nuevaAsistencia.setAlumnoAsistencia(alumno);
+                    Tematica nuevaTematica = new Tematica();
+                    nuevaTematica.setIdTematica(idA);
+                    nuevaTematica.setNombreTematica(txtTematica.getText());
+                    String fechaTematica = formatearFecha(fechaIngresada);
+                    nuevaTematica.setFechaTematica(fechaTematica);
+                    nuevaAsistencia.setTematicaAsistencia(nuevaTematica);
 
-                        asistenciaControlDao.setAsistencias(nuevaAsistencia);
-                        try {
-                            if (asistenciaControlDao.Persist()) {
-                                asistenciaGuardadaExitosamente = true;
-                            } 
-                            else {
-                                JOptionPane.showMessageDialog(null, "No se pudo guardar la asistencia", "Error", JOptionPane.ERROR_MESSAGE);
-                            }
-                        } 
-                        catch (Exception e) {
-                            e.printStackTrace();
-                        }
+                    nuevaAsistencia.setAlumnoAsistencia(alumno);
+                    
+                    if (asistenciaExiste(nuevaAsistencia)) {
+                        JOptionPane.showMessageDialog(null, "La asistencia ya existe para este dia y horario", "Error", JOptionPane.INFORMATION_MESSAGE);
+                        return;
+                    }
+                    
+                    if (asistenciaControlDao.Persist(nuevaAsistencia)) {
+                        asistenciaGuardada = true;
+                    } 
+                    else {
+                        JOptionPane.showMessageDialog(null, "No se pudo guardar la asistencia del alumno: " + alumno.getDatosAlumno().getNombre(), "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 }
-                if (asistenciaGuardadaExitosamente) {
-                    JOptionPane.showMessageDialog(null, "Asistencia guardada exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE);
-                    asistenciaControlDao.setAsistencias(null);
-                }
-                Limpiar();
-            } 
-            catch (ListaVacia e) {
-                e.printStackTrace();
             }
+
+            if (asistenciaGuardada) {
+                JOptionPane.showMessageDialog(null, "Asistencia guardada exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE);
+                try {
+                    Limpiar();
+                } 
+                catch (ListaVacia ex) {
+                    ex.printStackTrace();
+                }
+            } 
+            else {
+                JOptionPane.showMessageDialog(null, "No se pudo guardar ninguna asistencia", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+    
+    private int convertirDiaSemanaANumero(String diaSemana) {
+        switch (diaSemana) {
+            case "Lunes":
+                return Calendar.MONDAY;
+            case "Martes":
+                return Calendar.TUESDAY;
+            case "Miercoles":
+                return Calendar.WEDNESDAY;
+            case "Jueves":
+                return Calendar.THURSDAY;
+            case "Viernes":
+                return Calendar.FRIDAY;
+            case "Sabado":
+                return Calendar.SATURDAY;
+            case "Domingo":
+                return Calendar.SUNDAY;
+            default:
+                return -1;
         }
     }
     
@@ -218,16 +276,19 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
         Date hoy = new Date();
         return !date.after(hoy);
     }
-    
+
     private Alumno obtenerAlumnoDesdeTabla(int rowIndex) {
-        Integer idPersona = (Integer) tblt.getValueAt(rowIndex, 0);
-        ListaDinamica<Alumno> listaAlumnos = obtenerAlumnosDeMateria(materiaSeleccionada);
-        for (Alumno alumno : listaAlumnos.toArray()) {
-            if (alumno.getDatosAlumno().getIdPersona().equals(idPersona)) {
-                return alumno;
+        Integer numeroSecuencia = (Integer) tblt.getValueAt(rowIndex, 0);
+        Integer idAlumno = secuenciaAlumnoMap.get(numeroSecuencia);
+        if (idAlumno != null) {
+            ListaDinamica<Alumno> listaAlumnos = obtenerAlumnosDeMateria(materiaSeleccionada);
+            for (Alumno alumno : listaAlumnos.toArray()) {
+                if (alumno.getDatosAlumno().getIdPersona().equals(idAlumno)) {
+                    return alumno;
+                }
             }
         }
-    return null;
+        return null;
     }
 
     private void CargarTablaAlumnos() {
@@ -249,7 +310,6 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MMMM/yyyy");
         return sdf.format(fecha);
     }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -391,12 +451,6 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
         jLabel11.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(0, 0, 0));
         jLabel11.setText("Horario");
-
-        cbxHorario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbxHorarioActionPerformed(evt);
-            }
-        });
 
         jLabel12.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(0, 0, 0));
@@ -765,28 +819,6 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_jButton7ActionPerformed
-
-    private void cbxHorarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxHorarioActionPerformed
-        
-//        cbxHorario.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                Horario horarioSeleccionado = (Horario) cbxHorario.getSelectedItem();
-//
-//                if (horarioSeleccionado != null) {
-//                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MMMM/yyyy");
-//                    try {
-//                        Date fechaHorario = dateFormat.parse(horarioSeleccionado.getDiaSemana());
-//                        DateFechaActual.setDate(fechaHorario);
-//                    } catch (Exception ex) {
-//                        ex.printStackTrace();
-//                        JOptionPane.showMessageDialog(null, "Error al obtener la fecha del horario", "Error", JOptionPane.ERROR_MESSAGE);
-//                    }
-//                }
-//            }
-//        });
-        
-    }//GEN-LAST:event_cbxHorarioActionPerformed
 
     /**
      * @param args the command line arguments

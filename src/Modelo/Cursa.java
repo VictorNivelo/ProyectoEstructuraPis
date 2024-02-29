@@ -105,8 +105,6 @@ public class Cursa {
         this.MateriaID = MateriaID;
     }
     
-    
-    
     @Override
     public String toString() {
         return ParaleloCursa + "\n";

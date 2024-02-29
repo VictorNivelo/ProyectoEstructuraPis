@@ -94,12 +94,10 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Falta seleccionar el estado del alumno", "Error", JOptionPane.WARNING_MESSAGE);
         } 
         else {
-            Integer idAlumno = listaAlumnos.getLongitud() + 1;
             String estado = cbxEstado.getSelectedItem().toString();
             Persona datosAlumno = UtilVista.obtenerPersonaAlumnosControl(cbxAlumno);
 
             Alumno nuevoAlumno = new Alumno();
-//            nuevoAlumno.setIdAlumno(idAlumno);
             nuevoAlumno.setDatosAlumno(datosAlumno);
             nuevoAlumno.setEstadoAlumno(estado);
 

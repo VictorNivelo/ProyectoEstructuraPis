@@ -11,10 +11,10 @@ import Modelo.Asistencia;
  */
 public class asistenciaDao extends DaoImplement<Asistencia>{
     private ListaDinamica<Asistencia> listaAsistencia = new ListaDinamica<>();
-    private Asistencia asistencias;
-    
+    private Asistencia asistencia;
+
     public asistenciaDao(){
-        super (Asistencia.class);
+        super(Asistencia.class);
     }
 
     public ListaDinamica<Asistencia> getListaAsistencia() {
@@ -26,20 +26,20 @@ public class asistenciaDao extends DaoImplement<Asistencia>{
         this.listaAsistencia = listaAsistencia;
     }
 
-    public Asistencia getAsistencias() {
-        if(asistencias == null){
-            asistencias = new Asistencia();
+    public Asistencia getAsistencia() {
+        if(asistencia == null){
+            asistencia = new Asistencia();
         }
-        return asistencias;
+        return asistencia;
     }
 
-    public void setAsistencias(Asistencia asistencias) {
-        this.asistencias = asistencias;
+    public void setAsistencia(Asistencia asistencia) {
+        this.asistencia = asistencia;
     }
-
+    
     public Boolean Persist(){
-        asistencias.setIdAsistencia(all().getLongitud()+1);
-        return Persist(asistencias);
+        asistencia.setIdAsistencia(all().getLongitud()+1);
+        return  Persist(asistencia);
     }
     
 }

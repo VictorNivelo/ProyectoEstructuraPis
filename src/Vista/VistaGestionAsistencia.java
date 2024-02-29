@@ -61,7 +61,7 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
         cbxEstadoAsistencia.setSelectedIndex(-1);
         cbxHorario.setSelectedIndex(-1);
         DateFechaTematica.setDate(null);
-        AsistenciaControl.setAsistencias(null);
+        AsistenciaControl.setAsistencia(null);
         CargarTabla();
     }
     
@@ -72,14 +72,14 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
         }
         else{
             try {
-                AsistenciaControl.setAsistencias(mta.getAsistenciaTabla().getInfo(fila));
+                AsistenciaControl.setAsistencia(mta.getAsistenciaTabla().getInfo(fila));
                 
-                txtObservacion.setText(AsistenciaControl.getAsistencias().getObservacion());
-                cbxEstadoAsistencia.setSelectedItem(AsistenciaControl.getAsistencias().getEstadoAsistencia().toString());
-                txtTematica.setText(AsistenciaControl.getAsistencias().getTematicaAsistencia().getNombreTematica());
-                Date Fecha = Formato.parse(AsistenciaControl.getAsistencias().getTematicaAsistencia().getFechaTematica());
+                txtObservacion.setText(AsistenciaControl.getAsistencia().getObservacion());
+                cbxEstadoAsistencia.setSelectedItem(AsistenciaControl.getAsistencia().getEstadoAsistencia().toString());
+                txtTematica.setText(AsistenciaControl.getAsistencia().getTematicaAsistencia().getNombreTematica());
+                Date Fecha = Formato.parse(AsistenciaControl.getAsistencia().getTematicaAsistencia().getFechaTematica());
                 DateFechaTematica.setDate(Fecha);
-                cbxHorario.setSelectedIndex(AsistenciaControl.getAsistencias().getHorarioAsistencia().getIdHorario() -1);
+                cbxHorario.setSelectedIndex(AsistenciaControl.getAsistencia().getHorarioAsistencia().getIdHorario() -1);
 
             } 
             catch (Exception e) {
@@ -128,15 +128,15 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
             t.setFechaTematica(FechaT);
 //            IdAsistencia, TEM, FechaT);
                                     
-            AsistenciaControl.getAsistencias().setIdAsistencia(IdAsistencia);
-            AsistenciaControl.getAsistencias().setHorarioAsistencia(UtilVista.obtenerHorarioControl(cbxHorario));
+            AsistenciaControl.getAsistencia().setIdAsistencia(IdAsistencia);
+            AsistenciaControl.getAsistencia().setHorarioAsistencia(UtilVista.obtenerHorarioControl(cbxHorario));
 //            AsistenciaControl.getAsistencias().setEstadoAsistencia(estadoSeleccionado);
-            AsistenciaControl.getAsistencias().setObservacion(Observacion);
-            AsistenciaControl.getAsistencias().setTematicaAsistencia(t);
+            AsistenciaControl.getAsistencia().setObservacion(Observacion);
+            AsistenciaControl.getAsistencia().setTematicaAsistencia(t);
                         
             if (AsistenciaControl.Persist()) {
                 JOptionPane.showMessageDialog(null, "ASISTENCIA GUARDADA EXISTOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
-                AsistenciaControl.setAsistencias(null);
+                AsistenciaControl.setAsistencia(null);
             } 
             else {
                 JOptionPane.showMessageDialog(null, "NO SE PUEDE REGISTRAR", "INFORMACION", JOptionPane.WARNING_MESSAGE);
@@ -607,7 +607,7 @@ public class VistaGestionAsistencia extends javax.swing.JFrame {
             }
             else {
 
-                Integer IdAsistencia = AsistenciaControl.getAsistencias().getIdAsistencia();
+                Integer IdAsistencia = AsistenciaControl.getAsistencia().getIdAsistencia();
 
                 int indiceSeleccionado = cbxEstadoAsistencia.getSelectedIndex();
                 EstadoAsistencia[] valores = EstadoAsistencia.values();

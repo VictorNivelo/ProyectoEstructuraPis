@@ -19,14 +19,6 @@ public class Asistencia {
         
     }
 
-    public Integer getIdAsistencia() {
-        return IdAsistencia;
-    }
-
-    public void setIdAsistencia(Integer IdAsistencia) {
-        this.IdAsistencia = IdAsistencia;
-    }
-
     public String getFechaAsistencia() {
         return FechaAsistencia;
     }
@@ -73,6 +65,14 @@ public class Asistencia {
 
     public void setTematicaAsistencia(Tematica TematicaAsistencia) {
         this.TematicaAsistencia = TematicaAsistencia;
+    }
+
+    public Integer getIdAsistencia() {
+        return IdAsistencia;
+    }
+
+    public void setIdAsistencia(Integer IdAsistencia) {
+        this.IdAsistencia = IdAsistencia;
     }
     
     @Override

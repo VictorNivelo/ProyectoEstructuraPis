@@ -14,13 +14,16 @@ import Modelo.ControlAccesoDocente;
 import Modelo.Cursa;
 import Modelo.Horario;
 import Modelo.Materia;
-import Modelo.Tematica;
+import Modelo.Persona;
 import Vista.Utiles.UtilVista;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -31,14 +34,15 @@ import javax.swing.table.TableColumn;
  * @author Victor
  */
 public class VistaGestionRegistroAsistencias extends javax.swing.JFrame {
-    alumnoDao alumnoControlDao = new alumnoDao();
     asistenciaDao asistenciaControlDao = new asistenciaDao();
+    DefaultTableModel dtm = new DefaultTableModel();
+    alumnoDao alumnoControlDao = new alumnoDao();
     horarioDao horarioControlDao = new horarioDao();
     cursoDao cursaControlDao = new cursoDao();
-    DefaultTableModel dtm = new DefaultTableModel();
     SimpleDateFormat Formato = new SimpleDateFormat("dd/MMMM/yyyy");
-    private Materia materiaSeleccionada;
-    private ListaDinamica<Horario> listaHorarios;
+    Materia materiaSeleccionada;
+    ListaDinamica<Horario> listaHorarios;
+    Map<Integer, Integer> secuenciaAlumnoMap = new HashMap<>();
 
     /**
      * Creates new form VistaRegistroAsistencias
@@ -47,7 +51,8 @@ public class VistaGestionRegistroAsistencias extends javax.swing.JFrame {
     public VistaGestionRegistroAsistencias() throws ListaVacia {
         initComponents();
         this.setLocationRelativeTo(null);
-        DateFechaSeleccionada.setDateFormatString("dd/MMMM/yyyy");        
+        DateFechaSeleccionada.setDateFormatString("dd/MMMM/yyyy");     
+        setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
         cargarMateriasYHorariosDocente();
         cbxHorario.setSelectedIndex(-1);
         cbxMateria.setSelectedIndex(-1);
@@ -105,21 +110,29 @@ public class VistaGestionRegistroAsistencias extends javax.swing.JFrame {
         return sdf.format(fecha);
     }
     
-    private void CargarTabla() {
-//        mtu.setUnidadCurricularTabla(unidadCurricularControlDao.getListaUnidadCurricular());
-//        tblUnidadCurrricular.setModel(mtu);
-//        tblUnidadCurrricular.updateUI();
-        cbxHorario.setSelectedIndex(-1);
-        cbxMateria.setSelectedIndex(-1);
-        cbxTipoBusqueda.setSelectedIndex(-1);
+    private void CargarTablaAlumnos() {
+        try {
+            Object[] datosLista = cursaControlDao.getListaCursa().toArray();
+            for (Object dato : datosLista) {
+                if (dato instanceof Persona) {
+                    Persona persona = (Persona) dato;
+                    dtm.addRow(new Object[]{persona.getIdPersona(), persona.getNumeroCedula(), persona.getNombre(), persona.getApellido(), true});
+                }
+            }
+        } 
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     
+    @SuppressWarnings("unused")
     private void Limpiar() throws ListaVacia {
         cbxMateria.setSelectedIndex(-1);
         cbxHorario.setSelectedIndex(-1);
         DateFechaSeleccionada.setDate(null);
-        asistenciaControlDao.setAsistencias(null);
-        CargarTabla();
+        asistenciaControlDao.setAsistencia(null);
+        dtm.setRowCount(0);
+        CargarTablaAlumnos();
     }
     
     public  Integer OrdenSeleccionado(){
@@ -133,8 +146,32 @@ public class VistaGestionRegistroAsistencias extends javax.swing.JFrame {
         }
         return null;
     }
-   
     
+    private Alumno obtenerAlumnoDesdeTabla(int rowIndex) {
+        Integer numeroSecuencia = (Integer) tblRegistroAsistencia.getValueAt(rowIndex, 0);
+        Integer idAlumno = secuenciaAlumnoMap.get(numeroSecuencia);
+        if (idAlumno != null) {
+            ListaDinamica<Alumno> listaAlumnos = obtenerAlumnosDeMateria(materiaSeleccionada);
+            for (Alumno alumno : listaAlumnos.toArray()) {
+                if (alumno.getDatosAlumno().getIdPersona().equals(idAlumno)) {
+                    return alumno;
+                }
+            }
+        }
+        return null;
+    }
+    
+    private ListaDinamica<Alumno> obtenerAlumnosDeMateria(Materia materiaSeleccionada) {
+        ListaDinamica<Alumno> listaAlumnos = new ListaDinamica<>();
+        ListaDinamica<Cursa> listaCursas = cursaControlDao.all();
+
+        for (Cursa cursa : listaCursas.toArray()) {
+            if (Objects.equals(cursa.getMateriaCursa().getIdMateria(), materiaSeleccionada.getIdMateria())) {
+                listaAlumnos.Agregar(cursa.getMatriculaCursa().getAlumnoMatricula());
+            }
+        }
+        return listaAlumnos;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -171,10 +208,6 @@ public class VistaGestionRegistroAsistencias extends javax.swing.JFrame {
         btnModificar = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         cbxHorario = new javax.swing.JComboBox<>();
-        jLabel7 = new javax.swing.JLabel();
-        txtTematica = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
-        txtObservacion = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("VISTA REGISTRO DE ASISTENCIA");
@@ -308,14 +341,6 @@ public class VistaGestionRegistroAsistencias extends javax.swing.JFrame {
         jLabel11.setForeground(new java.awt.Color(0, 0, 0));
         jLabel11.setText("Horario");
 
-        jLabel7.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel7.setText("Tematica");
-
-        jLabel9.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel9.setText("Observacion");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -323,29 +348,23 @@ public class VistaGestionRegistroAsistencias extends javax.swing.JFrame {
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jButton2)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnVerRegistro))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE))
-                                .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(DateFechaSeleccionada, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
-                                .addComponent(cbxMateria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(cbxHorario, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(txtObservacion, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE)
-                        .addComponent(txtTematica, javax.swing.GroupLayout.Alignment.LEADING)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnVerRegistro))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE))
+                            .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(DateFechaSeleccionada, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
+                            .addComponent(cbxMateria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbxHorario, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(2, 2, 2)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -420,14 +439,6 @@ public class VistaGestionRegistroAsistencias extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel11)
                             .addComponent(cbxHorario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtTematica, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtObservacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -482,16 +493,17 @@ public class VistaGestionRegistroAsistencias extends javax.swing.JFrame {
                     Alumno p = ResultadoBusqueda.getInfo(i);
                     datos[i] = new Object[]{
                         p.getIdAlumno(),
+                        p.getDatosAlumno().getNumeroCedula(),
                         p.getDatosAlumno().getNombre(),
                         p.getDatosAlumno().getApellido(),};
                 }
 
-                Object[] columnas = {"#", "Nombre", "Apellido", "Asistencia"};
+                Object[] columnas = {"#", "DNI", "Nombre", "Apellido", "Asistencia"};
 
                 DefaultTableModel modeloTabla = new DefaultTableModel(datos, columnas);
 
                 tblRegistroAsistencia.setModel(modeloTabla);
-                AgregarCheckbox(3, tblRegistroAsistencia);
+                AgregarCheckbox(4, tblRegistroAsistencia);
 
             }
         }
@@ -539,18 +551,19 @@ public class VistaGestionRegistroAsistencias extends javax.swing.JFrame {
                     Alumno p = ResultadoBusqueda.getInfo(i);
                     datos[i] = new Object[]{
                         p.getIdAlumno(),
+                        p.getDatosAlumno().getNumeroCedula(),
                         p.getDatosAlumno().getNombre(),
                         p.getDatosAlumno().getApellido(),
                         false
                     };
                 }
 
-                Object[] columnas = {"#", "Nombre", "Apellido", "Asistencia"};
+                Object[] columnas = {"#", "DNI", "Nombre", "Apellido", "Asistencia"};
 
                 DefaultTableModel modeloTabla = new DefaultTableModel(datos, columnas);
 
                 tblRegistroAsistencia.setModel(modeloTabla);
-                AgregarCheckbox(3, tblRegistroAsistencia);
+                AgregarCheckbox(4, tblRegistroAsistencia);
             }
         }
         catch (Exception e) {
@@ -561,18 +574,98 @@ public class VistaGestionRegistroAsistencias extends javax.swing.JFrame {
 
     private void btnVerRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerRegistroActionPerformed
   
-        if(cbxMateria.getSelectedIndex() == -1){
-            JOptionPane.showMessageDialog(null, "No ha seleccionado la materia", "FALTA SELCCIONAR", JOptionPane.WARNING_MESSAGE);
+        try {
+            if (asistenciaControlDao == null) {
+                JOptionPane.showMessageDialog(null, "No hay datos que cargar", "Error", JOptionPane.WARNING_MESSAGE);
+            }
+            else {
+                if (cbxMateria.getSelectedIndex() == -1 || cbxHorario.getSelectedIndex() == -1 || DateFechaSeleccionada.getDate() == null) {
+                    JOptionPane.showMessageDialog(null, "Por favor, seleccione la materia, el horario y la fecha", "Error", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+
+                Date selectedDate = DateFechaSeleccionada.getDate();
+                String fechaFormateada = Formato.format(selectedDate);
+                Horario selectedHorario = UtilVista.obtenerHorarioControl(cbxHorario);
+                Materia selectedMateria = UtilVista.obtenerComboMateria(cbxMateria);
+
+                ListaDinamica<Asistencia> asistencias = asistenciaControlDao.getListaAsistencia();
+
+                List<Object[]> data = new ArrayList<>();
+                for (Asistencia asistencia : asistencias.toArray()) {
+                    if (asistencia.getFechaAsistencia().equals(fechaFormateada)
+                            && asistencia.getHorarioAsistencia().getIdHorario().equals(selectedHorario.getIdHorario())
+                            && asistencia.getHorarioAsistencia().getMateriaHorario().getIdMateria().equals(selectedMateria.getIdMateria())) {
+                        Object[] rowData = new Object[5];
+                        rowData[0] = data.size() + 1;
+                        rowData[1] = asistencia.getAlumnoAsistencia().getDatosAlumno().getNumeroCedula();
+                        rowData[2] = asistencia.getAlumnoAsistencia().getDatosAlumno().getNombre();
+                        rowData[3] = asistencia.getAlumnoAsistencia().getDatosAlumno().getApellido();
+                        rowData[4] = asistencia.getEstadoAsistencia().equals("Presente");
+                        data.add(rowData);
+                    }
+                }
+
+                if (data.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "No hay registros de asistencia para la fecha, horario y materia seleccionados", "Información", JOptionPane.INFORMATION_MESSAGE);
+                } 
+                else {
+                    Object[] columnNames = {"#", "DNI", "Nombre", "Apellido", "Asistencia"};
+                    Object[][] dataArray = data.toArray(new Object[0][0]);
+                    DefaultTableModel model = new DefaultTableModel(dataArray, columnNames);
+                    tblRegistroAsistencia.setModel(model);
+                    AgregarCheckbox(4, tblRegistroAsistencia);
+                }
+            }
+        } 
+        catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al cargar los registros de asistencia", "Error", JOptionPane.ERROR_MESSAGE);
         }
-        else if(DateFechaSeleccionada.getDate() == null){
-            JOptionPane.showMessageDialog(null, "No ha seleccionado la fecha", "FALTA SELCCIONAR", JOptionPane.WARNING_MESSAGE);
-        }
-        else if(cbxHorario.getSelectedIndex() == -1){
-            JOptionPane.showMessageDialog(null, "No ha seleccionado el horario", "FALTA SELCCIONAR", JOptionPane.WARNING_MESSAGE);
-        }
-        else {
-            
-        }
+        
+//        try {
+//            if (cbxMateria.getSelectedIndex() == -1 || cbxHorario.getSelectedIndex() == -1 || DateFechaSeleccionada.getDate() == null) {
+//                JOptionPane.showMessageDialog(null, "Por favor, seleccione la materia, el horario y la fecha", "Error", JOptionPane.WARNING_MESSAGE);
+//                return;
+//            }
+//
+//            Date selectedDate = DateFechaSeleccionada.getDate();
+//            String fechaFormateada = Formato.format(selectedDate);
+//            Horario selectedHorario = UtilVista.obtenerHorarioControl(cbxHorario);
+//            Materia selectedMateria = UtilVista.obtenerComboMateria(cbxMateria);
+//
+//            ListaDinamica<Asistencia> asistencias = asistenciaControlDao.getListaAsistencia();
+//
+//            List<Object[]> data = new ArrayList<>();
+//            for (Asistencia asistencia : asistencias.toArray()) {
+//                if (asistencia.getFechaAsistencia().equals(fechaFormateada)
+//                        && asistencia.getHorarioAsistencia().getIdHorario().equals(selectedHorario.getIdHorario())
+//                        && asistencia.getHorarioAsistencia().getMateriaHorario().getIdMateria().equals(selectedMateria.getIdMateria())) {
+//                    Object[] rowData = new Object[5];
+//                    rowData[0] = data.size() + 1;
+//                    rowData[1] = asistencia.getAlumnoAsistencia().getDatosAlumno().getNumeroCedula();
+//                    rowData[2] = asistencia.getAlumnoAsistencia().getDatosAlumno().getNombre();
+//                    rowData[3] = asistencia.getAlumnoAsistencia().getDatosAlumno().getApellido();
+//                    rowData[4] = asistencia.getEstadoAsistencia().equals("Presente") ? "Presente" : "Ausente";
+//                    data.add(rowData);
+//                }
+//            }
+//
+//            if (data.isEmpty()) {
+//                JOptionPane.showMessageDialog(null, "No hay registros de asistencia para la fecha, horario y materia seleccionados", "Información", JOptionPane.INFORMATION_MESSAGE);
+//            } 
+//            else {
+//                Object[] columnNames = {"#", "DNI", "Nombre", "Apellido", "Asistencia"};
+//                Object[][] dataArray = data.toArray(new Object[0][0]);
+//                DefaultTableModel model = new DefaultTableModel(dataArray, columnNames);
+//                tblRegistroAsistencia.setModel(model);
+//                AgregarCheckbox(4, tblRegistroAsistencia);
+//            }
+//        } 
+//        catch (Exception e) {
+//            e.printStackTrace();
+//            JOptionPane.showMessageDialog(null, "Error al cargar los registros de asistencia", "Error", JOptionPane.ERROR_MESSAGE);
+//        }
         
     }//GEN-LAST:event_btnVerRegistroActionPerformed
 
@@ -604,52 +697,52 @@ public class VistaGestionRegistroAsistencias extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        
+      
         int fila = tblRegistroAsistencia.getSelectedRow();
         if (fila < 0) {
             JOptionPane.showMessageDialog(null, "Escoga un registro");
         } 
         else {
-            if(cbxMateria.getSelectedIndex() == -1){
-            JOptionPane.showMessageDialog(null, "No ha seleccionado la materia", "FALTA SELCCIONAR", JOptionPane.WARNING_MESSAGE);
-        }
-        else if(DateFechaSeleccionada.getDate() == null){
-            JOptionPane.showMessageDialog(null, "No ha seleccionado la fecha", "FALTA SELCCIONAR", JOptionPane.WARNING_MESSAGE);
-        }
-        else if(cbxHorario.getSelectedIndex() == -1){
-            JOptionPane.showMessageDialog(null, "No ha seleccionado el horario", "FALTA SELCCIONAR", JOptionPane.WARNING_MESSAGE);
-        }
-        else {
-
-                Integer IdAsistencia = asistenciaControlDao.getAsistencias().getIdAsistencia();
-                Date FechaSF = DateFechaSeleccionada.getDate();
-                String Fecha = Formato.format(FechaSF);
-                String Horario = cbxHorario.getSelectedItem().toString();
-                String Observacion = txtObservacion.getText();
-
-                Asistencia asistenciaModificada = new Asistencia();
-                asistenciaModificada.setIdAsistencia(IdAsistencia);
-                asistenciaModificada.setFechaAsistencia(Fecha);
-                asistenciaModificada.setObservacion(Observacion);
-                asistenciaModificada.setHorarioAsistencia(UtilVista.obtenerHorarioControl(cbxHorario));
-                                
-                //Alumno
-                
-                //Tematica
-
-                asistenciaControlDao.Merge(asistenciaModificada, IdAsistencia - 1);
-
-                CargarTabla();
-
+            if (cbxMateria.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Falta seleccionar la materia", "Error", JOptionPane.WARNING_MESSAGE);
+            } 
+            else if (DateFechaSeleccionada.getDate() == null) {
+                JOptionPane.showMessageDialog(null, "Falta seleccionar la fecha", "Error", JOptionPane.WARNING_MESSAGE);
+            } 
+            else if (cbxHorario.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Falta seleccionar el horario", "Error", JOptionPane.WARNING_MESSAGE);
+            } 
+            else {
+                for (int i = 0; i < tblRegistroAsistencia.getRowCount(); i++) {
+                    boolean estaPresente = (boolean) tblRegistroAsistencia.getValueAt(i, 4);
+                    String estadoAsistencia = estaPresente ? "Presente" : "Ausente";
+                    Alumno alumno = obtenerAlumnoDesdeTabla(i);
+                    
+                    Date fechaAsistencia = DateFechaSeleccionada.getDate();
+                    String Fecha = Formato.format(fechaAsistencia);
+                    
+                    Asistencia asistenciaModificadad = new Asistencia();
+                    asistenciaModificadad.setIdAsistencia(fila+1);
+                    asistenciaModificadad.setAlumnoAsistencia(alumno);
+                    asistenciaModificadad.setHorarioAsistencia(UtilVista.obtenerHorarioControl(cbxHorario));
+                    asistenciaModificadad.setObservacion(asistenciaControlDao.getAsistencia().getObservacion());
+                    asistenciaModificadad.setEstadoAsistencia(estadoAsistencia);
+                    asistenciaModificadad.setFechaAsistencia(Fecha);
+                    asistenciaModificadad.setTematicaAsistencia(asistenciaControlDao.getAsistencia().getTematicaAsistencia());
+                    
+                    asistenciaControlDao.Merge(asistenciaModificadad, fila);
+                    
+                    CargarTablaAlumnos();
+                }
                 try {
                     Limpiar();
                 } 
-                catch (ListaVacia ex) {
-
+                catch (Exception e) {
+                    
                 }
             }
         }
-        
+
     }//GEN-LAST:event_btnModificarActionPerformed
 
     /**
@@ -685,8 +778,9 @@ public class VistaGestionRegistroAsistencias extends javax.swing.JFrame {
             public void run() {
                 try {
                     new VistaGestionRegistroAsistencias().setVisible(true);
-                } catch (ListaVacia ex) {
-                    Logger.getLogger(VistaGestionRegistroAsistencias.class.getName()).log(Level.SEVERE, null, ex);
+                } 
+                catch (ListaVacia ex) {
+                    
                 }
             }
         });
@@ -713,15 +807,11 @@ public class VistaGestionRegistroAsistencias extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblRegistroAsistencia;
     private javax.swing.JTextField txtBuscar;
-    private javax.swing.JTextField txtObservacion;
-    private javax.swing.JTextField txtTematica;
     // End of variables declaration//GEN-END:variables
 }
