@@ -699,49 +699,94 @@ public class VistaGestionRegistroAsistencias extends javax.swing.JFrame {
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
       
         int fila = tblRegistroAsistencia.getSelectedRow();
-        if (fila < 0) {
-            JOptionPane.showMessageDialog(null, "Escoga un registro");
-        } 
-        else {
-            if (cbxMateria.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar la materia", "Error", JOptionPane.WARNING_MESSAGE);
-            } 
-            else if (DateFechaSeleccionada.getDate() == null) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar la fecha", "Error", JOptionPane.WARNING_MESSAGE);
-            } 
-            else if (cbxHorario.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar el horario", "Error", JOptionPane.WARNING_MESSAGE);
-            } 
-            else {
+    if (fila < 0) {
+        JOptionPane.showMessageDialog(null, "Seleccione un registro", "Error", JOptionPane.WARNING_MESSAGE);
+    } else {
+        if (cbxMateria.getSelectedIndex() == -1 || DateFechaSeleccionada.getDate() == null || cbxHorario.getSelectedIndex() == -1) {
+            JOptionPane.showMessageDialog(null, "Por favor, complete la selección de materia, fecha y horario", "Error", JOptionPane.WARNING_MESSAGE);
+        } else {
+            try {
+                boolean alMenosUnaModificacion = false;
                 for (int i = 0; i < tblRegistroAsistencia.getRowCount(); i++) {
                     boolean estaPresente = (boolean) tblRegistroAsistencia.getValueAt(i, 4);
-                    String estadoAsistencia = estaPresente ? "Presente" : "Ausente";
                     Alumno alumno = obtenerAlumnoDesdeTabla(i);
-                    
-                    Date fechaAsistencia = DateFechaSeleccionada.getDate();
-                    String Fecha = Formato.format(fechaAsistencia);
-                    
-                    Asistencia asistenciaModificadad = new Asistencia();
-                    asistenciaModificadad.setIdAsistencia(fila+1);
-                    asistenciaModificadad.setAlumnoAsistencia(alumno);
-                    asistenciaModificadad.setHorarioAsistencia(UtilVista.obtenerHorarioControl(cbxHorario));
-                    asistenciaModificadad.setObservacion(asistenciaControlDao.getAsistencia().getObservacion());
-                    asistenciaModificadad.setEstadoAsistencia(estadoAsistencia);
-                    asistenciaModificadad.setFechaAsistencia(Fecha);
-                    asistenciaModificadad.setTematicaAsistencia(asistenciaControlDao.getAsistencia().getTematicaAsistencia());
-                    
-                    asistenciaControlDao.Merge(asistenciaModificadad, fila);
-                    
-                    CargarTablaAlumnos();
+
+                    if (alumno != null) {
+                        Date fechaAsistencia = DateFechaSeleccionada.getDate();
+                        String fechaFormateada = Formato.format(fechaAsistencia);
+                        Horario horarioSeleccionado = (Horario) cbxHorario.getSelectedItem();
+
+                        Asistencia asistencia = new Asistencia();
+                        asistencia.setIdAsistencia(fila + 1);
+                        asistencia.setAlumnoAsistencia(alumno);
+                        asistencia.setHorarioAsistencia(horarioSeleccionado);
+                        asistencia.setEstadoAsistencia(estaPresente ? "Presente" : "Ausente");
+                        asistencia.setFechaAsistencia(fechaFormateada);
+
+                        asistenciaControlDao.Merge(asistencia, fila);
+
+                        alMenosUnaModificacion = true;
+                    }
                 }
-                try {
+                if (alMenosUnaModificacion) {
+                    JOptionPane.showMessageDialog(null, "Registros de asistencia modificados correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                     Limpiar();
-                } 
-                catch (Exception e) {
-                    
+                    // Actualizar la tabla después de la modificación
+                    btnVerRegistroActionPerformed(null);
+                } else {
+                    JOptionPane.showMessageDialog(null, "No se han realizado modificaciones", "Advertencia", JOptionPane.WARNING_MESSAGE);
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Error al modificar los registros de asistencia", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
+    }
+        
+//        int fila = tblRegistroAsistencia.getSelectedRow();
+//        if (fila < 0) {
+//            JOptionPane.showMessageDialog(null, "Escoga un registro");
+//        } 
+//        else {
+//            if (cbxMateria.getSelectedIndex() == -1) {
+//                JOptionPane.showMessageDialog(null, "Falta seleccionar la materia", "Error", JOptionPane.WARNING_MESSAGE);
+//            } 
+//            else if (DateFechaSeleccionada.getDate() == null) {
+//                JOptionPane.showMessageDialog(null, "Falta seleccionar la fecha", "Error", JOptionPane.WARNING_MESSAGE);
+//            } 
+//            else if (cbxHorario.getSelectedIndex() == -1) {
+//                JOptionPane.showMessageDialog(null, "Falta seleccionar el horario", "Error", JOptionPane.WARNING_MESSAGE);
+//            } 
+//            else {
+//                for (int i = 0; i < tblRegistroAsistencia.getRowCount(); i++) {
+//                    boolean estaPresente = (boolean) tblRegistroAsistencia.getValueAt(i, 4);
+//                    String estadoAsistencia = estaPresente ? "Presente" : "Ausente";
+//                    Alumno alumno = obtenerAlumnoDesdeTabla(i);
+//                    
+//                    Date fechaAsistencia = DateFechaSeleccionada.getDate();
+//                    String Fecha = Formato.format(fechaAsistencia);
+//                    
+//                    Asistencia asistenciaModificadad = new Asistencia();
+//                    asistenciaModificadad.setIdAsistencia(fila+1);
+//                    asistenciaModificadad.setAlumnoAsistencia(alumno);
+//                    asistenciaModificadad.setHorarioAsistencia(UtilVista.obtenerHorarioControl(cbxHorario));
+//                    asistenciaModificadad.setObservacion(asistenciaControlDao.getAsistencia().getObservacion());
+//                    asistenciaModificadad.setEstadoAsistencia(estadoAsistencia);
+//                    asistenciaModificadad.setFechaAsistencia(Fecha);
+//                    asistenciaModificadad.setTematicaAsistencia(asistenciaControlDao.getAsistencia().getTematicaAsistencia());
+//                    
+//                    asistenciaControlDao.Merge(asistenciaModificadad, fila);
+//                    
+//                    CargarTablaAlumnos();
+//                }
+//                try {
+//                    Limpiar();
+//                } 
+//                catch (Exception e) {
+//                    
+//                }
+//            }
+//        }
 
     }//GEN-LAST:event_btnModificarActionPerformed
 
