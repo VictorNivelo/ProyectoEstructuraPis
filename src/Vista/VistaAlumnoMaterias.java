@@ -186,10 +186,10 @@ public class VistaAlumnoMaterias extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(btnSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtnombreMateria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(txtnombreMateria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -355,36 +355,50 @@ public class VistaAlumnoMaterias extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        
         dispose();
+        
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
 
-        
-        VistaAlumnoPrincipal vpa = new VistaAlumnoPrincipal();
-        vpa.setVisible(true);
-        this.setVisible(false);
-        
+        try {
+            VistaAlumnoPrincipal vpa = new VistaAlumnoPrincipal();
+            vpa.setVisible(true);
+            this.setVisible(false);
+        } 
+        catch (Exception e) {
+            
+        }
 
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnUnidad1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUnidad1ActionPerformed
+       
         u1();
+        
     }//GEN-LAST:event_btnUnidad1ActionPerformed
 
     private void btnUnidad2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUnidad2ActionPerformed
+       
         u2();
+        
     }//GEN-LAST:event_btnUnidad2ActionPerformed
 
     private void btnUnidad3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUnidad3ActionPerformed
+        
         u3();
+        
     }//GEN-LAST:event_btnUnidad3ActionPerformed
 
     private void btnInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioActionPerformed
 
+        
+        
     }//GEN-LAST:event_btnInicioActionPerformed
 
     private void btnCalificacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalificacionesActionPerformed
+        
         Calificacion();
         
     }//GEN-LAST:event_btnCalificacionesActionPerformed

@@ -7,17 +7,13 @@ package Modelo;
  */
 public class Asistencia {
     private Integer IdAsistencia;
-    private String Observacion;
+    private String FechaAsistencia;
     private String EstadoAsistencia;
-    
+    private String Observacion;
+
     private Horario horarioAsistencia;
-    private Integer IdH;
-    
     private Alumno alumnoAsistencia;
-    private Integer AlumnoID;
-    
     private Tematica TematicaAsistencia;
-    private Integer TematicaID;
     
     public Asistencia() {
         
@@ -31,12 +27,12 @@ public class Asistencia {
         this.IdAsistencia = IdAsistencia;
     }
 
-    public String getObservacion() {
-        return Observacion;
+    public String getFechaAsistencia() {
+        return FechaAsistencia;
     }
 
-    public void setObservacion(String Observacion) {
-        this.Observacion = Observacion;
+    public void setFechaAsistencia(String FechaAsistencia) {
+        this.FechaAsistencia = FechaAsistencia;
     }
 
     public String getEstadoAsistencia() {
@@ -47,36 +43,20 @@ public class Asistencia {
         this.EstadoAsistencia = EstadoAsistencia;
     }
 
+    public String getObservacion() {
+        return Observacion;
+    }
+
+    public void setObservacion(String Observacion) {
+        this.Observacion = Observacion;
+    }
+
     public Horario getHorarioAsistencia() {
         return horarioAsistencia;
     }
 
     public void setHorarioAsistencia(Horario horarioAsistencia) {
         this.horarioAsistencia = horarioAsistencia;
-    }
-
-    public Integer getHorarioID() {
-        return IdH;
-    }
-
-    public void setHorarioID(Integer HorarioID) {
-        this.IdH = HorarioID;
-    }
-
-    public Tematica getTematicaAsistencia() {
-        return TematicaAsistencia;
-    }
-
-    public void setTematicaAsistencia(Tematica TematicaAsistencia) {
-        this.TematicaAsistencia = TematicaAsistencia;
-    }
-
-    public Integer getTematicaID() {
-        return TematicaID;
-    }
-
-    public void setTematicaID(Integer TematicaID) {
-        this.TematicaID = TematicaID;
     }
 
     public Alumno getAlumnoAsistencia() {
@@ -87,12 +67,12 @@ public class Asistencia {
         this.alumnoAsistencia = alumnoAsistencia;
     }
 
-    public Integer getAlumnoID() {
-        return AlumnoID;
+    public Tematica getTematicaAsistencia() {
+        return TematicaAsistencia;
     }
 
-    public void setAlumnoID(Integer AlumnoID) {
-        this.AlumnoID = AlumnoID;
+    public void setTematicaAsistencia(Tematica TematicaAsistencia) {
+        this.TematicaAsistencia = TematicaAsistencia;
     }
     
     @Override

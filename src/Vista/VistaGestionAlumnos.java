@@ -99,7 +99,7 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
             Persona datosAlumno = UtilVista.obtenerPersonaAlumnosControl(cbxAlumno);
 
             Alumno nuevoAlumno = new Alumno();
-            nuevoAlumno.setIdAlumno(idAlumno);
+//            nuevoAlumno.setIdAlumno(idAlumno);
             nuevoAlumno.setDatosAlumno(datosAlumno);
             nuevoAlumno.setEstadoAlumno(estado);
 
@@ -602,6 +602,7 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
         
         try {
             if (txtAlumnoBusqueda.getText().isEmpty()) {
+                UtilVista.cargarcomboPersonaAlumnos(cbxAlumno);
                 JOptionPane.showMessageDialog(null, "Ingrese el alumno a buscar", "FALTA LLENAR", JOptionPane.WARNING_MESSAGE);
             } 
             else {
@@ -617,6 +618,9 @@ public class VistaGestionAlumnos extends javax.swing.JFrame {
 
                 ListaDinamica<Persona> ResultadoN = UtilesControlador.BusquedaLineal(lista, Campo, "Nombre");
                 ResultadoBusqueda.concatenar(ResultadoN);
+                
+                ListaDinamica<Persona> ResultadoA = UtilesControlador.BusquedaLineal(lista, Campo, "Apellido");
+                ResultadoBusqueda.concatenar(ResultadoA);
 
                 cbxAlumno.removeAllItems();
 

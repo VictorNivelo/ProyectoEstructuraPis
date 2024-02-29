@@ -78,7 +78,7 @@ public class Horario {
     
     @Override
     public String toString() {
-        return DiaSemana  + "  H "+ HoraIncio + " - " + HoraFin + "\n";
+        return DiaSemana + "  "+ HoraIncio + " - " + HoraFin + "\n";
     }
     
 }

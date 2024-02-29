@@ -28,7 +28,6 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
     ListaDinamica<Matricula> listaMatricula = new ListaDinamica<>();
     matriculaDao MatriculaControlDao = new matriculaDao();
     ModeloTablaMatriculas mtm = new ModeloTablaMatriculas(); 
-    SimpleDateFormat Formato = new SimpleDateFormat("dd/MMMM/yyyy");
     
     /**
      * Creates new form Matricula
@@ -691,6 +690,7 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
         
         try {
             if (txtBusquedaAlumno.getText().isEmpty()) {
+                UtilVista.cargarcomboAlumnos(cbxAlumno);
                 JOptionPane.showMessageDialog(null, "Ingrese el alumno a buscar", "FALTA LLENAR", JOptionPane.WARNING_MESSAGE);
             } 
             else {
@@ -706,6 +706,9 @@ public class VistaGestionMatricula extends javax.swing.JFrame {
 
                 ListaDinamica<Alumno> ResultadoNO = UtilesControlador.BusquedaLineal(lista, Campo, "DatosAlumno.Nombre");
                 ResultadoBusqueda.concatenar(ResultadoNO);
+                
+                ListaDinamica<Alumno> ResultadoA = UtilesControlador.BusquedaLineal(lista, Campo, "DatosAlumno.Apellido");
+                ResultadoBusqueda.concatenar(ResultadoA);
 
                 cbxAlumno.removeAllItems();
 

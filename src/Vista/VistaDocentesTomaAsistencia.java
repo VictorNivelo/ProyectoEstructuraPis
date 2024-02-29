@@ -20,8 +20,6 @@ import Modelo.Materia;
 import Modelo.Persona;
 import Modelo.Tematica;
 import Vista.Utiles.UtilVista;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
@@ -180,9 +178,10 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
                         nuevaAsistencia.setHorarioAsistencia(UtilVista.obtenerHorarioControl(cbxHorario));
 
                         String fechaTematica = formatearFecha(fechaIngresada);
-
+                        
+                        Integer IdTematica = listaAsistencia.getLongitud() + 1;
                         Tematica nuevaTematica = new Tematica();
-                        nuevaTematica.setIdTematica(idAsistencia);
+                        nuevaTematica.setIdTematica(IdTematica);
                         nuevaTematica.setNombreTematica(txtTematica.getText());
                         nuevaTematica.setFechaTematica(fechaTematica);
                         nuevaAsistencia.setTematicaAsistencia(nuevaTematica);
@@ -629,9 +628,14 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         
-        VistaDocentePrincipal abrirLogin = new VistaDocentePrincipal();
-        abrirLogin.setVisible(true);
-        this.setVisible(false);
+        try {
+            VistaDocentePrincipal abrirLogin = new VistaDocentePrincipal();
+            abrirLogin.setVisible(true);
+            this.setVisible(false);
+        } 
+        catch (Exception e) {
+            
+        }
         
     }//GEN-LAST:event_jButton4ActionPerformed
 
@@ -764,24 +768,23 @@ public class VistaDocentesTomaAsistencia extends javax.swing.JFrame {
 
     private void cbxHorarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxHorarioActionPerformed
         
-        cbxHorario.addActionListener(new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            Horario horarioSeleccionado = (Horario) cbxHorario.getSelectedItem();
-
-            if (horarioSeleccionado != null) {
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MMMM/yyyy");
-                try {
-                    Date fechaHorario = dateFormat.parse(horarioSeleccionado.getDiaSemana());
-                    DateFechaActual.setDate(fechaHorario);
-                } 
-                catch (Exception ex) {
-                    ex.printStackTrace();
-                    JOptionPane.showMessageDialog(null, "Error al obtener la fecha del horario", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        }
-    });
+//        cbxHorario.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                Horario horarioSeleccionado = (Horario) cbxHorario.getSelectedItem();
+//
+//                if (horarioSeleccionado != null) {
+//                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MMMM/yyyy");
+//                    try {
+//                        Date fechaHorario = dateFormat.parse(horarioSeleccionado.getDiaSemana());
+//                        DateFechaActual.setDate(fechaHorario);
+//                    } catch (Exception ex) {
+//                        ex.printStackTrace();
+//                        JOptionPane.showMessageDialog(null, "Error al obtener la fecha del horario", "Error", JOptionPane.ERROR_MESSAGE);
+//                    }
+//                }
+//            }
+//        });
         
     }//GEN-LAST:event_cbxHorarioActionPerformed
 

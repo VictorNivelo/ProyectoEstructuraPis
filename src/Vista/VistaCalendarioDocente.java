@@ -1,10 +1,12 @@
 
 package Vista;
 
+import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import javax.swing.*;
 import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
+
 
 public class VistaCalendarioDocente extends JFrame {
 
@@ -88,9 +90,15 @@ public class VistaCalendarioDocente extends JFrame {
         JButton botonRegresar = new JButton("REGRESAR");
         botonRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Regresar.png")));
         botonRegresar.addActionListener(e -> {
-            VistaDocentePrincipal otraInterfaz = new VistaDocentePrincipal();
-            otraInterfaz.setLocationRelativeTo(this);
-            otraInterfaz.setVisible(true);
+            VistaDocentePrincipal otraInterfaz;
+            try {
+                otraInterfaz = new VistaDocentePrincipal();
+                otraInterfaz.setLocationRelativeTo(this);
+                otraInterfaz.setVisible(true);
+            } 
+            catch (ListaVacia ex) {
+                
+            }
             dispose();
         });
 

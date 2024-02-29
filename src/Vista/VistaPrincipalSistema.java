@@ -32,7 +32,6 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
     public VistaPrincipalSistema() throws ListaVacia {
         initComponents();
         this.setLocationRelativeTo(null);
-        
         panelPrincipal.setOpaque(false);
 //        txaContenido.setOpaque(false);
 //        txaContenido.setBorder(null);
@@ -48,8 +47,8 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
         for (int i = 0; i < listaPresentacion.getLongitud(); i++) {
             try {
                 String imagen = listaPresentacion.getInfo(i).getImagen();
-//                System.out.println(imagen);
                 imagenes.Agregar(imagen);
+                System.out.println(i);
             } 
             catch (ListaVacia ex) {
                 
@@ -80,6 +79,7 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
         String auxEstado = "";
 
         try {
+            System.out.println(indiceImagenActual);
             auxEstado = listaPresentacion.getInfo(indiceImagenActual).getEstadoPresentacion();
             if ("Activa".equalsIgnoreCase(auxEstado)) {
                 auxTitulo = listaPresentacion.getInfo(indiceImagenActual).getTitulo();
@@ -94,6 +94,7 @@ public class VistaPrincipalSistema extends javax.swing.JFrame {
             auxContenido = listaPresentacion.getInfo(indiceImagenActual).getContenido();
             txtTitulo.setText(auxTitulo);
             txaContenido.setText(auxContenido);
+            System.out.println(indiceImagenActual);
         }
     }
 

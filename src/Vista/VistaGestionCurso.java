@@ -197,7 +197,7 @@ public class VistaGestionCurso extends javax.swing.JFrame {
             cursoControlDao.getCursos().setMateriaCursa(UtilVista.obtenerComboMateria(cbxMateria));
 
             if (cursoControlDao.Persist()) {
-                JOptionPane.showMessageDialog(null, "CICLO GUARDADA EXISTOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "CURSO GUARDADA EXISTOSAMENTE", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
                 cursoControlDao.setCursos(null);
             }
             else {
@@ -939,6 +939,7 @@ public class VistaGestionCurso extends javax.swing.JFrame {
 
         try {
             if (txtMatriculaBusqueda.getText().isEmpty()) {
+                UtilVista.cargarcomboMatricula(cbxMatricula);
                 JOptionPane.showMessageDialog(null, "Ingrese la matricula a buscar", "FALTA LLENAR", JOptionPane.WARNING_MESSAGE);
             } 
             else {
@@ -954,6 +955,12 @@ public class VistaGestionCurso extends javax.swing.JFrame {
 
                 ListaDinamica<Matricula> ResultadoCedula = UtilesControlador.BusquedaLineal(lista, Campo, "alumnoMatricula.DatosAlumno.NumeroCedula");
                 ResultadoBusqueda.concatenar(ResultadoCedula);
+                
+                ListaDinamica<Matricula> ResultadoN = UtilesControlador.BusquedaLineal(lista, Campo, "alumnoMatricula.DatosAlumno.Nombre");
+                ResultadoBusqueda.concatenar(ResultadoN);
+                
+                ListaDinamica<Matricula> ResultadoA = UtilesControlador.BusquedaLineal(lista, Campo, "alumnoMatricula.DatosAlumno.Apellido");
+                ResultadoBusqueda.concatenar(ResultadoA);
 
                 cbxMatricula.removeAllItems();
 
@@ -973,6 +980,7 @@ public class VistaGestionCurso extends javax.swing.JFrame {
         
         try {
             if (txtDocenteBusqueda.getText().isEmpty()) {
+                UtilVista.cargarcomboDocente(cbxDocente); 
                 JOptionPane.showMessageDialog(null, "Ingrese el docente a buscar", "FALTA LLENAR", JOptionPane.WARNING_MESSAGE);
             } 
             else {
@@ -988,6 +996,9 @@ public class VistaGestionCurso extends javax.swing.JFrame {
 
                 ListaDinamica<Docente> ResultadoN = UtilesControlador.BusquedaLineal(lista, Campo, "DatosDocente.Nombre");
                 ResultadoBusqueda.concatenar(ResultadoN);
+                
+                ListaDinamica<Docente> ResultadoA = UtilesControlador.BusquedaLineal(lista, Campo, "DatosDocente.Apellido");
+                ResultadoBusqueda.concatenar(ResultadoA);
 
                 cbxDocente.removeAllItems();
 
@@ -1006,20 +1017,25 @@ public class VistaGestionCurso extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         
         try {
+            if (txtMateriaBusqueda.getText().isEmpty()) {
+                UtilVista.CargarComboMateria(cbxMateria);
+                JOptionPane.showMessageDialog(null, "Ingrese el docente a buscar", "FALTA LLENAR", JOptionPane.WARNING_MESSAGE);
+            } 
+            else {
+            
                 materiaDao PD = new materiaDao();
                 ListaDinamica<Materia> lista = PD.all();
 
                 String Campo = txtMateriaBusqueda.getText();
 
-
                 ListaDinamica<Materia> ResultadoBusqueda = UtilesControlador.BusquedaLineal(lista, Campo, "NombreMateria");
-
 
                 cbxMateria.removeAllItems();
 
                 for (Materia pb : ResultadoBusqueda.toArray()) {
                     cbxMateria.addItem(pb);
                 }
+            }
         } 
         catch (Exception e) {
 

@@ -1,6 +1,7 @@
 
 package Vista;
 
+import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import javax.swing.*;
 import java.awt.*;
 import java.text.SimpleDateFormat;
@@ -88,12 +89,16 @@ public class VistaCalendarioAlumno extends JFrame {
         JButton botonRegresar = new JButton("REGRESAR");
         botonRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/RecursosGraficos/Botones/Regresar.png")));
         botonRegresar.addActionListener(e -> {
-            VistaAlumnoPrincipal otraInterfaz = new VistaAlumnoPrincipal();
-            otraInterfaz.setLocationRelativeTo(this);
-            otraInterfaz.setVisible(true);
+            try {
+                VistaAlumnoPrincipal otraInterfaz = new VistaAlumnoPrincipal();
+                otraInterfaz.setLocationRelativeTo(this);
+                otraInterfaz.setVisible(true);
+            }
+            catch (ListaVacia ex) {
+                
+            }
             dispose();
         });
-
         PanelPrincipal.add(botonRegresar, BorderLayout.WEST);
 //BotonImprimir fecha
 //        JButton botonImprimirFecha = new JButton("Imprimir Fecha");
@@ -163,7 +168,7 @@ public class VistaCalendarioAlumno extends JFrame {
         for (String Dia : DiaMes) {
             JLabel EtiquetaDias = new JLabel(Dia, JLabel.CENTER);
             EtiquetaDias.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
-            EtiquetaDias.setPreferredSize(new Dimension(50, 50));
+            EtiquetaDias.setPreferredSize(new Dimension(50, 30));
             EtiquetaDias.setForeground(Color.WHITE);
             EtiquetaDias.setBackground(new Color(84, 82, 100));
             EtiquetaDias.setFont(new Font("SansSerif", Font.PLAIN, 16));
@@ -243,7 +248,7 @@ public class VistaCalendarioAlumno extends JFrame {
 
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("FlatLaf Dark".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }

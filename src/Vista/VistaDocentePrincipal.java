@@ -3,10 +3,13 @@ package Vista;
 
 import Controlador.Dao.Modelo.cursoDao;
 import Controlador.Dao.Modelo.horarioDao;
+import Controlador.Dao.Modelo.presentacionDao;
+import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
 import Controlador.TDA.ListaDinamica.ListaDinamica;
 import Modelo.ControlAccesoDocente;
 import Modelo.Cursa;
 import Modelo.Horario;
+import Modelo.Presentacion;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,39 +22,81 @@ import javax.swing.Timer;
  * @author romer
  */
 public class VistaDocentePrincipal extends javax.swing.JFrame {
+    presentacionDao presentacionControlDao = new presentacionDao();
+    private ListaDinamica<Presentacion> listaPresentacion = presentacionControlDao.all();
+    private ListaDinamica<String> imagenes = new ListaDinamica<>();
     
-    private final String[] imagenes = {
-        "/Vista/RecursosGraficos/Fondos/Fondo1.jpg",
-        "/Vista/RecursosGraficos/Fondos/Fondo2.jpg",
-        "/Vista/RecursosGraficos/Fondos/Fondo3.jpg",
-        "/Vista/RecursosGraficos/Fondos/Fondo4.jpg"
-    };
+//    private final String[] imagenes = {
+//        "/Vista/RecursosGraficos/Fondos/Fondo1.jpg",
+//        "/Vista/RecursosGraficos/Fondos/Fondo2.jpg",
+//        "/Vista/RecursosGraficos/Fondos/Fondo3.jpg",
+//        "/Vista/RecursosGraficos/Fondos/Fondo4.jpg"
+//    };
 
-    private int indiceImagenActual = 0;
+    private int indiceImagenActual = -1;
     private Timer timer;
 
     /**
      * Creates new form VistaDocentes
+     * @throws Controlador.TDA.ListaDinamica.Excepcion.ListaVacia
      */
-    public VistaDocentePrincipal() {
+    public VistaDocentePrincipal() throws ListaVacia {
         initComponents();
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
         
         mostrarNombreDocente();
         
-        timer = new Timer(3000, new ActionListener() {
+        for (int i = 0; i < listaPresentacion.getLongitud(); i++) {
+            try {
+                String imagen = listaPresentacion.getInfo(i).getImagen();
+                imagenes.Agregar(imagen);
+                System.out.println(i);
+            } 
+            catch (ListaVacia ex) {
+                
+            }
+        }
+
+        cambiarImagen();
+  
+        timer = new Timer(2500, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                cambiarImagen();
+                try {
+                    cambiarImagen();
+                } 
+                catch (ListaVacia ex) {
+
+                }
             }
         });
         timer.start();
     }
     
-    private void cambiarImagen() {
-        indiceImagenActual = (indiceImagenActual + 1) % imagenes.length;
-        panelPrincipal.repaint();
+    private String CargarImagen() throws ListaVacia {
+        try {
+            String rutaImagen = imagenes.getInfo(indiceImagenActual);
+            if (rutaImagen.startsWith("src/")) {
+                rutaImagen = rutaImagen.substring(3);
+            }
+            return rutaImagen;
+        }
+        catch (NullPointerException e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+
+    private void cambiarImagen() throws ListaVacia {
+        int intentos = 0;
+        do {
+            indiceImagenActual = (indiceImagenActual + 1) % imagenes.getLongitud();
+            intentos++;
+        } 
+        while (!"Activa".equalsIgnoreCase(listaPresentacion.getInfo(indiceImagenActual).getEstadoPresentacion()) && intentos < imagenes.getLongitud());
+
+        panelPrincipal.repaint(); 
     }
  
     private void mostrarNombreDocente() {
@@ -59,6 +104,18 @@ public class VistaDocentePrincipal extends javax.swing.JFrame {
         lblNombreUsuarioIngresado.setText(nombreDocente);
     }
 
+    /*
+     * panelPrincipal = new javax.swing.JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                ImageIcon icon = new ImageIcon(getClass().getResource(imagenes[indiceImagenActual]));
+                g.drawImage(icon.getImage(), 0, 0, getWidth(), getHeight(), this);
+            }
+        };
+     * 
+     */
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -71,8 +128,13 @@ public class VistaDocentePrincipal extends javax.swing.JFrame {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                ImageIcon icon = new ImageIcon(getClass().getResource(imagenes[indiceImagenActual]));
-                g.drawImage(icon.getImage(), 0, 0, getWidth(), getHeight(), this);
+                try {
+                    ImageIcon icon = new ImageIcon(getClass().getResource(CargarImagen()));
+                    g.drawImage(icon.getImage(), 0, 0, getWidth(), getHeight(), this);
+                } 
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         };
         
@@ -326,7 +388,12 @@ public class VistaDocentePrincipal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VistaDocentePrincipal().setVisible(true);
+                try {
+                    new VistaDocentePrincipal().setVisible(true);
+                } 
+                catch (ListaVacia ex) {
+                    
+                }
             }
         });
     }

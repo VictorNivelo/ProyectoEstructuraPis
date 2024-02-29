@@ -168,7 +168,7 @@ public class VistaInicioSesionEstudiante extends javax.swing.JFrame {
             abrirAsistencia.setVisible(true);
         } 
         catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
     

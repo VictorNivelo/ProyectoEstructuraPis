@@ -38,7 +38,8 @@ public class VistaAlumnoEva extends javax.swing.JDialog {
         setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
         try {
             UtilVista.CargarComboMateria(cbxMaterias);
-        } catch (ListaVacia ex) {
+        } 
+        catch (ListaVacia ex) {
             Logger.getLogger(VistaAlumnoEva.class.getName()).log(Level.SEVERE, null, ex);
         }
         cbxMaterias.setSelectedIndex(0);
@@ -334,7 +335,9 @@ public class VistaAlumnoEva extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        
         dispose();
+        
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void cbxMateriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxMateriasActionPerformed
@@ -346,6 +349,7 @@ public class VistaAlumnoEva extends javax.swing.JDialog {
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void btnCalendarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalendarioActionPerformed
+        
         VistaAlumnoCalendario fc = new VistaAlumnoCalendario(null, true);
         dispose();
         fc.setVisible(true);
@@ -353,9 +357,15 @@ public class VistaAlumnoEva extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCalendarioActionPerformed
 
     private void btnPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrincipalActionPerformed
-        VistaPrincipalSGA vps = new VistaPrincipalSGA();
-        dispose();
-        vps.setVisible(true);
+        
+        try {
+            VistaPrincipalSistema vps = new VistaPrincipalSistema();
+            dispose();
+            vps.setVisible(true);
+        } 
+        catch (Exception e) {
+            
+        }
 
     }//GEN-LAST:event_btnPrincipalActionPerformed
 

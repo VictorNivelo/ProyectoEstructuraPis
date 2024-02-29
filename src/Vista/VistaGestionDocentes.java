@@ -81,7 +81,8 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
             return false;
         }
         for (Docente d : docentes.toArray()) {
-            if (d.getIdDocente().equals(nuevoDocente.getIdDocente())) {
+            if (d.getIdDocente().equals(nuevoDocente.getIdDocente())
+                    && d.getEspecialidad().equals(nuevoDocente.getEspecialidad())) {
                 return true;
             }
         }
@@ -718,6 +719,7 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
 
         try {
             if (txtDocenteBusqueda.getText().isEmpty()) {
+                UtilVista.cargarcomboPersonaDocentes(cbxDocente);
                 JOptionPane.showMessageDialog(null, "Ingrese el docente a buscar", "FALTA LLENAR", JOptionPane.WARNING_MESSAGE);
             } 
             else {
@@ -733,6 +735,9 @@ public class VistaGestionDocentes extends javax.swing.JFrame {
 
                 ListaDinamica<Persona> ResultadoN = UtilesControlador.BusquedaLineal(lista, Campo, "Nombre");
                 ResultadoBusqueda.concatenar(ResultadoN);
+                
+                ListaDinamica<Persona> ResultadoA = UtilesControlador.BusquedaLineal(lista, Campo, "Apellido");
+                ResultadoBusqueda.concatenar(ResultadoA);
 
                 cbxDocente.removeAllItems();
 

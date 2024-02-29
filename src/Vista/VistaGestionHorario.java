@@ -15,7 +15,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -27,7 +26,6 @@ public class VistaGestionHorario extends javax.swing.JFrame {
     horarioDao horarioControlDao = new horarioDao();
     ListaDinamica<Horario> listaHorarios = new ListaDinamica<>();
     ModeloTablaHorario mth = new ModeloTablaHorario();
-    SimpleDateFormat Formato = new SimpleDateFormat("dd/MMMM/yyyy");
     
     /**
      * Creates new form GestionDeHorario
@@ -37,7 +35,6 @@ public class VistaGestionHorario extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         UtilVista.CargarComboMateria(cbxMateria);
-        DateHorario.setDateFormatString("dd/MMMM/yyyy");
         setIconImage(new ImageIcon(getClass().getResource("/Vista/RecursosGraficos/IconoPrograma.png")).getImage());
         CargarTabla();
     }
@@ -48,6 +45,7 @@ public class VistaGestionHorario extends javax.swing.JFrame {
         tblHorario.updateUI();
         cbxMateria.setSelectedIndex(-1);
         cbxTipoOrden.setSelectedIndex(-1);
+        cbxDiaHorario.setSelectedIndex(-1);
     }
     
     private void Limpiar() throws ListaVacia {
@@ -56,7 +54,7 @@ public class VistaGestionHorario extends javax.swing.JFrame {
         txtCodigoHorario.setText("");
         cbxMateria.setSelectedIndex(-1);
         cbxTipoOrden.setSelectedIndex(-1);
-        DateHorario.setDate(null);
+        cbxDiaHorario.setSelectedIndex(-1);
         horarioControlDao.setHorarios(null);
         CargarTabla();
     }
@@ -74,8 +72,9 @@ public class VistaGestionHorario extends javax.swing.JFrame {
                 txtHoraFin.setText(horarioControlDao.getHorarios().getHoraFin());
                 txtCodigoHorario.setText(horarioControlDao.getHorarios().getCodigoHorario());
                 cbxMateria.setSelectedIndex(horarioControlDao.getHorarios().getMateriaHorario().getIdMateria() -1);
-                Date FechaNacimiento = Formato.parse(horarioControlDao.getHorarios().getDiaSemana());
-                DateHorario.setDate(FechaNacimiento);
+                cbxDiaHorario.setSelectedItem(horarioControlDao.getHorarios().getDiaSemana());
+//                Date FechaNacimiento = Formato.parse(horarioControlDao.getHorarios().getDiaSemana());
+//                DateHorario.setDate(FechaNacimiento);
                 
             } 
             catch (Exception e) {
@@ -92,17 +91,16 @@ public class VistaGestionHorario extends javax.swing.JFrame {
 
         try {
             ListaDinamica<Horario> listaPresentacion = (ListaDinamica<Horario>) Bridge.getConection().fromXML(new FileReader(presentacionURL));
-
             if (!listaPresentacion.EstaVacio()) {
                 Horario ultimaPresentacion = listaPresentacion.getInfo(listaPresentacion.getLongitud() - 1);
                 ultimoId = ultimaPresentacion.getIdHorario();
             }
         } 
         catch (FileNotFoundException e) {
+            
         }
 
         ultimoId++;
-
         return "H-" + String.format("%04d", ultimoId);
     }
     
@@ -115,7 +113,7 @@ public class VistaGestionHorario extends javax.swing.JFrame {
             if (h.getDiaSemana().equals(nuevoHorario.getDiaSemana())
                     && h.getHoraIncio().equals(nuevoHorario.getHoraIncio())
                     && h.getHoraFin().equals(nuevoHorario.getHoraFin())
-                    && h.getMateriaHorario().getIdMateria().equals(nuevoHorario.getMateriaHorario().getIdMateria())) {
+                    /*&& h.getMateriaHorario().getIdMateria().equals(nuevoHorario.getMateriaHorario().getIdMateria())*/) {
                 return true;
             }
         }
@@ -123,9 +121,12 @@ public class VistaGestionHorario extends javax.swing.JFrame {
     }
 
     private void Guardar() throws ListaVacia {
-        if (DateHorario.getDate() == null) {
+//        if (DateHorario.getDate() == null) {
+//            JOptionPane.showMessageDialog(null, "Falta seleccionar el día", "Error", JOptionPane.WARNING_MESSAGE);
+//        } 
+        if(cbxDiaHorario.getSelectedIndex() == -1){
             JOptionPane.showMessageDialog(null, "Falta seleccionar el día", "Error", JOptionPane.WARNING_MESSAGE);
-        } 
+        }
         else if (txtHoraInicio.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Falta llenar la hora de inicio", "Error", JOptionPane.WARNING_MESSAGE);
         } 
@@ -137,19 +138,21 @@ public class VistaGestionHorario extends javax.swing.JFrame {
         } 
         else {
             // Obtener datos del horario
-            Date dia = DateHorario.getDate();
-            String fechaHorario = Formato.format(dia);
+//            Date dia = DateHorario.getDate();
+//            String diaHorario = Formato.format(dia);
+            String diaHorario = cbxDiaHorario.getSelectedItem().toString();
             String horaInicio = txtHoraInicio.getText();
             String horaFin = txtHoraFin.getText();
             Materia materia = UtilVista.obtenerComboMateria(cbxMateria);
+            
             Horario nuevoHorario = new Horario();
-            nuevoHorario.setDiaSemana(fechaHorario);
+            nuevoHorario.setDiaSemana(diaHorario);
             nuevoHorario.setHoraIncio(horaInicio);
             nuevoHorario.setHoraFin(horaFin);
             nuevoHorario.setMateriaHorario(materia);
 
             if (horarioExiste(nuevoHorario)) {
-                JOptionPane.showMessageDialog(null, "El horario ya existe para esta materia en este día y horario", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "El horario ya existe en este día y horario", "Error", JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
 
@@ -221,11 +224,11 @@ public class VistaGestionHorario extends javax.swing.JFrame {
         cbxMateria = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         txtCodigoHorario = new javax.swing.JTextField();
-        DateHorario = new com.toedter.calendar.JDateChooser();
         jLabel12 = new javax.swing.JLabel();
         cbxOrden = new javax.swing.JComboBox<>();
         btnOrdenar = new javax.swing.JButton();
         cbxTipoBusqueda = new javax.swing.JComboBox<>();
+        cbxDiaHorario = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("GESTION DE HORARIOS");
@@ -378,8 +381,6 @@ public class VistaGestionHorario extends javax.swing.JFrame {
         txtCodigoHorario.setEditable(false);
         txtCodigoHorario.setEnabled(false);
 
-        DateHorario.setDateFormatString("dd MMM yyyy");
-
         jLabel12.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(0, 0, 0));
         jLabel12.setText("Ordenar");
@@ -396,6 +397,9 @@ public class VistaGestionHorario extends javax.swing.JFrame {
 
         cbxTipoBusqueda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dia", "Codigo", "Hora de inicio", "Hora de fin", "Materia" }));
         cbxTipoBusqueda.setSelectedIndex(-1);
+
+        cbxDiaHorario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Lunes", "Martes", "Miercoles", "Jueves", "VIernes" }));
+        cbxDiaHorario.setSelectedIndex(-1);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -417,11 +421,11 @@ public class VistaGestionHorario extends javax.swing.JFrame {
                             .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(DateHorario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txtCodigoHorario)
                             .addComponent(txtHoraFin, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
                             .addComponent(txtHoraInicio)
-                            .addComponent(cbxMateria, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(cbxMateria, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbxDiaHorario, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -477,18 +481,16 @@ public class VistaGestionHorario extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel9)
-                                    .addComponent(jLabel10)
-                                    .addComponent(cbxTipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel6)
-                                    .addComponent(txtCodigoHorario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(DateHorario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel10)
+                            .addComponent(cbxTipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbxDiaHorario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(txtCodigoHorario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
@@ -528,9 +530,12 @@ public class VistaGestionHorario extends javax.swing.JFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         
         try {
-            if (DateHorario.getDate() == null) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar el dia", "Error", JOptionPane.WARNING_MESSAGE);
-            } 
+//            if (DateHorario.getDate() == null) {
+//                JOptionPane.showMessageDialog(null, "Falta seleccionar el dia", "Error", JOptionPane.WARNING_MESSAGE);
+//            } 
+            if (cbxDiaHorario.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Falta seleccionar el día", "Error", JOptionPane.WARNING_MESSAGE);
+            }
             else if (txtHoraInicio.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Falta llenar hora inicio", "Error", JOptionPane.WARNING_MESSAGE);
             } 
@@ -565,9 +570,12 @@ public class VistaGestionHorario extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Escoga un registro");
         } 
         else {
-            if (DateHorario.getDate() == null) {
-                JOptionPane.showMessageDialog(null, "Falta seleccionar el dia", "Error", JOptionPane.WARNING_MESSAGE);
-            } 
+//            if (DateHorario.getDate() == null) {
+//                JOptionPane.showMessageDialog(null, "Falta seleccionar el dia", "Error", JOptionPane.WARNING_MESSAGE);
+//            } 
+            if (cbxDiaHorario.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Falta seleccionar el día", "Error", JOptionPane.WARNING_MESSAGE);
+            }
             else if (txtHoraInicio.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Falta llenar hora inicio", "Error", JOptionPane.WARNING_MESSAGE);
             } 
@@ -580,15 +588,16 @@ public class VistaGestionHorario extends javax.swing.JFrame {
             else {
 
                 Integer IdHorario = horarioControlDao.getHorarios().getIdHorario();
-                Date Dia = DateHorario.getDate();
-                String FechaHorario = Formato.format(Dia);
+//                Date Dia = DateHorario.getDate();
+//                String diaHorario = Formato.format(Dia);
+                String diaHorario = cbxDiaHorario.getSelectedItem().toString();
                 String Codigo = txtCodigoHorario.getText();
                 String Inicio = txtHoraInicio.getText();
                 String Fin = txtHoraFin.getText();
 
                 Horario horarioModiPersona = new Horario();
                 horarioModiPersona.setIdHorario(IdHorario);
-                horarioModiPersona.setDiaSemana(FechaHorario);
+                horarioModiPersona.setDiaSemana(diaHorario);
                 horarioModiPersona.setCodigoHorario(Codigo);
                 horarioModiPersona.setHoraIncio(Inicio);
                 horarioModiPersona.setHoraFin(Fin);
@@ -791,8 +800,8 @@ public class VistaGestionHorario extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.toedter.calendar.JDateChooser DateHorario;
     private javax.swing.JButton btnOrdenar;
+    private javax.swing.JComboBox<String> cbxDiaHorario;
     private javax.swing.JComboBox<String> cbxMateria;
     private javax.swing.JComboBox<String> cbxOrden;
     private javax.swing.JComboBox<String> cbxTipoBusqueda;

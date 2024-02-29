@@ -124,9 +124,14 @@ public class VistaDocenteCalendario extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         
-        VistaDocentePrincipal vd = new VistaDocentePrincipal();
-        vd.setVisible(true);
-        this.setVisible(false);
+        try {
+            VistaDocentePrincipal vd = new VistaDocentePrincipal();
+            vd.setVisible(true);
+            this.setVisible(false);
+        } 
+        catch (Exception e) {
+            
+        }
         
     }//GEN-LAST:event_jButton2ActionPerformed
 
