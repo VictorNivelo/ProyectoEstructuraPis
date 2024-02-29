@@ -2,6 +2,8 @@
 package Vista;
 
 import Controlador.TDA.ListaDinamica.Excepcion.ListaVacia;
+import Controlador.TDA.ListaDinamica.ListaDinamica;
+import Modelo.Horario;
 import javax.swing.*;
 import java.awt.*;
 import java.text.SimpleDateFormat;
@@ -33,14 +35,41 @@ public class VistaCalendarioAlumno extends JFrame {
         setVisible(true);
     }
 
-    public void AgregarEvento(String fecha, String descripcion) {
+    public void AgregarEvento(String nombreDia, String descripcion) {
+        for (int mes = 0; mes < 12; mes++) {
+            Calendar cal = Calendar.getInstance();
+            cal.set(Calendar.YEAR, AnioActual);
+            cal.set(Calendar.MONTH, mes);
+            cal.set(Calendar.DAY_OF_MONTH, 1);
 
-        ArrayList<String> recordatorios = MapaRecordatorios.getOrDefault(fecha, new ArrayList<>());
-        recordatorios.add(descripcion);
-        MapaRecordatorios.put(fecha, recordatorios);
+            while (cal.get(Calendar.YEAR) == AnioActual && cal.get(Calendar.MONTH) == mes) {
+                String nombreDiaActual = cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.forLanguageTag("es-ES"));
 
+                if (nombreDiaActual.equalsIgnoreCase(nombreDia)) {
+                    String fecha = Formato.format(cal.getTime());
+
+                    ArrayList<String> recordatorios = MapaRecordatorios.getOrDefault(fecha, new ArrayList<>());
+                    recordatorios.add(descripcion);
+                    MapaRecordatorios.put(fecha, recordatorios);
+                }
+                cal.add(Calendar.DAY_OF_MONTH, 1);
+            }
+        }
         ActualizarCalendario();
     }
+
+
+
+
+
+//    public void AgregarEvento(String fecha, String descripcion) {
+//
+//        ArrayList<String> recordatorios = MapaRecordatorios.getOrDefault(fecha, new ArrayList<>());
+//        recordatorios.add(descripcion);
+//        MapaRecordatorios.put(fecha, recordatorios);
+//
+//        ActualizarCalendario();
+//    }
 
     @SuppressWarnings("unused")
     private void imprimirFechaActual(String fecha) {

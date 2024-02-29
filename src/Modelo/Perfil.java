@@ -9,6 +9,8 @@ public class Perfil {
     private Integer IdPerfil;
     private String NombreUsuario;
     private String FotoUsuario;
+    private String Visibilidad;
+    private String Estado;
     private String DescripcionUsuario;
     private Persona personaPerfil;
 
@@ -54,6 +56,22 @@ public class Perfil {
 
     public void setPersonaPerfil(Persona personaPerfil) {
         this.personaPerfil = personaPerfil;
+    }
+
+    public String getVisibilidad() {
+        return Visibilidad;
+    }
+
+    public void setVisibilidad(String Visibilidad) {
+        this.Visibilidad = Visibilidad;
+    }
+
+    public String getEstado() {
+        return Estado;
+    }
+
+    public void setEstado(String Estado) {
+        this.Estado = Estado;
     }
 
     @Override

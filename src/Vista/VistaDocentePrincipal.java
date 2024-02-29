@@ -25,13 +25,6 @@ public class VistaDocentePrincipal extends javax.swing.JFrame {
     presentacionDao presentacionControlDao = new presentacionDao();
     private ListaDinamica<Presentacion> listaPresentacion = presentacionControlDao.all();
     private ListaDinamica<String> imagenes = new ListaDinamica<>();
-    
-//    private final String[] imagenes = {
-//        "/Vista/RecursosGraficos/Fondos/Fondo1.jpg",
-//        "/Vista/RecursosGraficos/Fondos/Fondo2.jpg",
-//        "/Vista/RecursosGraficos/Fondos/Fondo3.jpg",
-//        "/Vista/RecursosGraficos/Fondos/Fondo4.jpg"
-//    };
 
     private int indiceImagenActual = -1;
     private Timer timer;

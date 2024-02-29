@@ -18,8 +18,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -38,15 +36,7 @@ public class VistaAlumnoPrincipal extends javax.swing.JFrame {
     private ListaDinamica<String> imagenes = new ListaDinamica<>();
     
     private int indiceImagenActual = -1;
-    private Timer timer;
-//    private final String[] imagenes = {
-//        "/Vista/RecursosGraficos/Fondos/Fondo1.jpg",
-//        "/Vista/RecursosGraficos/Fondos/Fondo2.jpg",
-//        "/Vista/RecursosGraficos/Fondos/Fondo3.jpg",
-//        "/Vista/RecursosGraficos/Fondos/Fondo4.jpg"
-//    };
-
-    
+    private Timer timer;    
 
     /**
      * Creates new form VistaAlumnoPrincipal
@@ -152,6 +142,7 @@ public class VistaAlumnoPrincipal extends javax.swing.JFrame {
         lblNombreAlumnoIngresado.setText(nombreAlumno);
     }
     
+    @SuppressWarnings("unused")
     private boolean esDiaLaborable(String diaSemana, Date fechaInicioPeriodo, Date fechaFinPeriodo) {
         Date fechaActual = new Date();
         if (fechaActual.compareTo(fechaInicioPeriodo) >= 0 && fechaActual.compareTo(fechaFinPeriodo) <= 0) {
@@ -166,6 +157,7 @@ public class VistaAlumnoPrincipal extends javax.swing.JFrame {
         return false;
     }
 
+    @SuppressWarnings("unused")
     private Date convertirStringADate(String fechaString) {
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -177,6 +169,7 @@ public class VistaAlumnoPrincipal extends javax.swing.JFrame {
         }
     }
     
+    @SuppressWarnings("unused")
     public static PeriodoAcademico obtenerPeriodoAcademicoActivo(ListaDinamica<PeriodoAcademico> periodos) {
         Date fechaActual = new Date();
 
@@ -224,7 +217,20 @@ public class VistaAlumnoPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        panelPrincipal = new javax.swing.JPanel();
+        panelPrincipal = new javax.swing.JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                try {
+                    ImageIcon icon = new ImageIcon(getClass().getResource(CargarImagen()));
+                    g.drawImage(icon.getImage(), 0, 0, getWidth(), getHeight(), this);
+                } 
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
